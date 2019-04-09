@@ -1,0 +1,5 @@
+include *.md
+include LICENSE
+include requirements.txt
+include requirements-dev.txt
+include requirements-tests.txt

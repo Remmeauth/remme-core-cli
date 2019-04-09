@@ -1,0 +1,23 @@
+language: python
+
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7-dev"
+
+install:
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
+  - pip install -r requirements-tests.txt
+
+script:
+  - cat requirements.txt requirements-tests.txt requirements-dev.txt | safety check --stdin
+  - radon cc cli -nb --total-average
+  - isort -rc cli --diff && isort -rc tests --diff
+  - flake8 cli
+  - coverage run -m pytest -vv tests
+
+after_success:
+  - coverage report -m && coverage xml
+  - bash <(curl -s https://codecov.io/bash)
