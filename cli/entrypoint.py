@@ -3,6 +3,8 @@ Provide implementation of the command line interface to interact with Remme-core
 """
 import click
 
+from cli.clis.account import account_commands
+
 
 @click.group()
 @click.version_option()
@@ -12,3 +14,6 @@ def cli():
     Command-line interface to interact with Remme-core.
     """
     pass
+
+
+cli.add_command(account_commands)

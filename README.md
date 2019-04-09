@@ -17,7 +17,11 @@
   
 ## Getting started
 
-Blank.
+Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+
+```bash
+$ pip3 install remme-core-cli
+```
 
 ## Usage
 
@@ -43,6 +47,22 @@ Options:
   --help     Show this message and exit.
 
 ...
+```
+
+### Account
+
+Get balance of the account by its address — ``remme account get-balance``:
+
+| Arguments  | Type     |  Required  | Description                                         |
+| :--------: | :------: | :--------: | --------------------------------------------------- |
+| address    | String   |  Yes       | Get balance of the account by its address.          |
+| node-url   | String   |  No        | Apply the command to the specified node by its URL. |
+
+```bash
+$ remme account get-balance \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+368440.0
 ```
 
 ## Development
