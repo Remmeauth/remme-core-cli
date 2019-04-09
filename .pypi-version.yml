@@ -1,0 +1,9 @@
+package:
+  name: remme-core-cli
+
+ci:
+  name: travis
+
+branches:
+  development: develop
+  release: master
