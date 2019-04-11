@@ -10,13 +10,22 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/remme-core-cli.svg)](https://pypi.python.org/pypi/remme-core-cli/)
 
   * [Getting started](#getting-started)
+    * [Requirements](#getting-started-requirements)
+    * [Installation](#installation)
   * [Usage](#usage)
     * [Service](#service)
   * [Development](#development)
+    * [Requirements](#development-requirements)
     * [Docker](#docker)
   * [Production](#production)
   
 ## Getting started
+
+<h3 id="getting-started-requirements">Requirements</h4>
+
+- Python 3.6 or 3.7 — install one of them with the [following reference](https://www.python.org/downloads).
+
+### Installation
 
 Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
@@ -68,7 +77,8 @@ $ remme account get-balance \
 
 ## Development
 
-Requirements:
+<h3 id="development-requirements">Requirements</h4>
+
 - Docker — https://www.docker.com. Install it with the [following reference](https://docs.docker.com/install).
 
 ### Docker
@@ -77,6 +87,12 @@ Clone the project and move to project folder:
 
 ```bash
 $ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
+```
+
+If you already worked with the project, you can clean it's container and images with the following command:
+
+```bash
+$ docker rm remme-core-cli -f || true && docker rmi remme-core-cli -f || true
 ```
 
 Run the ``Docker container`` with the project source code in the background mode:
@@ -99,7 +115,7 @@ $ pytest tests/
 $ flake8 cli && flake8 tests/
 ```
 
-When you have developed new functionality, check it with the following command. This command create the ``Python package``
+When you have developed new functionality, check it with the following command. This command creates the ``Python package``
 from source code instead of installing it from the ``PyPi``.
 
 ```bash
@@ -107,15 +123,13 @@ $ pip3 uninstall -y remme-core-cli && rm -rf dist/ remme_core_cli.egg-info && \
       python3 setup.py sdist && pip3 install dist/*.tar.gz
 ```
 
-So after this command you are free to execute the command line interface as if you installed in through ``pip3 install``:
+So after this command, you are free to execute the command line interface as if you installed in through ``pip3 install``:
 
 ```bash
 $ remme --version
 ```
 
 With the commands above you could test your features as if user will use it on own.
-
-You can clean container and images with the following command:
 
 ```bash
 $ docker rm $(docker ps -a -q) -f
