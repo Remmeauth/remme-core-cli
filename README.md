@@ -13,6 +13,7 @@
   * [Usage](#usage)
     * [Service](#service)
   * [Development](#development)
+    * [Docker](#docker)
   * [Production](#production)
   
 ## Getting started
@@ -47,17 +48,58 @@ Options:
 
 ## Development
 
-To run the tests, use the following command, being in the root of the project:
+Requirements:
+- Docker — https://www.docker.com. Install it with the [following reference](https://docs.docker.com/install).
+
+### Docker
+
+Clone the project and move to project folder:
 
 ```bash
-$ pytest tests/
+$ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
 ```
 
-To build the package to test of to be deployed, use the following commands:
+Run the ``Docker container`` with the project source code in the background mode:
 
 ```bash
-$ pip3 uninstall -y remme-core-cli && rm -rf dist/ remme_core_cli.egg-info && \
+$ docker build -t remme-core-cli . -f Dockerfile.development
+$ docker run -d -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
+```
+
+Enter the container bash:
+
+```bash
+$ docker exec -it remme-core-cli bash
+```
+
+And now being in the container, you can develop the project. For instance, run tests and linters:
+
+```bash
+# pytest tests/
+# flake8 cli && flake8 tests/
+```
+
+When you have developed new functionality, check it with the following command. This command create the ``Python package``
+from source code instead of installing it from the ``PyPi``.
+
+```bash
+# pip3 uninstall -y remme-core-cli && rm -rf dist/ remme_core_cli.egg-info && \
       python3 setup.py sdist && pip3 install dist/*.tar.gz
+```
+
+So after this command you are free to execute the command line interface as if you installed in through ``pip3 install``:
+
+```bash
+# remme --version
+```
+
+With the commands above you could test your features as if user will use it on own.
+
+You can clean container and images with the following command:
+
+```bash
+$ docker rm $(docker ps -a -q) -f
+$ docker rmi $(docker images -q) -f
 ```
 
 ## Production
