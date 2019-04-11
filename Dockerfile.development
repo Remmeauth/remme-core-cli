@@ -1,0 +1,10 @@
+FROM python:3.7
+
+RUN apt-get update && apt-get install -y libsecp256k1-dev
+
+WORKDIR /remme-core-cli
+COPY . /remme-core-cli
+
+RUN pip3 install -r requirements.txt -r requirements-dev.txt -r requirements-tests.txt
+
+CMD sleep 7200
