@@ -41,7 +41,7 @@ def get_balance(address, node_url):
     if node_url is None:
         node_url = 'localhost'
 
-    remme = Remme(private_key_hex=None, network_config={
+    remme = Remme(network_config={
         'node_address': str(node_url) + ':8080',
     })
 

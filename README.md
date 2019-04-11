@@ -14,6 +14,7 @@
     * [Installation](#installation)
   * [Usage](#usage)
     * [Service](#service)
+    * [Transactions](#transactions)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -73,6 +74,77 @@ $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
 368440.0
+```
+
+### Transactions
+
+Get list of transactions — ``remme transactions get-list``:
+
+| Arguments   | Type   |  Required | Description                                            |
+| :---------: | :----: | :-------: | -----------------------------------------------------  |
+| ids         | String |  No       | List transaction by its identifier.                    |
+| start       | String |  No       | Id to start paging (inclusive).                        |
+| limit       | Integer|  No       | Number of transaction to return.                       |
+| head        | String |  No       | Id of head block.                                      |
+| reverse     | String |  No       | Reverse result.                                        |
+| node-url    | String |  No       | Apply the command to the specified node by its URL.    |
+| family-name | String |  No       | List transaction by its family name.                   |
+
+```bash
+$ remme transactions get-list \
+    --limit=3 \
+    --ids=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc \
+    --start=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc \
+    --head=792bef7ace0c13e47ddc28328952ed0494d28ecabacec961808b2c7bf93f765f5df2e8e32d1487fdb2d24b5cd0cde0ea2902a019243b9917793d3c26e834d8cf \
+    --family_name=account
+{
+   "head": "792bef7ace0c13e47ddc28328952ed0494d28ecabacec961808b2c7bf93f765f
+            5df2e8e32d1487fdb2d24b5cd0cde0ea2902a019243b9917793d3c26e834d8cf",
+   "paging": {
+      "limit": 3,
+      "start": "13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f
+                5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc",
+      "next": ""
+   },
+   "data": []
+}
+```
+
+Get single transaction by id — ``remme transactions get-single``:
+
+| Arguments   | Type   |  Required | Description                                            |
+| :---------: | :----: | :-------: | -----------------------------------------------------  |
+| identifier  | String |  Yes      | Transaction by its identifier.                         |
+| node-url    | String |  No       | Apply the command to the specified node by its URL.    |
+
+```bash
+$ remme transactions get-single \
+    --identifier=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc 
+{
+   "data": {
+      "header": {
+         "batcher_public_key": "02a65796f249091c3087614b4d9c292b00b8eba580d045ac2fd781224b87b6f13e",
+         "family_name": "sawtooth_settings",
+         "family_version": "1.0",
+         "inputs": [
+            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
+            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7",
+            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1918142591ba4e8a7",
+            "000000a87cb5eafdcca6a8f82af32160bc53119b8878ad4d2117f2e3b0c44298fc1c14"
+         ],
+         "outputs": [
+            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
+            "000000a87cb5eafdcca6a8f82af32160bc53119b8878ad4d2117f2e3b0c44298fc1c14"
+         ],
+         "payload_sha512": "9d20b85d9683f3a8a83107bf282a90ca53ea4dc892ee8dd0bf116982e0a220a5245dd6b4614a715d826ce83bad1b35e1b9210424382555cde78b87002c0bf6b7",
+         "signer_public_key": "02a65796f249091c3087614b4d9c292b00b8eba580d045ac2fd781224b87b6f13e",
+         "dependencies": [],
+         "nonce": ""
+      },
+      "header_signature": "13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc",
+      "payload": "CAESbAopc2F3dG9vdGgudmFsaWRhdG9yLmJsb2NrX3ZhbGlkYXRpb25fcnVsZXMSK05vZlg6MSxibG9ja19pbmZvO1hhdFk6YmxvY2tfaW5mbywwO2xvY2FsOjAaEjB4ZDI5MWEyNmJhOGQzMWI3MA=="
+   }
+}
 ```
 
 ## Development
