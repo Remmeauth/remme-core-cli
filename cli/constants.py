@@ -1,0 +1,1 @@
+REMME_CORE_CLI_CONFIG_FILE_NAME = 'remme-core-cli'

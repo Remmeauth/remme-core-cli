@@ -75,7 +75,7 @@ $ docker exec -it remme-core-cli bash
 And now being in the container, you can develop the project. For instance, run tests and linters:
 
 ```bash
-# pytest tests/
+# pytest -vv tests/
 # flake8 cli && flake8 tests/
 ```
 
