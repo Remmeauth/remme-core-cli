@@ -6,7 +6,7 @@ import pathlib
 import yaml
 from accessify import private
 
-from cli.constants import REMME_CORE_CLI_CONFIG_FILE_NAME
+from cli.constants import CLI_CONFIG_FILE_NAME
 
 
 class ConfigParameters:
@@ -38,7 +38,7 @@ class ConfigFile:
         return str(pathlib.Path.home())
 
     @private
-    def read(self, name=REMME_CORE_CLI_CONFIG_FILE_NAME):
+    def read(self, name=CLI_CONFIG_FILE_NAME):
         """
         Read configuration file.
         Return dictionary.

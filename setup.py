@@ -10,7 +10,7 @@ with open('requirements.txt', 'r') as f:
     requirements = f.read().splitlines()
 
 setup(
-    version='0.1.0',
+    version='0.1.1',
     name='remme-core-cli',
     description='The command-line interface (CLI) that provides a set of commands to interact with Remme-core.',
     long_description=long_description,
@@ -31,8 +31,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
 
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
