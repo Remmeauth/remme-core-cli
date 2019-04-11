@@ -54,10 +54,10 @@ Options:
 
 Get balance of the account by its address — ``remme account get-balance``:
 
-| Arguments  | Type     |  Required  | Description                                         |
-| :--------: | :------: | :--------: | --------------------------------------------------- |
-| address    | String   |  Yes       | Get balance of the account by its address.          |
-| node-url   | String   |  No        | Apply the command to the specified node by its URL. |
+| Arguments | Type   |  Required | Description                                         |
+| :-------: | :----: | :-------: | --------------------------------------------------- |
+| address   | String |  Yes      | Get balance of the account by its address.          |
+| node-url  | String |  No       | Apply the command to the specified node by its URL. |
 
 ```bash
 $ remme account get-balance \

@@ -1,11 +1,12 @@
 """
 Provide implementation of the account.
 """
-import asyncio
+from accessify import implements
 
-loop = asyncio.get_event_loop()
+from cli.account.interfaces import AccountInterface
 
 
+@implements(AccountInterface)
 class Account:
     """
     Implements account.
@@ -20,8 +21,8 @@ class Account:
         """
         self.service = service
 
-    def get_balance(self, address):
+    async def get_balance(self, address):
         """
         Get balance of the account by its address.
         """
-        return loop.run_until_complete(self.service.token.get_balance(address=address))
+        return await self.service.token.get_balance(address=address)

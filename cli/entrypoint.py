@@ -3,7 +3,7 @@ Provide implementation of the command line interface to interact with Remme-core
 """
 import click
 
-from cli.clis.account import account_commands
+from cli.account.cli import account_commands
 
 
 @click.group()

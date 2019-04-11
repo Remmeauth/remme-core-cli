@@ -1,13 +1,22 @@
 """
 Provide implementation of the command line interface's account commands.
 """
+import sys
+import re
+
+import asyncio
 import click
 from remme import Remme
 
-from cli.services.account import Account
+from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.account.service import Account
+from cli.constants import (
+    ADDRESS_REGEXP,
+    FAILED_EXIT_FROM_COMMAND,
+    NODE_URL_ARGUMENT_HELP_MESSAGE,
+)
 
-GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE = 'Get balance of the account by its address.'
-NODE_URL_ARGUMENT_HELP_MESSAGE = 'Apply the command to the specified node by its URL.'
+loop = asyncio.get_event_loop()
 
 
 @click.group('account', chain=True)
@@ -25,13 +34,18 @@ def get_balance(address, node_url):
     """
     Get balance of the account by its address.
     """
+    if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
+        click.echo('The following address `{address}` is not valid.'.format(address=address))
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
+
     if node_url is None:
         node_url = 'localhost'
 
     remme = Remme(private_key_hex=None, network_config={
         'node_address': str(node_url) + ':8080',
-        'ssl_mode': False,
     })
 
-    balance = Account(service=remme).get_balance(address=address)
+    account = Account(service=remme)
+    balance = loop.run_until_complete(account.get_balance(address=address))
+
     click.echo(balance)
