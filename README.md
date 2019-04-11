@@ -14,6 +14,7 @@
     * [Installation](#installation)
   * [Usage](#usage)
     * [Service](#service)
+    * [Account](#account)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -145,4 +146,6 @@ account package is going to be uploaded to.
 ```build
 $ python3 setup.py sdist
 $ twine upload dist/*
+username: remme
+password: ********
 ```
