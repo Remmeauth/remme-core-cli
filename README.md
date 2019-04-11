@@ -27,7 +27,11 @@
 
 ### Installation
 
-Blank.
+Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+
+```bash
+$ pip3 install remme-core-cli
+```
 
 ## Usage
 
@@ -53,6 +57,22 @@ Options:
   --help     Show this message and exit.
 
 ...
+```
+
+### Account
+
+Get balance of the account by its address — ``remme account get-balance``:
+
+| Arguments | Type   |  Required | Description                                         |
+| :-------: | :----: | :-------: | --------------------------------------------------- |
+| address   | String |  Yes      | Get balance of the account by its address.          |
+| node-url  | String |  No       | Apply the command to the specified node by its URL. |
+
+```bash
+$ remme account get-balance \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+368440.0
 ```
 
 ## Development
@@ -95,7 +115,7 @@ $ pytest tests/
 $ flake8 cli && flake8 tests/
 ```
 
-When you have developed new functionality, check it with the following command. This command create the ``Python package``
+When you have developed new functionality, check it with the following command. This command creates the ``Python package``
 from source code instead of installing it from the ``PyPi``.
 
 ```bash
@@ -103,7 +123,7 @@ $ pip3 uninstall -y remme-core-cli && rm -rf dist/ remme_core_cli.egg-info && \
       python3 setup.py sdist && pip3 install dist/*.tar.gz
 ```
 
-So after this command you are free to execute the command line interface as if you installed in through ``pip3 install``:
+So after this command, you are free to execute the command line interface as if you installed in through ``pip3 install``:
 
 ```bash
 $ remme --version
