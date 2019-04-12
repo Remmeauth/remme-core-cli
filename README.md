@@ -20,7 +20,8 @@
     * [Docker](#docker)
   * [Production](#production)
   * [Contributing](#contributing)
-
+    * [Request pull request's review](#request-pull-requests-review)
+  
 ## Getting started
 
 <h3 id="getting-started-requirements">Requirements</h4>
@@ -170,7 +171,12 @@ If you are new for the contribution, please read:
 * Read how to provide pull request — https://help.github.com/en/articles/creating-a-pull-request-from-a-fork
 * Also the useful article about how to contribute — https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
 
-If you want to your pull request to be review, ensure you `have wrote the description of the pull request`, `have added at least 2 reviewers` and `continuous integration has been passed`.
+### Request pull request's review
+
+If you want to your pull request to be review, ensure you:
+- `have wrote the description of the pull request`,
+- `have added at least 2 reviewers`,
+- `continuous integration has been passed`.
 
 ![Example of the description and reviewers](https://habrastorage.org/webt/t1/py/cu/t1pycu1bxjslyojlpy50mxb5yie.png)
 
