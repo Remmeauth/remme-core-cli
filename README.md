@@ -149,3 +149,24 @@ $ twine upload dist/*
 username: remme
 password: ********
 ```
+
+## Contributing
+
+Clone the project and install requirements:
+
+```bash
+$ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
+$ pip3 install -r requirements.txt
+$ pip3 install -r requirements-dev.txt
+$ pip3 install -r requirements-tests.txt
+```
+
+When you will make changes, ensure your code pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16) and is covered by tests using [pytest](https://docs.pytest.org/en/latest).
+
+If you are new for the contribution, please read:
+
+* Read about pull requests — https://help.github.com/en/articles/about-pull-requests
+* Read how to provide pull request — https://help.github.com/en/articles/creating-a-pull-request-from-a-fork
+* Also the useful article about how to contribute — https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
+
+When you want to your pull request to be review, ensure you `have wrote the description of the pull request`, `have added at least 2 reviewers` and `continuous integration has been passed`.
