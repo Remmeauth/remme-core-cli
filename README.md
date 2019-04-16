@@ -172,10 +172,13 @@ If you are new for the contribution, please read:
 ### Request pull request's review
 
 If you want to your pull request to be review, ensure you:
-- `have wrote the description of the pull request`,
-- `have added at least 2 reviewers`,
-- `continuous integration has been passed`.
+1. Branch isn't out-of-date with the base branch,
+2. Have wrote the description of the pull request,
+3. Have added at least 2 reviewers,
+4. Continuous integration has been passed`.
 
 ![Example of the description and reviewers](https://habrastorage.org/webt/t1/py/cu/t1pycu1bxjslyojlpy50mxb5yie.png)
 
 ![Example of the CI which passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png)
+
+![Examples of the out-of-dated branch](https://habrastorage.org/webt/ux/gi/wm/uxgiwmnft08fubvjfd6d-8pw2wq.png)
