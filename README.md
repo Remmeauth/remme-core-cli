@@ -13,6 +13,7 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
+    * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
   * [Development](#development)
@@ -37,6 +38,31 @@ $ pip3 install remme-core-cli
 ```
 
 ## Usage
+
+### Configuration file
+
+Using the command line interface, you will have an option to declare the `node URL` to send commands to as illustrated below:
+
+```bash
+$ remme account get-balance \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+```
+
+You shouldn't declare `node URL` every time when you execute a command, use configuration file instead. Configuration file 
+is required to be named `.remme-core-cli.yml` and located in the home directory (`~/`).
+
+The configuration file have an optional section to declare `node URL` to send commands to:
+
+```bash
+node-url: node-genesis-testnet.remme.io
+```
+
+Try it out by downloading the example of the configuration file to the home directory.
+
+```bash
+$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+```
 
 ### Service
 
@@ -114,7 +140,7 @@ $ docker exec -it remme-core-cli bash
 And now being in the container, you can develop the project. For instance, run tests and linters:
 
 ```bash
-$ pytest tests/
+$ pytest -vv tests/
 $ flake8 cli && flake8 tests/
 ```
 
