@@ -13,6 +13,7 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
+    * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
   * [Development](#development)
@@ -48,20 +49,19 @@ $ remme account get-balance \
       --node-url=node-genesis-testnet.remme.io
 ```
 
-You shouldn't declare node url every time when you execute a command, use configuration file instead. Configuration file 
+You shouldn't declare `node URL` every time when you execute a command, use configuration file instead. Configuration file 
 is required to be named `.remme-core-cli.yml` and located in the home directory (`~/`).
 
 The configuration file have an optional section to declare `node URL` to send commands to:
 
 ```bash
-node:
-  url: node-genesis-testnet.remme.io
+node-url: node-genesis-testnet.remme.io
 ```
 
 Try it out by downloading the example of the configuration file to the home directory.
 
 ```bash
-$ curl https://git.io/fjYZS > ~/.remme-core-cli.yml
+$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
 ```
 
 ### Service

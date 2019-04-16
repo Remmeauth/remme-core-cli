@@ -1,5 +1,5 @@
 """
-Provide implementation of the Remme Core CLI checking configurations manipulating.
+Provide implementation of the CLI configurations file.
 """
 import pathlib
 
@@ -27,7 +27,7 @@ class ConfigParameters:
 
 class ConfigFile:
     """
-    Implementation of Remme Core CLI configuration file.
+    Implementation of command line interface configuration file.
     """
 
     @property
@@ -38,19 +38,24 @@ class ConfigFile:
         return str(pathlib.Path.home())
 
     @private
-    def read(self, name=CLI_CONFIG_FILE_NAME):
+    def read(self, name):
         """
         Read configuration file.
 
         Return dictionary.
         """
-        with open(self.path + '/.' + name + '.yml') as f:
-            return yaml.safe_load(f)
+        with open(self.path + '/.' + name + '.yml') as config_file:
+            return yaml.safe_load(config_file)
 
-    def parse(self):
+    def parse(self, name=CLI_CONFIG_FILE_NAME):
         """
         Parse configuration file.
         """
-        config_as_dict = self.read()
+        config_as_dict = self.read(name=name)
 
-        return ConfigParameters(node_url=config_as_dict.get('node').get('url'))
+        if config_as_dict is None:
+            return ConfigParameters(node_url=None)
+
+        node_url = config_as_dict.get('node-url')
+
+        return ConfigParameters(node_url=node_url)
