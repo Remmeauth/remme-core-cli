@@ -15,6 +15,7 @@ from cli.constants import (
 )
 from cli.public_key.help import GET_PUBLIC_KEY_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.public_key.service import PublicKey
+from cli.utils import dict_to_pretty_json
 
 loop = asyncio.get_event_loop()
 
@@ -30,9 +31,9 @@ def public_key_commands():
 @click.option('--address', type=str, required=True, help=GET_PUBLIC_KEY_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
 @public_key_commands.command('get-single')
-def get_single(address, node_url):
+def get_public_key_info(address, node_url):
     """
-    Get public key by account address.
+    Get information about public key by public key address.
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
         click.echo('The following address `{address}` is not valid.'.format(address=address))
@@ -47,4 +48,4 @@ def get_single(address, node_url):
 
     public_key = loop.run_until_complete(PublicKey(service=remme).get(address=address))
 
-    click.echo(public_key)
+    click.echo(dict_to_pretty_json(data=public_key.data))

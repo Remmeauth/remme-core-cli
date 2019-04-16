@@ -16,6 +16,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Public key](#public-key)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -106,22 +107,29 @@ $ remme account get-balance \
 
 ### Public key
 
-Get public key by account address — ``remme public key get-single``:
+Get public key by account address — ``remme public-key get-single``:
 
-| Arguments | Type   | Required | Description                                         |
-| :-------: | :----: | :------: | --------------------------------------------------- |
-| address   | String |  Yes     | Get public key by account address.                  |
-| node-url  | String |  No      | Apply the command to the specified node by its URL. |
+| Arguments | Type   | Required | Description                                             |
+| :-------: | :----: | :------: | ------------------------------------------------------- |
+| address   | String |  Yes     | Get information about public key by public key address. |
+| node-url  | String |  No      | Apply the command to the specified node by its URL.     |
 
 ```bash
 $ remme public-key get-single \
-      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --address=a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b \
       --node-url=node-genesis-testnet.remme.io
-[
-    "a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b",
-    "a23be17265e8393dd9ae7a46f1be662f86130c434fd54576a7d92b678e5c30de4f677f",
-    ...
-]
+{
+    "address": "a23be1ae97d605bcbe61c312d9a443c010dbe7e6a0761e24b10d5368829ab0a7d36acc",
+    "entity_hash": "13517cee1694346b584c08f5d84cc584b407043ef6a682942b1e18f0466cf1e2dede1756499ac8a2ee495cba258c609ea6147b4daa15225ba60ec5ffca419bd6",
+    "entity_hash_signature": "6e081607aac18e63a44265e0054fb3e60d3791ac2292925c56d54df216396a3af42e96557a0da09b236cdb5970ca5272473dcc9d71f16978e09a26bfb5e96562d8002473cfdf29b4c04dcc97cd4fa9d768ea13bd04b7479fe2f5965cfb0f944848511c9f597eacd4a23a1fd66aabfa95f45130fae1ae2507e8ed8d8ee308c77a042c86bbc476e2d3ed46c4b3c2a86c87470bb94c6e266cfd44bc513d04e5523c7faf08887df4e37f2e31bda1bf403cb7bb3145602cd56dea7965e6e417d86620704a68013e95bbda6a81e3dfb86aa489fa060e78bf9edfc4329ffc1f8484ecc610fccb5302499e1f18d0e2584db9c23cdb4b0485ccda7cab17896b8fec28c851",
+    "is_revoked": false,
+    "is_valid": true,
+    "owner_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+    "public_key": "30820122300d06092a864886f70d01010105000382010f003082010a028201010098ed61c659566b05d4017a0b59b7ce15f6be8432a470713cf3f0ac40b9ded6b65c227704c9bbde4f41a81a380c1ebadb771d1295418805eb16d514c0eb8a8747d08bb1cb5269d5ecb1152d64a8d8bb14836589f6babce22c2deac7dc6b80fcf285c74b67c5ccaf7464df47d10dccecf02d8c4ed9924a8f4ee0df8661d9378fdb0a42355eda8128e88f7871ac5ea7c2605afa1b2b400e1a13b9f9fcf037aa7defcfe2abdcc4b9635d8601d1755660c0838fb2e10c35a88e7b9c1fc89db58cb6fa701a8a80f3dbbf587c1af43e7029e4bc79a26012cb9534d66a818c68acb9707a1a1a7c02b781df4928540053693696fb058d1935fed35cf307c362e7f601710b0203010001",
+    "type": "rsa",
+    "valid_from": 1554753277,
+    "valid_to": 1585857277
+}
 ```
 
 ## Development

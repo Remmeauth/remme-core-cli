@@ -17,4 +17,5 @@ def cli():
     pass
 
 
+cli.add_command(account_commands)
 cli.add_command(public_key_commands)

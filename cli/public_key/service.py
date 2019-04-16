@@ -21,14 +21,8 @@ class PublicKey:
         """
         self.service = service
 
-    async def get_account_public_keys(self, address):
-        """
-        Get account public keys by account address.
-        """
-        return await self.service.public_key_storage.get_account_public_keys(address=address)
-
     async def get(self, address):
         """
-        Get public key by account address.
+        Get information about public key by public key address.
         """
-        return await self.service.public_key_storage.get_info(address=address)
+        return await self.service.public_key_storage.get_info(public_key_address=address)
