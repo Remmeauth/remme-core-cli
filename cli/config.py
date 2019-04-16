@@ -41,6 +41,7 @@ class ConfigFile:
     def read(self, name=CLI_CONFIG_FILE_NAME):
         """
         Read configuration file.
+
         Return dictionary.
         """
         with open(self.path + '/.' + name + '.yml') as f:
