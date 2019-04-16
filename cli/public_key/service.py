@@ -21,8 +21,8 @@ class PublicKey:
         """
         self.service = service
 
-    async def get_account_public_keys(self, address):
+    async def get_list(self, address):
         """
-        Get account public keys by account address.
+        Get list of the public keys by account address.
         """
         return await self.service.public_key_storage.get_account_public_keys(address=address)

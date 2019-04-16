@@ -107,16 +107,16 @@ $ remme account get-balance \
 
 ### Public key
 
-Get account public keys by account address — ``remme public key get-list``:
+Get list of the public keys by account address — ``remme public-key get-list``:
 
 | Arguments | Type   | Required | Description                                         |
 | :-------: | :----: | :------: | --------------------------------------------------- |
-| address   | String |  Yes     | Get account public keys by account address.         |
+| address   | String |  Yes     | Address to get list of the public keys by.          |
 | node-url  | String |  No      | Apply the command to the specified node by its URL. |
 
 ```bash
 $ remme public-key get-list \
-      --address=112007a5181cbfc63911999fc30a9aa1e1fe96be45b28e3a5d3c03bee308c6105a2df9 \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
 [
     "a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b",

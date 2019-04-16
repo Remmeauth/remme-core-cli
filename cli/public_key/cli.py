@@ -1,20 +1,21 @@
 """
 Provide implementation of the command line interface's public key commands.
 """
-import sys
 import re
+import sys
 
 import asyncio
 import click
 from remme import Remme
 
-from cli.public_key.help import GET_ACCOUNT_PUBLIC_KEYS_ADDRESS_ARGUMENT_HELP_MESSAGE
-from cli.public_key.service import PublicKey
 from cli.constants import (
     ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
+from cli.public_key.help import GET_PUBLIC_KEYS_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.public_key.service import PublicKey
+from cli.utils import dict_to_pretty_json
 
 loop = asyncio.get_event_loop()
 
@@ -27,12 +28,12 @@ def public_key_commands():
     pass
 
 
-@click.option('--address', type=str, required=True, help=GET_ACCOUNT_PUBLIC_KEYS_ADDRESS_ARGUMENT_HELP_MESSAGE)
-@click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', type=str, required=True, help=GET_PUBLIC_KEYS_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
 @public_key_commands.command('get-list')
-def get_list(address, node_url):
+def get_public_keys(address, node_url):
     """
-    Get account public keys by account address.
+    Get list of the public keys by account address.
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
         click.echo('The following address `{address}` is not valid.'.format(address=address))
@@ -45,8 +46,6 @@ def get_list(address, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    public_key = PublicKey(service=remme)
-    addresses = loop.run_until_complete(public_key.get_account_public_keys(address=address))
+    addresses = loop.run_until_complete(PublicKey(service=remme).get_list(address=address))
 
-    import json
-    click.echo(json.dumps(addresses, indent=4, sort_keys=True))
+    click.echo(dict_to_pretty_json(data=addresses))
