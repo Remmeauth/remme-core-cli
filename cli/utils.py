@@ -1,7 +1,9 @@
 """
 Provide utils for command line interface.
 """
+
 from cli.constants import FAILED_EXIT_FROM_COMMAND
+
 import sys
 import re
 import click
