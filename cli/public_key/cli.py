@@ -36,7 +36,7 @@ def get_public_keys(address, node_url):
     Get list of the public keys by account address.
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
-        click.echo('The following address `{address}` is not valid.'.format(address=address))
+        click.echo(f'The following address `{address}` is not valid.')
         sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     if node_url is None:
