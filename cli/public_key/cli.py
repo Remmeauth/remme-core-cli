@@ -1,8 +1,8 @@
 """
 Provide implementation of the command line interface's public key commands.
 """
-import sys
 import re
+import sys
 
 import asyncio
 import click
@@ -13,7 +13,7 @@ from cli.constants import (
     FAILED_EXIT_FROM_COMMAND,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
-from cli.public_key.help import GET_PUBLIC_KEY_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.public_key.help import GET_PUBLIC_KEY_INFO_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.public_key.service import PublicKey
 from cli.utils import dict_to_pretty_json
 
@@ -28,15 +28,15 @@ def public_key_commands():
     pass
 
 
-@click.option('--address', type=str, required=True, help=GET_PUBLIC_KEY_ADDRESS_ARGUMENT_HELP_MESSAGE)
-@click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', type=str, required=True, help=GET_PUBLIC_KEY_INFO_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
 @public_key_commands.command('get-single')
 def get_public_key_info(address, node_url):
     """
     Get information about public key by public key address.
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
-        click.echo('The following address `{address}` is not valid.'.format(address=address))
+        click.echo(f'The following address `{address}` is not valid.')
         sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     if node_url is None:

@@ -107,12 +107,12 @@ $ remme account get-balance \
 
 ### Public key
 
-Get public key by account address — ``remme public-key get-single``:
+Get information about public key by public key address — ``remme public-key get-single``:
 
-| Arguments | Type   | Required | Description                                             |
-| :-------: | :----: | :------: | ------------------------------------------------------- |
-| address   | String |  Yes     | Get information about public key by public key address. |
-| node-url  | String |  No      | Apply the command to the specified node by its URL.     |
+| Arguments | Type   | Required | Description                                         |
+| :-------: | :----: | :------: | --------------------------------------------------- |
+| address   | String |  Yes     | Address to get information about public key by.     |
+| node-url  | String |  No      | Apply the command to the specified node by its URL. |
 
 ```bash
 $ remme public-key get-single \
