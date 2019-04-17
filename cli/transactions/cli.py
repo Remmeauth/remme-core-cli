@@ -34,12 +34,9 @@ loop = asyncio.get_event_loop()
 
 @click.group('transactions', chain=True)
 def transaction_command():
-
     """
-
     Provide commands for working with transactions.
     """
-
     pass
 
 
@@ -52,11 +49,9 @@ def transaction_command():
 @click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
 @transaction_command.command('get-list')
 def get_list_transaction(ids, start, limit, head, reverse, family_name, node_url):
-
     """
     Get a list of transactions.
     """
-
     transaction_ids = validate_ids(ids=ids, regexp_pattern=HEADER_SIGNATURE_REGEXP)
     limit = validate_limit(limit=limit)
     start = validate_head_sign(sign=start, regexp_pattern=HEADER_SIGNATURE_REGEXP)
@@ -74,7 +69,7 @@ def get_list_transaction(ids, start, limit, head, reverse, family_name, node_url
                     'limit': limit,
                     'head': head,
                     'reverse': reverse,
-                    'family_name': family_name
+                    'family_name': family_name,
                 }))
 
         click.echo(dict_to_pretty_json(data=transactions))
@@ -90,11 +85,9 @@ def get_list_transaction(ids, start, limit, head, reverse, family_name, node_url
 @click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
 @transaction_command.command('get-single')
 def get_single_transaction(identifier, node_url):
-
     """
     Fetch transaction by its id.
     """
-
     transaction_id = validate_id(id_=identifier, regexp_pattern=HEADER_SIGNATURE_REGEXP)
     remme = get_network(node_url=node_url)
 
@@ -102,7 +95,7 @@ def get_single_transaction(identifier, node_url):
     try:
         transactions = loop.run_until_complete(
             transaction.single_transaction(
-                transaction_id=transaction_id
+                transaction_id=transaction_id,
             ))
 
         click.echo(dict_to_pretty_json(data=transactions))

@@ -1,11 +1,11 @@
 """
 Provide utils for command line interface.
 """
+from cli.constants import FAILED_EXIT_FROM_COMMAND
 import sys
 import re
 import click
 import json
-from cli.constants import FAILED_EXIT_FROM_COMMAND
 
 from remme import Remme
 
@@ -21,7 +21,6 @@ def get_network(node_url):
     """
     Create object for sending requests to chain.
     """
-
     if node_url is None:
         node_url = 'localhost'
 
@@ -33,7 +32,7 @@ def get_network(node_url):
 
 def validate_ids(ids, regexp_pattern):
     """
-    Validation function for list of ids.
+    Validate function for list of ids.
     """
     if ids is None:
         return
@@ -52,7 +51,7 @@ def validate_ids(ids, regexp_pattern):
 
 def validate_id(id_, regexp_pattern):
     """
-    Validation function for id.
+    Validate function for id.
     """
     if id_ is None:
         return
@@ -68,7 +67,7 @@ def validate_id(id_, regexp_pattern):
 
 def validate_limit(limit):
     """
-    Validation function for limit.
+    Validate function for limit.
     """
     if limit is None:
         return
@@ -83,7 +82,7 @@ def validate_limit(limit):
 
 def validate_head_sign(sign, regexp_pattern):
     """
-    Validation function for head.
+    Validate function for head.
     """
     if sign is None:
         return

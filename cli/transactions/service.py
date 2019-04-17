@@ -15,6 +15,7 @@ class Transactions:
     def __init__(self, service):
         """
         Constructor.
+
         Arguments:
             service: object to interact with Remme core API.
         """
