@@ -1,9 +1,9 @@
 """
-Provide implementation of the blockchain info.
+Provide implementation of the transaction info.
 """
 from accessify import implements
 
-from cli.blockchain_info.interfaces import TransactionInterfaces
+from cli.transactions.interfaces import TransactionInterfaces
 
 
 @implements(TransactionInterfaces)

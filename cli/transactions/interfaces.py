@@ -1,5 +1,5 @@
 """
-Provide implementation of the blockchain info interfaces.
+Provide implementation of the transaction info interfaces.
 """
 
 
@@ -21,7 +21,7 @@ class TransactionInterfaces:
 
     async def single_transaction(self, transaction_id):
         """
-        Get transactions by its id.
+        Get transaction by its id.
 
         Arguments:
             transaction_id (string, required): transaction id
