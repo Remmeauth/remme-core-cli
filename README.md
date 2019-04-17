@@ -13,12 +13,16 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
+    * [Configuration file](#configuration-file)
     * [Service](#service)
+    * [Account](#account)
     * [Transactions](#transactions)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
   * [Production](#production)
+  * [Contributing](#contributing)
+    * [Request pull request's review](#request-pull-requests-review)
   
 ## Getting started
 
@@ -35,6 +39,31 @@ $ pip3 install remme-core-cli
 ```
 
 ## Usage
+
+### Configuration file
+
+Using the command line interface, you will have an option to declare the `node URL` to send commands to as illustrated below:
+
+```bash
+$ remme account get-balance \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+```
+
+You shouldn't declare `node URL` every time when you execute a command, use configuration file instead. Configuration file 
+is required to be named `.remme-core-cli.yml` and located in the home directory (`~/`).
+
+The configuration file have an optional section to declare `node URL` to send commands to:
+
+```bash
+node-url: node-genesis-testnet.remme.io
+```
+
+Try it out by downloading the example of the configuration file to the home directory.
+
+```bash
+$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+```
 
 ### Service
 
@@ -183,7 +212,7 @@ $ docker exec -it remme-core-cli bash
 And now being in the container, you can develop the project. For instance, run tests and linters:
 
 ```bash
-$ pytest tests/
+$ pytest -vv tests/
 $ flake8 cli && flake8 tests/
 ```
 
@@ -217,4 +246,34 @@ account package is going to be uploaded to.
 ```build
 $ python3 setup.py sdist
 $ twine upload dist/*
+username: remme
+password: ********
 ```
+
+## Contributing
+
+Clone the project and install requirements:
+
+```bash
+$ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
+$ pip3 install -r requirements.txt -r requirements-dev.txt -r requirements-tests.txt
+```
+
+When you make changes, ensure your code pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16) and is covered by tests using [pytest](https://docs.pytest.org/en/latest).
+
+If you are new for the contribution, please read:
+
+* Read about pull requests — https://help.github.com/en/articles/about-pull-requests
+* Read how to provide pull request — https://help.github.com/en/articles/creating-a-pull-request-from-a-fork
+* Also the useful article about how to contribute — https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
+
+### Request pull request's review
+
+If you want to your pull request to be review, ensure you:
+- `have wrote the description of the pull request`,
+- `have added at least 2 reviewers`,
+- `continuous integration has been passed`.
+
+![Example of the description and reviewers](https://habrastorage.org/webt/t1/py/cu/t1pycu1bxjslyojlpy50mxb5yie.png)
+
+![Example of the CI which passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png)
