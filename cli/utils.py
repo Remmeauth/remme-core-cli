@@ -1,6 +1,7 @@
 """
 Provide utils for command line interface.
 """
+
 import sys
 import re
 import click
