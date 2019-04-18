@@ -35,7 +35,7 @@ def get_balance(address, node_url):
     Get balance of the account by its address.
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
-        click.echo('The following address `{address}` is not valid.'.format(address=address))
+        click.echo(f'The following address `{address}` is not valid.')
         sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     if node_url is None:
@@ -45,7 +45,7 @@ def get_balance(address, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    account = Account(service=remme)
-    balance = loop.run_until_complete(account.get_balance(address=address))
+    account_service = Account(service=remme)
+    balance = loop.run_until_complete(account_service.get_balance(address=address))
 
     click.echo(balance)
