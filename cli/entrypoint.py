@@ -4,7 +4,7 @@ Provide implementation of the command line interface to interact with Remme-core
 import click
 
 from cli.account.cli import account_commands
-from cli.transactions.cli import transaction_command
+from cli.transaction.cli import transaction_command
 
 
 @click.group()

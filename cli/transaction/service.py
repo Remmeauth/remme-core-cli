@@ -1,15 +1,15 @@
 """
-Provide implementation of the transaction info.
+Provide implementation of the transaction.
 """
 from accessify import implements
 
-from cli.transactions.interfaces import TransactionInterfaces
+from cli.transaction.interfaces import TransactionInterfaces
 
 
 @implements(TransactionInterfaces)
-class Transactions:
+class Transaction:
     """
-    Implements transaction info.
+    Implements transaction.
     """
 
     def __init__(self, service):
@@ -21,13 +21,13 @@ class Transactions:
         """
         self.service = service
 
-    async def list_transactions(self, query):
+    async def get_list(self, query):
         """
-        Get list transactions by: ids, start, head, limit, reverse.
+        Get list transaction by: ids, start, head, limit, reverse.
         """
         return await self.service.blockchain_info.get_transactions(query=query)
 
-    async def single_transaction(self, transaction_id):
+    async def get(self, transaction_id):
         """
         Fetch transaction by its id.
         """

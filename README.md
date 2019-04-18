@@ -16,7 +16,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
-    * [Transactions](#transactions)
+    * [Transaction](#transaction)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -105,13 +105,13 @@ $ remme account get-balance \
 368440.0
 ```
 
-### Transactions
+### Transaction
 
-Get list of transactions — ``remme transactions get-list``:
+Get list of transaction — ``remme transaction get-list``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
-| ids         | String |  No       | List transaction by its identifier.                    |
+| ids         | String |  No       | Identifiers to get a list of transaction by.          |
 | start       | String |  No       | Id to start paging (inclusive).                        |
 | limit       | Integer|  No       | Number of transaction to return.                       |
 | head        | String |  No       | Id of head block.                                      |
@@ -120,11 +120,12 @@ Get list of transactions — ``remme transactions get-list``:
 | family-name | String |  No       | List transaction by its family name.                   |
 
 ```bash
-$ remme transactions get-list \
-    --limit=3 \
+$ remme transaction get-list \
     --ids=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc \
     --start=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc \
+    --limit=3 \
     --head=792bef7ace0c13e47ddc28328952ed0494d28ecabacec961808b2c7bf93f765f5df2e8e32d1487fdb2d24b5cd0cde0ea2902a019243b9917793d3c26e834d8cf \
+    --reverse=false \
     --family_name=account
 {
    "head": "792bef7ace0c13e47ddc28328952ed0494d28ecabacec961808b2c7bf93f765f
@@ -139,16 +140,16 @@ $ remme transactions get-list \
 }
 ```
 
-Get single transaction by id — ``remme transactions get-single``:
+Get single transaction by id — ``remme transaction get-single``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
-| identifier  | String |  Yes      | Transaction by its identifier.                         |
+| identifier  | String |  Yes      | Identifier to get transaction by.                      |
 | node-url    | String |  No       | Apply the command to the specified node by its URL.    |
 
 ```bash
-$ remme transactions get-single \
-    --identifier=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc 
+$ remme transaction get-single \
+    --id=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc 
 {
    "data": {
       "header": {

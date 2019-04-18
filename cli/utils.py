@@ -1,15 +1,17 @@
 """
 Provide utils for command line interface.
 """
-
-from cli.constants import FAILED_EXIT_FROM_COMMAND
-
-import sys
-import re
-import click
 import json
+import re
+import sys
 
+import click
 from remme import Remme
+
+from cli.constants import (
+    FAILED_EXIT_FROM_COMMAND,
+    FAMILY_NAMES,
+)
 
 
 def dict_to_pretty_json(data):
@@ -51,22 +53,6 @@ def validate_ids(ids, regexp_pattern):
     return ids
 
 
-def validate_id(id_, regexp_pattern):
-    """
-    Validate function for id.
-    """
-    if id_ is None:
-        return
-
-    if not re.match(pattern=regexp_pattern, string=id_) is not None:
-
-        click.echo(
-            'The following id `{id_}` is not valid.'.format(id_=id_))
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
-
-    return id_
-
-
 def validate_limit(limit):
     """
     Validate function for limit.
@@ -82,9 +68,9 @@ def validate_limit(limit):
     return limit
 
 
-def validate_head_sign(sign, regexp_pattern):
+def validate_sign(sign, regexp_pattern, type_sign):
     """
-    Validate function for head.
+    Validate function for signature.
     """
     if sign is None:
         return
@@ -92,7 +78,23 @@ def validate_head_sign(sign, regexp_pattern):
     if not re.match(pattern=regexp_pattern, string=sign) is not None:
 
         click.echo(
-            'The following header signature `{sign}` is not valid.'.format(sign=sign))
+            'The following {type_sign} `{sign}` is not valid.'.format(sign=sign, type_sign=type_sign))
         sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     return sign
+
+
+def validate_family_name(family_name):
+    """
+    Validate function for family name.
+    """
+    if family_name is None:
+        return
+
+    if family_name not in FAMILY_NAMES:
+
+        click.echo(
+            'The following family name `{family_name}` is not valid.'.format(family_name=family_name))
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
+
+    return family_name

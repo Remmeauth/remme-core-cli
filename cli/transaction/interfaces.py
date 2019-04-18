@@ -1,5 +1,5 @@
 """
-Provide implementation of the transaction info interfaces.
+Provide implementation of the transaction interfaces.
 """
 
 
@@ -8,23 +8,25 @@ class TransactionInterfaces:
     Implements transaction interface.
     """
 
-    async def list_transactions(self, query):
+    async def get_list(self, query):
         """
-        Get list transactions by: ids, start, head, limit, reverse.
+        Get list transaction by: ids, start, head, limit, reverse.
 
         Arguments:
             query (dict, optional): dictionary with specific parameters
+
         Returns:
-            List of transactions.
+            List of transaction.
         """
         pass
 
-    async def single_transaction(self, transaction_id):
+    async def get(self, transaction_id):
         """
         Get transaction by its id.
 
         Arguments:
             transaction_id (string, required): transaction id
+
         Returns:
             Transaction.
         """
