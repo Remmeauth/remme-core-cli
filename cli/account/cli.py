@@ -12,7 +12,7 @@ from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.account.service import Account
 from cli.constants import (
     ADDRESS_REGEXP,
-    FAILED_EXIT_FROM_COMMAND,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 
@@ -36,7 +36,7 @@ def get_balance(address, node_url):
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
         click.echo(f'The following address `{address}` is not valid.')
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     if node_url is None:
         node_url = 'localhost'

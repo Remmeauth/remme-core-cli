@@ -68,7 +68,7 @@ Get balance of the account by its address — ``remme account get-balance``:
 
 | Arguments | Type   |  Required | Description                                         |
 | :-------: | :----: | :-------: | --------------------------------------------------- |
-| address   | String |  Yes      | Get balance of the account by its address.          |
+| address   | String |  Yes      | Account address to get a balance by.                |
 | node-url  | String |  No       | Apply the command to the specified node by its URL. |
 
 ```bash
