@@ -104,6 +104,19 @@ $ remme account get-balance \
 368440.0
 ```
 
+### Atomic Swap
+
+Get public key of atomic swap. — ``remme atomic-swap get-public-key``:
+
+| Arguments | Type   | Required | Description                                         |
+| :-------: | :----: | :------: | --------------------------------------------------- |
+| node-url  | String |  No      | Apply the command to the specified node by its URL. |
+
+```bash
+$ remme atomic-swap get-public-key --node-url=node-genesis-testnet.remme.io
+03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad
+```
+
 ## Development
 
 <h3 id="development-requirements">Requirements</h4>
