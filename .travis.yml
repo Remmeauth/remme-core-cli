@@ -17,7 +17,7 @@ script:
   - pypi-version check
   - cat requirements.txt requirements-tests.txt requirements-dev.txt | safety check --stdin
   - radon cc cli -nb --total-average
-  - isort -rc cli --diff && isort -rc tests --diff
+  - ./scripts/isort-diff.sh
   - flake8 cli && flake8 tests
   - coverage run -m pytest -vv tests
 
