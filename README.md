@@ -161,7 +161,11 @@ $ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
 $ pip3 install -r requirements.txt -r requirements-dev.txt -r requirements-tests.txt
 ```
 
-When you make changes, ensure your code pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16) and is covered by tests using [pytest](https://docs.pytest.org/en/latest).
+When you make changes, ensure your code:
+
+* pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16),
+* is covered by tests using [pytest](https://docs.pytest.org/en/latest),
+* follow team [code style](https://github.com/dmytrostriletskyi/nimble-python-code-style-guide).
 
 If you are new for the contribution, please read:
 
