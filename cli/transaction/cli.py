@@ -2,14 +2,15 @@
 Provide implementation of the command line interface's transaction info commands.
 """
 import asyncio
+import sys
 
 import click
 from aiohttp_json_rpc import RpcGenericServerDefinedError
-
 from cli.constants import (
-    HEADER_SIGNATURE_REGEXP,
+    FAILED_EXIT_FROM_COMMAND,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
+from cli.forms import ValidationForm
 from cli.transaction.help import (
     GET_TRANSACTION_ID_HELP_MESSAGE,
     GET_TRANSACTIONS_FAMILY_NAME_ARGUMENT_HELP_MESSAGE,
@@ -23,11 +24,8 @@ from cli.transaction.service import Transaction
 from cli.utils import (
     dict_to_pretty_json,
     get_network,
-    validate_family_name,
-    validate_ids,
-    validate_limit,
-    validate_sign,
 )
+from marshmallow import ValidationError
 
 loop = asyncio.get_event_loop()
 
@@ -52,26 +50,25 @@ def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
     """
     Get a list of transaction.
     """
-    transaction_ids = validate_ids(ids=ids, regexp_pattern=HEADER_SIGNATURE_REGEXP)
-    limit = validate_limit(limit=limit)
-    start = validate_sign(sign=start, regexp_pattern=HEADER_SIGNATURE_REGEXP, type_sign='start')
-    head = validate_sign(sign=head, regexp_pattern=HEADER_SIGNATURE_REGEXP, type_sign='header signature')
-    family_name = validate_family_name(family_name=family_name)
+    try:
+        arguments = ValidationForm().load({
+            'ids': ids,
+            'start': start,
+            'limit': limit,
+            'head': head,
+            'family_name': family_name,
+        })
+    except ValidationError as err:
+        click.echo(err.messages)
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     remme = get_network(node_url=node_url)
 
     transaction = Transaction(service=remme)
     try:
         transactions = loop.run_until_complete(
-            transaction.get_list(
-                query={
-                    'ids': transaction_ids,
-                    'start': start,
-                    'limit': limit,
-                    'head': head,
-                    'reverse': reverse,
-                    'family_name': family_name,
-                }))
+            transaction.get_list(arguments),
+        )
 
         click.echo(dict_to_pretty_json(data=transactions))
 
@@ -89,7 +86,14 @@ def get_transaction(id, node_url):
     """
     Fetch transaction by its id.
     """
-    transaction_id = validate_sign(sign=id, regexp_pattern=HEADER_SIGNATURE_REGEXP, type_sign='id')
+    transaction_id, errors = ValidationForm().load({
+        'ids': id,
+    })
+
+    if errors:
+        click.echo(errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
+
     remme = get_network(node_url=node_url)
 
     transaction = Transaction(service=remme)

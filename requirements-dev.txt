@@ -9,3 +9,4 @@ pep8-naming==0.8.2
 safety==1.8.5
 pypi-version==0.1.0
 radon==3.0.1
+marshmallow==3.0.0rc5
