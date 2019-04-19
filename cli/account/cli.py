@@ -35,7 +35,7 @@ def get_balance(address, node_url):
     Get balance of the account by its address.
     """
     if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
-        click.echo(f'The following address `{address}` is not valid.')
+        click.echo(f'The following address `{address}` is invalid.')
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     if node_url is None:
