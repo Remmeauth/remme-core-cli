@@ -2,18 +2,21 @@
 Provide implementation of the command line interface's account commands.
 """
 import asyncio
-import re
 import sys
 
 import click
 from remme import Remme
 
+from cli.account.forms import GetAccountBalanceForm
 from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.account.service import Account
 from cli.constants import (
-    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
+)
+from cli.utils import (
+    default_node_url,
+    dict_to_pretty_json,
 )
 
 loop = asyncio.get_event_loop()
@@ -28,20 +31,25 @@ def account_commands():
 
 
 @click.option('--address', type=str, required=True, help=GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE)
-@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @account_commands.command('get-balance')
 def get_balance(address, node_url):
     """
     Get balance of the account by its address.
     """
-    if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
-        click.echo(f'The following address `{address}` is invalid.')
+    arguments, errors = GetAccountBalanceForm().load({
+        'address': address,
+        'node_url': node_url,
+    })
+
+    if errors:
+        click.echo(dict_to_pretty_json(errors))
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    if node_url is None:
-        node_url = 'localhost'
+    address = arguments.get('address')
+    node_url = arguments.get('node_url')
 
-    remme = Remme(private_key_hex=None, network_config={
+    remme = Remme(network_config={
         'node_address': str(node_url) + ':8080',
     })
 

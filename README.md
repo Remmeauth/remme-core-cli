@@ -13,6 +13,7 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
+    * [Nodes](#nodes)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
@@ -38,6 +39,13 @@ $ pip3 install remme-core-cli
 ```
 
 ## Usage
+
+### Nodes
+
+You can use the following list of the addresses of the nodes to execute commands to:
+
+- `node-genesis-testnet.remme.io`,
+- `node-6-testnet.remme.io`.
 
 ### Configuration file
 
