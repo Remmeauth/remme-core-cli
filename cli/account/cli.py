@@ -28,7 +28,7 @@ def account_commands():
 
 
 @click.option('--address', type=str, required=True, help=GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE)
-@click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
 @account_commands.command('get-balance')
 def get_balance(address, node_url):
     """
