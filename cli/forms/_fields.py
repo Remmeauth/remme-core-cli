@@ -3,13 +3,14 @@ Provide implementation of the custom fields.
 """
 import re
 
-from cli.constants import (
-    FAMILY_NAMES,
-    HEADER_SIGNATURE_REGEXP,
-)
 from marshmallow import (
     ValidationError,
     fields,
+)
+
+from cli.constants import (
+    FAMILY_NAMES,
+    HEADER_SIGNATURE_REGEXP,
 )
 
 
@@ -17,7 +18,7 @@ class IdList(fields.Field):
     """
     List of ids custom field.
 
-    Raises a ValidationError if id not corresponds to HEADER_SIGNATURE_REGEXP.
+    Raises a ValidationError if ids do not correspond to HEADER_SIGNATURE_REGEXP.
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -35,7 +36,7 @@ class FamilyName(fields.Field):
     """
     FamilyName custom field.
 
-    Raises a ValidationError if Family name not exist.
+    Raises a ValidationError if family name not exist.
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -50,7 +51,7 @@ class Limit(fields.Field):
     """
     Id custom field.
 
-    Raises a ValidationError if limit negative number.
+    Raises a ValidationError if the limit is a negative number.
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -71,6 +72,6 @@ class Id(fields.Field):
     def _deserialize(self, value, attr, obj, **kwargs):
 
         if not re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is not None:
-            raise ValidationError(f'The following id `{value}` are not valid.')
+            raise ValidationError(f'The following id `{value}` is not valid.')
 
         return value

@@ -144,7 +144,7 @@ Get single transaction by id — ``remme transaction get-single``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
-| identifier  | String |  Yes      | Identifier to get transaction by.                      |
+| id          | String |  Yes      | Identifier to get transaction by.                      |
 | node-url    | String |  No       | Apply the command to the specified node by its URL.    |
 
 ```bash

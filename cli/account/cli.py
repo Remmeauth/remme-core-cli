@@ -6,6 +6,8 @@ import re
 import sys
 
 import click
+from remme import Remme
+
 from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.account.service import Account
 from cli.constants import (
@@ -13,7 +15,6 @@ from cli.constants import (
     FAILED_EXIT_FROM_COMMAND,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
-from remme import Remme
 
 loop = asyncio.get_event_loop()
 

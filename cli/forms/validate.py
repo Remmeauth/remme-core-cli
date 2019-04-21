@@ -1,7 +1,10 @@
 """
 Provide implementation validation.
 """
-from marshmallow import Schema
+from marshmallow import (
+    Schema,
+    fields,
+)
 
 from ._fields import (
     FamilyName,
@@ -22,3 +25,4 @@ class ValidationForm(Schema):
     limit = Limit(allow_none=True)
     head = Id(allow_none=True)
     family_name = FamilyName(allow_none=True)
+    reverse = fields.String(allow_none=True)

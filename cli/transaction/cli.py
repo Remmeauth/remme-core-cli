@@ -6,6 +6,8 @@ import sys
 
 import click
 from aiohttp_json_rpc import RpcGenericServerDefinedError
+from marshmallow import ValidationError
+
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
@@ -24,8 +26,8 @@ from cli.transaction.service import Transaction
 from cli.utils import (
     dict_to_pretty_json,
     get_network,
+    pprint,
 )
-from marshmallow import ValidationError
 
 loop = asyncio.get_event_loop()
 
@@ -57,9 +59,11 @@ def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
             'limit': limit,
             'head': head,
             'family_name': family_name,
+            'reverse': reverse,
         })
+
     except ValidationError as err:
-        click.echo(err.messages)
+        pprint(err)
         sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     remme = get_network(node_url=node_url)
@@ -72,11 +76,13 @@ def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
 
         click.echo(dict_to_pretty_json(data=transactions))
 
-    except RpcGenericServerDefinedError:
-        click.echo("Generic server defined Error (Transactions not found).")
+    except RpcGenericServerDefinedError as err:
+        pprint(err)
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
 
-    except Exception:
-        click.echo("Generic server defined Error (Connection error).")
+    except Exception as err:
+        pprint(err)
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
 
 
 @click.option('--id', required=True, type=str, help=GET_TRANSACTION_ID_HELP_MESSAGE)
@@ -86,27 +92,29 @@ def get_transaction(id, node_url):
     """
     Fetch transaction by its id.
     """
-    transaction_id, errors = ValidationForm().load({
-        'ids': id,
-    })
+    try:
+        transaction_id = ValidationForm().load({
+            'id': id,
+        })
 
-    if errors:
-        click.echo(errors)
+    except ValidationError as errs:
+        pprint(errs)
         sys.exit(FAILED_EXIT_FROM_COMMAND)
 
     remme = get_network(node_url=node_url)
 
     transaction = Transaction(service=remme)
+    transaction_service = transaction.get(
+        transaction_id=transaction_id.get('id'),
+    )
     try:
-        transactions = loop.run_until_complete(
-            transaction.get(
-                transaction_id=transaction_id,
-            ))
-
+        transactions = loop.run_until_complete(transaction_service)
         click.echo(dict_to_pretty_json(data=transactions))
 
-    except RpcGenericServerDefinedError:
-        click.echo("Generic server defined Error (Transaction not found).")
+    except RpcGenericServerDefinedError as err:
+        pprint(err)
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
 
-    except Exception:
-        click.echo("Generic server defined Error (Connection error).")
+    except Exception as err:
+        pprint(err)
+        sys.exit(FAILED_EXIT_FROM_COMMAND)
