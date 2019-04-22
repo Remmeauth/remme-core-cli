@@ -13,3 +13,9 @@ class AccountInterface:
         Get balance of the account by its address.
         """
         pass
+
+    def transfer_tokens(self, address_to, amount):
+        """
+        Transfer tokens to address.
+        """
+        pass

@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's account commands.
+Provide tests for command line interface's account get balance command.
 """
 import json
 
@@ -66,12 +66,12 @@ def test_get_balance_invalid_address():
 def test_get_balance_without_node_url(mocker):
     """
     Case: get a balance of an account by address without passing node URL.
-    Expect: balance is returned.
+    Expect: balance is returned from node on localhost.
     """
-    balance_from_localhost = 13500
+    balance = 13500
 
     mock_account_get_balance = mocker.patch('cli.account.service.Account.get_balance')
-    mock_account_get_balance.return_value = return_async_value(balance_from_localhost)
+    mock_account_get_balance.return_value = return_async_value(balance)
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -83,7 +83,7 @@ def test_get_balance_without_node_url(mocker):
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert isinstance(json.loads(result.output), int)
-    assert str(balance_from_localhost) in result.output
+    assert str(balance) in result.output
 
 
 def test_get_balance_invalid_node_url():

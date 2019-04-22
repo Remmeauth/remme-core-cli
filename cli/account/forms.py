@@ -14,6 +14,7 @@ from cli.constants import (
     ADDRESS_REGEXP,
     DOMAIN_NAME_REGEXP,
 )
+from cli.generic.forms.fields import PrivateKeyField
 
 
 class GetAccountBalanceForm(Schema):
@@ -25,6 +26,41 @@ class GetAccountBalanceForm(Schema):
     node_url = fields.String(allow_none=True, required=False)
 
     @validates('address')
+    def validate_address(self, address):
+        """
+        Validate account address.
+        """
+        if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
+            raise ValidationError(f'The following address `{address}` is invalid.')
+
+    @validates('node_url')
+    def validate_node_url(self, node_url):
+        """
+        Validate node URL.
+
+        If node URL is localhost, it means client didn't passed any URL, so nothing to validate.
+        """
+        if node_url == 'localhost':
+            return
+
+        if 'http' in node_url or 'https' in node_url:
+            raise ValidationError(f'Pass the following node URL `{node_url}` without protocol (http, https, etc.).')
+
+        if re.match(pattern=DOMAIN_NAME_REGEXP, string=node_url) is None:
+            raise ValidationError(f'The following node URL `{node_url}` is invalid.')
+
+
+class TransferTokensForm(Schema):
+    """
+    Transfer tokens to address form.
+    """
+
+    private_key_from = PrivateKeyField(required=True)
+    address_to = fields.String(required=True)
+    amount = fields.Integer(required=True)
+    node_url = fields.String(allow_none=True, required=False)
+
+    @validates('address_to')
     def validate_address(self, address):
         """
         Validate account address.
