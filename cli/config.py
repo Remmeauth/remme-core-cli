@@ -44,8 +44,12 @@ class ConfigFile:
 
         Return dictionary.
         """
-        with open(self.path + '/.' + name + '.yml') as config_file:
-            return yaml.safe_load(config_file)
+        try:
+            with open(self.path + '/.' + name + '.yml') as config_file:
+                return yaml.safe_load(config_file)
+
+        except FileNotFoundError:
+            return
 
     def parse(self, name=CLI_CONFIG_FILE_NAME):
         """
