@@ -100,10 +100,10 @@ Options:
 
 Get balance of the account by its address — ``remme account get-balance``:
 
-| Arguments | Type   |  Required | Description                                         |
-| :-------: | :----: | :-------: | --------------------------------------------------- |
-| address   | String |  Yes      | Account address to get a balance by.                |
-| node-url  | String |  No       | Apply the command to the specified node by its URL. |
+| Arguments | Type   |  Required | Description                          |
+| :-------: | :----: | :-------: | ------------------------------------ |
+| address   | String |  Yes      | Account address to get a balance by. |
+| node-url  | String |  No       | Node URL to apply a command to.      |
 
 ```bash
 $ remme account get-balance \
@@ -211,5 +211,5 @@ If you are new for the contribution, please read:
 
 If you want to your pull request to be review, ensure you:
 1. [Branch isn't out-of-date with the base branch](https://habrastorage.org/webt/ux/gi/wm/uxgiwmnft08fubvjfd6d-8pw2wq.png).
-2. [Have wrote the description of the pull request and have added at least 2 reviewers](https://camo.githubusercontent.com/55c309334a8b61a4848a6ef25f9b0fb3751ae5e9/68747470733a2f2f686162726173746f726167652e6f72672f776562742f74312f70792f63752f7431707963753162786a736c796f6a6c707935306d7862357969652e706e67).
+2. [Have written the description of the pull request and have added at least 2 reviewers](https://camo.githubusercontent.com/55c309334a8b61a4848a6ef25f9b0fb3751ae5e9/68747470733a2f2f686162726173746f726167652e6f72672f776562742f74312f70792f63752f7431707963753162786a736c796f6a6c707935306d7862357969652e706e67).
 3. [Continuous integration has been passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png).

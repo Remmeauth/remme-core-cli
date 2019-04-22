@@ -33,7 +33,7 @@ def test_get_balance():
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert True is isinstance(json.loads(result.output), int)
+    assert isinstance(json.loads(result.output), int)
 
 
 def test_get_balance_invalid_address():
@@ -82,7 +82,7 @@ def test_get_balance_without_node_url(mocker):
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert True is isinstance(json.loads(result.output), int)
+    assert isinstance(json.loads(result.output), int)
     assert str(balance_from_localhost) in result.output
 
 
