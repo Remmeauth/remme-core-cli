@@ -16,7 +16,8 @@ from cli.constants import (
 )
 from cli.utils import (
     default_node_url,
-    dict_to_pretty_json,
+    print_errors,
+    print_result,
 )
 
 loop = asyncio.get_event_loop()
@@ -43,7 +44,7 @@ def get_balance(address, node_url):
     })
 
     if errors:
-        click.echo(dict_to_pretty_json(errors))
+        print_errors(errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     address = arguments.get('address')
@@ -56,4 +57,4 @@ def get_balance(address, node_url):
     account_service = Account(service=remme)
     balance = loop.run_until_complete(account_service.get_balance(address=address))
 
-    click.echo(balance)
+    print_result(balance)
