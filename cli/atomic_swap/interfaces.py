@@ -8,7 +8,7 @@ class AtomicSwapInterface:
     Implements atomic swap interface.
     """
 
-    async def get_list(self, swap_id):
+    async def get_info(self, swap_id):
         """
         Get information about atomic swap by swap identifier.
         """
