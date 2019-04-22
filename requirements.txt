@@ -2,3 +2,4 @@ accessify==0.3.1
 asyncio==3.4.3
 click==7.0
 remme==1.0.0
+marshmallow==2.19.2
