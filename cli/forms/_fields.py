@@ -9,6 +9,8 @@ from marshmallow import (
 )
 
 from cli.constants import (
+    ADDRESS_REGEXP,
+    DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
     HEADER_SIGNATURE_REGEXP,
 )
@@ -73,5 +75,39 @@ class Id(fields.Field):
 
         if not re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is not None:
             raise ValidationError(f'The following id `{value}` is not valid.')
+
+        return value
+
+
+class NodeURL(fields.Field):
+    """
+    Validate node URL.
+
+    If node URL is localhost, it means client didn't passed any URL, so nothing to validate.
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+
+        if value == 'localhost':
+            return value
+
+        if 'http' in value or 'https' in value:
+            raise ValidationError(f'Pass the following node URL `{value}` without protocol (http, https, etc.).')
+
+        if re.match(pattern=DOMAIN_NAME_REGEXP, string=value) is None:
+            raise ValidationError(f'The following node URL `{value}` is invalid.')
+
+        return value
+
+
+class NodeAddress(fields.Field):
+    """
+    Validate account address.
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+
+        if re.match(pattern=ADDRESS_REGEXP, string=value) is None:
+            raise ValidationError(f'The following address `{value}` is invalid.')
 
         return value

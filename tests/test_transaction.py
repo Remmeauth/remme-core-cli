@@ -7,7 +7,7 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
@@ -56,10 +56,14 @@ def test_get_single_transaction_with_invalid_id():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_error = f'The following id `{invalid_transaction_id}` is not valid.\n'
+    expected_error_message = {
+        'id': [
+            f'The following id `{invalid_transaction_id}` is not valid.'
+        ],
+    }
 
-    assert FAILED_EXIT_FROM_COMMAND == result.exit_code
-    assert expected_error == result.output
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
 
 
 def test_get_single_transaction_without_node_url(mocker):
@@ -97,12 +101,12 @@ def test_get_single_transaction_without_node_url(mocker):
             'payload': 'CAESRAoic2F3dG9vdGgudmFsaWRhdG9yLmJhdGNoX2luamVj'
                        'dG9ycxIKYmxvY2tfaW5mbxoSMHhhNGY2YzZhZWMxOWQ1OTBi',
         },
-    }
+    }, None
 
     mock_transaction_get_single = mocker.patch('cli.transaction.service.Transaction.get')
-    mock_transaction_get_single.return_value = return_async_value(expected_result)
+    mock_transaction_get_single.return_value = expected_result
 
-    expected_result = dict_to_pretty_json(expected_result) + '\n'
+    # expected_result = dict_to_pretty_json(expected_result)
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -112,34 +116,38 @@ def test_get_single_transaction_without_node_url(mocker):
         transaction_id,
     ])
 
+    transaction_list = json.loads(result.output).get('data')
+    expected_result = json.loads(result.output).get('data')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
-    assert expected_result == result.output
+    assert isinstance(transaction_list, dict)
+    assert expected_result == transaction_list
 
 
-# def test_get_single_transaction_with_invalid_node_url():
-#     """
-#     Case: get a single transaction by passing invalid node URL.
-#     Expect: the following node URL is invalid error message.
-#     """
-#     invalid_node_url = 'my-node-url'
-#
-#     runner = CliRunner()
-#     result = runner.invoke(cli, [
-#         'transaction',
-#         'get-single',
-#         '--id',
-#         '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-#         '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
-#         '--node-url',
-#         invalid_node_url,
-#     ])
-#
-#     expected_error = 'Please check if your node running at http://' + invalid_node_url + ':8080.\n'
-#
-#     print(result.output)
-#     assert FAILED_EXIT_FROM_COMMAND == result.exit_code
-#     assert expected_error == result.output
+def test_get_single_transaction_with_invalid_node_url():
+    """
+    Case: get a single transaction by passing invalid node URL.
+    Expect: the following node URL is invalid error message.
+    """
+    invalid_node_url = 'my-node-url.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get-single',
+        '--id',
+        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
+        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        '--node-url',
+        invalid_node_url,
+    ])
+
+    expected_error_message = {
+        'Error-message': f'Please check if your node running at http://{invalid_node_url}:8080.'
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
 
 
 def test_get_list_transaction_with_ids():
@@ -183,10 +191,14 @@ def test_get_list_transaction_with_invalid_ids():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_error_message = f'The following ids `{invalid_transaction_ids.split()}` are not valid.\n'
+    expected_error_message = {
+        'ids': [
+            f'The following ids `{invalid_transaction_ids.split()}` are not valid.',
+        ],
+    }
 
-    assert FAILED_EXIT_FROM_COMMAND == result.exit_code
-    assert expected_error_message == result.output
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
 
 
 def test_get_list_transaction_with_start():
@@ -270,10 +282,14 @@ def test_get_list_transaction_with_invalid_start_head(command_flag):
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_error_message = f'The following id `{invalid_id}` is not valid.\n'
+    expected_error_message = {
+        f'{command_flag[2:]}': [
+            f'The following id `{invalid_id}` is not valid.'
+        ],
+    }
 
-    assert FAILED_EXIT_FROM_COMMAND == result.exit_code
-    assert expected_error_message == result.output
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
 
 
 def test_get_list_transaction_with_limit():
@@ -312,10 +328,14 @@ def test_get_list_transaction_with_invalid_limit():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_error_message = f'The following limit `{invalid_limit}` should be a positive.\n'
+    expected_error_message = {
+        'limit': [
+            f'The following limit `{invalid_limit}` should be a positive.'
+        ],
+    }
 
-    assert FAILED_EXIT_FROM_COMMAND == result.exit_code
-    assert expected_error_message == result.output
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
 
 
 def test_get_list_transaction_with_family_name():
@@ -356,7 +376,11 @@ def test_get_list_transaction_with_invalid_family_name():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_error_message = f'The following family name `{invalid_family_name}` is not valid.\n'
+    expected_error_message = {
+        "family_name": [
+            f"The following family name `{invalid_family_name}` is not valid.",
+        ],
+    }
 
-    assert FAILED_EXIT_FROM_COMMAND == result.exit_code
-    assert expected_error_message == result.output
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output

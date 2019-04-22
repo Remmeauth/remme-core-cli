@@ -5,11 +5,10 @@ import asyncio
 import sys
 
 import click
-from aiohttp_json_rpc import RpcGenericServerDefinedError
-from marshmallow import ValidationError
+from remme import Remme
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.forms import ValidationForm
@@ -24,9 +23,9 @@ from cli.transaction.help import (
 )
 from cli.transaction.service import Transaction
 from cli.utils import (
-    dict_to_pretty_json,
-    get_network,
-    pprint,
+    default_node_url,
+    print_result,
+    print_errors,
 )
 
 loop = asyncio.get_event_loop()
@@ -46,75 +45,71 @@ def transaction_command():
 @click.option('--head', required=False, type=str, help=GET_TRANSACTIONS_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--reverse', required=False, type=str, help=GET_TRANSACTIONS_REVERSE_ARGUMENT_HELP_MESSAGE)
 @click.option('--family-name', required=False, type=str, help=GET_TRANSACTIONS_FAMILY_NAME_ARGUMENT_HELP_MESSAGE)
-@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @transaction_command.command('get-list')
 def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
     """
     Get a list of transaction.
     """
-    try:
-        arguments = ValidationForm().load({
-            'ids': ids,
-            'start': start,
-            'limit': limit,
-            'head': head,
-            'family_name': family_name,
-            'reverse': reverse,
-        })
+    arguments, errors = ValidationForm().load({
+        'ids': ids,
+        'start': start,
+        'limit': limit,
+        'head': head,
+        'family_name': family_name,
+        'reverse': reverse,
+        'node_url': node_url,
+    })
 
-    except ValidationError as err:
-        pprint(err)
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    remme = get_network(node_url=node_url)
+    node_url = arguments.get('node_url')
 
-    transaction = Transaction(service=remme)
-    try:
-        transactions = loop.run_until_complete(
-            transaction.get_list(arguments),
-        )
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
 
-        click.echo(dict_to_pretty_json(data=transactions))
+    transactions, errors = Transaction(service=remme).get_list(
+        query=arguments,
+    )
 
-    except RpcGenericServerDefinedError as err:
-        pprint(err)
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    except Exception as err:
-        pprint(err)
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    print_result(result=transactions)
 
 
 @click.option('--id', required=True, type=str, help=GET_TRANSACTION_ID_HELP_MESSAGE)
-@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @transaction_command.command('get-single')
 def get_transaction(id, node_url):
     """
     Fetch transaction by its id.
     """
-    try:
-        transaction_id = ValidationForm().load({
-            'id': id,
-        })
+    arguments, errors = ValidationForm().load({
+        'id': id,
+        'node_url': node_url,
+    })
 
-    except ValidationError as errs:
-        pprint(errs)
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    remme = get_network(node_url=node_url)
+    node_url = arguments.get('node_url')
 
-    transaction = Transaction(service=remme)
-    transaction_service = transaction.get(
-        transaction_id=transaction_id.get('id'),
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
+
+    transaction, errors = Transaction(service=remme).get(
+        transaction_id=arguments.get('id'),
     )
-    try:
-        transactions = loop.run_until_complete(transaction_service)
-        click.echo(dict_to_pretty_json(data=transactions))
 
-    except RpcGenericServerDefinedError as err:
-        pprint(err)
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    except Exception as err:
-        pprint(err)
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    print_result(result=transaction)

@@ -4,13 +4,28 @@ Provide utils for command line interface.
 import json
 
 import click
-import marshmallow
-from remme import Remme
 
 
 def dict_to_pretty_json(data):
-    """
-    Convert dictionary to string with indents as human readable text.
+    r"""
+    Convert dictionary to json with indents (human readable string).
+
+    From the following code:
+        {
+            "address": [
+                "The following address `1120076ecf036e857f42129b5830` is invalid."
+            ]
+        }
+
+    It creates:
+        "{\n    \"address\": [\n        \"The following address `1120076ecf036e857f42129b5830` is invalid.\"    ]\n}\n"
+
+    Notes:
+        - `r` symbol at the start of the documentation is presented because of PEP257.
+
+    References:
+        - https://www.python.org/dev/peps/pep-0257/#id15
+        - https://stackoverflow.com/a/33734332/9632462
     """
     return json.dumps(data, indent=4, sort_keys=True)
 
@@ -31,53 +46,28 @@ async def return_async_value(value):
     return value
 
 
-def get_network(node_url):
+def print_result(result):
     """
-    Create object for sending requests to chain.
+    Print successful result to the terminal.
     """
-    if node_url is None:
-        node_url = 'localhost'
-
-    remme = Remme(network_config={
-        'node_address': str(node_url) + ':8080',
-    })
-    return remme
+    return click.echo(dict_to_pretty_json(result))
 
 
-def pprint_walker(printer):
+def print_errors(errors):
     """
-    Change print behavior by error type.
+    Print error messages to the terminal.
 
     Arguments:
-        printer (function): function that print message.
-        error (Exception): particular error object.
-
-    Returns:
-        Redefined print function.
-    """
-    def pprint_inner(error):
-
-        if isinstance(error, marshmallow.exceptions.ValidationError):
-            for err in error.messages:
-                printer(error.messages.get(err)[0])
-
-        else:
-            printer(error)
-
-    return pprint_inner
-
-
-@pprint_walker
-def pprint(error):
-    """
-    Print to a console error message.
-
-    Using for a print exception error message to the console.
-
-    Arguments:
-        error (Exception): particular error object.
+        errors (dict): dictionary with error messages.
 
     References:
-        https://click.palletsprojects.com/en/7.x/utils/#ansi-colors
+        - https://click.palletsprojects.com/en/7.x/utils/#ansi-colors
     """
-    click.secho(f'{error}', blink=True, bold=True, fg='red')
+    click.secho(dict_to_pretty_json(errors), blink=True, bold=True, fg='red')
+
+
+def default_node_url():
+    """
+    Get default node URL.
+    """
+    return 'localhost'

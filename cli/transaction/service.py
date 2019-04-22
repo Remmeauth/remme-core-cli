@@ -1,9 +1,14 @@
 """
 Provide implementation of the transaction.
 """
+import asyncio
+
 from accessify import implements
+from aiohttp_json_rpc import RpcGenericServerDefinedError
 
 from cli.transaction.interfaces import TransactionInterfaces
+
+loop = asyncio.get_event_loop()
 
 
 @implements(TransactionInterfaces)
@@ -21,14 +26,46 @@ class Transaction:
         """
         self.service = service
 
-    async def get_list(self, query):
+    def get_list(self, query):
         """
         Get list transaction by: ids, start, head, limit, reverse.
         """
-        return await self.service.blockchain_info.get_transactions(query=query)
+        try:
+            transaction_list = loop.run_until_complete(
+                self.service.blockchain_info.get_transactions(
+                    query=query,
+                ))
 
-    async def get(self, transaction_id):
+            return transaction_list, None
+
+        except RpcGenericServerDefinedError as error:
+            return None, {
+                'Error-message': str(error),
+            }
+
+        except Exception as error:
+            return None, {
+                'Error-message': str(error),
+            }
+
+    def get(self, transaction_id):
         """
         Fetch transaction by its id.
         """
-        return await self.service.blockchain_info.get_transaction_by_id(transaction_id=transaction_id)
+        try:
+            single_transaction = loop.run_until_complete(
+                self.service.blockchain_info.get_transaction_by_id(
+                    transaction_id=transaction_id,
+                ))
+
+            return single_transaction, None
+
+        except RpcGenericServerDefinedError as error:
+            return None, {
+                'Error-message': str(error),
+            }
+
+        except Exception as error:
+            return None, {
+                'Error-message': str(error),
+            }
