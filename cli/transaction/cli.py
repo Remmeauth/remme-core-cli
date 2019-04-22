@@ -24,8 +24,8 @@ from cli.transaction.help import (
 from cli.transaction.service import Transaction
 from cli.utils import (
     default_node_url,
-    print_result,
     print_errors,
+    print_result,
 )
 
 loop = asyncio.get_event_loop()

@@ -7,13 +7,13 @@ import sys
 import click
 from remme import Remme
 
-from cli.forms import ValidationForm
 from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.account.service import Account
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
+from cli.forms import ValidationForm
 from cli.utils import (
     default_node_url,
     print_errors,

@@ -10,24 +10,21 @@ class TransactionInterfaces:
 
     async def get_list(self, query):
         """
-        Get list transaction by: ids, start, head, limit, reverse.
+        Get a list of transactions.
+
+        List of transactions can be filtered by identifiers, start pagging, identifier of block's head, limit
+        of transactions, reversed result, family-name of transactions
 
         Arguments:
             query (dict, optional): dictionary with specific parameters
-
-        Returns:
-            List of transaction.
         """
         pass
 
     async def get(self, transaction_id):
         """
-        Get transaction by its id.
+        Get transaction by its identifier.
 
         Arguments:
             transaction_id (string, required): transaction id
-
-        Returns:
-            Transaction.
         """
         pass

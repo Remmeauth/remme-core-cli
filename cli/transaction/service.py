@@ -32,20 +32,19 @@ class Transaction:
         """
         try:
             transaction_list = loop.run_until_complete(
-                self.service.blockchain_info.get_transactions(
-                    query=query,
-                ))
+                self.service.blockchain_info.get_transactions(query=query),
+            )
 
             return transaction_list, None
 
         except RpcGenericServerDefinedError as error:
             return None, {
-                'Error-message': str(error),
+                'error': str(error),
             }
 
         except Exception as error:
             return None, {
-                'Error-message': str(error),
+                'error': str(error),
             }
 
     def get(self, transaction_id):
@@ -54,18 +53,17 @@ class Transaction:
         """
         try:
             single_transaction = loop.run_until_complete(
-                self.service.blockchain_info.get_transaction_by_id(
-                    transaction_id=transaction_id,
-                ))
+                self.service.blockchain_info.get_transaction_by_id(transaction_id=transaction_id),
+            )
 
             return single_transaction, None
 
         except RpcGenericServerDefinedError as error:
             return None, {
-                'Error-message': str(error),
+                'error': str(error),
             }
 
         except Exception as error:
             return None, {
-                'Error-message': str(error),
+                'error': str(error),
             }

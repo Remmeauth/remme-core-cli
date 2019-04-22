@@ -119,11 +119,11 @@ Get list of transaction — ``remme transaction get-list``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
-| ids         | String |  No       | Identifiers to get a list of transaction by.          |
-| start       | String |  No       | Id to start paging (inclusive).                        |
-| limit       | Integer|  No       | Number of transaction to return.                       |
-| head        | String |  No       | Id of head block.                                      |
-| reverse     | String |  No       | Reverse result.                                        |
+| ids         | String |  No       | Identifiers to get a list of transactions by.          |
+| start       | String |  No       | Identifier to start paging (inclusive).                |
+| limit       | Integer|  No       | Number of transactions to return.                      |
+| head        | String |  No       | Identifier of block's head.                            |
+| reverse     | String |  No       | If transactions should be reversed.                    |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 | family-name | String |  No       | List transaction by its family name.                   |
 
@@ -148,7 +148,7 @@ $ remme transaction get-list \
 }
 ```
 
-Get single transaction by id — ``remme transaction get-single``:
+Get single transaction by identifier — ``remme transaction get-single``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |

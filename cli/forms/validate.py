@@ -7,12 +7,12 @@ from marshmallow import (
 )
 
 from ._fields import (
-    NodeAddress,
-    NodeURL,
     FamilyName,
     Id,
     IdList,
     Limit,
+    NodeAddress,
+    NodeURL,
 )
 
 
