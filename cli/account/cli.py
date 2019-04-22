@@ -1,21 +1,24 @@
 """
 Provide implementation of the command line interface's account commands.
 """
-import sys
-import re
-
 import asyncio
+import sys
+
 import click
 from remme import Remme
 
+from cli.account.forms import GetAccountBalanceForm
 from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.account.service import Account
 from cli.constants import (
-    ADDRESS_REGEXP,
-    FAILED_EXIT_FROM_COMMAND,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
-from cli.utils import default_node_url
+from cli.utils import (
+    default_node_url,
+    print_errors,
+    print_result,
+)
 
 loop = asyncio.get_event_loop()
 
@@ -35,13 +38,23 @@ def get_balance(address, node_url):
     """
     Get balance of the account by its address.
     """
-    if re.match(pattern=ADDRESS_REGEXP, string=address) is None:
-        click.echo('The following address `{address}` is not valid.'.format(address=address))
-        sys.exit(FAILED_EXIT_FROM_COMMAND)
+    arguments, errors = GetAccountBalanceForm().load({
+        'address': address,
+        'node_url': node_url,
+    })
 
-    remme = Remme(network_config={'node_address': str(node_url) + ':8080'})
+    if errors:
+        print_errors(errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    address = arguments.get('address')
+    node_url = arguments.get('node_url')
+
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
 
     account_service = Account(service=remme)
     balance = loop.run_until_complete(account_service.get_balance(address=address))
 
-    click.echo(balance)
+    print_result(balance)
