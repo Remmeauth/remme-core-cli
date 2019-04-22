@@ -32,7 +32,7 @@
 
 ### Installation
 
-Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
 ```bash
 $ pip3 install remme-core-cli
