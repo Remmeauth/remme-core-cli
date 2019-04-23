@@ -27,7 +27,7 @@ def test_transfer_tokens():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
@@ -54,7 +54,7 @@ def test_transfer_tokens_invalid_private_key_from():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         invalid_private_key,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
@@ -66,7 +66,7 @@ def test_transfer_tokens_invalid_private_key_from():
 
     expected_error = {
         'errors': {
-            'private_key_from': [
+            'private_key': [
                 f'The following private key `{invalid_private_key}` is invalid.',
             ],
         },
@@ -87,7 +87,7 @@ def test_transfer_tokens_invalid_address_to():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         invalid_address_to,
@@ -120,7 +120,7 @@ def test_transfer_tokens_invalid_amount():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
@@ -146,7 +146,7 @@ def test_transfer_tokens_without_node_url(mocker, sent_transaction):
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
@@ -171,7 +171,7 @@ def test_transfer_tokens_invalid_node_url():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
@@ -204,7 +204,7 @@ def test_transfer_tokens_node_url_with_http():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
@@ -237,7 +237,7 @@ def test_transfer_tokens_node_url_with_https():
     result = runner.invoke(cli, [
         'account',
         'transfer-tokens',
-        '--private-key-from',
+        '--private-key',
         PRIVATE_KEY_FOR_TESTING,
         '--address-to',
         '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',

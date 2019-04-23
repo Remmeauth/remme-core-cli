@@ -68,17 +68,17 @@ def get_balance(address, node_url):
     print_result(result=result)
 
 
-@click.option('--private-key-from', type=str, required=True, help=PRIVATE_KEY_FROM_ARGUMENT_HELP_MESSAGE)
+@click.option('--private-key', type=str, required=True, help=PRIVATE_KEY_FROM_ARGUMENT_HELP_MESSAGE)
 @click.option('--address-to', type=str, required=True, help=ADDRESS_TO_ARGUMENT_HELP_MESSAGE)
 @click.option('--amount', type=int, required=True, help=AMOUNT_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @account_commands.command('transfer-tokens')
-def transfer_tokens(private_key_from, address_to, amount, node_url):
+def transfer_tokens(private_key, address_to, amount, node_url):
     """
     Transfer tokens to address.
     """
     arguments, errors = TransferTokensForm().load({
-        'private_key_from': private_key_from,
+        'private_key': private_key,
         'address_to': address_to,
         'amount': amount,
         'node_url': node_url,
@@ -88,14 +88,15 @@ def transfer_tokens(private_key_from, address_to, amount, node_url):
         print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    private_key_from = arguments.get('private_key_from')
+    private_key = arguments.get('private_key')
     address_to = arguments.get('address_to')
     amount = arguments.get('amount')
     node_url = arguments.get('node_url')
 
-    remme = Remme(private_key_hex=private_key_from, network_config={
-        'node_address': str(node_url) + ':8080',
-    })
+    remme = Remme(
+        account_config={'private_key_hex': private_key},
+        network_config={'node_address': str(node_url) + ':8080'},
+    )
 
     result, errors = Account(service=remme).transfer_tokens(address_to=address_to, amount=amount)
 

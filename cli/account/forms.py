@@ -27,7 +27,7 @@ class TransferTokensForm(Schema):
     Transfer tokens to address form.
     """
 
-    private_key_from = PrivateKeyField(required=True)
+    private_key = PrivateKeyField(required=True)
     address_to = AccountAddressField(required=True)
     amount = fields.Integer(required=True)
     node_url = NodeURLField(allow_none=True, required=False)
