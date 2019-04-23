@@ -32,7 +32,7 @@
 
 ### Installation
 
-Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
 ```bash
 $ pip3 install remme-core-cli
@@ -69,7 +69,7 @@ node-url: node-genesis-testnet.remme.io
 Try it out by downloading the example of the configuration file to the home directory.
 
 ```bash
-$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+$ curl -L https://git.io/fj3Mi > ~/.remme-core-cli.yml
 ```
 
 ### Service
@@ -109,7 +109,11 @@ Get balance of the account by its address — ``remme account get-balance``:
 $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
-368440.0
+{
+    "result": {
+        "balance": 368440.0
+    }
+}
 ```
 
 ## Development
