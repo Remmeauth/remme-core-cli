@@ -1,7 +1,6 @@
 """
 Provide implementation of the command line interface's account commands.
 """
-import asyncio
 import sys
 
 import click
@@ -12,9 +11,9 @@ from cli.account.forms import (
     TransferTokensForm,
 )
 from cli.account.help import (
+    ADDRESS_ARGUMENT_HELP_MESSAGE,
     ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
     AMOUNT_ARGUMENT_HELP_MESSAGE,
-    GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE,
     PRIVATE_KEY_FROM_ARGUMENT_HELP_MESSAGE,
 )
 from cli.account.service import Account
@@ -28,8 +27,6 @@ from cli.utils import (
     print_result,
 )
 
-loop = asyncio.get_event_loop()
-
 
 @click.group('account', chain=True)
 def account_commands():
@@ -39,7 +36,7 @@ def account_commands():
     pass
 
 
-@click.option('--address', type=str, required=True, help=GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', type=str, required=True, help=ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @account_commands.command('get-balance')
 def get_balance(address, node_url):
@@ -62,10 +59,13 @@ def get_balance(address, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    account_service = Account(service=remme)
-    balance = loop.run_until_complete(account_service.get_balance(address=address))
+    result, errors = Account(service=remme).get_balance(address=address)
 
-    print_result(result=balance)
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
 
 
 @click.option('--private-key-from', type=str, required=True, help=PRIVATE_KEY_FROM_ARGUMENT_HELP_MESSAGE)
