@@ -4,6 +4,7 @@ Provide constants for command line interface.
 ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
 BATCH_ID_REGEXP = r'^[0-9a-f]{128}$'
 PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'
+HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
 DOMAIN_NAME_REGEXP = r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]'
 
 PASSED_EXIT_FROM_COMMAND_CODE = 0

@@ -25,11 +25,15 @@ class Account:
         """
         self.service = service
 
-    async def get_balance(self, address):
+    def get_balance(self, address):
         """
         Get balance of the account by its address.
         """
-        return await self.service.token.get_balance(address=address)
+        balance = loop.run_until_complete(self.service.token.get_balance(address=address))
+
+        return {
+            'balance': balance,
+        }, None
 
     def transfer_tokens(self, address_to, amount):
         """
@@ -40,5 +44,5 @@ class Account:
         )
 
         return {
-            'batch_id': transaction_response.batch_id,
+            'batch_identifier': transaction_response.batch_id,
         }, None

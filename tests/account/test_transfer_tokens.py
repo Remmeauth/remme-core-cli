@@ -37,7 +37,7 @@ def test_transfer_tokens():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    batch_id = json.loads(result.output).get('batch_id')
+    batch_id = json.loads(result.output).get('result').get('batch_identifier')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert re.match(pattern=BATCH_ID_REGEXP, string=batch_id) is not None
@@ -45,7 +45,7 @@ def test_transfer_tokens():
 
 def test_transfer_tokens_invalid_private_key_from():
     """
-    Case: transfer tokens to address with invalid private key from..
+    Case: transfer tokens to address with invalid private key from.
     Expect: the following private key is invalid error message.
     """
     invalid_private_key = 'b03e31d2f310305eab249133b53b5fb327'
@@ -65,9 +65,11 @@ def test_transfer_tokens_invalid_private_key_from():
     ])
 
     expected_error = {
-        'private_key_from': [
-            f'The following private key `{invalid_private_key}` is invalid.',
-        ],
+        'errors': {
+            'private_key_from': [
+                f'The following private key `{invalid_private_key}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -96,9 +98,11 @@ def test_transfer_tokens_invalid_address_to():
     ])
 
     expected_error = {
-        'address_to': [
-            f'The following address `{invalid_address_to}` is invalid.',
-        ],
+        'errors': {
+            'address_to': [
+                f'The following address `{invalid_address_to}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -155,7 +159,7 @@ def test_transfer_tokens_without_node_url(mocker):
         '1000',
     ])
 
-    batch_id = json.loads(result.output).get('batch_id')
+    batch_id = json.loads(result.output).get('result').get('batch_id')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert re.match(pattern=BATCH_ID_REGEXP, string=batch_id) is not None
@@ -183,9 +187,11 @@ def test_transfer_tokens_invalid_node_url():
     ])
 
     expected_error = {
-        'node_url': [
-            f'The following node URL `{invalid_node_url}` is invalid.',
-        ],
+        'errors': {
+            'node_url': [
+                f'The following node URL `{invalid_node_url}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -214,9 +220,11 @@ def test_transfer_tokens_node_url_with_http():
     ])
 
     expected_error = {
-        'node_url': [
-            f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-        ],
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -245,9 +253,11 @@ def test_transfer_tokens_node_url_with_https():
     ])
 
     expected_error = {
-        'node_url': [
-            f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
-        ],
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
