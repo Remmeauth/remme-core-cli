@@ -136,7 +136,7 @@ Run the ``Docker container`` with the project source code in the background mode
 
 ```bash
 $ docker build -t remme-core-cli . -f Dockerfile.development
-$ docker run -d -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
+$ docker run -d --network host -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
 ```
 
 Enter the container bash:
