@@ -8,7 +8,7 @@ class AccountInterface:
     Implements account interface.
     """
 
-    async def get_balance(self, address):
+    def get_balance(self, address):
         """
         Get balance of the account by its address.
         """
