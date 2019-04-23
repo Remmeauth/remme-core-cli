@@ -86,10 +86,25 @@ class SentTransaction:
     def batch_id(self):
         """
         Get batch identifier of the sent transaction.
-        :return:
         """
         return '37809770b004dcbc7dae116fd9f17428255ddddee3304c9b3d14609d2792e78f' \
                '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
+
+
+class NodeConfigurations:
+    """
+    Impose node configurations data transfer object.
+    """
+
+    @property
+    def data(self):
+        """
+        Get node configurations.
+        """
+        return {
+            'node_address': '11682919ed54658edf965f955a5783e6a653ce3bb411b99c8afe9f6e5840af45171774',
+            'node_public_key': '03725231d64d1b379a1d855d0e7614684744ba915bd657e398f5a5cefc9ced896d',
+        }
 
 
 @pytest.fixture()
@@ -98,3 +113,11 @@ def sent_transaction():
     Get sent transaction fixture.
     """
     return SentTransaction()
+
+
+@pytest.fixture()
+def node_configurations():
+    """
+    Get node configurations fixture.
+    """
+    return NodeConfigurations()

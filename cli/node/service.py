@@ -29,11 +29,8 @@ class Node:
         """
         Get node configurations.
         """
-        # configurations = loop.run_until_complete(self.service.node_management.get_node_config())
-
-        from remme.models.general.methods import RemmeMethods
-        configurations = loop.run_until_complete(self.service._remme_api.send_request(method=RemmeMethods.NODE_CONFIG))
+        configurations = loop.run_until_complete(self.service.node_management.get_node_config())
 
         return {
-            'configurations': configurations
+            'configurations': configurations.data,
         }, None

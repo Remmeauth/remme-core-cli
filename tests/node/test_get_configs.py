@@ -40,18 +40,13 @@ def test_get_node_configs():
     assert expected_node_configurations == json.loads(result.output)
 
 
-def test_get_node_configs_without_node_url(mocker):
+def test_get_node_configs_without_node_url(mocker, node_configurations):
     """
     Case: get node configurations without passing node URL.
     Expect: batch identifier is returned from node on localhost.
     """
-    expected_node_configurations = {
-        'node_address': '11682919ed54658edf965f955a5783e6a653ce3bb411b99c8afe9f6e5840af45171774',
-        'node_public_key': '03725231d64d1b379a1d855d0e7614684744ba915bd657e398f5a5cefc9ced896d',
-    }
-
     mock_account_get_balance = mocker.patch('cli.node.service.loop.run_until_complete')
-    mock_account_get_balance.return_value = expected_node_configurations
+    mock_account_get_balance.return_value = node_configurations
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -61,10 +56,7 @@ def test_get_node_configs_without_node_url(mocker):
 
     expected_node_configurations = {
         'result': {
-            'configurations': {
-                'node_address': '11682919ed54658edf965f955a5783e6a653ce3bb411b99c8afe9f6e5840af45171774',
-                'node_public_key': '03725231d64d1b379a1d855d0e7614684744ba915bd657e398f5a5cefc9ced896d',
-            }
+            'configurations': node_configurations.data,
         },
     }
 
