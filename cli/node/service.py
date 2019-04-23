@@ -25,7 +25,7 @@ class Node:
         """
         self.service = service
 
-    def get_configurations(self):
+    def get_configs(self):
         """
         Get node configurations.
         """
@@ -34,4 +34,6 @@ class Node:
         from remme.models.general.methods import RemmeMethods
         configurations = loop.run_until_complete(self.service._remme_api.send_request(method=RemmeMethods.NODE_CONFIG))
 
-        return configurations, None
+        return {
+            'configurations': configurations
+        }, None

@@ -31,8 +31,8 @@ def node_commands():
 
 
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
-@node_commands.command('get-configurations')
-def transfer_tokens(node_url):
+@node_commands.command('get-configs')
+def get_config(node_url):
     """
     Get node configurations.
     """
@@ -50,7 +50,7 @@ def transfer_tokens(node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    result, errors = Node(service=remme).get_configurations()
+    result, errors = Node(service=remme).get_configs()
 
     if errors is not None:
         print_errors(errors=errors)

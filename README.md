@@ -149,10 +149,14 @@ Get node configurations — ``remme node get-configurations``:
 | node-url  | String |  No       | Node URL to apply a command to.      |
 
 ```bash
-$ remme node get-configurations --node-url=node-genesis-testnet.remme.io
+$ remme node get-configs --node-url=node-genesis-testnet.remme.io
 {
-    "node_address": "1168296ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
-    "node_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+    "result": {
+        "configurations": {
+            "node_address": "1168296ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "node_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+        }
+    }
 }
 ```
 

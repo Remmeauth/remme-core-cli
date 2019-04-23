@@ -8,7 +8,7 @@ class NodeInterface:
     Implements node interface.
     """
 
-    def get_configurations(self):
+    def get_configs(self):
         """
         Get node configurations.
         """
