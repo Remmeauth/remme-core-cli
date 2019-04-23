@@ -11,10 +11,7 @@ from cli.constants import (
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
-from cli.utils import (
-    dict_to_pretty_json,
-    return_async_value,
-)
+from cli.utils import dict_to_pretty_json
 
 
 def test_get_balance():
@@ -32,8 +29,10 @@ def test_get_balance():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    balance = json.loads(result.output).get('result')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), int)
+    assert isinstance(balance, int)
 
 
 def test_get_balance_invalid_address():
@@ -66,12 +65,12 @@ def test_get_balance_invalid_address():
 def test_get_balance_without_node_url(mocker):
     """
     Case: get a balance of an account by address without passing node URL.
-    Expect: balance is returned.
+    Expect: balance is returned from node on localhost.
     """
-    balance_from_localhost = 13500
+    balance = 13500
 
-    mock_account_get_balance = mocker.patch('cli.account.service.Account.get_balance')
-    mock_account_get_balance.return_value = return_async_value(balance_from_localhost)
+    mock_account_get_balance = mocker.patch('cli.account.service.loop.run_until_complete')
+    mock_account_get_balance.return_value = balance
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -81,9 +80,12 @@ def test_get_balance_without_node_url(mocker):
         '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf',
     ])
 
+    expected_result = {
+        'result': 13500,
+    }
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), int)
-    assert str(balance_from_localhost) in result.output
+    assert expected_result == json.loads(result.output)
 
 
 def test_get_balance_invalid_node_url():

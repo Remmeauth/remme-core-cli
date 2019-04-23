@@ -1,7 +1,6 @@
 """
 Provide implementation of the command line interface's account commands.
 """
-import asyncio
 import sys
 
 import click
@@ -19,8 +18,6 @@ from cli.utils import (
     print_errors,
     print_result,
 )
-
-loop = asyncio.get_event_loop()
 
 
 @click.group('account', chain=True)
@@ -44,7 +41,7 @@ def get_balance(address, node_url):
     })
 
     if errors:
-        print_errors(errors)
+        print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     address = arguments.get('address')
@@ -54,7 +51,10 @@ def get_balance(address, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    account_service = Account(service=remme)
-    balance = loop.run_until_complete(account_service.get_balance(address=address))
+    result, errors = Account(service=remme).get_balance(address=address)
 
-    print_result(balance)
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
