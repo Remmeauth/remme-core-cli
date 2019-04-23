@@ -13,6 +13,7 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
+    * [Nodes](#nodes)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
@@ -39,6 +40,13 @@ $ pip3 install remme-core-cli
 ```
 
 ## Usage
+
+### Nodes
+
+You can use the following list of the addresses of the nodes to execute commands to:
+
+- `node-genesis-testnet.remme.io`,
+- `node-6-testnet.remme.io`.
 
 ### Configuration file
 
@@ -93,10 +101,10 @@ Options:
 
 Get balance of the account by its address — ``remme account get-balance``:
 
-| Arguments | Type   |  Required | Description                                         |
-| :-------: | :----: | :-------: | --------------------------------------------------- |
-| address   | String |  Yes      | Get balance of the account by its address.          |
-| node-url  | String |  No       | Apply the command to the specified node by its URL. |
+| Arguments | Type   |  Required | Description                          |
+| :-------: | :----: | :-------: | ------------------------------------ |
+| address   | String |  Yes      | Account address to get a balance by. |
+| node-url  | String |  No       | Node URL to apply a command to.      |
 
 ```bash
 $ remme account get-balance \
@@ -215,7 +223,11 @@ $ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
 $ pip3 install -r requirements.txt -r requirements-dev.txt -r requirements-tests.txt
 ```
 
-When you make changes, ensure your code pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16) and is covered by tests using [pytest](https://docs.pytest.org/en/latest).
+When you make changes, ensure your code:
+
+* pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16),
+* is covered by tests using [pytest](https://docs.pytest.org/en/latest),
+* follow team [code style](https://github.com/dmytrostriletskyi/nimble-python-code-style-guide).
 
 If you are new for the contribution, please read:
 
@@ -226,10 +238,6 @@ If you are new for the contribution, please read:
 ### Request pull request's review
 
 If you want to your pull request to be review, ensure you:
-- `have wrote the description of the pull request`,
-- `have added at least 2 reviewers`,
-- `continuous integration has been passed`.
-
-![Example of the description and reviewers](https://habrastorage.org/webt/t1/py/cu/t1pycu1bxjslyojlpy50mxb5yie.png)
-
-![Example of the CI which passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png)
+1. [Branch isn't out-of-date with the base branch](https://habrastorage.org/webt/ux/gi/wm/uxgiwmnft08fubvjfd6d-8pw2wq.png).
+2. [Have written the description of the pull request and have added at least 2 reviewers](https://camo.githubusercontent.com/55c309334a8b61a4848a6ef25f9b0fb3751ae5e9/68747470733a2f2f686162726173746f726167652e6f72672f776562742f74312f70792f63752f7431707963753162786a736c796f6a6c707935306d7862357969652e706e67).
+3. [Continuous integration has been passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png).

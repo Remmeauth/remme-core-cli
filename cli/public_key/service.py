@@ -1,9 +1,13 @@
 """
 Provide implementation of the public key.
 """
+import asyncio
+
 from accessify import implements
 
 from cli.public_key.interfaces import PublicKeyInterface
+
+loop = asyncio.get_event_loop()
 
 
 @implements(PublicKeyInterface)
@@ -21,8 +25,12 @@ class PublicKey:
         """
         self.service = service
 
-    async def get(self, address):
+    async def get_info(self, address):
         """
         Get information about public key by public key address.
         """
-        return await self.service.public_key_storage.get_info(public_key_address=address)
+        public_key_info = loop.run_until_complete(self.service.public_key_storage.get_info(public_key_address=address))
+
+        return {
+            'result': public_key_info,
+        }, None

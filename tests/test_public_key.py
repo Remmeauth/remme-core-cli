@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     ADDRESS_REGEXP,
-    FAILED_EXIT_FROM_COMMAND,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     HEADER_SIGNATURE_REGEXP,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_REGEXP,
@@ -62,5 +62,7 @@ def test_get_public_key_info_invalid_address():
         'public-key', 'get-single', '--address', invalid_address, '--node-url', NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    assert FAILED_EXIT_FROM_COMMAND == result.exit_code
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert f'The following address `{invalid_address}` is not valid.' in result.output
+
+
