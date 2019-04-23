@@ -7,7 +7,7 @@ import click
 from remme import Remme
 
 from cli.account.forms import GetAccountBalanceForm
-from cli.account.help import GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.account.help import ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.account.service import Account
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
@@ -28,7 +28,7 @@ def account_commands():
     pass
 
 
-@click.option('--address', type=str, required=True, help=GET_ACCOUNT_BALANCE_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', type=str, required=True, help=ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @account_commands.command('get-balance')
 def get_balance(address, node_url):

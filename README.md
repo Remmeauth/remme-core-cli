@@ -109,7 +109,9 @@ Get balance of the account by its address — ``remme account get-balance``:
 $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
-368440.0
+{
+    "result": 368440.0
+}
 ```
 
 ## Development
