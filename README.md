@@ -33,7 +33,7 @@
 
 ### Installation
 
-Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
 ```bash
 $ pip3 install remme-core-cli
@@ -111,7 +111,11 @@ Get balance of the account by its address — ``remme account get-balance``:
 $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
-368440.0
+{
+    "result": {
+        "balance": 368440.0
+    }
+}
 ```
 
 Transfer tokens to address — ``remme account transfer-tokens``:
@@ -130,7 +134,9 @@ $ remme account transfer-tokens \
       --amount=1000 \
       --node-url=node-genesis-testnet.remme.io
 {
-    "batch_id": "37809770b004dcbc7dae116fd9f17428255ddddee3304c9b3d14609d2792e78f08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956"
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
 }
 ```
 
@@ -174,7 +180,7 @@ Run the ``Docker container`` with the project source code in the background mode
 
 ```bash
 $ docker build -t remme-core-cli . -f Dockerfile.development
-$ docker run -d -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
+$ docker run -d --network host -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
 ```
 
 Enter the container bash:
