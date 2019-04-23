@@ -110,7 +110,9 @@ $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
 {
-    "result": 368440.0
+    "result": {
+        "balance": 368440.0
+    }
 }
 ```
 

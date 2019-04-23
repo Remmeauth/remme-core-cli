@@ -29,7 +29,7 @@ def test_get_balance():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    balance = json.loads(result.output).get('result')
+    balance = json.loads(result.output).get('result').get('balance')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert isinstance(balance, int)
@@ -53,9 +53,11 @@ def test_get_balance_invalid_address():
     ])
 
     expected_error = {
-        'address': [
-            f'The following address `{invalid_address}` is invalid.',
-        ],
+        'errors': {
+            'address': [
+                f'The following address `{invalid_address}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -81,7 +83,9 @@ def test_get_balance_without_node_url(mocker):
     ])
 
     expected_result = {
-        'result': 13500,
+        'result': {
+            'balance': 13500,
+        },
     }
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -106,9 +110,11 @@ def test_get_balance_invalid_node_url():
     ])
 
     expected_error = {
-        'node_url': [
-            f'The following node URL `{invalid_node_url}` is invalid.',
-        ],
+        'errors': {
+            'node_url': [
+                f'The following node URL `{invalid_node_url}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -133,9 +139,11 @@ def test_get_balance_node_url_with_http():
     ])
 
     expected_error = {
-        'node_url': [
-            f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-        ],
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -160,9 +168,11 @@ def test_get_balance_node_url_with_https():
     ])
 
     expected_error = {
-        'node_url': [
-            f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
-        ],
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

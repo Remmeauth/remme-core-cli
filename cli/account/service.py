@@ -30,7 +30,6 @@ class Account:
         Get balance of the account by its address.
         """
         balance = loop.run_until_complete(self.service.token.get_balance(address=address))
-
         return {
-            'result': balance,
+            'balance': balance,
         }, None
