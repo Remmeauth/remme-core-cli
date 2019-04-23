@@ -134,18 +134,13 @@ def test_transfer_tokens_invalid_amount():
     assert f'{invalid_amount} is not a valid integer' in result.output
 
 
-def test_transfer_tokens_without_node_url(mocker):
+def test_transfer_tokens_without_node_url(mocker, sent_transaction):
     """
     Case: transfer tokens to address without passing node URL.
     Expect: batch identifier is returned from node on localhost.
     """
-    transfer_tokens_info = {
-        'batch_id': '37809770b004dcbc7dae116fd9f17428255ddddee3304c9b3d14609d2792e78f'
-                    '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956',
-    }, None
-
-    mock_account_transfer_tokens = mocker.patch('cli.account.service.Account.transfer_tokens')
-    mock_account_transfer_tokens.return_value = transfer_tokens_info
+    mock_account_transfer_tokens = mocker.patch('cli.account.service.loop.run_until_complete')
+    mock_account_transfer_tokens.return_value = sent_transaction
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -159,7 +154,7 @@ def test_transfer_tokens_without_node_url(mocker):
         '1000',
     ])
 
-    batch_id = json.loads(result.output).get('result').get('batch_id')
+    batch_id = json.loads(result.output).get('result').get('batch_identifier')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert re.match(pattern=BATCH_ID_REGEXP, string=batch_id) is not None

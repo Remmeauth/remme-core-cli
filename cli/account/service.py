@@ -39,10 +39,10 @@ class Account:
         """
         Transfer tokens to address.
         """
-        transaction_response = loop.run_until_complete(
+        transaction = loop.run_until_complete(
             self.service.token.transfer(address_to=address_to, amount=amount),
         )
 
         return {
-            'batch_identifier': transaction_response.batch_id,
+            'batch_identifier': transaction.batch_id,
         }, None
