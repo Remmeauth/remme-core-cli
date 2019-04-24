@@ -2,11 +2,17 @@
 Provide implementation of the CLI configurations file.
 """
 import pathlib
+import platform
 
 import yaml
 from accessify import private
 
-from cli.constants import CLI_CONFIG_FILE_NAME
+from cli.constants import (
+    CLI_CONFIG_FILE_NAME,
+    LINUX_NODE_PRIVATE_KEY_FILE_PATH,
+    SUPPORTED_OS_TO_EXECUTE_NODE_MANAGEMENT_COMMANDS,
+)
+from cli.errors import NotSupportedOsToGetNodePrivateKeyError
 
 
 class ConfigParameters:
@@ -63,3 +69,29 @@ class ConfigFile:
         node_url = config_as_dict.get('node-url')
 
         return ConfigParameters(node_url=node_url)
+
+
+class NodePrivateKey:
+    """
+    Implementation of the node's private key.
+    """
+
+    @staticmethod
+    def get(file_path=LINUX_NODE_PRIVATE_KEY_FILE_PATH):
+        """
+        Get the node's private key.
+
+        Supported operating systems to get the private key are: Linux.
+        Not supported operating systems to get the private key are: Darwin (aka MacOS), Windows.
+        """
+        if platform.system() not in SUPPORTED_OS_TO_EXECUTE_NODE_MANAGEMENT_COMMANDS:
+            raise NotSupportedOsToGetNodePrivateKeyError(
+                'The current operating system is not supported to get the node\'s private key.',
+            )
+
+        try:
+            with open(file_path) as private_key_file:
+                return private_key_file.readline().rstrip()
+
+        except FileNotFoundError:
+            raise FileNotFoundError('Private key hasn\'t been founded on the machine.')
