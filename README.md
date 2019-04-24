@@ -142,11 +142,11 @@ $ remme account transfer-tokens \
 
 ### Node
 
-Get node configurations — ``remme node get-configurations``:
+Get node configurations — ``remme node get-configs``:
 
-| Arguments | Type   |  Required | Description                          |
-| :-------: | :----: | :-------: | ------------------------------------ |
-| node-url  | String |  No       | Node URL to apply a command to.      |
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
 
 ```bash
 $ remme node get-configs --node-url=node-genesis-testnet.remme.io

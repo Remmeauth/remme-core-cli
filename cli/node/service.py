@@ -13,7 +13,7 @@ loop = asyncio.get_event_loop()
 @implements(NodeInterface)
 class Node:
     """
-    Implements account.
+    Implements node.
     """
 
     def __init__(self, service):
