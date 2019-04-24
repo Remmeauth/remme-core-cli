@@ -42,7 +42,7 @@ class ConfigFile:
         """
         Read configuration file.
 
-        Return dictionary.
+        Return dictionary if configurations are presented, else None.
         """
         try:
             with open(self.path + '/.' + name + '.yml') as config_file:

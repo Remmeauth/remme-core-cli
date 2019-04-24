@@ -45,7 +45,8 @@ $ pip3 install remme-core-cli
 You can use the following list of the addresses of the nodes to execute commands to:
 
 - `node-genesis-testnet.remme.io`,
-- `node-6-testnet.remme.io`.
+- `node-6-testnet.remme.io`,
+- `node-1-testnet.remme.io`.
 
 ### Configuration file
 
@@ -112,6 +113,28 @@ $ remme account get-balance \
 {
     "result": {
         "balance": 368440.0
+    }
+}
+```
+
+Transfer tokens to address — ``remme account transfer-tokens``:
+
+| Arguments   | Type    |  Required | Description                                    |
+| :---------: | :-----: | :-------: | ---------------------------------------------- |
+| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
+| amount      | Integer |  Yes      | Amount to transfer.                            |
+| node-url    | String  |  No       | Node URL to apply a command to.                |
+
+```bash
+$ remme account transfer-tokens \
+      --private-key=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
+      --address-to=112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202 \
+      --amount=1000 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
     }
 }
 ```

@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's account commands.
+Provide tests for command line interface's account get balance command.
 """
 import json
 
