@@ -30,6 +30,17 @@ class Account:
         Get balance of the account by its address.
         """
         balance = loop.run_until_complete(self.service.token.get_balance(address=address))
+
         return {
             'balance': balance,
+        }, None
+
+    def transfer_tokens(self, address_to, amount):
+        """
+        Transfer tokens to address.
+        """
+        transaction = loop.run_until_complete(self.service.token.transfer(address_to=address_to, amount=amount))
+
+        return {
+            'batch_identifier': transaction.batch_id,
         }, None
