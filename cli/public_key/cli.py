@@ -1,7 +1,6 @@
 """
 Provide implementation of the command line interface's public key commands.
 """
-import asyncio
 import sys
 
 import click
@@ -20,8 +19,6 @@ from cli.utils import (
     print_result,
 )
 
-loop = asyncio.get_event_loop()
-
 
 @click.group('public-key', chain=True)
 def public_key_commands():
@@ -36,7 +33,7 @@ def public_key_commands():
 @public_key_commands.command('get-list')
 def get_public_keys(address, node_url):
     """
-    Get list of the public keys by account address.
+    Get a list of the addresses of the public keys by account address.
     """
     arguments, errors = GetPublicKeysForm().load({
         'address': address,
@@ -50,7 +47,9 @@ def get_public_keys(address, node_url):
     address = arguments.get('address')
     node_url = arguments.get('node_url')
 
-    remme = Remme(network_config={'node_address': str(node_url) + ':8080'})
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
 
     result, errors = PublicKey(service=remme).get_list(address=address)
 

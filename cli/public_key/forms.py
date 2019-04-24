@@ -1,5 +1,5 @@
 """
-Provide forms for command line interface's account commands.
+Provide forms for command line interface's public key commands.
 """
 from marshmallow import Schema
 
@@ -11,7 +11,7 @@ from cli.generic.forms.fields import (
 
 class GetPublicKeysForm(Schema):
     """
-    Get list of the public keys of the public key form.
+    Get a list of the addresses of the public keys form.
     """
 
     address = AccountAddressField(required=True)

@@ -10,6 +10,6 @@ class PublicKeyInterface:
 
     def get_list(self, address):
         """
-        Get list of the public keys by account address.
+        Get a list of the addresses of the public keys by account address.
         """
         pass

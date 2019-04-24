@@ -27,10 +27,16 @@ class PublicKey:
 
     def get_list(self, address):
         """
-        Get list of the public keys by account address.
+        Get a list of the addresses of the public keys by account address.
         """
-        public_keys = loop.run_until_complete(self.service.public_key_storage.get_account_public_keys(address=address))
+        try:
+            public_key_addresses = loop.run_until_complete(
+                self.service.public_key_storage.get_account_public_keys(address=address),
+            )
+
+        except Exception as error:
+            return None, str(error)
 
         return {
-            'public_keys': public_keys,
+            'public_key_addresses': public_key_addresses,
         }, None
