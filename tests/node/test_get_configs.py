@@ -32,7 +32,7 @@ def test_get_node_configs():
             'configurations': {
                 'node_address': '11682919ed54658edf965f955a5783e6a653ce3bb411b99c8afe9f6e5840af45171774',
                 'node_public_key': '03725231d64d1b379a1d855d0e7614684744ba915bd657e398f5a5cefc9ced896d',
-            }
+            },
         },
     }
 
@@ -139,6 +139,29 @@ def test_get_node_configs_node_url_with_https():
                 f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
             ],
         },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_get_node_configs_non_existing_node_url():
+    """
+    Case: get node configurations by passing non existing node URL.
+    Expect: check if node running at URL error message.
+    """
+    non_existing_node_url = 'non-existing-node.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'node',
+        'get-configs',
+        '--node-url',
+        non_existing_node_url,
+    ])
+
+    expected_error = {
+        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

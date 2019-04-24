@@ -29,7 +29,11 @@ class Node:
         """
         Get node configurations.
         """
-        configurations = loop.run_until_complete(self.service.node_management.get_node_config())
+        try:
+            configurations = loop.run_until_complete(self.service.node_management.get_node_config())
+
+        except Exception as error:
+            return None, str(error)
 
         return {
             'configurations': configurations.data,
