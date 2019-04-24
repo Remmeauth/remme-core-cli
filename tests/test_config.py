@@ -35,3 +35,13 @@ def test_get_node_url_from_empty_file(create_empty_config_file):
     config = ConfigFile().parse(name=CLI_CONFIG_FILE_NAME_EMPTY_FILE)
 
     assert config.node_url is None
+
+
+def test_get_node_url_without_file():
+    """
+    Case: get node url without configuration file.
+    Expect: none is returned.
+    """
+    config = ConfigFile().parse()
+
+    assert config.node_url is None
