@@ -160,6 +160,31 @@ $ remme node get-configs --node-url=node-genesis-testnet.remme.io
 }
 ```
 
+Get the node peers — ``remme node get-peers``:
+
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-peers --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "peers": [
+            "tcp://127.0.0.1:8800",
+            "tcp://node-2-testnet.remme.io:8800",
+            "tcp://127.0.0.1:8800",
+            "tcp://node-9-testnet.remme.io:8800",
+            "tcp://node-4-testnet.remme.io:8800",
+            "tcp://node-3-testnet.remme.io:8800",
+            "tcp://node-1-testnet.remme.io:8800",
+            "tcp://127.0.0.1:8800",
+            "tcp://node-7-testnet.remme.io:8800"
+        ]
+    }
+}
+```
+
 ## Development
 
 <h3 id="development-requirements">Requirements</h4>
