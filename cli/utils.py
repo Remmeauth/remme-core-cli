@@ -5,6 +5,8 @@ import json
 
 import click
 
+from cli.config import ConfigFile
+
 
 def dict_to_pretty_json(data):
     r"""
@@ -54,7 +56,12 @@ def default_node_url():
     """
     Get default node URL.
     """
-    return 'localhost'
+    config_parameters = ConfigFile().parse()
+
+    if config_parameters.node_url is None:
+        return 'localhost'
+
+    return config_parameters.node_url
 
 
 async def return_async_value(value):

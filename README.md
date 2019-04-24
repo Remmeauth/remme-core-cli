@@ -70,7 +70,7 @@ node-url: node-genesis-testnet.remme.io
 Try it out by downloading the example of the configuration file to the home directory.
 
 ```bash
-$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+$ curl -L https://git.io/fj3Mi > ~/.remme-core-cli.yml
 ```
 
 ### Service
