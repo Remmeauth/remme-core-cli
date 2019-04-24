@@ -17,6 +17,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Public key](#public-key)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -135,6 +136,29 @@ $ remme account transfer-tokens \
 {
     "result": {
         "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+### Public key
+
+Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
+
+| Arguments | Type   | Required | Description                                                           |
+| :-------: | :----: | :------: | --------------------------------------------------------------------- |
+| address   | String | Yes      | Account address to get a list of the addresses of the public keys by. |
+| node-url  | String | No       | Node URL to apply a command to.                                       |
+
+```bash
+$ remme public-key get-list \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "public_key_addresses": [
+            "a23be10b3aad1b4a98f338c71d6dcdb2aa2f296c7e31fb400615e335dc10dd1d4f62bf",
+            "a23be14b362514d624c1985277005327f6fc40413fb090eee6fccb673a32c9809060ff"
+        ]
     }
 }
 ```

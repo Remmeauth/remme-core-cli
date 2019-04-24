@@ -4,6 +4,7 @@ Provide implementation of the command line interface to interact with Remme-core
 import click
 
 from cli.account.cli import account_commands
+from cli.public_key.cli import public_key_commands
 
 
 @click.group()
@@ -17,3 +18,4 @@ def cli():
 
 
 cli.add_command(account_commands)
+cli.add_command(public_key_commands)
