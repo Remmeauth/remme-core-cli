@@ -119,12 +119,12 @@ $ remme account get-balance \
 
 Transfer tokens to address — ``remme account transfer-tokens``:
 
-| Arguments        | Type    |  Required | Description                                    |
-| :--------------: | :-----: | :-------: | ---------------------------------------------- |
-| private-key-from | String  |  Yes      | Account's private key to transfer tokens from. |
-| address-to       | String  |  Yes      | Account address to transfer tokens to.         |
-| amount           | Integer |  Yes      | Amount to transfer.                            |
-| node-url         | String  |  No       | Node URL to apply a command to.                |
+| Arguments   | Type    |  Required | Description                                    |
+| :---------: | :-----: | :-------: | ---------------------------------------------- |
+| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
+| amount      | Integer |  Yes      | Amount to transfer.                            |
+| node-url    | String  |  No       | Node URL to apply a command to.                |
 
 ```bash
 $ remme account transfer-tokens \

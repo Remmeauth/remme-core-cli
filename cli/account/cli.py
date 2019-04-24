@@ -14,7 +14,7 @@ from cli.account.help import (
     ADDRESS_ARGUMENT_HELP_MESSAGE,
     ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
     AMOUNT_ARGUMENT_HELP_MESSAGE,
-    PRIVATE_KEY_FROM_ARGUMENT_HELP_MESSAGE,
+    PRIVATE_KEY_ARGUMENT_HELP_MESSAGE,
 )
 from cli.account.service import Account
 from cli.constants import (
@@ -68,7 +68,7 @@ def get_balance(address, node_url):
     print_result(result=result)
 
 
-@click.option('--private-key', type=str, required=True, help=PRIVATE_KEY_FROM_ARGUMENT_HELP_MESSAGE)
+@click.option('--private-key', type=str, required=True, help=PRIVATE_KEY_ARGUMENT_HELP_MESSAGE)
 @click.option('--address-to', type=str, required=True, help=ADDRESS_TO_ARGUMENT_HELP_MESSAGE)
 @click.option('--amount', type=int, required=True, help=AMOUNT_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())

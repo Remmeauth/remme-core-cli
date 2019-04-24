@@ -4,6 +4,7 @@ Provide tests for command line interface's account transfer tokens command.
 import json
 import re
 
+import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
@@ -43,9 +44,9 @@ def test_transfer_tokens():
     assert re.match(pattern=BATCH_ID_REGEXP, string=batch_id) is not None
 
 
-def test_transfer_tokens_invalid_private_key_from():
+def test_transfer_tokens_invalid_private_key():
     """
-    Case: transfer tokens to address with invalid private key from.
+    Case: transfer tokens to address with invalid private key.
     Expect: the following private key is invalid error message.
     """
     invalid_private_key = 'b03e31d2f310305eab249133b53b5fb327'
@@ -132,6 +133,38 @@ def test_transfer_tokens_invalid_amount():
 
     assert INCORRECT_ENTERED_COMMAND_CODE == result.exit_code
     assert f'{invalid_amount} is not a valid integer' in result.output
+
+
+@pytest.mark.parametrize('insufficient_amount', [-1, 0])
+def test_transfer_tokens_with_insufficient_amount(insufficient_amount):
+    """
+    Case: transfer tokens to address with insufficient amount.
+    Expect: amount must be greater than 0 error message.
+    """
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'account',
+        'transfer-tokens',
+        '--private-key',
+        PRIVATE_KEY_FOR_TESTING,
+        '--address-to',
+        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        '--amount',
+        insufficient_amount,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error = {
+        'errors': {
+            'amount': [
+                f'Amount must be greater than 0.',
+            ],
+        },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
 
 
 def test_transfer_tokens_without_node_url(mocker, sent_transaction):
