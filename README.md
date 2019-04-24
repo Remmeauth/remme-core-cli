@@ -120,16 +120,16 @@ $ remme account get-balance \
 
 Transfer tokens to address — ``remme account transfer-tokens``:
 
-| Arguments        | Type    |  Required | Description                                    |
-| :--------------: | :-----: | :-------: | ---------------------------------------------- |
-| private-key-from | String  |  Yes      | Account's private key to transfer tokens from. |
-| address-to       | String  |  Yes      | Account address to transfer tokens to.         |
-| amount           | Integer |  Yes      | Amount to transfer.                            |
-| node-url         | String  |  No       | Node URL to apply a command to.                |
+| Arguments   | Type    |  Required | Description                                    |
+| :---------: | :-----: | :-------: | ---------------------------------------------- |
+| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
+| amount      | Integer |  Yes      | Amount to transfer.                            |
+| node-url    | String  |  No       | Node URL to apply a command to.                |
 
 ```bash
 $ remme account transfer-tokens \
-      --private-key-from=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
+      --private-key=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
       --address-to=112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202 \
       --amount=1000 \
       --node-url=node-genesis-testnet.remme.io
