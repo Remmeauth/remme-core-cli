@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's public key commands.
+Provide tests for command line interface's public key get public keys commands.
 """
 import json
 import re
@@ -13,10 +13,7 @@ from cli.constants import (
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
-from cli.utils import (
-    dict_to_pretty_json,
-    return_async_value,
-)
+from cli.utils import dict_to_pretty_json
 
 ADDRESS_PRESENTED_ON_THE_TEST_NODE = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf'
 
@@ -36,9 +33,11 @@ def test_get_public_keys():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    public_keys = json.loads(result.output).get('result').get('public_keys')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
-    for public_key in json.loads(result.output):
+    for public_key in public_keys:
         assert re.match(pattern=ADDRESS_REGEXP, string=public_key) is not None
 
 
@@ -54,8 +53,16 @@ def test_get_public_keys_invalid_address():
         'public-key', 'get-list', '--address', invalid_address, '--node-url', NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    expected_error = {
+        'errors': {
+            'address': [
+                f'The following address `{invalid_address}` is invalid.',
+            ],
+        },
+    }
+
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert f'The following address `{invalid_address}` is invalid.' in result.output
+    assert dict_to_pretty_json(expected_error) in result.output
 
 
 def test_get_public_keys_without_node_url(mocker):
@@ -63,21 +70,25 @@ def test_get_public_keys_without_node_url(mocker):
     Case: get a list of the public keys by address without passing node URL.
     Expect: list of public keys is returned from node on localhost.
     """
-    expected_list_of_public_keys = [
+    list_of_public_keys = [
         'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b',
         'a23be17265e8393dd9ae7a46f1be662f86130c434fd54576a7d92b678e5c30de4f677f',
     ]
 
-    mock_get_list = mocker.patch('cli.public_key.service.PublicKey.get_list')
-    mock_get_list.return_value = return_async_value(expected_list_of_public_keys)
+    mock_public_key_get_public_keys = mocker.patch('cli.public_key.service.loop.run_until_complete')
+    mock_public_key_get_public_keys.return_value = list_of_public_keys
 
     runner = CliRunner()
     result = runner.invoke(cli, ['public-key', 'get-list', '--address', ADDRESS_PRESENTED_ON_THE_TEST_NODE])
 
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    expected_result = {
+        'result': {
+            'public_keys': list_of_public_keys,
+        },
+    }
 
-    for public_key in json.loads(result.output):
-        assert re.match(pattern=ADDRESS_REGEXP, string=public_key) is not None
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert expected_result == json.loads(result.output)
 
 
 def test_get_public_keys_invalid_node_url():
@@ -98,9 +109,11 @@ def test_get_public_keys_invalid_node_url():
     ])
 
     expected_error = {
-        'node_url': [
-            f'The following node URL `{invalid_node_url}` is invalid.',
-        ],
+        'errors': {
+            'node_url': [
+                f'The following node URL `{invalid_node_url}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -125,9 +138,11 @@ def test_get_public_keys_node_url_with_http():
     ])
 
     expected_error = {
-        'node_url': [
-            f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-        ],
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -152,9 +167,11 @@ def test_get_public_keys_node_url_with_https():
     ])
 
     expected_error = {
-        'node_url': [
-            f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
-        ],
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

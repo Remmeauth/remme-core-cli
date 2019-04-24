@@ -12,7 +12,7 @@ from cli.constants import (
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.public_key.forms import GetPublicKeysForm
-from cli.public_key.help import GET_PUBLIC_KEYS_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.public_key.help import ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.public_key.service import PublicKey
 from cli.utils import (
     default_node_url,
@@ -31,7 +31,7 @@ def public_key_commands():
     pass
 
 
-@click.option('--address', type=str, required=True, help=GET_PUBLIC_KEYS_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', type=str, required=True, help=ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @public_key_commands.command('get-list')
 def get_public_keys(address, node_url):
@@ -50,11 +50,12 @@ def get_public_keys(address, node_url):
     address = arguments.get('address')
     node_url = arguments.get('node_url')
 
-    remme = Remme(network_config={
-        'node_address': str(node_url) + ':8080',
-    })
+    remme = Remme(network_config={'node_address': str(node_url) + ':8080'})
 
-    public_key_service = PublicKey(service=remme)
-    addresses = loop.run_until_complete(public_key_service.get_list(address=address))
+    result, errors = PublicKey(service=remme).get_list(address=address)
 
-    print_result(result=addresses)
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
