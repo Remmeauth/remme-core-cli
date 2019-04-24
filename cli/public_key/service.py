@@ -25,12 +25,24 @@ class PublicKey:
         """
         self.service = service
 
-    async def get_info(self, address):
+    async def get(self, address):
         """
-        Get information about public key by public key address.
+        Get information about public key address by public key address.
         """
-        public_key_info = loop.run_until_complete(self.service.public_key_storage.get_info(public_key_address=address))
+        return await self.service.public_key_storage.get_info(public_key_address=address)
+
+    def get_list(self, address):
+        """
+        Get a list of the addresses of the public keys by account address.
+        """
+        try:
+            public_key_addresses = loop.run_until_complete(
+                self.service.public_key_storage.get_account_public_keys(address=address),
+            )
+
+        except Exception as error:
+            return None, str(error)
 
         return {
-            'result': public_key_info,
-        }, None
+                   'public_key_addresses': public_key_addresses,
+               }, None

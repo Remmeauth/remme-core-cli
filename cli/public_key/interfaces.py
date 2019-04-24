@@ -8,8 +8,14 @@ class PublicKeyInterface:
     Implements public key interface.
     """
 
-    async def get_info(self, address):
+    async def get(self, address):
         """
-        Get information about public key by public key address.
+        Get information about public key address by public key address.
+        """
+        pass
+
+    def get_list(self, address):
+        """
+        Get a list of the addresses of the public keys by account address.
         """
         pass

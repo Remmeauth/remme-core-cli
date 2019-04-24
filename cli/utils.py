@@ -5,6 +5,8 @@ import json
 
 import click
 
+from cli.config import ConfigFile
+
 
 def dict_to_pretty_json(data):
     r"""
@@ -34,7 +36,7 @@ def print_result(result):
     """
     Print successful result to the terminal.
     """
-    return click.echo(dict_to_pretty_json(result))
+    return click.echo(dict_to_pretty_json({'result': result}))
 
 
 def print_errors(errors):
@@ -47,14 +49,19 @@ def print_errors(errors):
     References:
         - https://click.palletsprojects.com/en/7.x/utils/#ansi-colors
     """
-    click.secho(dict_to_pretty_json(errors), blink=True, bold=True, fg='red')
+    click.secho(dict_to_pretty_json({'errors': errors}), blink=True, bold=True, fg='red')
 
 
 def default_node_url():
     """
     Get default node URL.
     """
-    return 'localhost'
+    config_parameters = ConfigFile().parse()
+
+    if config_parameters.node_url is None:
+        return 'localhost'
+
+    return config_parameters.node_url
 
 
 async def return_async_value(value):

@@ -75,3 +75,25 @@ def create_empty_config_file():
     yield
 
     os.remove(path_to_copy_fixture_file_to)
+
+
+class SentTransaction:
+    """
+    Impose transaction data transfer object.
+    """
+
+    @property
+    def batch_id(self):
+        """
+        Get batch identifier of the sent transaction.
+        """
+        return '37809770b004dcbc7dae116fd9f17428255ddddee3304c9b3d14609d2792e78f' \
+               '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
+
+
+@pytest.fixture()
+def sent_transaction():
+    """
+    Get sent transaction fixture.
+    """
+    return SentTransaction()

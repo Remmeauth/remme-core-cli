@@ -33,7 +33,7 @@
 
 ### Installation
 
-Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
 ```bash
 $ pip3 install remme-core-cli
@@ -46,7 +46,8 @@ $ pip3 install remme-core-cli
 You can use the following list of the addresses of the nodes to execute commands to:
 
 - `node-genesis-testnet.remme.io`,
-- `node-6-testnet.remme.io`.
+- `node-6-testnet.remme.io`,
+- `node-1-testnet.remme.io`.
 
 ### Configuration file
 
@@ -70,7 +71,7 @@ node-url: node-genesis-testnet.remme.io
 Try it out by downloading the example of the configuration file to the home directory.
 
 ```bash
-$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+$ curl -L https://git.io/fj3Mi > ~/.remme-core-cli.yml
 ```
 
 ### Service
@@ -110,7 +111,56 @@ Get balance of the account by its address — ``remme account get-balance``:
 $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
-368440.0
+{
+    "result": {
+        "balance": 368440.0
+    }
+}
+```
+
+Transfer tokens to address — ``remme account transfer-tokens``:
+
+| Arguments   | Type    |  Required | Description                                    |
+| :---------: | :-----: | :-------: | ---------------------------------------------- |
+| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
+| amount      | Integer |  Yes      | Amount to transfer.                            |
+| node-url    | String  |  No       | Node URL to apply a command to.                |
+
+```bash
+$ remme account transfer-tokens \
+      --private-key=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
+      --address-to=112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202 \
+      --amount=1000 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+### Public key
+
+Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
+
+| Arguments | Type   | Required | Description                                                           |
+| :-------: | :----: | :------: | --------------------------------------------------------------------- |
+| address   | String | Yes      | Account address to get a list of the addresses of the public keys by. |
+| node-url  | String | No       | Node URL to apply a command to.                                       |
+
+```bash
+$ remme public-key get-list \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "public_key_addresses": [
+            "a23be10b3aad1b4a98f338c71d6dcdb2aa2f296c7e31fb400615e335dc10dd1d4f62bf",
+            "a23be14b362514d624c1985277005327f6fc40413fb090eee6fccb673a32c9809060ff"
+        ]
+    }
+}
 ```
 
 ### Public key
@@ -164,7 +214,7 @@ Run the ``Docker container`` with the project source code in the background mode
 
 ```bash
 $ docker build -t remme-core-cli . -f Dockerfile.development
-$ docker run -d -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
+$ docker run -d --network host -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
 ```
 
 Enter the container bash:
