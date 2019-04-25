@@ -8,7 +8,7 @@ class AtomicSwapInterface:
     Implements atomic swap interface.
     """
 
-    async def get(self):
+    def get_public_key(self):
         """
         Get public key of atomic swap.
         """

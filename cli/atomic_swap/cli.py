@@ -1,14 +1,22 @@
 """
 Provide implementation of the command line interface's atomic swap commands.
 """
-import asyncio
+import sys
+
 import click
 from remme import Remme
 
+from cli.atomic_swap.forms import GetPublicKeyForm
 from cli.atomic_swap.service import AtomicSwap
-from cli.constants import NODE_URL_ARGUMENT_HELP_MESSAGE
-
-loop = asyncio.get_event_loop()
+from cli.constants import (
+    FAILED_EXIT_FROM_COMMAND_CODE,
+    NODE_URL_ARGUMENT_HELP_MESSAGE,
+)
+from cli.utils import (
+    default_node_url,
+    print_errors,
+    print_result,
+)
 
 
 @click.group('atomic-swap', chain=True)
@@ -19,19 +27,30 @@ def atomic_swap_commands():
     pass
 
 
-@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @atomic_swap_commands.command('get-public-key')
 def get_public_key(node_url):
     """
     Get public key of atomic swap.
     """
-    if node_url is None:
-        node_url = 'localhost'
+    arguments, errors = GetPublicKeyForm().load({
+        'node_url': node_url,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    node_url = arguments.get('node_url')
 
     remme = Remme(network_config={
         'node_address': str(node_url) + ':8080',
     })
 
-    public_key = loop.run_until_complete(AtomicSwap(service=remme).get())
+    result, errors = AtomicSwap(service=remme).get_public_key()
 
-    click.echo(public_key)
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
