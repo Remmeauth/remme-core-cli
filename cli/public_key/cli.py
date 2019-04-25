@@ -36,7 +36,7 @@ def public_key_commands():
 
 @click.option('--address', type=str, required=True, help=PUBLIC_KEY_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
-@public_key_commands.command('get-single')
+@public_key_commands.command('get-info')
 def get_public_key_info(address, node_url):
     """
     Get information about public key address by public key address.
@@ -63,7 +63,7 @@ def get_public_key_info(address, node_url):
         print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    print_result(result=result.data)
+    print_result(result=result)
 
 
 @click.option('--address', type=str, required=True, help=ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)

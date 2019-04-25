@@ -4,6 +4,7 @@ Provide implementation of the public key.
 import asyncio
 
 from accessify import implements
+from aiohttp_json_rpc import RpcGenericServerDefinedError
 
 from cli.public_key.interfaces import PublicKeyInterface
 
@@ -25,11 +26,24 @@ class PublicKey:
         """
         self.service = service
 
-    async def get(self, address):
+    def get(self, address):
         """
         Get information about public key address by public key address.
         """
-        return await self.service.public_key_storage.get_info(public_key_address=address)
+        try:
+            public_key_info = loop.run_until_complete(
+                self.service.public_key_storage.get_info(public_key_address=address),
+            )
+
+        except RpcGenericServerDefinedError as error:
+            return None, str(error.message)
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'public_key_info': public_key_info.data,
+        }, None
 
     def get_list(self, address):
         """
@@ -44,5 +58,5 @@ class PublicKey:
             return None, str(error)
 
         return {
-                   'public_key_addresses': public_key_addresses,
-               }, None
+            'public_key_addresses': public_key_addresses,
+        }, None

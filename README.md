@@ -163,30 +163,32 @@ $ remme public-key get-list \
 }
 ```
 
-### Public key
+Get information about public key address by public key address — ``remme public-key get-info``:
 
-Get information about public key by public key address — ``remme public-key get-single``:
-
-| Arguments | Type   | Required | Description                                         |
-| :-------: | :----: | :------: | --------------------------------------------------- |
-| address   | String |  Yes     | Address to get information about public key by.     |
-| node-url  | String |  No      | Apply the command to the specified node by its URL. |
+| Arguments | Type   | Required | Description                                                |
+| :-------: | :----: | :------: | ---------------------------------------------------------- |
+| address   | String | Yes     | Public key address to get information about public key by. |
+| node-url  | String | No      | Node URL to apply a command to.                            |
 
 ```bash
-$ remme public-key get-single \
-      --address=a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b \
+$ remme public-key get-info \
+      --address=a23be149969381eadcacaf9e4e8914296f1107119cfe1b7d79c0e6027a02822dfd19b7 \
       --node-url=node-genesis-testnet.remme.io
 {
-    "address": "a23be1ae97d605bcbe61c312d9a443c010dbe7e6a0761e24b10d5368829ab0a7d36acc",
-    "entity_hash": "13517cee1694346b584c08f5d84cc584b407043ef6a682942b1e18f0466cf1e2dede1756499ac8a2ee495cba258c609ea6147b4daa15225ba60ec5ffca419bd6",
-    "entity_hash_signature": "6e081607aac18e63a44265e0054fb3e60d3791ac2292925c56d54df216396a3af42e96557a0da09b236cdb5970ca5272473dcc9d71f16978e09a26bfb5e96562d8002473cfdf29b4c04dcc97cd4fa9d768ea13bd04b7479fe2f5965cfb0f944848511c9f597eacd4a23a1fd66aabfa95f45130fae1ae2507e8ed8d8ee308c77a042c86bbc476e2d3ed46c4b3c2a86c87470bb94c6e266cfd44bc513d04e5523c7faf08887df4e37f2e31bda1bf403cb7bb3145602cd56dea7965e6e417d86620704a68013e95bbda6a81e3dfb86aa489fa060e78bf9edfc4329ffc1f8484ecc610fccb5302499e1f18d0e2584db9c23cdb4b0485ccda7cab17896b8fec28c851",
-    "is_revoked": false,
-    "is_valid": true,
-    "owner_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
-    "public_key": "30820122300d06092a864886f70d01010105000382010f003082010a028201010098ed61c659566b05d4017a0b59b7ce15f6be8432a470713cf3f0ac40b9ded6b65c227704c9bbde4f41a81a380c1ebadb771d1295418805eb16d514c0eb8a8747d08bb1cb5269d5ecb1152d64a8d8bb14836589f6babce22c2deac7dc6b80fcf285c74b67c5ccaf7464df47d10dccecf02d8c4ed9924a8f4ee0df8661d9378fdb0a42355eda8128e88f7871ac5ea7c2605afa1b2b400e1a13b9f9fcf037aa7defcfe2abdcc4b9635d8601d1755660c0838fb2e10c35a88e7b9c1fc89db58cb6fa701a8a80f3dbbf587c1af43e7029e4bc79a26012cb9534d66a818c68acb9707a1a1a7c02b781df4928540053693696fb058d1935fed35cf307c362e7f601710b0203010001",
-    "type": "rsa",
-    "valid_from": 1554753277,
-    "valid_to": 1585857277
+    "result": {
+        "public_key_info": {
+            "address": "a23be1003e0b0a65edd19b057c5f9b20c7e0571ff07634b5936209048b00aefb711ba0",
+            "entity_hash": "3409ab9912c4bbb900648f327f62a5d8a45ff5dc52f437aad44b75b5c4f7a95bcac6b7163ffbaa22bbf87dcb77805940e80fab785d95685e68b4f9e8f559a7ea",
+            "entity_hash_signature": "71fd79a7d095a917fa37d720001c4ca81bb279919130685022136e579a2b11b610c734b024c6f0d5751ad5c9701aa902d7f0adf536d14f45cb2feb0ba20c347d13c0ff8c2de7f16d59c2952b45ed4378238e3fd1d2b6948e9ff61edf6049cc9c1464a4526f24f635140953acb2f29f76d5bdeb1fc15d99279e3a519a79a56fdf8a8cd522a757eb4e64e6f3ff18c13d7c179a5a0967b823e65884a125aa298dda8801db1f38fdb8aeff4d60a794d00d3f171649d2c3c200d101d3a59819a536a144b95457c41370abcfb05f6fd57d2e4c69bd9f4b14adcd1796e12a3036147d615e6e6d2e275e7e9eafd228ddaf2863bf5ea9a0b4e7411f388d35cbc993b5a446",
+            "is_revoked": false,
+            "is_valid": true,
+            "owner_public_key": "02c172f9a27512c11e2d49fd41adbcb2151403bd1582e8cd94a5153779c2107092",
+            "public_key": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100c1bc4b0de0473683444c463a95a17c143962a20b5fb531bca52eef7a9b617e6232727048bf1209b0eb96aa37f85adb08dc1d3d1289bfb8b01721a2d46081db29a8bab3c25097a9a5aafbc465304f18463847008a8a6b5f35d440ef49638f88efcd4afda7cd9ea551561174d37d9947a08f8efa9314d88e78b3db071fc1d16a216fbea0cf29b559d304b52f505a60d9421119fc10bdbec899f1c43d6c2e05a285e50bc4f64bed8804012ef164f08f86f67182b3d5204654f1dc95a8db99e43a0d55a61b34e41a602f1638c623b84988724fff172aff9f658993939b2f4f3a179560ef261c6dfab40f005b96e042a61c23c2c282f03775b35bc359d5a6443db1cb0203010001",
+            "type": "rsa",
+            "valid_from": 1556123507,
+            "valid_to": 1587659507
+        }
+    }
 }
 ```
 

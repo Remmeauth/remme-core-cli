@@ -12,7 +12,7 @@ from cli.constants import (
     ADDRESS_REGEXP,
     DOMAIN_NAME_REGEXP,
     PRIVATE_KEY_REGEXP,
-    PUBLIC_KEY_REGEXP,
+    PUBLIC_KEY_ADDRESS_REGEXP,
 )
 
 
@@ -98,7 +98,7 @@ class PublicKeyAddressField(fields.Field):
         """
         public_key_address = value
 
-        if re.match(pattern=PUBLIC_KEY_REGEXP, string=public_key_address) is None:
+        if re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key_address) is None:
             raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
 
         return value

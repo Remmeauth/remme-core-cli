@@ -7,10 +7,10 @@ import re
 from click.testing import CliRunner
 
 from cli.constants import (
-    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
+    PUBLIC_KEY_ADDRESS_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -38,7 +38,7 @@ def test_get_public_keys():
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
     for public_key in public_key_addresses:
-        assert re.match(pattern=ADDRESS_REGEXP, string=public_key) is not None
+        assert re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key) is not None
 
 
 def test_get_public_keys_invalid_address():
