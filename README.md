@@ -17,6 +17,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Node](#node)
     * [Public key](#public-key)
   * [Development](#development)
     * [Requirements](#development-requirements)
@@ -136,6 +137,26 @@ $ remme account transfer-tokens \
 {
     "result": {
         "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+### Node
+
+Get node configurations — ``remme node get-configs``:
+
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-configs --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "configurations": {
+            "node_address": "1168296ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "node_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+        }
     }
 }
 ```
