@@ -7,8 +7,8 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    LATEST_RELEASE_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
+    RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -24,14 +24,14 @@ def test_get_node_configs():
         'node',
         'get-configs',
         '--node-url',
-        LATEST_RELEASE_NODE_IP_ADDRESS_FOR_TESTING,
+        RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
     ])
 
     expected_node_configurations = {
         'result': {
             'configurations': {
-                'node_address': '11682919ed54658edf965f955a5783e6a653ce3bb411b99c8afe9f6e5840af45171774',
-                'node_public_key': '03725231d64d1b379a1d855d0e7614684744ba915bd657e398f5a5cefc9ced896d',
+                'node_address': '116829f18683f6c30146559c9cb8d5d302545019ff00f2ab72500df99bceb7b81a1dad',
+                'node_public_key': '0350e9cf23966ad404dc56438fd01ec11a913446cfd7c4fb8d95586a58718431e7',
             },
         },
     }

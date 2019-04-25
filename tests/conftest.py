@@ -102,8 +102,8 @@ class NodeConfigurations:
         Get node configurations.
         """
         return {
-            'node_address': '11682919ed54658edf965f955a5783e6a653ce3bb411b99c8afe9f6e5840af45171774',
-            'node_public_key': '03725231d64d1b379a1d855d0e7614684744ba915bd657e398f5a5cefc9ced896d',
+            'node_address': '116829f18683f6c30146559c9cb8d5d302545019ff00f2ab72500df99bceb7b81a1dad',
+            'node_public_key': '0350e9cf23966ad404dc56438fd01ec11a913446cfd7c4fb8d95586a58718431e7',
         }
 
 

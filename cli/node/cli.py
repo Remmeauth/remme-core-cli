@@ -1,7 +1,6 @@
 """
 Provide implementation of the command line interface's node commands.
 """
-import asyncio
 import sys
 
 import click
@@ -18,8 +17,6 @@ from cli.utils import (
     print_errors,
     print_result,
 )
-
-loop = asyncio.get_event_loop()
 
 
 @click.group('node', chain=True)
