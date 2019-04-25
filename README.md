@@ -13,9 +13,12 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
+    * [Nodes](#nodes)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Node](#node)
+    * [Public key](#public-key)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -31,13 +34,21 @@
 
 ### Installation
 
-Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
 ```bash
 $ pip3 install remme-core-cli
 ```
 
 ## Usage
+
+### Nodes
+
+You can use the following list of the addresses of the nodes to execute commands to:
+
+- `node-genesis-testnet.remme.io`,
+- `node-6-testnet.remme.io`,
+- `node-1-testnet.remme.io`.
 
 ### Configuration file
 
@@ -61,7 +72,7 @@ node-url: node-genesis-testnet.remme.io
 Try it out by downloading the example of the configuration file to the home directory.
 
 ```bash
-$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+$ curl -L https://git.io/fj3Mi > ~/.remme-core-cli.yml
 ```
 
 ### Service
@@ -92,16 +103,85 @@ Options:
 
 Get balance of the account by its address — ``remme account get-balance``:
 
-| Arguments | Type   |  Required | Description                                         |
-| :-------: | :----: | :-------: | --------------------------------------------------- |
-| address   | String |  Yes      | Get balance of the account by its address.          |
-| node-url  | String |  No       | Apply the command to the specified node by its URL. |
+| Arguments | Type   |  Required | Description                          |
+| :-------: | :----: | :-------: | ------------------------------------ |
+| address   | String |  Yes      | Account address to get a balance by. |
+| node-url  | String |  No       | Node URL to apply a command to.      |
 
 ```bash
 $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
-368440.0
+{
+    "result": {
+        "balance": 368440.0
+    }
+}
+```
+
+Transfer tokens to address — ``remme account transfer-tokens``:
+
+| Arguments   | Type    |  Required | Description                                    |
+| :---------: | :-----: | :-------: | ---------------------------------------------- |
+| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
+| amount      | Integer |  Yes      | Amount to transfer.                            |
+| node-url    | String  |  No       | Node URL to apply a command to.                |
+
+```bash
+$ remme account transfer-tokens \
+      --private-key=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
+      --address-to=112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202 \
+      --amount=1000 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+### Node
+
+Get node configurations — ``remme node get-configs``:
+
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-configs --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "configurations": {
+            "node_address": "1168296ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "node_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+        }
+    }
+}
+```
+
+### Public key
+
+Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
+
+| Arguments | Type   | Required | Description                                                           |
+| :-------: | :----: | :------: | --------------------------------------------------------------------- |
+| address   | String | Yes      | Account address to get a list of the addresses of the public keys by. |
+| node-url  | String | No       | Node URL to apply a command to.                                       |
+
+```bash
+$ remme public-key get-list \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "public_key_addresses": [
+            "a23be10b3aad1b4a98f338c71d6dcdb2aa2f296c7e31fb400615e335dc10dd1d4f62bf",
+            "a23be14b362514d624c1985277005327f6fc40413fb090eee6fccb673a32c9809060ff"
+        ]
+    }
+}
 ```
 
 ### Atomic Swap
@@ -141,7 +221,7 @@ Run the ``Docker container`` with the project source code in the background mode
 
 ```bash
 $ docker build -t remme-core-cli . -f Dockerfile.development
-$ docker run -d -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
+$ docker run -d --network host -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
 ```
 
 Enter the container bash:
@@ -200,7 +280,11 @@ $ git clone https://github.com/Remmeauth/remme-core-cli && cd remme-core-cli
 $ pip3 install -r requirements.txt -r requirements-dev.txt -r requirements-tests.txt
 ```
 
-When you make changes, ensure your code pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16) and is covered by tests using [pytest](https://docs.pytest.org/en/latest).
+When you make changes, ensure your code:
+
+* pass [the checkers](https://github.com/Remmeauth/remme-core-cli/blob/develop/.travis.yml#L16),
+* is covered by tests using [pytest](https://docs.pytest.org/en/latest),
+* follow team [code style](https://github.com/dmytrostriletskyi/nimble-python-code-style-guide).
 
 If you are new for the contribution, please read:
 
@@ -211,10 +295,6 @@ If you are new for the contribution, please read:
 ### Request pull request's review
 
 If you want to your pull request to be review, ensure you:
-- `have wrote the description of the pull request`,
-- `have added at least 2 reviewers`,
-- `continuous integration has been passed`.
-
-![Example of the description and reviewers](https://habrastorage.org/webt/t1/py/cu/t1pycu1bxjslyojlpy50mxb5yie.png)
-
-![Example of the CI which passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png)
+1. [Branch isn't out-of-date with the base branch](https://habrastorage.org/webt/ux/gi/wm/uxgiwmnft08fubvjfd6d-8pw2wq.png).
+2. [Have written the description of the pull request and have added at least 2 reviewers](https://camo.githubusercontent.com/55c309334a8b61a4848a6ef25f9b0fb3751ae5e9/68747470733a2f2f686162726173746f726167652e6f72672f776562742f74312f70792f63752f7431707963753162786a736c796f6a6c707935306d7862357969652e706e67).
+3. [Continuous integration has been passed](https://habrastorage.org/webt/oz/fl/-n/ozfl-nl-jynrh7ofz8yuz9_gapy.png).
