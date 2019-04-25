@@ -2,22 +2,22 @@
 Provide tests for command line interface's public key commands.
 """
 import json
-# import re
+import re
 
 from click.testing import CliRunner
 
 from cli.constants import (
-    # ADDRESS_REGEXP,
-    # HEADER_SIGNATURE_REGEXP,
+    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
+    HEADER_SIGNATURE_REGEXP,
+    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
-    # PUBLIC_KEY_REGEXP,
-    RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
+    PUBLIC_KEY_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = 'a23be149969381eadcacaf9e4e8914296f1107119cfe1b7d79c0e6027a02822dfd19b7'
+PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = 'a23be17addad8eeb5177a395ea47eb54b4a646f8c570f4a2ecc0b1d2f6241c6845181b'
 
 
 def test_get_public_key_info():
@@ -32,20 +32,20 @@ def test_get_public_key_info():
         '--address',
         PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
     public_key_info = json.loads(result.output).get('result').get('public_key_info')
 
-    # assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    #
-    # assert re.match(pattern=ADDRESS_REGEXP, string=public_key_info.get('address')) is not None
-    # assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=public_key_info.get('entity_hash')) is not None
-    # assert re.match(pattern=PUBLIC_KEY_REGEXP, string=public_key_info.get('owner_public_key')) is not None
-    # assert isinstance(public_key_info.get('valid_from'), int)
-    # assert isinstance(public_key_info.get('valid_to'), int)
-    # assert isinstance(public_key_info.get('is_revoked'), bool)
-    # assert isinstance(public_key_info.get('is_valid'), bool)
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+
+    assert re.match(pattern=ADDRESS_REGEXP, string=public_key_info.get('address')) is not None
+    assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=public_key_info.get('entity_hash')) is not None
+    assert re.match(pattern=PUBLIC_KEY_REGEXP, string=public_key_info.get('owner_public_key')) is not None
+    assert isinstance(public_key_info.get('valid_from'), int)
+    assert isinstance(public_key_info.get('valid_to'), int)
+    assert isinstance(public_key_info.get('is_revoked'), bool)
+    assert isinstance(public_key_info.get('is_valid'), bool)
 
 
 def test_get_public_key_info_invalid_address():
@@ -62,7 +62,7 @@ def test_get_public_key_info_invalid_address():
         '--address',
         invalid_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
     expected_error = {
@@ -204,11 +204,11 @@ def test_get_public_key_info_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
     expected_error = {
-        'errors': 'Public key info not found.',
+        'errors': 'Public key info not found',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

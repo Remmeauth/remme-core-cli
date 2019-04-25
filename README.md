@@ -17,6 +17,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Node](#node)
     * [Public key](#public-key)
   * [Development](#development)
     * [Requirements](#development-requirements)
@@ -140,6 +141,26 @@ $ remme account transfer-tokens \
 }
 ```
 
+### Node
+
+Get node configurations — ``remme node get-configs``:
+
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-configs --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "configurations": {
+            "node_address": "1168296ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "node_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+        }
+    }
+}
+```
+
 ### Public key
 
 Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
@@ -167,26 +188,26 @@ Get information about public key address by public key address — ``remme publi
 
 | Arguments | Type   | Required | Description                                                |
 | :-------: | :----: | :------: | ---------------------------------------------------------- |
-| address   | String | Yes     | Public key address to get information about public key by. |
-| node-url  | String | No      | Node URL to apply a command to.                            |
+| address   | String | Yes      | Public key address to get information about public key by. |
+| node-url  | String | No       | Node URL to apply a command to.                            |
 
 ```bash
 $ remme public-key get-info \
-      --address=a23be149969381eadcacaf9e4e8914296f1107119cfe1b7d79c0e6027a02822dfd19b7 \
+      --address=a23be17addad8eeb5177a395ea47eb54b4a646f8c570f4a2ecc0b1d2f6241c6845181b \
       --node-url=node-genesis-testnet.remme.io
 {
     "result": {
         "public_key_info": {
-            "address": "a23be1003e0b0a65edd19b057c5f9b20c7e0571ff07634b5936209048b00aefb711ba0",
-            "entity_hash": "3409ab9912c4bbb900648f327f62a5d8a45ff5dc52f437aad44b75b5c4f7a95bcac6b7163ffbaa22bbf87dcb77805940e80fab785d95685e68b4f9e8f559a7ea",
-            "entity_hash_signature": "71fd79a7d095a917fa37d720001c4ca81bb279919130685022136e579a2b11b610c734b024c6f0d5751ad5c9701aa902d7f0adf536d14f45cb2feb0ba20c347d13c0ff8c2de7f16d59c2952b45ed4378238e3fd1d2b6948e9ff61edf6049cc9c1464a4526f24f635140953acb2f29f76d5bdeb1fc15d99279e3a519a79a56fdf8a8cd522a757eb4e64e6f3ff18c13d7c179a5a0967b823e65884a125aa298dda8801db1f38fdb8aeff4d60a794d00d3f171649d2c3c200d101d3a59819a536a144b95457c41370abcfb05f6fd57d2e4c69bd9f4b14adcd1796e12a3036147d615e6e6d2e275e7e9eafd228ddaf2863bf5ea9a0b4e7411f388d35cbc993b5a446",
+            "address": "a23be10d215132aee9377cfe26b6d301d32da070a799c227fb4701103e5626d48cd6ba",
+            "entity_hash": "1edd6d5b1c722a83e03b17180b888d89ec4c079a0044f074b7c8bb2720cad8ba4e97a80c7edbd24c1824f5312dfd8a0877453394a63410b52c1f16e1d60ef754",
+            "entity_hash_signature": "1322ca51fb6d33e44d2b6c028eb668b5712a5277bbdea089112203e8e950d1c7d02d446291865a2f5fca4c6767fb84583e53205df850f1fc05ea6f22c736635f425b0159881f7f998da52378bf08353d87d2a2c226a7ababea9a245e69be06d54c573a42c3be907ca49589a67b5e9cc4d8ed12cea8546b2df531fd9620f4dc71869d8fa0bfcbef239d9a6e2e3bf12bcac4fd562b22ff408d7b077b75d8e59af0348264a7c9e7e61b4c5f844636a0fbbcfae61955efdf10323a992ea2a1734eb0ee7952519b00e696a02e7460771b0e0887e011b709e88abfda896b68150c08dcf6b4bf7c70f996f6031c13311056ab935ce1fdf63d3f19b5a3ca6ae604c4f12b",
             "is_revoked": false,
             "is_valid": true,
-            "owner_public_key": "02c172f9a27512c11e2d49fd41adbcb2151403bd1582e8cd94a5153779c2107092",
-            "public_key": "30820122300d06092a864886f70d01010105000382010f003082010a0282010100c1bc4b0de0473683444c463a95a17c143962a20b5fb531bca52eef7a9b617e6232727048bf1209b0eb96aa37f85adb08dc1d3d1289bfb8b01721a2d46081db29a8bab3c25097a9a5aafbc465304f18463847008a8a6b5f35d440ef49638f88efcd4afda7cd9ea551561174d37d9947a08f8efa9314d88e78b3db071fc1d16a216fbea0cf29b559d304b52f505a60d9421119fc10bdbec899f1c43d6c2e05a285e50bc4f64bed8804012ef164f08f86f67182b3d5204654f1dc95a8db99e43a0d55a61b34e41a602f1638c623b84988724fff172aff9f658993939b2f4f3a179560ef261c6dfab40f005b96e042a61c23c2c282f03775b35bc359d5a6443db1cb0203010001",
+            "owner_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+            "public_key": "30820122300d06092a864886f70d01010105000382010f003082010a02820101008b29cc5ec32dab21b48b63faf2fd00f88879b9d4286c3cde6218d19263ea8226fce499039968c5f9736149e298bbc56680b516f2d83507d88fb95771445ca3c59bcdbb31bb5993a4e5dfcd2c4bc86328ec76e95e2f4582f9cac8223a2f16a2b14c4358b6fb105e37baf9daa9bd5b708ab204d8015a1ce782e28024eae1801151616c90a3b1aa1916d5b8dd021b3aa4cec77450660841f8619a7234c6199d01ccd43b1d6ff7fa5f50bf80bc06b682b126bdca0753a6830b7a95afca79442ec64fd09ddcc34627dcbdad0c5e66317db98d0e1c24c3f992b83f4b0f97e2b0300a2cb51e33eccf060f26b4e19a88f15216f8c17be5f5e023a1f260f7c93a2a4523ed0203010001",
             "type": "rsa",
-            "valid_from": 1556123507,
-            "valid_to": 1587659507
+            "valid_from": 1556118334,
+            "valid_to": 1587222334
         }
     }
 }
