@@ -91,9 +91,33 @@ class SentTransaction:
                '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
 
 
+class NodeConfigurations:
+    """
+    Impose node configurations data transfer object.
+    """
+
+    @property
+    def data(self):
+        """
+        Get node configurations.
+        """
+        return {
+            'node_address': '116829f18683f6c30146559c9cb8d5d302545019ff00f2ab72500df99bceb7b81a1dad',
+            'node_public_key': '0350e9cf23966ad404dc56438fd01ec11a913446cfd7c4fb8d95586a58718431e7',
+        }
+
+
 @pytest.fixture()
 def sent_transaction():
     """
     Get sent transaction fixture.
     """
     return SentTransaction()
+
+
+@pytest.fixture()
+def node_configurations():
+    """
+    Get node configurations fixture.
+    """
+    return NodeConfigurations()

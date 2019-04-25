@@ -17,6 +17,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Node](#node)
     * [Public key](#public-key)
     * [Transaction](#transaction)
   * [Development](#development)
@@ -141,6 +142,26 @@ $ remme account transfer-tokens \
 }
 ```
 
+### Node
+
+Get node configurations — ``remme node get-configs``:
+
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-configs --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "configurations": {
+            "node_address": "1168296ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "node_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+        }
+    }
+}
+```
+
 ### Public key
 
 Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
@@ -172,7 +193,7 @@ Get list of transaction — ``remme transaction get-list``:
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
 | ids         | String |  No       | Identifiers to get a list of transactions by.          |
 | start       | String |  No       | Identifier to start paging (inclusive).                |
-| limit       | Integer|  No       | Number of transactions to return.                      |
+| limit       | Integer|  No       | Maximum amount of transactions to return.              |
 | head        | String |  No       | Identifier of block's head.                            |
 | reverse     | Bool   |  No       | If transactions should be reversed.                    |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
