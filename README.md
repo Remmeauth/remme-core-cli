@@ -172,18 +172,13 @@ $ remme node get-peers --node-url=node-genesis-testnet.remme.io
 {
     "result": {
         "peers": [
-            "tcp://127.0.0.1:8800",
-            "tcp://node-2-testnet.remme.io:8800",
-            "tcp://127.0.0.1:8800",
+            "tcp://node-22-testnet.remme.io:8800",
             "tcp://node-9-testnet.remme.io:8800",
-            "tcp://node-4-testnet.remme.io:8800",
-            "tcp://node-3-testnet.remme.io:8800",
-            "tcp://node-1-testnet.remme.io:8800",
-            "tcp://127.0.0.1:8800",
-            "tcp://node-7-testnet.remme.io:8800"
+            "tcp://node-29-testnet.remme.io:8800"
         ]
     }
 }
+```
 
 ### Public key
 

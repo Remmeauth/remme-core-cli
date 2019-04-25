@@ -50,5 +50,5 @@ class Node:
             return None, str(error)
 
         return {
-            'peers': peers
+            'peers': peers,
         }, None

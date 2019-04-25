@@ -16,6 +16,6 @@ class NodeInterface:
 
     def get_peers(self):
         """
-        Get node's peers.
+        Get the node's peers.
         """
         pass

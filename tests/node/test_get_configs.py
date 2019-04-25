@@ -2,15 +2,16 @@
 Provide tests for command line interface's node get configurations command.
 """
 import json
+import re
 
 from click.testing import CliRunner
 
 from cli.constants import (
+    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    LATEST_RELEASE_NODE_IP_ADDRESS_FOR_TESTING,
+    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
-    PASSED_EXIT_FROM_COMMAND_CODE,
-    RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
+    PUBLIC_KEY_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -26,20 +27,17 @@ def test_get_node_configs():
         'node',
         'get-configs',
         '--node-url',
-        RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
-    expected_node_configurations = {
-        'result': {
-            'configurations': {
-                'node_address': '116829f18683f6c30146559c9cb8d5d302545019ff00f2ab72500df99bceb7b81a1dad',
-                'node_public_key': '0350e9cf23966ad404dc56438fd01ec11a913446cfd7c4fb8d95586a58718431e7',
-            },
-        },
-    }
+    node_configurations = json.loads(result.output).get('result').get('configurations')
+
+    node_address = node_configurations.get('node_address')
+    node_public_key = node_configurations.get('node_public_key')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_node_configurations == json.loads(result.output)
+    assert re.match(pattern=ADDRESS_REGEXP, string=node_address) is not None
+    assert re.match(pattern=PUBLIC_KEY_REGEXP, string=node_public_key) is not None
 
 
 def test_get_node_configs_without_node_url(mocker, node_configurations):

@@ -7,7 +7,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
+    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -24,23 +24,14 @@ def test_node_get_peers_configs():
         'node',
         'get-peers',
         '--node-url',
-        RELEASE_0_9_0_ALPHA_NODE_ADDRESS,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
-    expected_node_configurations = {
-        'result': {
-            'peers': [
-                'tcp://node-26-testnet.remme.io:8800',
-                'tcp://node-12-testnet.remme.io:8800',
-                'tcp://node-4-testnet.remme.io:8800',
-                'tcp://node-13-testnet.remme.io:8800',
-                'tcp://node-18-testnet.remme.io:8800',
-            ]
-        }
-    }
-
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_node_configurations == json.loads(result.output)
+
+    for peer_url in json.loads(result.output).get('result').get('peers'):
+        assert 'tcp://' in peer_url
+        assert ':8800' in peer_url
 
 
 def test_node_get_peers_configs_without_node_url(mocker):
@@ -68,7 +59,7 @@ def test_node_get_peers_configs_without_node_url(mocker):
     expected_node_configurations = {
         'result': {
             'peers': peers,
-        }
+        },
     }
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
