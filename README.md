@@ -17,6 +17,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Public key](#public-key)
     * [Transaction](#transaction)
   * [Development](#development)
     * [Requirements](#development-requirements)
@@ -33,7 +34,7 @@
 
 ### Installation
 
-Install the package from the [PypI](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
+Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
 ```bash
 $ pip3 install remme-core-cli
@@ -46,7 +47,8 @@ $ pip3 install remme-core-cli
 You can use the following list of the addresses of the nodes to execute commands to:
 
 - `node-genesis-testnet.remme.io`,
-- `node-6-testnet.remme.io`.
+- `node-6-testnet.remme.io`,
+- `node-1-testnet.remme.io`.
 
 ### Configuration file
 
@@ -70,7 +72,7 @@ node-url: node-genesis-testnet.remme.io
 Try it out by downloading the example of the configuration file to the home directory.
 
 ```bash
-$ curl -L https://git.io/fjYZS > ~/.remme-core-cli.yml
+$ curl -L https://git.io/fj3Mi > ~/.remme-core-cli.yml
 ```
 
 ### Service
@@ -110,7 +112,56 @@ Get balance of the account by its address — ``remme account get-balance``:
 $ remme account get-balance \
       --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
       --node-url=node-genesis-testnet.remme.io
-368440.0
+{
+    "result": {
+        "balance": 368440.0
+    }
+}
+```
+
+Transfer tokens to address — ``remme account transfer-tokens``:
+
+| Arguments   | Type    |  Required | Description                                    |
+| :---------: | :-----: | :-------: | ---------------------------------------------- |
+| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
+| amount      | Integer |  Yes      | Amount to transfer.                            |
+| node-url    | String  |  No       | Node URL to apply a command to.                |
+
+```bash
+$ remme account transfer-tokens \
+      --private-key=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
+      --address-to=112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202 \
+      --amount=1000 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+### Public key
+
+Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
+
+| Arguments | Type   | Required | Description                                                           |
+| :-------: | :----: | :------: | --------------------------------------------------------------------- |
+| address   | String | Yes      | Account address to get a list of the addresses of the public keys by. |
+| node-url  | String | No       | Node URL to apply a command to.                                       |
+
+```bash
+$ remme public-key get-list \
+      --address=1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "public_key_addresses": [
+            "a23be10b3aad1b4a98f338c71d6dcdb2aa2f296c7e31fb400615e335dc10dd1d4f62bf",
+            "a23be14b362514d624c1985277005327f6fc40413fb090eee6fccb673a32c9809060ff"
+        ]
+    }
+}
 ```
 
 ### Transaction
@@ -123,32 +174,33 @@ Get list of transaction — ``remme transaction get-list``:
 | start       | String |  No       | Identifier to start paging (inclusive).                |
 | limit       | Integer|  No       | Number of transactions to return.                      |
 | head        | String |  No       | Identifier of block's head.                            |
-| reverse     | String |  No       | If transactions should be reversed.                    |
+| reverse     | bool   |  No       | If transactions should be reversed.                    |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 | family-name | String |  No       | List transaction by its family name.                   |
 
 ```bash
 $ remme transaction get-list \
-    --ids=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc \
-    --start=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc \
+    --ids=64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab \
+    --start=64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab \
     --limit=3 \
-    --head=792bef7ace0c13e47ddc28328952ed0494d28ecabacec961808b2c7bf93f765f5df2e8e32d1487fdb2d24b5cd0cde0ea2902a019243b9917793d3c26e834d8cf \
-    --reverse=false \
-    --family_name=account
+    --head=0f6601c8dd031370891d7b8c923fc46859911880fb971a5535da709a27e30b8569cadfbfe8349a678f447e28d03c4c4656245fed7abed4295b309ce1f859efbd \
+    --reverse \
+    --family-name=account \
+    --node-url=node-6-testnet.remme.io
 {
-   "head": "792bef7ace0c13e47ddc28328952ed0494d28ecabacec961808b2c7bf93f765f
-            5df2e8e32d1487fdb2d24b5cd0cde0ea2902a019243b9917793d3c26e834d8cf",
-   "paging": {
-      "limit": 3,
-      "start": "13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f
-                5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc",
-      "next": ""
-   },
-   "data": []
+    "result": {
+        "data": [],
+        "head": "0f6601c8dd031370891d7b8c923fc46859911880fb971a5535da709a27e30b8569cadfbfe8349a678f447e28d03c4c4656245fed7abed4295b309ce1f859efbd",
+        "paging": {
+            "limit": 3,
+            "next": "",
+            "start": "64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab"
+        }
+    }
 }
 ```
 
-Get single transaction by identifier — ``remme transaction get-single``:
+Get transaction by identifier — ``remme transaction get``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
@@ -156,32 +208,40 @@ Get single transaction by identifier — ``remme transaction get-single``:
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 
 ```bash
-$ remme transaction get-single \
-    --id=13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc 
+$ remme transaction get \
+    --id=64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab \
+    --node-url=node-6-testnet.remme.io
 {
-   "data": {
-      "header": {
-         "batcher_public_key": "02a65796f249091c3087614b4d9c292b00b8eba580d045ac2fd781224b87b6f13e",
-         "family_name": "sawtooth_settings",
-         "family_version": "1.0",
-         "inputs": [
-            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
-            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7",
-            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1918142591ba4e8a7",
-            "000000a87cb5eafdcca6a8f82af32160bc53119b8878ad4d2117f2e3b0c44298fc1c14"
-         ],
-         "outputs": [
-            "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
-            "000000a87cb5eafdcca6a8f82af32160bc53119b8878ad4d2117f2e3b0c44298fc1c14"
-         ],
-         "payload_sha512": "9d20b85d9683f3a8a83107bf282a90ca53ea4dc892ee8dd0bf116982e0a220a5245dd6b4614a715d826ce83bad1b35e1b9210424382555cde78b87002c0bf6b7",
-         "signer_public_key": "02a65796f249091c3087614b4d9c292b00b8eba580d045ac2fd781224b87b6f13e",
-         "dependencies": [],
-         "nonce": ""
-      },
-      "header_signature": "13e46c3b07848b3a38be301b13a0a0b1f73b53766345b64eea1746031bb9672f5e6a34e123f56ce2a1af8523741d996c6f4c3cbf7bd75511547bcc4297d3c5cc",
-      "payload": "CAESbAopc2F3dG9vdGgudmFsaWRhdG9yLmJsb2NrX3ZhbGlkYXRpb25fcnVsZXMSK05vZlg6MSxibG9ja19pbmZvO1hhdFk6YmxvY2tfaW5mbywwO2xvY2FsOjAaEjB4ZDI5MWEyNmJhOGQzMWI3MA=="
-   }
+    "result": {
+        "data": {
+            "header": {
+                "batcher_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                "dependencies": [],
+                "family_name": "consensus_account",
+                "family_version": "0.1",
+                "inputs": [
+                    "116829",
+                    "112007",
+                    "0000007ca83d6bbb759da9cde0fb0dec1400c54773f137ea7cfe91e3b0c44298fc1c14",
+                    "0000007ca83d6bbb759da9cde0fb0dec1400c5034223fb6c3e825ee3b0c44298fc1c14",
+                    "0000007ca83d6bbb759da9cde0fb0dec1400c5e64de9aa6a37ac92e3b0c44298fc1c14",
+                    "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                    "00b10c00",
+                    "fd0e4f0000000000000000000000000000000000000000000000000000000000000000"
+                ],
+                "nonce": "b8baa6c54ab9463590627c18fb9c10ed",
+                "outputs": [
+                    "116829",
+                    "112007",
+                    "fd0e4f0000000000000000000000000000000000000000000000000000000000000000"
+                ],
+                "payload_sha512": "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e",
+                "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+            },
+            "header_signature": "64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab",
+            "payload": ""
+        }
+    }
 }
 ```
 
@@ -209,7 +269,7 @@ Run the ``Docker container`` with the project source code in the background mode
 
 ```bash
 $ docker build -t remme-core-cli . -f Dockerfile.development
-$ docker run -d -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
+$ docker run -d --network host -v $PWD:/remme-core-cli --name remme-core-cli remme-core-cli
 ```
 
 Enter the container bash:

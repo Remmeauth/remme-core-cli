@@ -1,5 +1,5 @@
 """
-Provide implementation of the command line interface's transaction info commands.
+Provide implementation of the command line interface's transaction commands.
 """
 import asyncio
 import sys
@@ -11,7 +11,10 @@ from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
-from cli.forms import ValidationForm
+from cli.transaction.forms import (
+    GetListTransactionForm,
+    GetSingleTransaction,
+)
 from cli.transaction.help import (
     GET_TRANSACTION_ID_HELP_MESSAGE,
     GET_TRANSACTIONS_FAMILY_NAME_ARGUMENT_HELP_MESSAGE,
@@ -43,15 +46,15 @@ def transaction_command():
 @click.option('--start', required=False, type=str, help=GET_TRANSACTIONS_START_ARGUMENT_HELP_MESSAGE)
 @click.option('--limit', required=False, type=int, help=GET_TRANSACTIONS_LIMIT_ARGUMENT_HELP_MESSAGE)
 @click.option('--head', required=False, type=str, help=GET_TRANSACTIONS_HEAD_ARGUMENT_HELP_MESSAGE)
-@click.option('--reverse', required=False, type=str, help=GET_TRANSACTIONS_REVERSE_ARGUMENT_HELP_MESSAGE)
+@click.option('--reverse', is_flag=True, help=GET_TRANSACTIONS_REVERSE_ARGUMENT_HELP_MESSAGE)
 @click.option('--family-name', required=False, type=str, help=GET_TRANSACTIONS_FAMILY_NAME_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @transaction_command.command('get-list')
 def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
     """
-    Get a list of transaction.
+    Get a list of transactions.
     """
-    arguments, errors = ValidationForm().load({
+    arguments, errors = GetListTransactionForm().load({
         'ids': ids,
         'start': start,
         'limit': limit,
@@ -84,12 +87,12 @@ def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
 
 @click.option('--id', required=True, type=str, help=GET_TRANSACTION_ID_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
-@transaction_command.command('get-single')
+@transaction_command.command('get')
 def get_transaction(id, node_url):
     """
     Fetch transaction by its id.
     """
-    arguments, errors = ValidationForm().load({
+    arguments, errors = GetSingleTransaction().load({
         'id': id,
         'node_url': node_url,
     })

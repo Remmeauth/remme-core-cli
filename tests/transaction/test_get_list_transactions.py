@@ -21,7 +21,7 @@ def test_get_list_transaction_with_ids():
     Expect: transactions are returned.
     """
     transaction_ids = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
-                      '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b ' \
+                      '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b, ' \
                       '6601e240044b00db4b7e5eda7800e88236341077879a4a9cf5a1b1f9fb2ece87' \
                       '7bc9a43808d429e68f4d65ee8d7231e4e8711e705ad51be7888d1a7f25b57717'
 
@@ -44,7 +44,7 @@ def test_get_list_transaction_with_invalid_ids():
     Case: get a list transaction by invalid ids.
     Expect: The following ids are not valid error message.
     """
-    invalid_transaction_ids = '044c7 True 010101'
+    invalid_transaction_ids = '044c7, True 010101'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -56,10 +56,14 @@ def test_get_list_transaction_with_invalid_ids():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    invalid_transaction_ids = [id_.strip() for id_ in invalid_transaction_ids.split(',')]
+
     expected_error_message = {
-        'ids': [
-            f'The following ids `{invalid_transaction_ids.split()}` are not valid.',
-        ],
+        'errors': {
+            'ids': [
+                f'The following ids `{invalid_transaction_ids}` are not valid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -71,8 +75,8 @@ def test_get_list_transaction_with_start():
     Case: get a list transaction by start.
     Expect: transactions are returned.
     """
-    start = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
-            '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b'
+    start = 'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb' \
+            '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -97,10 +101,9 @@ def test_get_list_transaction_with_reverse():
     result = runner.invoke(cli, [
         'transaction',
         'get-list',
-        '--reverse',
-        'false',
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
+        '--reverse',
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -148,9 +151,11 @@ def test_get_list_transaction_with_invalid_start_head(command_flag):
     ])
 
     expected_error_message = {
-        f'{command_flag[2:]}': [
-            f'The following id `{invalid_id}` is not valid.',
-        ],
+        'errors': {
+            f'{command_flag[2:]}': [
+                f'The following id `{invalid_id}` is not valid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -194,9 +199,11 @@ def test_get_list_transaction_with_invalid_limit():
     ])
 
     expected_error_message = {
-        'limit': [
-            f'The following limit `{invalid_limit}` should be a positive.',
-        ],
+        'errors': {
+            'limit': [
+                f'Limit must be greater than 0.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -242,9 +249,11 @@ def test_get_list_transaction_with_invalid_family_name():
     ])
 
     expected_error_message = {
-        "family_name": [
-            f"The following family name `{invalid_family_name}` is not valid.",
-        ],
+        'errors': {
+            "family_name": [
+                f"The following family name `{invalid_family_name}` is not valid.",
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

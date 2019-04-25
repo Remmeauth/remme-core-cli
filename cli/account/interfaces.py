@@ -8,8 +8,14 @@ class AccountInterface:
     Implements account interface.
     """
 
-    async def get_balance(self, address):
+    def get_balance(self, address):
         """
         Get balance of the account by its address.
+        """
+        pass
+
+    def transfer_tokens(self, address_to, amount):
+        """
+        Transfer tokens to address.
         """
         pass

@@ -5,6 +5,8 @@ import json
 
 import click
 
+from cli.config import ConfigFile
+
 
 def dict_to_pretty_json(data):
     r"""
@@ -30,6 +32,38 @@ def dict_to_pretty_json(data):
     return json.dumps(data, indent=4, sort_keys=True)
 
 
+def print_result(result):
+    """
+    Print successful result to the terminal.
+    """
+    return click.echo(dict_to_pretty_json({'result': result}))
+
+
+def print_errors(errors):
+    """
+    Print error messages to the terminal.
+
+    Arguments:
+        errors (dict): dictionary with error messages.
+
+    References:
+        - https://click.palletsprojects.com/en/7.x/utils/#ansi-colors
+    """
+    click.secho(dict_to_pretty_json({'errors': errors}), blink=True, bold=True, fg='red')
+
+
+def default_node_url():
+    """
+    Get default node URL.
+    """
+    config_parameters = ConfigFile().parse()
+
+    if config_parameters.node_url is None:
+        return 'localhost'
+
+    return config_parameters.node_url
+
+
 async def return_async_value(value):
     """
     Asynchronous function return value impostor.
@@ -44,30 +78,3 @@ async def return_async_value(value):
         - https://github.com/pytest-dev/pytest-mock/issues/60
     """
     return value
-
-
-def print_result(result):
-    """
-    Print successful result to the terminal.
-    """
-    return click.echo(dict_to_pretty_json(result))
-
-
-def print_errors(errors):
-    """
-    Print error messages to the terminal.
-
-    Arguments:
-        errors (dict): dictionary with error messages.
-
-    References:
-        - https://click.palletsprojects.com/en/7.x/utils/#ansi-colors
-    """
-    click.secho(dict_to_pretty_json(errors), blink=True, bold=True, fg='red')
-
-
-def default_node_url():
-    """
-    Get default node URL.
-    """
-    return 'localhost'

@@ -13,24 +13,25 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-# def test_get_single_transaction():
-#     """
-#     Case: get a transaction by id.
-#     Expect: transaction is returned.
-#     """
-#     runner = CliRunner()
-#     result = runner.invoke(cli, [
-#         'transaction',
-#         'get-single',
-#         '--id',
-#         '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180'
-#         '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b',
-#         '--node-url',
-#         NODE_IP_ADDRESS_FOR_TESTING,
-#     ])
-#
-#     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-#     assert isinstance(json.loads(result.output), dict)
+
+def test_get_single_transaction():
+    """
+    Case: get a transaction by id.
+    Expect: transaction is returned.
+    """
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get',
+        '--id',
+        'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb'
+        '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4',
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert isinstance(json.loads(result.output), dict)
 
 
 def test_get_single_transaction_with_invalid_id():
@@ -44,7 +45,7 @@ def test_get_single_transaction_with_invalid_id():
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
-        'get-single',
+        'get',
         '--id',
         invalid_transaction_id,
         '--node-url',
@@ -52,9 +53,11 @@ def test_get_single_transaction_with_invalid_id():
     ])
 
     expected_error_message = {
-        'id': [
-            f'The following id `{invalid_transaction_id}` is not valid.',
-        ],
+        'errors': {
+            'id': [
+                f'The following id `{invalid_transaction_id}` is not valid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -96,48 +99,46 @@ def test_get_single_transaction_without_node_url(mocker):
             'payload': 'CAESRAoic2F3dG9vdGgudmFsaWRhdG9yLmJhdGNoX2luamVj'
                        'dG9ycxIKYmxvY2tfaW5mbxoSMHhhNGY2YzZhZWMxOWQ1OTBi',
         },
-    }, None
+    }
 
-    mock_transaction_get_single = mocker.patch('cli.transaction.service.Transaction.get')
+    mock_transaction_get_single = mocker.patch('cli.transaction.service.loop.run_until_complete')
     mock_transaction_get_single.return_value = expected_result
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
-        'get-single',
+        'get',
         '--id',
         transaction_id,
     ])
 
-    transaction_list = json.loads(result.output).get('data')
-    expected_result = json.loads(result.output).get('data')
-
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(transaction_list, dict)
-    assert expected_result == transaction_list
+    assert expected_result == json.loads(result.output).get('result')
 
 
-# def test_get_single_transaction_with_invalid_node_url():
-#     """
-#     Case: get a single transaction by passing invalid node URL.
-#     Expect: the following node URL is invalid error message.
-#     """
-#     invalid_node_url = 'my-node-url.com'
-#
-#     runner = CliRunner()
-#     result = runner.invoke(cli, [
-#         'transaction',
-#         'get-single',
-#         '--id',
-#         '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-#         '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
-#         '--node-url',
-#         invalid_node_url,
-#     ])
-#
-#     expected_error_message = {
-#         'error': f'Please check if your node running at http://{invalid_node_url}:8080.'
-#     }
-#
-#     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-#     assert dict_to_pretty_json(expected_error_message) in result.output
+def test_get_single_transaction_with_invalid_node_url():
+    """
+    Case: get a single transaction by passing invalid node URL.
+    Expect: the following node URL is invalid error message.
+    """
+    invalid_node_url = 'my-node-url.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get',
+        '--id',
+        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
+        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        '--node-url',
+        invalid_node_url,
+    ])
+
+    expected_error_message = {
+        'errors': {
+            'connection': f'Please check if your node running at http://{invalid_node_url}:8080.',
+        },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output

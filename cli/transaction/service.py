@@ -28,7 +28,7 @@ class Transaction:
 
     def get_list(self, query):
         """
-        Get list transaction by: ids, start, head, limit, reverse.
+        Get a list of transactions by: ids, start, head, limit, reverse.
         """
         try:
             transaction_list = loop.run_until_complete(
@@ -39,12 +39,12 @@ class Transaction:
 
         except RpcGenericServerDefinedError as error:
             return None, {
-                'error': str(error),
+                'server-error': str(error.message),
             }
 
         except Exception as error:
             return None, {
-                'error': str(error),
+                'connection': str(error),
             }
 
     def get(self, transaction_id):
@@ -60,10 +60,10 @@ class Transaction:
 
         except RpcGenericServerDefinedError as error:
             return None, {
-                'error': str(error),
+                'server-error': str(error.message),
             }
 
         except Exception as error:
             return None, {
-                'error': str(error),
+                'connection': str(error),
             }
