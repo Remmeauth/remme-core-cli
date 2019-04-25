@@ -174,7 +174,7 @@ Get list of transaction — ``remme transaction get-list``:
 | start       | String |  No       | Identifier to start paging (inclusive).                |
 | limit       | Integer|  No       | Number of transactions to return.                      |
 | head        | String |  No       | Identifier of block's head.                            |
-| reverse     | bool   |  No       | If transactions should be reversed.                    |
+| reverse     | Bool   |  No       | If transactions should be reversed.                    |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 | family-name | String |  No       | List transaction by its family name.                   |
 

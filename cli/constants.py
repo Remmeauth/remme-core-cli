@@ -1,6 +1,8 @@
 """
 Provide constants for command line interface.
 """
+from remme.models.utils.family_name import RemmeFamilyName
+
 ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
 BATCH_ID_REGEXP = r'^[0-9a-f]{128}$'
 PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'
@@ -15,7 +17,12 @@ NODE_URL_ARGUMENT_HELP_MESSAGE = 'Apply the command to the specified node by its
 
 CLI_CONFIG_FILE_NAME = 'remme-core-cli'
 
-FAMILY_NAMES = ['account', 'node_account', 'pub_key', 'AtomicSwap']
+FAMILY_NAMES = [
+    RemmeFamilyName.ACCOUNT.value,
+    RemmeFamilyName.NODE_ACCOUNT.value,
+    RemmeFamilyName.PUBLIC_KEY.value,
+    RemmeFamilyName.SWAP.value,
+]
 
 NODE_IP_ADDRESS_FOR_TESTING = '159.89.104.9'
 PRIVATE_KEY_FOR_TESTING = 'b03e31d2f310305eab249133b53b5fb3270090fc1692c9b022b81c6b9bb6029b'
