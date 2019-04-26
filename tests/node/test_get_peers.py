@@ -14,7 +14,7 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_node_get_peers_configs():
+def test_get_node_peers_configs():
     """
     Case: get the node's peers.
     Expect: node peers are returned.
@@ -27,14 +27,16 @@ def test_node_get_peers_configs():
         NODE_27_IN_TESTNET_ADDRESS,
     ])
 
+    peers = json.loads(result.output).get('result').get('peers')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
-    for peer_url in json.loads(result.output).get('result').get('peers'):
-        assert 'tcp://' in peer_url
-        assert ':8800' in peer_url
+    for peer in peers:
+        assert 'tcp://' in peer
+        assert ':8800' in peer
 
 
-def test_node_get_peers_configs_without_node_url(mocker):
+def test_get_node_peers_without_node_url(mocker):
     """
     Case: get the node's peers without passing node URL.
     Expect: node peers are returned from node on localhost.
@@ -47,8 +49,8 @@ def test_node_get_peers_configs_without_node_url(mocker):
         'tcp://node-18-testnet.remme.io:8800',
     ]
 
-    mock_account_get_balance = mocker.patch('cli.node.service.loop.run_until_complete')
-    mock_account_get_balance.return_value = peers
+    mock_get_node_peers = mocker.patch('cli.node.service.loop.run_until_complete')
+    mock_get_node_peers.return_value = peers
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -56,17 +58,17 @@ def test_node_get_peers_configs_without_node_url(mocker):
         'get-peers',
     ])
 
-    expected_node_configurations = {
+    expected_node_peers = {
         'result': {
             'peers': peers,
         },
     }
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_node_configurations == json.loads(result.output)
+    assert expected_node_peers == json.loads(result.output)
 
 
-def test_node_get_peers_configs_invalid_node_url():
+def test_get_node_peers_invalid_node_url():
     """
     Case: get the node's peers by passing invalid node URL.
     Expect: the following node URL is invalid error message.
@@ -93,7 +95,7 @@ def test_node_get_peers_configs_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_node_get_peers_configs_node_url_with_http():
+def test_get_node_peers_node_url_with_http():
     """
     Case: get the node's peers by passing node URL with explicit HTTP protocol.
     Expect: the following node URL contains protocol error message.
@@ -120,7 +122,7 @@ def test_node_get_peers_configs_node_url_with_http():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_node_get_peers_configs_node_url_with_https():
+def test_get_node_peers_node_url_with_https():
     """
     Case: get the node's peers by passing node URL with explicit HTTPS protocol.
     Expect: the following node URL contains protocol error message.
@@ -147,7 +149,7 @@ def test_node_get_peers_configs_node_url_with_https():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_node_get_peers_configs_non_existing_node_url():
+def test_get_node_peers_non_existing_node_url():
     """
     Case: get the node's peers by passing non existing node URL.
     Expect: check if node running at URL error message.

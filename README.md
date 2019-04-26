@@ -161,7 +161,7 @@ $ remme node get-configs --node-url=node-genesis-testnet.remme.io
 }
 ```
 
-Get the node peers — ``remme node get-peers``:
+Get the node's peers — ``remme node get-peers``:
 
 | Arguments | Type   |  Required | Description                     |
 | :-------: | :----: | :-------: | ------------------------------- |
