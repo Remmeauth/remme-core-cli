@@ -38,14 +38,10 @@ class Transaction:
             return transaction_list, None
 
         except RpcGenericServerDefinedError as error:
-            return None, {
-                'server-error': str(error.message),
-            }
+            return None, str(error.message)
 
         except Exception as error:
-            return None, {
-                'connection': str(error),
-            }
+            return None, str(error)
 
     def get(self, transaction_id):
         """
@@ -59,11 +55,7 @@ class Transaction:
             return single_transaction, None
 
         except RpcGenericServerDefinedError as error:
-            return None, {
-                'server-error': str(error.message),
-            }
+            return None, str(error.message)
 
         except Exception as error:
-            return None, {
-                'connection': str(error),
-            }
+            return None, str(error)

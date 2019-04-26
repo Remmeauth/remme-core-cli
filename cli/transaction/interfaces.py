@@ -12,11 +12,8 @@ class TransactionInterfaces:
         """
         Get a list of transactions.
 
-        List of transactions can be filtered by identifiers, start pagging, identifier of block's head, limit
-        of transactions, reversed result, family-name of transactions
-
         Arguments:
-            query (dict, optional): dictionary with specific parameters
+            query (dict, optional): dictionary with specific parameters.
         """
         pass
 

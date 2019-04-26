@@ -42,7 +42,7 @@ def test_get_list_transaction_with_ids():
 def test_get_list_transaction_with_invalid_ids():
     """
     Case: get a list transaction by invalid ids.
-    Expect: The following ids are not valid error message.
+    Expect: the following ids are not valid error message.
     """
     invalid_transaction_ids = '044c7, True 010101'
 
@@ -61,7 +61,7 @@ def test_get_list_transaction_with_invalid_ids():
     expected_error_message = {
         'errors': {
             'ids': [
-                f'The following ids `{invalid_transaction_ids}` are not valid.',
+                f'The following id `{invalid_transaction_ids}` is invalid.',
             ],
         },
     }
@@ -136,7 +136,7 @@ def test_get_list_transaction_by_head():
 def test_get_list_transaction_with_invalid_start_head(command_flag):
     """
     Case: get a list transaction by invalid start and head.
-    Expect: The following id is not valid error message.
+    Expect: the following id is not valid error message.
     """
     invalid_id = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180'
 
@@ -153,7 +153,7 @@ def test_get_list_transaction_with_invalid_start_head(command_flag):
     expected_error_message = {
         'errors': {
             f'{command_flag[2:]}': [
-                f'The following id `{invalid_id}` is not valid.',
+                f'The following id `{invalid_id}` is invalid.',
             ],
         },
     }
@@ -184,7 +184,7 @@ def test_get_list_transaction_with_limit():
 def test_get_list_transaction_with_invalid_limit():
     """
     Case: get a list transaction by invalid limit.
-    Expect: The following limit should be a positive error message.
+    Expect: the following limit should be a positive error message.
     """
     invalid_limit = -33
 
@@ -234,7 +234,7 @@ def test_get_list_transaction_with_family_name():
 def test_get_list_transaction_with_invalid_family_name():
     """
     Case: get a list transaction by invalid family name.
-    Expect: The following family name is not valid. error message.
+    Expect: the following family name is not valid error message.
     """
     invalid_family_name = 'non-existing family name'
 
@@ -251,9 +251,35 @@ def test_get_list_transaction_with_invalid_family_name():
     expected_error_message = {
         'errors': {
             "family_name": [
-                f"The following family name `{invalid_family_name}` is not valid.",
+                f"The following family name `{invalid_family_name}` is invalid.",
             ],
         },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
+
+
+def test_get_list_transaction_with_invalid_node_url():
+    """
+    Case: get a list of transactions by passing invalid node URL.
+    Expect: the following node URL is invalid error message.
+    """
+    invalid_node_url = 'my-node-url.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get-list',
+        '--ids',
+        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
+        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        '--node-url',
+        invalid_node_url,
+    ])
+
+    expected_error_message = {
+        'errors': f'Please check if your node running at http://{invalid_node_url}:8080.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

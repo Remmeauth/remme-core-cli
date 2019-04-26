@@ -187,21 +187,22 @@ $ remme public-key get-list \
 
 ### Transaction
 
-Get list of transaction — ``remme transaction get-list``:
+Get a list of transactions — ``remme transaction get-list``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |
 | ids         | String |  No       | Identifiers to get a list of transactions by.          |
-| start       | String |  No       | Identifier to start paging (inclusive).                |
+| start       | String |  No       | Transaction identifier to get a list transaction starting from.|
 | limit       | Integer|  No       | Maximum amount of transactions to return.              |
-| head        | String |  No       | Identifier of block's head.                            |
-| reverse     | Bool   |  No       | If transactions should be reversed.                    |
+| head        | String |  No       | Block identifier to get a list of transactions from.   |
+| reverse     | Bool   |  No       | Parameter to reverse result.                           |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 | family-name | String |  No       | List transaction by its family name.                   |
 
 ```bash
 $ remme transaction get-list \
-    --ids=64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab \
+    --ids='64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab, 
+    4a20a44a29fdb2c289dd7b137038e3bf5746ba888c0ee9f3a478db30fbdeb9200bed7c4cb15f4396412a3646fd4afeca0ed7bc6ec63eee0c665e4e508e7ed582' \
     --start=64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab \
     --limit=3 \
     --head=0f6601c8dd031370891d7b8c923fc46859911880fb971a5535da709a27e30b8569cadfbfe8349a678f447e28d03c4c4656245fed7abed4295b309ce1f859efbd \
@@ -221,7 +222,7 @@ $ remme transaction get-list \
 }
 ```
 
-Get transaction by identifier — ``remme transaction get``:
+Get a transaction by identifier — ``remme transaction get``:
 
 | Arguments   | Type   |  Required | Description                                            |
 | :---------: | :----: | :-------: | -----------------------------------------------------  |

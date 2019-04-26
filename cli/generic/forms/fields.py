@@ -12,8 +12,8 @@ from cli.constants import (
     ADDRESS_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
-    HEADER_SIGNATURE_REGEXP,
     PRIVATE_KEY_REGEXP,
+    TRANSACTION_SIGNATURE_REGEXP,
 )
 
 
@@ -52,12 +52,12 @@ class FamilyNameField(fields.Field):
         Validate data (family name) that was passed to field.
         """
         if value not in FAMILY_NAMES:
-            raise ValidationError(f'The following family name `{value}` is not valid.')
+            raise ValidationError(f'The following family name `{value}` is invalid.')
 
         return value
 
 
-class IdListField(fields.Field):
+class TransactionIdentifierListField(fields.Field):
     """
     Implements validation of the list identifiers.
 
@@ -74,13 +74,13 @@ class IdListField(fields.Field):
         value = [v.strip() for v in value.split(',')]
         for id_ in value:
 
-            if not re.match(pattern=HEADER_SIGNATURE_REGEXP, string=id_) is not None:
-                raise ValidationError(f'The following ids `{value}` are not valid.')
+            if not re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=id_) is not None:
+                raise ValidationError(f'The following id `{value}` is invalid.')
 
         return value
 
 
-class IdField(fields.Field):
+class TransactionIdentifierField(fields.Field):
     """
     Implements validation of the identifier.
 
@@ -94,8 +94,8 @@ class IdField(fields.Field):
         """
         Validate data (list identifier) that was passed to field.
         """
-        if not re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is not None:
-            raise ValidationError(f'The following id `{value}` is not valid.')
+        if not re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=value) is not None:
+            raise ValidationError(f'The following id `{value}` is invalid.')
 
         return value
 

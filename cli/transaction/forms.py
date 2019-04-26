@@ -9,10 +9,10 @@ from marshmallow import (
 
 from cli.generic.forms.fields import (
     FamilyNameField,
-    IdField,
-    IdListField,
     NodeURLField,
     ReverseField,
+    TransactionIdentifierField,
+    TransactionIdentifierListField,
 )
 
 
@@ -21,9 +21,9 @@ class GetListTransactionForm(Schema):
     Get list of transactions form.
     """
 
-    ids = IdListField(allow_none=True, required=False)
-    start = IdField(allow_none=True, required=False)
-    head = IdField(allow_none=True, required=False)
+    ids = TransactionIdentifierListField(allow_none=True, required=False)
+    start = TransactionIdentifierField(allow_none=True, required=False)
+    head = TransactionIdentifierField(allow_none=True, required=False)
     limit = fields.Integer(
         allow_none=True,
         strict=True,
@@ -42,5 +42,5 @@ class GetSingleTransaction(Schema):
     Get transaction form.
     """
 
-    id = IdField(allow_none=True, required=False)
+    id = TransactionIdentifierField(allow_none=True, required=False)
     node_url = NodeURLField(allow_none=True, required=False)

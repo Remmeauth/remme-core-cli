@@ -55,7 +55,7 @@ def test_get_single_transaction_with_invalid_id():
     expected_error_message = {
         'errors': {
             'id': [
-                f'The following id `{invalid_transaction_id}` is not valid.',
+                f'The following id `{invalid_transaction_id}` is invalid.',
             ],
         },
     }
@@ -135,9 +135,7 @@ def test_get_single_transaction_with_invalid_node_url():
     ])
 
     expected_error_message = {
-        'errors': {
-            'connection': f'Please check if your node running at http://{invalid_node_url}:8080.',
-        },
+        'errors': f'Please check if your node running at http://{invalid_node_url}:8080.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
