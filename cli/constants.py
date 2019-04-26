@@ -3,6 +3,7 @@ Provide constants for command line interface.
 """
 ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
 BATCH_ID_REGEXP = r'^[0-9a-f]{128}$'
+PUBLIC_KEY_REGEXP = r'^[0-9a-f]{66}$'
 PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'
 HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
 DOMAIN_NAME_REGEXP = r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]'
@@ -18,5 +19,6 @@ CLI_CONFIG_FILE_NAME = 'remme-core-cli'
 NODE_IP_ADDRESS_FOR_TESTING = '159.89.104.9'
 LATEST_RELEASE_NODE_IP_ADDRESS_FOR_TESTING = '165.22.75.163'
 RELEASE_0_9_0_ALPHA_NODE_ADDRESS = '165.227.169.119'
+NODE_27_IN_TESTNET_ADDRESS = 'node-27-testnet.remme.io'
 
 PRIVATE_KEY_FOR_TESTING = 'b03e31d2f310305eab249133b53b5fb3270090fc1692c9b022b81c6b9bb6029b'
