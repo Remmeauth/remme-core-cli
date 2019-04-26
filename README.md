@@ -195,7 +195,7 @@ $ remme public-key get-list \
       --node-url=node-genesis-testnet.remme.io
 {
     "result": {
-        "public_key_addresses": [
+        "addresses": [
             "a23be10b3aad1b4a98f338c71d6dcdb2aa2f296c7e31fb400615e335dc10dd1d4f62bf",
             "a23be14b362514d624c1985277005327f6fc40413fb090eee6fccb673a32c9809060ff"
         ]
@@ -203,7 +203,7 @@ $ remme public-key get-list \
 }
 ```
 
-Get information about public key address by public key address — ``remme public-key get-info``:
+Get information about public key by its address — ``remme public-key get-info``:
 
 | Arguments | Type   | Required | Description                                                |
 | :-------: | :----: | :------: | ---------------------------------------------------------- |
@@ -216,7 +216,7 @@ $ remme public-key get-info \
       --node-url=node-genesis-testnet.remme.io
 {
     "result": {
-        "public_key_info": {
+        "information": {
             "address": "a23be10d215132aee9377cfe26b6d301d32da070a799c227fb4701103e5626d48cd6ba",
             "entity_hash": "1edd6d5b1c722a83e03b17180b888d89ec4c079a0044f074b7c8bb2720cad8ba4e97a80c7edbd24c1824f5312dfd8a0877453394a63410b52c1f16e1d60ef754",
             "entity_hash_signature": "1322ca51fb6d33e44d2b6c028eb668b5712a5277bbdea089112203e8e950d1c7d02d446291865a2f5fca4c6767fb84583e53205df850f1fc05ea6f22c736635f425b0159881f7f998da52378bf08353d87d2a2c226a7ababea9a245e69be06d54c573a42c3be907ca49589a67b5e9cc4d8ed12cea8546b2df531fd9620f4dc71869d8fa0bfcbef239d9a6e2e3bf12bcac4fd562b22ff408d7b077b75d8e59af0348264a7c9e7e61b4c5f844636a0fbbcfae61955efdf10323a992ea2a1734eb0ee7952519b00e696a02e7460771b0e0887e011b709e88abfda896b68150c08dcf6b4bf7c70f996f6031c13311056ab935ce1fdf63d3f19b5a3ca6ae604c4f12b",

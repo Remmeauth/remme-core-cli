@@ -33,7 +33,7 @@ def test_get_public_keys():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    public_key_addresses = json.loads(result.output).get('result').get('public_key_addresses')
+    public_key_addresses = json.loads(result.output).get('result').get('addresses')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
@@ -83,7 +83,7 @@ def test_get_public_keys_without_node_url(mocker):
 
     expected_result = {
         'result': {
-            'public_key_addresses': public_key_addresses,
+            'addresses': public_key_addresses,
         },
     }
 
@@ -195,7 +195,7 @@ def test_get_public_keys_non_existing_address():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    public_key_addresses = json.loads(result.output).get('result').get('public_key_addresses')
+    public_key_addresses = json.loads(result.output).get('result').get('addresses')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert isinstance(public_key_addresses, list)

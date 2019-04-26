@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's public key commands.
+Provide tests for command line interface's public key information commands.
 """
 import json
 import re
@@ -22,8 +22,8 @@ PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = 'a23be17addad8eeb5177a395ea47eb5
 
 def test_get_public_key_info():
     """
-    Case: get information about public key address by public key address.
-    Expect: dictionary of public key address information, keys matched regexp checking.
+    Case: get information about public key by its address.
+    Expect: dictionary of public key information, keys matched regexp checking.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -35,10 +35,9 @@ def test_get_public_key_info():
         NODE_27_IN_TESTNET_ADDRESS,
     ])
 
-    public_key_info = json.loads(result.output).get('result').get('public_key_info')
+    public_key_info = json.loads(result.output).get('result').get('information')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-
     assert re.match(pattern=ADDRESS_REGEXP, string=public_key_info.get('address')) is not None
     assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=public_key_info.get('entity_hash')) is not None
     assert re.match(pattern=PUBLIC_KEY_REGEXP, string=public_key_info.get('owner_public_key')) is not None
@@ -50,7 +49,7 @@ def test_get_public_key_info():
 
 def test_get_public_key_info_invalid_address():
     """
-    Case: get information about public key address by invalid address.
+    Case: get information about public key by invalid address.
     Expect: the following public key address is not valid error message.
     """
     invalid_address = 'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddczz'
@@ -79,7 +78,7 @@ def test_get_public_key_info_invalid_address():
 
 def test_get_public_key_info_without_node_url(mocker, public_key_info):
     """
-    Case: get information about public key address without passing node URL.
+    Case: get information about public key without passing node URL.
     Expect: dictionary of public key information is returned from node on localhost.
     """
     mock_public_key_get_info = mocker.patch('cli.public_key.service.loop.run_until_complete')
@@ -95,7 +94,7 @@ def test_get_public_key_info_without_node_url(mocker, public_key_info):
 
     expected_result = {
         'result': {
-            'public_key_info': public_key_info.data,
+            'information': public_key_info.data,
         },
     }
 
@@ -105,7 +104,7 @@ def test_get_public_key_info_without_node_url(mocker, public_key_info):
 
 def test_get_public_key_info_invalid_node_url():
     """
-    Case: get information about public key address by passing invalid node URL.
+    Case: get information about public key by passing invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -134,7 +133,7 @@ def test_get_public_key_info_invalid_node_url():
 
 def test_get_public_key_info_node_url_with_http():
     """
-    Case: get information about public key address by passing node URL with explicit HTTP protocol.
+    Case: get information about public key by passing node URL with explicit HTTP protocol.
     Expect: the following node URL contains protocol error message.
     """
     node_url_with_http_protocol = 'http://masternode.com'
@@ -163,7 +162,7 @@ def test_get_public_key_info_node_url_with_http():
 
 def test_get_public_key_info_node_url_with_https():
     """
-    Case: get information about public key address by passing node URL with explicit HTTPS protocol.
+    Case: get information about public key by passing node URL with explicit HTTPS protocol.
     Expect: the following node URL contains protocol error message.
     """
     node_url_with_https_protocol = 'https://masternode.com'
@@ -192,7 +191,7 @@ def test_get_public_key_info_node_url_with_https():
 
 def test_get_public_key_info_non_existing_address():
     """
-    Case: get information about public key address by passing non existing address.
+    Case: get information about public key by passing non existing address.
     Expect: public key information not found error message.
     """
     non_existing_address = 'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5c'
@@ -217,7 +216,7 @@ def test_get_public_key_info_non_existing_address():
 
 def test_get_public_key_info_non_existing_node_url():
     """
-    Case: get information about public key address by passing non existing node URL.
+    Case: get information about public key by passing non existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

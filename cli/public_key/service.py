@@ -28,7 +28,7 @@ class PublicKey:
 
     def get(self, address):
         """
-        Get information about public key address by public key address.
+        Get information about public key by its address.
         """
         try:
             public_key_info = loop.run_until_complete(
@@ -42,7 +42,7 @@ class PublicKey:
             return None, str(error)
 
         return {
-            'public_key_info': public_key_info.data,
+            'information': public_key_info.data,
         }, None
 
     def get_list(self, address):
@@ -58,5 +58,5 @@ class PublicKey:
             return None, str(error)
 
         return {
-            'public_key_addresses': public_key_addresses,
+            'addresses': public_key_addresses,
         }, None

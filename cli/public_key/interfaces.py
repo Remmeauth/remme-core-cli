@@ -10,7 +10,7 @@ class PublicKeyInterface:
 
     def get(self, address):
         """
-        Get information about public key address by public key address.
+        Get information about public key by its address.
         """
         pass
 

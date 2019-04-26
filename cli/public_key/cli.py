@@ -11,7 +11,7 @@ from cli.constants import (
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.public_key.forms import (
-    GetPublicKeyInfoForm,
+    GetPublicKeyInformationForm,
     GetPublicKeysForm,
 )
 from cli.public_key.help import (
@@ -39,9 +39,9 @@ def public_key_commands():
 @public_key_commands.command('get-info')
 def get_public_key_info(address, node_url):
     """
-    Get information about public key address by public key address.
+    Get information about public key by its address.
     """
-    arguments, errors = GetPublicKeyInfoForm().load({
+    arguments, errors = GetPublicKeyInformationForm().load({
         'address': address,
         'node_url': node_url,
     })

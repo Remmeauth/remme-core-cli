@@ -10,9 +10,9 @@ from cli.generic.forms.fields import (
 )
 
 
-class GetPublicKeyInfoForm(Schema):
+class GetPublicKeyInformationForm(Schema):
     """
-    Get information about public key address of the public key info form.
+    Get information about public key of the public key information form.
     """
 
     address = PublicKeyAddressField(required=True)

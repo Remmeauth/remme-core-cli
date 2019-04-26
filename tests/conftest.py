@@ -113,7 +113,7 @@ class SentTransaction:
                '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
 
 
-class PublicKeyInfo:
+class PublicKeyInformation:
     """
     Impose public key information data transfer object.
     """
@@ -121,7 +121,7 @@ class PublicKeyInfo:
     @property
     def data(self):
         """
-        Get data of public key information.
+        Get public key information.
         """
         return {
             'address': 'a23be1ae97d605bcbe61c312d9a443c010dbe7e6a0761e24b10d5368829ab0a7d36acc',
@@ -179,7 +179,7 @@ def public_key_info():
     """
     Get public key information fixture.
     """
-    return PublicKeyInfo()
+    return PublicKeyInformation()
 
 
 @pytest.fixture()
