@@ -2,13 +2,16 @@
 Provide tests for command line interface's node get configurations command.
 """
 import json
+import re
 
 from click.testing import CliRunner
 
 from cli.constants import (
+    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
+    PUBLIC_KEY_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -27,17 +30,14 @@ def test_get_node_configs():
         NODE_27_IN_TESTNET_ADDRESS,
     ])
 
-    expected_node_configurations = {
-        'result': {
-            'configurations': {
-                'node_address': '116829d8293c29cbced8aa4dba6ed29d979c2af6784d8aa9b4120d6c141c0153da7733',
-                'node_public_key': '03d4613540ce29cd1f5f28ea9169a5cb5853bd53dede635903af9383bc9ffaf079',
-            },
-        },
-    }
+    node_configurations = json.loads(result.output).get('result').get('configurations')
+
+    node_address = node_configurations.get('node_address')
+    node_public_key = node_configurations.get('node_public_key')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_node_configurations == json.loads(result.output)
+    assert re.match(pattern=ADDRESS_REGEXP, string=node_address) is not None
+    assert re.match(pattern=PUBLIC_KEY_REGEXP, string=node_public_key) is not None
 
 
 def test_get_node_configs_without_node_url(mocker, node_configurations):
