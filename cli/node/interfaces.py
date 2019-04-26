@@ -13,3 +13,9 @@ class NodeInterface:
         Get node configurations.
         """
         pass
+
+    def get_peers(self):
+        """
+        Get the node's peers.
+        """
+        pass

@@ -8,6 +8,11 @@ import sys
 
 import pytest
 
+from tests.constants import (
+    NODE_PRIVATE_KEY_DIRECTORY_PATH,
+    NODE_PRIVATE_KEY_FILE_PATH_IN_TESTING,
+)
+
 
 def pytest_configure():
     """
@@ -75,6 +80,23 @@ def create_empty_config_file():
     yield
 
     os.remove(path_to_copy_fixture_file_to)
+
+
+@pytest.yield_fixture()
+def create_node_private_key_file():
+    """
+    Create the node's private key file.
+
+    The example of the configuration file is located in the tests fixture folder.
+    """
+    fixture_file_path = os.getcwd() + '/tests/fixtures/validator.priv'
+
+    pathlib.Path(NODE_PRIVATE_KEY_DIRECTORY_PATH).mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(fixture_file_path, NODE_PRIVATE_KEY_FILE_PATH_IN_TESTING)
+
+    yield
+
+    os.remove(NODE_PRIVATE_KEY_FILE_PATH_IN_TESTING)
 
 
 class SentTransaction:
