@@ -6,7 +6,7 @@ from marshmallow import Schema
 from cli.generic.forms.fields import NodeURLField
 
 
-class GetPublicKeyForm(Schema):
+class GetAtomicSwapPublicKeyForm(Schema):
     """
     Get public key of the atomic swap form.
     """

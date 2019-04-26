@@ -6,7 +6,7 @@ import sys
 import click
 from remme import Remme
 
-from cli.atomic_swap.forms import GetPublicKeyForm
+from cli.atomic_swap.forms import GetAtomicSwapPublicKeyForm
 from cli.atomic_swap.service import AtomicSwap
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
@@ -33,7 +33,7 @@ def get_public_key(node_url):
     """
     Get public key of atomic swap.
     """
-    arguments, errors = GetPublicKeyForm().load({
+    arguments, errors = GetAtomicSwapPublicKeyForm().load({
         'node_url': node_url,
     })
 

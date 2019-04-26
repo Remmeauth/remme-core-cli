@@ -38,3 +38,17 @@ class Node:
         return {
             'configurations': configurations.data,
         }, None
+
+    def get_peers(self):
+        """
+        Get the node's peers.
+        """
+        try:
+            peers = loop.run_until_complete(self.service.blockchain_info.get_peers())
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'peers': peers,
+        }, None
