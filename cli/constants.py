@@ -22,3 +22,9 @@ RELEASE_0_9_0_ALPHA_NODE_ADDRESS = '165.227.169.119'
 NODE_27_IN_TESTNET_ADDRESS = 'node-27-testnet.remme.io'
 
 PRIVATE_KEY_FOR_TESTING = 'b03e31d2f310305eab249133b53b5fb3270090fc1692c9b022b81c6b9bb6029b'
+
+LINUX_NODE_PRIVATE_KEY_FILE_PATH = '/var/lib/docker/volumes/remme_validator_keys/_data/validator.priv'
+
+SUPPORTED_OS_TO_EXECUTE_NODE_MANAGEMENT_COMMANDS = (
+    'Linux'
+)
