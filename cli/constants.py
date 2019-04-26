@@ -3,6 +3,7 @@ Provide constants for command line interface.
 """
 ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
 BATCH_ID_REGEXP = r'^[0-9a-f]{128}$'
+PUBLIC_KEY_REGEXP = r'^[0-9a-f]{66}$'
 PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'
 PUBLIC_KEY_REGEXP = r'^[0-9a-f]{66}$'
 HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
