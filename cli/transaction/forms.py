@@ -10,13 +10,12 @@ from marshmallow import (
 from cli.generic.forms.fields import (
     FamilyNameField,
     NodeURLField,
-    ReverseField,
     TransactionIdentifierField,
     TransactionIdentifierListField,
 )
 
 
-class GetListTransactionForm(Schema):
+class GetTransactionsListForm(Schema):
     """
     Get list of transactions form.
     """
@@ -33,14 +32,13 @@ class GetListTransactionForm(Schema):
         ],
     )
     family_name = FamilyNameField(allow_none=True, required=False)
-    reverse = ReverseField(allow_none=True, required=False)
     node_url = NodeURLField(allow_none=True, required=False)
 
 
-class GetSingleTransaction(Schema):
+class GetTransactionForm(Schema):
     """
     Get transaction form.
     """
 
-    id = TransactionIdentifierField(allow_none=True, required=False)
+    id = TransactionIdentifierField(allow_none=True, required=True)
     node_url = NodeURLField(allow_none=True, required=False)

@@ -6,12 +6,12 @@ import asyncio
 from accessify import implements
 from aiohttp_json_rpc import RpcGenericServerDefinedError
 
-from cli.transaction.interfaces import TransactionInterfaces
+from cli.transaction.interfaces import TransactionInterface
 
 loop = asyncio.get_event_loop()
 
 
-@implements(TransactionInterfaces)
+@implements(TransactionInterface)
 class Transaction:
     """
     Implements transaction.
@@ -26,36 +26,54 @@ class Transaction:
         """
         self.service = service
 
-    def get_list(self, query):
+    def get_list(self, transaction_ids, start, limit, head, reverse, family_name):
         """
-        Get a list of transactions by: ids, start, head, limit, reverse.
+        Get a list of transactions.
+
+        Arguments:
+            transaction_ids (list, optional): transaction identifiers
+            start (string, optional): start
+            limit (int, optional): limit
+            head (string, optional): head
+            reverse (string, optional): reverse
+            family_name (string, optional): family name
         """
         try:
             transaction_list = loop.run_until_complete(
-                self.service.blockchain_info.get_transactions(query=query),
+                self.service.blockchain_info.get_transactions(query={
+                    'ids': transaction_ids,
+                    'start': start,
+                    'limit': limit,
+                    'head': head,
+                    'family_name': family_name,
+                    'reverse': reverse,
+                }),
             )
-
-            return transaction_list, None
 
         except RpcGenericServerDefinedError as error:
             return None, str(error.message)
 
         except Exception as error:
             return None, str(error)
+
+        return transaction_list.get('data'), None
 
     def get(self, transaction_id):
         """
-        Fetch transaction by its id.
+        Get a transaction.
+
+        Arguments:
+            transaction_id (string, required): transaction identifier
         """
         try:
-            single_transaction = loop.run_until_complete(
+            transaction = loop.run_until_complete(
                 self.service.blockchain_info.get_transaction_by_id(transaction_id=transaction_id),
             )
-
-            return single_transaction, None
 
         except RpcGenericServerDefinedError as error:
             return None, str(error.message)
 
         except Exception as error:
             return None, str(error)
+
+        return transaction.get('data'), None

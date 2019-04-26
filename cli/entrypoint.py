@@ -20,6 +20,6 @@ def cli():
 
 
 cli.add_command(account_commands)
-cli.add_command(transaction_command)
 cli.add_command(node_commands)
 cli.add_command(public_key_commands)
+cli.add_command(transaction_command)

@@ -41,8 +41,6 @@ class FamilyNameField(fields.Field):
     """
     Implements validation of the family name.
 
-    Raises a ValidationError if the family name not exist.
-
     References:
         - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
@@ -61,8 +59,6 @@ class TransactionIdentifierListField(fields.Field):
     """
     Implements validation of the list identifiers.
 
-    Raises a ValidationError if the identifier does not correspond to HEADER_SIGNATURE_REGEXP.
-
     References:
         - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
@@ -74,7 +70,7 @@ class TransactionIdentifierListField(fields.Field):
         value = [v.strip() for v in value.split(',')]
         for id_ in value:
 
-            if not re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=id_) is not None:
+            if re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=id_) is None:
                 raise ValidationError(f'The following id `{value}` is invalid.')
 
         return value
@@ -84,17 +80,15 @@ class TransactionIdentifierField(fields.Field):
     """
     Implements validation of the identifier.
 
-    Raises a ValidationError if the identifier does not correspond to HEADER_SIGNATURE_REGEXP.
-
     References:
         - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
         """
-        Validate data (list identifier) that was passed to field.
+        Validate data (identifier) that was passed to field.
         """
-        if not re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=value) is not None:
+        if re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=value) is None:
             raise ValidationError(f'The following id `{value}` is invalid.')
 
         return value
@@ -146,23 +140,3 @@ class PrivateKeyField(fields.Field):
             raise ValidationError(f'The following private key `{private_key}` is invalid.')
 
         return value
-
-
-class ReverseField(fields.Field):
-    """
-    Implements validation of the reverse.
-
-    If reverse is True, reverse equal empty line.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
-    """
-
-    def _deserialize(self, value, attr, obj, **kwargs):
-        """
-        Validate data (reverse) that was passed to field.
-        """
-        if value:
-            return ''
-
-        return 'false'

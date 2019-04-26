@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's get single transaction command.
+Provide tests for command line interface's get transaction command.
 """
 import json
 
@@ -14,7 +14,7 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_get_single_transaction():
+def test_get_transaction():
     """
     Case: get a transaction by id.
     Expect: transaction is returned.
@@ -34,7 +34,7 @@ def test_get_single_transaction():
     assert isinstance(json.loads(result.output), dict)
 
 
-def test_get_single_transaction_with_invalid_id():
+def test_get_transaction_with_invalid_id():
     """
     Case: get a transaction by its invalid id.
     Expect: the following id is invalid error message.
@@ -64,7 +64,7 @@ def test_get_single_transaction_with_invalid_id():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_single_transaction_without_node_url(mocker):
+def test_get_transaction_without_node_url(mocker):
     """
     Case: get a transaction by id without passing node URL.
     Expect: transaction is returned.
@@ -101,8 +101,8 @@ def test_get_single_transaction_without_node_url(mocker):
         },
     }
 
-    mock_transaction_get_single = mocker.patch('cli.transaction.service.loop.run_until_complete')
-    mock_transaction_get_single.return_value = expected_result
+    mock_get_transaction_by_id = mocker.patch('cli.transaction.service.loop.run_until_complete')
+    mock_get_transaction_by_id.return_value = expected_result
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -113,12 +113,12 @@ def test_get_single_transaction_without_node_url(mocker):
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_result == json.loads(result.output).get('result')
+    assert expected_result.get('data') == json.loads(result.output).get('result')
 
 
-def test_get_single_transaction_with_invalid_node_url():
+def test_get_transaction_with_invalid_node_url():
     """
-    Case: get a single transaction by passing invalid node URL.
+    Case: get a transaction by passing invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
@@ -140,3 +140,63 @@ def test_get_single_transaction_with_invalid_node_url():
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error_message) in result.output
+
+
+def test_get_transaction_node_url_with_http():
+    """
+    Case: get transaction by passing node URL with explicit HTTP protocol.
+    Expect: the following node URL contains protocol error message.
+    """
+    node_url_with_http_protocol = 'http://masternode.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get',
+        '--id',
+        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
+        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        '--node-url',
+        node_url_with_http_protocol,
+    ])
+
+    expected_error = {
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_get_transaction_node_url_with_https():
+    """
+    Case: get transaction by passing node URL with explicit HTTPS protocol.
+    Expect: the following node URL contains protocol error message.
+    """
+    node_url_with_https_protocol = 'https://masternode.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get',
+        '--id',
+        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
+        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        '--node-url',
+        node_url_with_https_protocol,
+    ])
+
+    expected_error = {
+        'errors': {
+            'node_url': [
+                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+            ],
+        },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
