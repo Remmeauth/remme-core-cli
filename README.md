@@ -161,6 +161,25 @@ $ remme node get-configs --node-url=node-genesis-testnet.remme.io
 }
 ```
 
+Get the node's peers — ``remme node get-peers``:
+
+| Arguments | Type   |  Required | Description                     |
+| :-------: | :----: | :-------: | ------------------------------- |
+| node-url  | String |  No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-peers --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "peers": [
+            "tcp://node-22-testnet.remme.io:8800",
+            "tcp://node-9-testnet.remme.io:8800",
+            "tcp://node-29-testnet.remme.io:8800"
+        ]
+    }
+}
+```
+
 ### Public key
 
 Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
