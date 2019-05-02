@@ -195,10 +195,39 @@ $ remme public-key get-list \
       --node-url=node-genesis-testnet.remme.io
 {
     "result": {
-        "public_key_addresses": [
+        "addresses": [
             "a23be10b3aad1b4a98f338c71d6dcdb2aa2f296c7e31fb400615e335dc10dd1d4f62bf",
             "a23be14b362514d624c1985277005327f6fc40413fb090eee6fccb673a32c9809060ff"
         ]
+    }
+}
+```
+
+Get information about public key by its address — ``remme public-key get-info``:
+
+| Arguments | Type   | Required | Description                                                |
+| :-------: | :----: | :------: | ---------------------------------------------------------- |
+| address   | String | Yes      | Public key address to get information about public key by. |
+| node-url  | String | No       | Node URL to apply a command to.                            |
+
+```bash
+$ remme public-key get-info \
+      --address=a23be17addad8eeb5177a395ea47eb54b4a646f8c570f4a2ecc0b1d2f6241c6845181b \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "information": {
+            "address": "a23be10d215132aee9377cfe26b6d301d32da070a799c227fb4701103e5626d48cd6ba",
+            "entity_hash": "1edd6d5b1c722a83e03b17180b888d89ec4c079a0044f074b7c8bb2720cad8ba4e97a80c7edbd24c1824f5312dfd8a0877453394a63410b52c1f16e1d60ef754",
+            "entity_hash_signature": "1322ca51fb6d33e44d2b6c028eb668b5712a5277bbdea089112203e8e950d1c7d02d446291865a2f5fca4c6767fb84583e53205df850f1fc05ea6f22c736635f425b0159881f7f998da52378bf08353d87d2a2c226a7ababea9a245e69be06d54c573a42c3be907ca49589a67b5e9cc4d8ed12cea8546b2df531fd9620f4dc71869d8fa0bfcbef239d9a6e2e3bf12bcac4fd562b22ff408d7b077b75d8e59af0348264a7c9e7e61b4c5f844636a0fbbcfae61955efdf10323a992ea2a1734eb0ee7952519b00e696a02e7460771b0e0887e011b709e88abfda896b68150c08dcf6b4bf7c70f996f6031c13311056ab935ce1fdf63d3f19b5a3ca6ae604c4f12b",
+            "is_revoked": false,
+            "is_valid": true,
+            "owner_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+            "public_key": "30820122300d06092a864886f70d01010105000382010f003082010a02820101008b29cc5ec32dab21b48b63faf2fd00f88879b9d4286c3cde6218d19263ea8226fce499039968c5f9736149e298bbc56680b516f2d83507d88fb95771445ca3c59bcdbb31bb5993a4e5dfcd2c4bc86328ec76e95e2f4582f9cac8223a2f16a2b14c4358b6fb105e37baf9daa9bd5b708ab204d8015a1ce782e28024eae1801151616c90a3b1aa1916d5b8dd021b3aa4cec77450660841f8619a7234c6199d01ccd43b1d6ff7fa5f50bf80bc06b682b126bdca0753a6830b7a95afca79442ec64fd09ddcc34627dcbdad0c5e66317db98d0e1c24c3f992b83f4b0f97e2b0300a2cb51e33eccf060f26b4e19a88f15216f8c17be5f5e023a1f260f7c93a2a4523ed0203010001",
+            "type": "rsa",
+            "valid_from": 1556118334,
+            "valid_to": 1587222334
+        }
     }
 }
 ```
