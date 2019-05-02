@@ -191,7 +191,7 @@ def test_get_public_key_info_node_url_with_https():
 
 def test_get_public_key_info_non_existing_address():
     """
-    Case: get information about public key by passing non existing address.
+    Case: get information about public key by passing non-existing address.
     Expect: public key information not found error message.
     """
     non_existing_address = 'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5c'
@@ -216,7 +216,7 @@ def test_get_public_key_info_non_existing_address():
 
 def test_get_public_key_info_non_existing_node_url():
     """
-    Case: get information about public key by passing non existing node URL.
+    Case: get information about public key by passing non-existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

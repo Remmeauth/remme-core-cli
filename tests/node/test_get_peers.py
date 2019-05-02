@@ -151,7 +151,7 @@ def test_get_node_peers_node_url_with_https():
 
 def test_get_node_peers_non_existing_node_url():
     """
-    Case: get the node's peers by passing non existing node URL.
+    Case: get the node's peers by passing non-existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

@@ -143,7 +143,7 @@ def test_get_public_key_node_url_with_https():
 
 def test_get_public_key_non_existing_node_url():
     """
-    Case: get the public key of atomic swap by passing non existing node URL.
+    Case: get the public key of atomic swap by passing non-existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

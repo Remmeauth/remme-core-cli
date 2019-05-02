@@ -180,7 +180,7 @@ def test_get_public_keys_node_url_with_https():
 
 def test_get_public_keys_non_existing_address():
     """
-    Case: get a list of the addresses of the public keys by passing non existing address.
+    Case: get a list of the addresses of the public keys by passing non-existing address.
     Expect: empty list of the addresses of the public keys is returned.
     """
     non_existing_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3c1'
@@ -204,7 +204,7 @@ def test_get_public_keys_non_existing_address():
 
 def test_get_public_keys_non_existing_node_url():
     """
-    Case: get a list of the addresses of the public keys by passing non existing node URL.
+    Case: get a list of the addresses of the public keys by passing non-existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
