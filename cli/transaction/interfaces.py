@@ -12,21 +12,16 @@ class TransactionInterface:
         """
         Get a list of transactions.
 
-         The following filters could be applied:
-            transaction identifiers: identifiers to get a list of transactions by.
-            start: transaction identifier to get a list transaction starting from.
-            limit: maximum amount of transactions to return.
-            head: block identifier to get a list of transactions from.
-            reverse: parameter to reverse result.
-            family-name: list of a transactions by its family name.
+        A list of transactions could be filtered by transactions identifiers, start identifier, limit, head identifier,
+        reverse, family name.
 
         Arguments:
-            transaction_ids (list, optional): transaction identifiers
-            start (string, optional): start
-            limit (int, optional): limit
-            head (string, optional): head
-            reverse (string, optional): reverse
-            family_name (string, optional): family name
+            transaction_ids (list, optional): identifiers to get a list of transactions by.
+            start (string, optional): transaction identifier to get a list transaction starting from.
+            limit (int, optional): maximum amount of transactions to return.
+            head (string, optional): block identifier to get a list of transactions from.
+            reverse (string, optional): parameter to reverse result.
+            family_name (string, optional): list of a transactions by its family name.
         """
         pass
 
@@ -35,6 +30,6 @@ class TransactionInterface:
         Get transaction by its identifier.
 
         Arguments:
-            transaction_id (string, required): transaction identifier
+            transaction_id (string, required): transaction identifier.
         """
         pass

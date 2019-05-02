@@ -1,5 +1,5 @@
 """
-Provide tests for implementation of the config commands.
+Provide tests for implementation of the config file.
 """
 from cli.config import ConfigFile
 

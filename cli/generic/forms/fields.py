@@ -13,6 +13,7 @@ from cli.constants import (
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
     PRIVATE_KEY_REGEXP,
+    PUBLIC_KEY_ADDRESS_REGEXP,
     TRANSACTION_SIGNATURE_REGEXP,
 )
 
@@ -55,9 +56,9 @@ class FamilyNameField(fields.Field):
         return value
 
 
-class TransactionIdentifierListField(fields.Field):
+class TransactionIdentifiersListField(fields.Field):
     """
-    Implements validation of the list identifiers.
+    Implements validation of the identifier of the list.
 
     References:
         - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
@@ -138,5 +139,25 @@ class PrivateKeyField(fields.Field):
 
         if re.match(pattern=PRIVATE_KEY_REGEXP, string=private_key) is None:
             raise ValidationError(f'The following private key `{private_key}` is invalid.')
+
+        return value
+
+
+class PublicKeyAddressField(fields.Field):
+    """
+    Implements validation of the public key address.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        """
+        Validate data (public key address) that was passed to field.
+        """
+        public_key_address = value
+
+        if re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key_address) is None:
+            raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
 
         return value

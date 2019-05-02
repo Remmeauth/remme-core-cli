@@ -31,13 +31,15 @@ class Transaction:
         Get a list of transactions.
 
         Arguments:
-            transaction_ids (list, optional): transaction identifiers
-            start (string, optional): start
-            limit (int, optional): limit
-            head (string, optional): head
-            reverse (string, optional): reverse
-            family_name (string, optional): family name
+            transaction_ids (list, optional): identifiers to get a list of transactions by.
+            start (string, optional): transaction identifier to get a list transaction starting from.
+            limit (int, optional): maximum amount of transactions to return.
+            head (string, optional): block identifier to get a list of transactions from.
+            reverse (string, optional): parameter to reverse result.
+            family_name (string, optional): list of a transactions by its family name.
         """
+        reverse = '' if reverse else 'false'
+
         try:
             transaction_list = loop.run_until_complete(
                 self.service.blockchain_info.get_transactions(query={
@@ -63,7 +65,7 @@ class Transaction:
         Get a transaction.
 
         Arguments:
-            transaction_id (string, required): transaction identifier
+            transaction_id (string, required): transaction identifier.
         """
         try:
             transaction = loop.run_until_complete(
