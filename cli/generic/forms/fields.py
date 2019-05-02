@@ -36,7 +36,7 @@ class AccountAddressField(fields.Field):
         return address
 
 
-class NodeURLField(fields.Field):
+class NodeUrlField(fields.Field):
     """
     Implements validation of the node URL.
 

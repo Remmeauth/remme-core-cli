@@ -5,7 +5,7 @@ from marshmallow import Schema
 
 from cli.generic.forms.fields import (
     AccountAddressField,
-    NodeURLField,
+    NodeUrlField,
     PublicKeyAddressField,
 )
 
@@ -16,7 +16,7 @@ class GetPublicKeyInformationForm(Schema):
     """
 
     address = PublicKeyAddressField(required=True)
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(allow_none=True, required=False)
 
 
 class GetPublicKeysForm(Schema):
@@ -25,4 +25,4 @@ class GetPublicKeysForm(Schema):
     """
 
     address = AccountAddressField(required=True)
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(allow_none=True, required=False)
