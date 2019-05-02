@@ -52,7 +52,7 @@ class NodeUrlField(fields.Field):
         """
         node_url = value
 
-        if node_url == 'localhost':
+        if node_url == 'localhost' or node_url == '127.0.0.1':
             return node_url
 
         if 'http' in node_url or 'https' in node_url:

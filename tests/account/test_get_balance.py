@@ -148,3 +148,28 @@ def test_get_account_balance_node_url_with_protocol(node_url_with_protocol):
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_get_account_balance_non_existing_node_url():
+    """
+    Case: get a balance of an account by passing non-existing node URL.
+    Expect: check if node running at URL error message.
+    """
+    non_existing_node_url = 'non-existing-node.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'account',
+        'get-balance',
+        '--address',
+        '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf',
+        '--node-url',
+        non_existing_node_url,
+    ])
+
+    expected_error = {
+        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output

@@ -153,7 +153,7 @@ def test_get_public_keys_node_url_with_http():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_public_keys_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a list of the addresses of the public keys by passing node URLwith explicit protocol.
+    Case: get a list of the addresses of the public keys by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
     runner = CliRunner()

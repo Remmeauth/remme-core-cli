@@ -256,3 +256,32 @@ def test_transfer_tokens_node_url_with_protocol(node_url_with_protocol):
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_transfer_tokens_non_existing_node_url():
+    """
+    Case: transfer tokens to address by passing non-existing node URL.
+    Expect: check if node running at URL error message.
+    """
+    non_existing_node_url = 'non-existing-node.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'account',
+        'transfer-tokens',
+        '--private-key',
+        PRIVATE_KEY_FOR_TESTING,
+        '--address-to',
+        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        '--amount',
+        '1000',
+        '--node-url',
+        non_existing_node_url,
+    ])
+
+    expected_error = {
+        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
