@@ -15,9 +15,11 @@ install:
 
 script:
   - pypi-version check
-  - cat requirements.txt requirements-tests.txt requirements-dev.txt | safety check --stdin
   - radon cc cli -nb --total-average
-  - ./scripts/isort-diff.sh
+  - cat requirements.txt requirements-tests.txt requirements-dev.txt | safety check --stdin
+  - bash <(curl -s https://linters.io/sort-requirements) requirements.txt requirements-tests.txt requirements-dev.txt
+  - bash <(curl -s https://linters.io/isort-diff) cli tests
+  - bash <(curl -s https://linters.io/pytest-inits) tests
   - flake8 cli && flake8 tests
   - coverage run -m pytest -vv tests
 
