@@ -8,10 +8,8 @@ import sys
 
 import pytest
 
-from tests.constants import (
-    NODE_PRIVATE_KEY_DIRECTORY_PATH,
-    NODE_PRIVATE_KEY_FILE_PATH_IN_TESTING,
-)
+NODE_PRIVATE_KEY_DIRECTORY_PATH = str(pathlib.Path.home()) + '/docker/volumes/remme_validator_keys/_data/'
+NODE_PRIVATE_KEY_FILE_PATH_IN_TESTING = NODE_PRIVATE_KEY_DIRECTORY_PATH + 'validator.priv'
 
 
 def pytest_configure():
@@ -29,6 +27,14 @@ def pytest_configure():
         - https://docs.pytest.org/en/latest/goodpractices.html#tests-outside-application-code
     """
     sys.path.insert(0, str(pathlib.Path(__file__).parents[1]))
+
+
+@pytest.fixture()
+def node_private_key_file_path():
+    """
+    Get node's private key file path.
+    """
+    return NODE_PRIVATE_KEY_FILE_PATH_IN_TESTING
 
 
 @pytest.yield_fixture()
