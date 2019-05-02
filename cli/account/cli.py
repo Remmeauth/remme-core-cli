@@ -11,8 +11,8 @@ from cli.account.forms import (
     TransferTokensForm,
 )
 from cli.account.help import (
-    ADDRESS_ARGUMENT_HELP_MESSAGE,
-    ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
+    ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
+    ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
     AMOUNT_ARGUMENT_HELP_MESSAGE,
     PRIVATE_KEY_ARGUMENT_HELP_MESSAGE,
 )
@@ -36,7 +36,7 @@ def account_commands():
     pass
 
 
-@click.option('--address', type=str, required=True, help=ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', type=str, required=True, help=ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @account_commands.command('get-balance')
 def get_balance(address, node_url):
@@ -69,7 +69,7 @@ def get_balance(address, node_url):
 
 
 @click.option('--private-key', type=str, required=True, help=PRIVATE_KEY_ARGUMENT_HELP_MESSAGE)
-@click.option('--address-to', type=str, required=True, help=ADDRESS_TO_ARGUMENT_HELP_MESSAGE)
+@click.option('--address-to', type=str, required=True, help=ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE)
 @click.option('--amount', type=int, required=True, help=AMOUNT_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @account_commands.command('transfer-tokens')

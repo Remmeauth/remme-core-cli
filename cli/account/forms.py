@@ -9,7 +9,7 @@ from marshmallow import (
 
 from cli.generic.forms.fields import (
     AccountAddressField,
-    NodeURLField,
+    NodeUrlField,
     PrivateKeyField,
 )
 
@@ -20,7 +20,7 @@ class GetAccountBalanceForm(Schema):
     """
 
     address = AccountAddressField(required=True)
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)
 
 
 class TransferTokensForm(Schema):
@@ -37,4 +37,4 @@ class TransferTokensForm(Schema):
             validate.Range(min=1, error='Amount must be greater than 0.'),
         ],
     )
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)
