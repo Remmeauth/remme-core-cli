@@ -11,4 +11,4 @@ class GetAtomicSwapPublicKeyForm(Schema):
     Get public key of the atomic swap form.
     """
 
-    node_url = NodeUrlField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)

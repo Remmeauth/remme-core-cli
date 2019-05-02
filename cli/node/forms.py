@@ -11,7 +11,7 @@ class GetNodeConfigurationsForm(Schema):
     Get node configurations.
     """
 
-    node_url = NodeUrlField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)
 
 
 class GetNodePeersForm(Schema):
@@ -19,4 +19,4 @@ class GetNodePeersForm(Schema):
     Get the node's peers.
     """
 
-    node_url = NodeUrlField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)
