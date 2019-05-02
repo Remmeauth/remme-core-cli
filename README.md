@@ -141,6 +141,23 @@ $ remme account transfer-tokens \
 }
 ```
 
+### Atomic Swap
+
+Get public key of atomic swap — ``remme atomic-swap get-public-key``:
+
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
+
+```bash
+$ remme atomic-swap get-public-key --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+    }
+}
+```
+
 ### Node
 
 Get node configurations — ``remme node get-configs``:
