@@ -27,7 +27,7 @@ setup(
     entry_points={
         'console_scripts': [
             'remme = cli.entrypoint:cli',
-        ]
+        ],
     },
     classifiers=[
         'Operating System :: OS Independent',

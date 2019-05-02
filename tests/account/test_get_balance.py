@@ -14,7 +14,7 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_get_balance():
+def test_get__account_balance():
     """
     Case: get a balance of an account by address.
     Expect: balance is returned.
@@ -35,7 +35,7 @@ def test_get_balance():
     assert isinstance(balance, int)
 
 
-def test_get_balance_invalid_address():
+def test_get_account_balance_invalid_address():
     """
     Case: get a balance of an account by invalid address.
     Expect: the following address is invalid error message.
@@ -64,7 +64,7 @@ def test_get_balance_invalid_address():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_balance_without_node_url(mocker):
+def test_get_account_balance_without_node_url(mocker):
     """
     Case: get a balance of an account by address without passing node URL.
     Expect: balance is returned from node on localhost.
@@ -92,7 +92,7 @@ def test_get_balance_without_node_url(mocker):
     assert expected_result == json.loads(result.output)
 
 
-def test_get_balance_invalid_node_url():
+def test_get_account_balance_invalid_node_url():
     """
     Case: get a balance of an account by passing invalid node URL.
     Expect: the following node URL is invalid error message.
@@ -121,7 +121,7 @@ def test_get_balance_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_balance_node_url_with_http():
+def test_get_account_balance_node_url_with_http():
     """
     Case: get a balance of an account by passing node URL with explicit HTTP protocol.
     Expect: the following node URL contains protocol error message.
@@ -150,7 +150,7 @@ def test_get_balance_node_url_with_http():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_balance_node_url_with_https():
+def test_get_account_balance_node_url_with_https():
     """
     Case: get a balance of an account by passing node URL with explicit HTTPS protocol.
     Expect: the following node URL contains protocol error message.
