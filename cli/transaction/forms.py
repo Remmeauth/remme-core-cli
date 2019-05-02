@@ -11,7 +11,7 @@ from cli.generic.forms.fields import (
     FamilyNameField,
     NodeURLField,
     TransactionIdentifierField,
-    TransactionIdentifierListField,
+    TransactionIdentifiersListField,
 )
 
 
@@ -20,7 +20,7 @@ class GetTransactionsListForm(Schema):
     Get list of transactions form.
     """
 
-    ids = TransactionIdentifierListField(allow_none=True, required=False)
+    ids = TransactionIdentifiersListField(allow_none=True, required=False)
     start = TransactionIdentifierField(allow_none=True, required=False)
     head = TransactionIdentifierField(allow_none=True, required=False)
     limit = fields.Integer(

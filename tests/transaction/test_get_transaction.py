@@ -3,6 +3,7 @@ Provide tests for command line interface's get transaction command.
 """
 import json
 
+import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
@@ -142,13 +143,12 @@ def test_get_transaction_with_invalid_node_url():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_transaction_node_url_with_http():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_get_transaction_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get transaction by passing node URL with explicit HTTP protocol.
+    Case: get transaction by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_http_protocol = 'http://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
@@ -157,43 +157,13 @@ def test_get_transaction_node_url_with_http():
         '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
         '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
         '--node-url',
-        node_url_with_http_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_get_transaction_node_url_with_https():
-    """
-    Case: get transaction by passing node URL with explicit HTTPS protocol.
-    Expect: the following node URL contains protocol error message.
-    """
-    node_url_with_https_protocol = 'https://masternode.com'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'transaction',
-        'get',
-        '--id',
-        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
-        '--node-url',
-        node_url_with_https_protocol,
-    ])
-
-    expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }

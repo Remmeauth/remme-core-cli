@@ -58,7 +58,7 @@ class FamilyNameField(fields.Field):
 
 class TransactionIdentifiersListField(fields.Field):
     """
-    Implements validation of the identifier of the list.
+    Implements validation of the list of the identifiers.
 
     References:
         - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
@@ -66,15 +66,18 @@ class TransactionIdentifiersListField(fields.Field):
 
     def _deserialize(self, value, attr, obj, **kwargs):
         """
-        Validate data (list identifiers) that was passed to field.
+        Validate data (list of the identifiers) that was passed to field.
         """
-        value = [v.strip() for v in value.split(',')]
-        for id_ in value:
+        validated_identifiers = []
+        for identifier in value.split(','):
 
-            if re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=id_) is None:
-                raise ValidationError(f'The following id `{value}` is invalid.')
+            identifier = identifier.strip()
+            if re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=identifier) is None:
+                raise ValidationError(f'The following id `{identifier}` is invalid.')
 
-        return value
+            validated_identifiers.append(identifier)
+
+        return validated_identifiers
 
 
 class TransactionIdentifierField(fields.Field):

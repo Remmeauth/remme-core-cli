@@ -44,24 +44,25 @@ def test_get_list_transactions_with_invalid_ids():
     Case: get a list transactions by invalid ids.
     Expect: the following ids are not valid error message.
     """
-    invalid_transaction_ids = '044c7, True 010101'
+    invalid_id = '044c7'
+    transaction_ids = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
+                      '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b, ' \
+                      f'{invalid_id}'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get-list',
         '--ids',
-        invalid_transaction_ids,
+        transaction_ids,
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    invalid_transaction_ids = [id_.strip() for id_ in invalid_transaction_ids.split(',')]
-
     expected_error_message = {
         'errors': {
             'ids': [
-                f'The following id `{invalid_transaction_ids}` is invalid.',
+                f'The following id `{invalid_id}` is invalid.',
             ],
         },
     }
@@ -338,13 +339,12 @@ def test_get_list_transactions_without_node_url(mocker):
     assert expected_result.get('data') == json.loads(result.output).get('result')
 
 
-def test_get_list_transactions_node_url_with_http():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_get_list_transactions_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get list transactions by passing node URL with explicit HTTP protocol.
+    Case: get list transactions by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_http_protocol = 'http://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
@@ -353,43 +353,13 @@ def test_get_list_transactions_node_url_with_http():
         '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
         '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
         '--node-url',
-        node_url_with_http_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_get_list_transactions_node_url_with_https():
-    """
-    Case: get list transactions by passing node URL with explicit HTTPS protocol.
-    Expect: the following node URL contains protocol error message.
-    """
-    node_url_with_https_protocol = 'https://masternode.com'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'transaction',
-        'get',
-        '--id',
-        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
-        '--node-url',
-        node_url_with_https_protocol,
-    ])
-
-    expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }
