@@ -52,3 +52,17 @@ class Node:
         return {
             'peers': peers,
         }, None
+
+    def get_info(self):
+        """
+        Get node information.
+        """
+        try:
+            information = loop.run_until_complete(self.service.node_management.get_node_info())
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'information': information.data,
+        }, None

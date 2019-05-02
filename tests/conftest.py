@@ -172,6 +172,22 @@ class NodeConfigurations:
         }
 
 
+class NodeInformation:
+    """
+    Impose node information data transfer object.
+    """
+
+    @property
+    def data(self):
+        """
+        Get node information.
+        """
+        return {
+            'is_synced': True,
+            'peer_count': 3,
+        }
+
+
 @pytest.fixture()
 def sent_transaction():
     """
@@ -181,7 +197,7 @@ def sent_transaction():
 
 
 @pytest.fixture()
-def public_key_info():
+def public_key_information():
     """
     Get public key information fixture.
     """
@@ -194,3 +210,11 @@ def node_configurations():
     Get node configurations fixture.
     """
     return NodeConfigurations()
+
+
+@pytest.fixture()
+def node_information():
+    """
+    Get node information fixture.
+    """
+    return NodeInformation()
