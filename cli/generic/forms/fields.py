@@ -36,7 +36,7 @@ class AccountAddressField(fields.Field):
         return address
 
 
-class NodeURLField(fields.Field):
+class NodeUrlField(fields.Field):
     """
     Implements validation of the node URL.
 
@@ -52,7 +52,7 @@ class NodeURLField(fields.Field):
         """
         node_url = value
 
-        if node_url == 'localhost':
+        if node_url == 'localhost' or node_url == '127.0.0.1':
             return node_url
 
         if 'http' in node_url or 'https' in node_url:
