@@ -43,8 +43,6 @@ $ pip3 install remme-core-cli
 
 ## Usage
 
-### Nodes
-
 You can use the following list of the addresses of the nodes to execute commands to:
 
 - `node-genesis-testnet.remme.io`,
@@ -52,6 +50,8 @@ You can use the following list of the addresses of the nodes to execute commands
 - `node-1-testnet.remme.io`.
 
 ### Configuration file
+
+*Disclaimer!* Configuration file is supported only on Unix operating systems and isn't supported on Windows.
 
 Using the command line interface, you will have an option to declare the `node URL` to send commands to as illustrated below:
 
