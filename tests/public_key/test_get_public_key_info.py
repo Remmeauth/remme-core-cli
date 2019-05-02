@@ -4,6 +4,7 @@ Provide tests for command line interface's public key information commands.
 import json
 import re
 
+import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
@@ -131,42 +132,12 @@ def test_get_public_key_info_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_key_info_node_url_with_http():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_get_public_key_info_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get information about public key by passing node URL with explicit HTTP protocol.
+    Case: get information about public key by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_http_protocol = 'http://masternode.com'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'public-key',
-        'get-info',
-        '--address',
-        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
-        '--node-url',
-        node_url_with_http_protocol,
-    ])
-
-    expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_get_public_key_info_node_url_with_https():
-    """
-    Case: get information about public key by passing node URL with explicit HTTPS protocol.
-    Expect: the following node URL contains protocol error message.
-    """
-    node_url_with_https_protocol = 'https://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
@@ -174,13 +145,13 @@ def test_get_public_key_info_node_url_with_https():
         '--address',
         PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        node_url_with_https_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }

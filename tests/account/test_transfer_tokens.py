@@ -226,13 +226,12 @@ def test_transfer_tokens_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_transfer_tokens_node_url_with_http():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_transfer_tokens_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: transfer tokens to address by passing node URL with explicit HTTP protocol.
+    Case: transfer tokens to address by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_http_protocol = 'http://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'account',
@@ -244,46 +243,13 @@ def test_transfer_tokens_node_url_with_http():
         '--amount',
         '1000',
         '--node-url',
-        node_url_with_http_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_transfer_tokens_node_url_with_https():
-    """
-    Case: transfer tokens to address by passing node URL with explicit HTTPS protocol.
-    Expect: the following node URL contains protocol error message.
-    """
-    node_url_with_https_protocol = 'https://masternode.com'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'account',
-        'transfer-tokens',
-        '--private-key',
-        PRIVATE_KEY_FOR_TESTING,
-        '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
-        '--amount',
-        '1000',
-        '--node-url',
-        node_url_with_https_protocol,
-    ])
-
-    expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }
