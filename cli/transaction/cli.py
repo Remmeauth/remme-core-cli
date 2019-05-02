@@ -70,7 +70,6 @@ def get_transactions(ids, start, limit, head, reverse, family_name, node_url):
     limit = arguments.get('limit')
     head = arguments.get('head')
     family_name = arguments.get('family_name')
-
     node_url = arguments.get('node_url')
 
     remme = Remme(network_config={

@@ -14,7 +14,7 @@ from cli.constants import (
     FAMILY_NAMES,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
-    TRANSACTION_SIGNATURE_REGEXP,
+    TRANSACTION_HEADER_SIGNATURE_REGEXP,
 )
 
 
@@ -72,8 +72,8 @@ class TransactionIdentifiersListField(fields.Field):
         for identifier in value.split(','):
 
             identifier = identifier.strip()
-            if re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=identifier) is None:
-                raise ValidationError(f'The following id `{identifier}` is invalid.')
+            if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+                raise ValidationError(f'The following identifier `{identifier}` is invalid.')
 
             validated_identifiers.append(identifier)
 
@@ -92,8 +92,8 @@ class TransactionIdentifierField(fields.Field):
         """
         Validate data (identifier) that was passed to field.
         """
-        if re.match(pattern=TRANSACTION_SIGNATURE_REGEXP, string=value) is None:
-            raise ValidationError(f'The following id `{value}` is invalid.')
+        if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=value) is None:
+            raise ValidationError(f'The following identifier `{value}` is invalid.')
 
         return value
 

@@ -41,7 +41,7 @@ class Transaction:
         reverse = '' if reverse else 'false'
 
         try:
-            transaction_list = loop.run_until_complete(
+            transactions = loop.run_until_complete(
                 self.service.blockchain_info.get_transactions(query={
                     'ids': transaction_ids,
                     'start': start,
@@ -58,7 +58,7 @@ class Transaction:
         except Exception as error:
             return None, str(error)
 
-        return transaction_list.get('data'), None
+        return transactions.get('data'), None
 
     def get(self, transaction_id):
         """

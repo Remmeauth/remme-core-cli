@@ -9,7 +9,7 @@ from marshmallow import (
 
 from cli.generic.forms.fields import (
     FamilyNameField,
-    NodeURLField,
+    NodeUrlField,
     TransactionIdentifierField,
     TransactionIdentifiersListField,
 )
@@ -32,7 +32,7 @@ class GetTransactionsListForm(Schema):
         ],
     )
     family_name = FamilyNameField(allow_none=True, required=False)
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)
 
 
 class GetTransactionForm(Schema):
@@ -41,4 +41,4 @@ class GetTransactionForm(Schema):
     """
 
     id = TransactionIdentifierField(allow_none=True, required=True)
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)

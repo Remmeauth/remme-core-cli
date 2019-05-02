@@ -38,7 +38,7 @@ def test_get_transaction():
 def test_get_transaction_with_invalid_id():
     """
     Case: get a transaction by its invalid id.
-    Expect: the following id is invalid error message.
+    Expect: the following identifier is invalid error message.
     """
     invalid_transaction_id = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180dd' \
                              '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85bdd'
@@ -56,7 +56,7 @@ def test_get_transaction_with_invalid_id():
     expected_error_message = {
         'errors': {
             'id': [
-                f'The following id `{invalid_transaction_id}` is invalid.',
+                f'The following identifier `{invalid_transaction_id}` is invalid.',
             ],
         },
     }

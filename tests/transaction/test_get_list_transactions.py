@@ -42,7 +42,7 @@ def test_get_list_transactions_with_ids():
 def test_get_list_transactions_with_invalid_ids():
     """
     Case: get a list transactions by invalid ids.
-    Expect: the following ids are not valid error message.
+    Expect: the following identifier are not valid error message.
     """
     invalid_id = '044c7'
     transaction_ids = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
@@ -62,7 +62,7 @@ def test_get_list_transactions_with_invalid_ids():
     expected_error_message = {
         'errors': {
             'ids': [
-                f'The following id `{invalid_id}` is invalid.',
+                f'The following identifier `{invalid_id}` is invalid.',
             ],
         },
     }
@@ -137,7 +137,7 @@ def test_get_list_transactions_by_head():
 def test_get_list_transactions_with_invalid_start_head(command_flag):
     """
     Case: get a list transactions by invalid start and head.
-    Expect: the following id is not valid error message.
+    Expect: the following identifier is not valid error message.
     """
     invalid_id = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180'
 
@@ -154,7 +154,7 @@ def test_get_list_transactions_with_invalid_start_head(command_flag):
     expected_error_message = {
         'errors': {
             f'{command_flag[2:]}': [
-                f'The following id `{invalid_id}` is invalid.',
+                f'The following identifier `{invalid_id}` is invalid.',
             ],
         },
     }
