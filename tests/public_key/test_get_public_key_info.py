@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's public key get public keys addresses commands.
+Provide tests for command line interface's public key information commands.
 """
 import json
 import re
@@ -9,54 +9,65 @@ from click.testing import CliRunner
 from cli.constants import (
     ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    HEADER_SIGNATURE_REGEXP,
+    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
+    PUBLIC_KEY_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-ADDRESS_PRESENTED_ON_THE_TEST_NODE = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf'
+PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = 'a23be17addad8eeb5177a395ea47eb54b4a646f8c570f4a2ecc0b1d2f6241c6845181b'
 
 
-def test_get_public_keys():
+def test_get_public_key_info():
     """
-    Case: get a list of the addresses of the public keys by account address.
-    Expect: list of the addresses of the public keys, each public key address matched regexp checking.
+    Case: get information about public key by its address.
+    Expect: dictionary of public key information, keys matched regexp checking.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
-        'get-list',
+        'get-info',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
-    public_key_addresses = json.loads(result.output).get('result').get('public_key_addresses')
+    public_key_info = json.loads(result.output).get('result').get('information')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert re.match(pattern=ADDRESS_REGEXP, string=public_key_info.get('address')) is not None
+    assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=public_key_info.get('entity_hash')) is not None
+    assert re.match(pattern=PUBLIC_KEY_REGEXP, string=public_key_info.get('owner_public_key')) is not None
+    assert isinstance(public_key_info.get('valid_from'), int)
+    assert isinstance(public_key_info.get('valid_to'), int)
+    assert isinstance(public_key_info.get('is_revoked'), bool)
+    assert isinstance(public_key_info.get('is_valid'), bool)
 
-    for public_key in public_key_addresses:
-        assert re.match(pattern=ADDRESS_REGEXP, string=public_key) is not None
 
-
-def test_get_public_keys_invalid_address():
+def test_get_public_key_info_invalid_address():
     """
-    Case: get a list of the addresses of the public keys by invalid address.
-    Expect: the following address is not valid error message.
+    Case: get information about public key by invalid address.
+    Expect: the following public key address is not valid error message.
     """
-    invalid_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3zz'
+    invalid_address = 'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddczz'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
-        'public-key', 'get-list', '--address', invalid_address, '--node-url', NODE_IP_ADDRESS_FOR_TESTING,
+        'public-key',
+        'get-info',
+        '--address',
+        invalid_address,
+        '--node-url',
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
     expected_error = {
         'errors': {
             'address': [
-                f'The following address `{invalid_address}` is invalid.',
+                f'The following public key address `{invalid_address}` is invalid.',
             ],
         },
     }
@@ -65,25 +76,25 @@ def test_get_public_keys_invalid_address():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_without_node_url(mocker):
+def test_get_public_key_info_without_node_url(mocker, public_key_info):
     """
-    Case: get a list of the addresses of the public keys without passing node URL.
-    Expect: list of the addresses of the public keys is returned from node on localhost.
+    Case: get information about public key without passing node URL.
+    Expect: dictionary of public key information is returned from node on localhost.
     """
-    public_key_addresses = [
-        'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b',
-        'a23be17265e8393dd9ae7a46f1be662f86130c434fd54576a7d92b678e5c30de4f677f',
-    ]
-
-    mock_public_key_get_public_keys = mocker.patch('cli.public_key.service.loop.run_until_complete')
-    mock_public_key_get_public_keys.return_value = public_key_addresses
+    mock_public_key_get_info = mocker.patch('cli.public_key.service.loop.run_until_complete')
+    mock_public_key_get_info.return_value = public_key_info
 
     runner = CliRunner()
-    result = runner.invoke(cli, ['public-key', 'get-list', '--address', ADDRESS_PRESENTED_ON_THE_TEST_NODE])
+    result = runner.invoke(cli, [
+        'public-key',
+        'get-info',
+        '--address',
+        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+    ])
 
     expected_result = {
         'result': {
-            'public_key_addresses': public_key_addresses,
+            'information': public_key_info.data,
         },
     }
 
@@ -91,9 +102,9 @@ def test_get_public_keys_without_node_url(mocker):
     assert expected_result == json.loads(result.output)
 
 
-def test_get_public_keys_invalid_node_url():
+def test_get_public_key_info_invalid_node_url():
     """
-    Case: get a list of the addresses of the public keys by passing invalid node URL.
+    Case: get information about public key by passing invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -101,9 +112,9 @@ def test_get_public_keys_invalid_node_url():
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
-        'get-list',
+        'get-info',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         invalid_node_url,
     ])
@@ -120,9 +131,9 @@ def test_get_public_keys_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_node_url_with_http():
+def test_get_public_key_info_node_url_with_http():
     """
-    Case: get a list of the addresses of the public keys by passing node URL with explicit HTTP protocol.
+    Case: get information about public key by passing node URL with explicit HTTP protocol.
     Expect: the following node URL contains protocol error message.
     """
     node_url_with_http_protocol = 'http://masternode.com'
@@ -130,9 +141,9 @@ def test_get_public_keys_node_url_with_http():
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
-        'get-list',
+        'get-info',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         node_url_with_http_protocol,
     ])
@@ -149,9 +160,9 @@ def test_get_public_keys_node_url_with_http():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_node_url_with_https():
+def test_get_public_key_info_node_url_with_https():
     """
-    Case: get a list of the addresses of the public keys by passing node URL with explicit HTTPS protocol.
+    Case: get information about public key by passing node URL with explicit HTTPS protocol.
     Expect: the following node URL contains protocol error message.
     """
     node_url_with_https_protocol = 'https://masternode.com'
@@ -161,7 +172,7 @@ def test_get_public_keys_node_url_with_https():
         'public-key',
         'get-list',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         node_url_with_https_protocol,
     ])
@@ -178,33 +189,34 @@ def test_get_public_keys_node_url_with_https():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_non_existing_address():
+def test_get_public_key_info_non_existing_address():
     """
-    Case: get a list of the addresses of the public keys by passing non existing address.
-    Expect: empty list of the addresses of the public keys is returned.
+    Case: get information about public key by passing non existing address.
+    Expect: public key information not found error message.
     """
-    non_existing_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3c1'
+    non_existing_address = 'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5c'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
-        'get-list',
+        'get-info',
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        NODE_27_IN_TESTNET_ADDRESS,
     ])
 
-    public_key_addresses = json.loads(result.output).get('result').get('public_key_addresses')
+    expected_error = {
+        'errors': 'Public key info not found',
+    }
 
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(public_key_addresses, list)
-    assert public_key_addresses == []
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_non_existing_node_url():
+def test_get_public_key_info_non_existing_node_url():
     """
-    Case: get a list of the addresses of the public keys by passing non existing node URL.
+    Case: get information about public key by passing non existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
@@ -212,9 +224,9 @@ def test_get_public_keys_non_existing_node_url():
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
-        'get-list',
+        'get-info',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         non_existing_node_url,
     ])

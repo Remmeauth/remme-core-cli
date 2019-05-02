@@ -4,6 +4,7 @@ Provide implementation of the command line interface to interact with Remme-core
 import click
 
 from cli.account.cli import account_commands
+from cli.atomic_swap.cli import atomic_swap_commands
 from cli.node.cli import node_commands
 from cli.public_key.cli import public_key_commands
 
@@ -19,5 +20,6 @@ def cli():
 
 
 cli.add_command(account_commands)
+cli.add_command(atomic_swap_commands)
 cli.add_command(node_commands)
 cli.add_command(public_key_commands)
