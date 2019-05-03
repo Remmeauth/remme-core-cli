@@ -69,9 +69,10 @@ class TransactionIdentifiersListField(fields.Field):
         Validate data (list of the identifiers) that was passed to field.
         """
         validated_identifiers = []
-        for identifier in value.split(','):
 
+        for identifier in value.split(','):
             identifier = identifier.strip()
+
             if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=identifier) is None:
                 raise ValidationError(f'The following identifier `{identifier}` is invalid.')
 

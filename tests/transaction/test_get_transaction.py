@@ -17,16 +17,18 @@ from cli.utils import dict_to_pretty_json
 
 def test_get_transaction():
     """
-    Case: get a transaction by id.
+    Case: get a transaction by identifier.
     Expect: transaction is returned.
     """
+    transaction_id = 'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb' \
+                     '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4'
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get',
         '--id',
-        'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb'
-        '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4',
+        transaction_id,
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
@@ -37,7 +39,7 @@ def test_get_transaction():
 
 def test_get_transaction_with_invalid_id():
     """
-    Case: get a transaction by its invalid id.
+    Case: get a transaction by its invalid identifier.
     Expect: the following identifier is invalid error message.
     """
     invalid_transaction_id = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180dd' \
@@ -67,8 +69,8 @@ def test_get_transaction_with_invalid_id():
 
 def test_get_transaction_without_node_url(mocker):
     """
-    Case: get a transaction by id without passing node URL.
-    Expect: transaction is returned.
+    Case: get a transaction by identifier without passing node URL.
+    Expect: transaction is returned from node on localhost.
     """
     transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
                      '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'
@@ -114,7 +116,7 @@ def test_get_transaction_without_node_url(mocker):
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_result.get('data') == json.loads(result.output).get('result')
+    assert expected_result == json.loads(result.output).get('result')
 
 
 def test_get_transaction_with_invalid_node_url():
@@ -149,13 +151,15 @@ def test_get_transaction_node_url_with_protocol(node_url_with_protocol):
     Case: get transaction by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
+    transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
+                     '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get',
         '--id',
-        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        transaction_id,
         '--node-url',
         node_url_with_protocol,
     ])

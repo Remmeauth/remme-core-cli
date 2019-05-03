@@ -17,7 +17,7 @@ from cli.generic.forms.fields import (
 
 class GetTransactionsListForm(Schema):
     """
-    Get list of transactions form.
+    Get a list of transactions form.
     """
 
     ids = TransactionIdentifiersListField(allow_none=True, required=False)

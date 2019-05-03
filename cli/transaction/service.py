@@ -58,7 +58,7 @@ class Transaction:
         except Exception as error:
             return None, str(error)
 
-        return transactions.get('data'), None
+        return transactions, None
 
     def get(self, transaction_id):
         """
@@ -78,4 +78,4 @@ class Transaction:
         except Exception as error:
             return None, str(error)
 
-        return transaction.get('data'), None
+        return transaction, None
