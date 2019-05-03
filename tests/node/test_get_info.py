@@ -18,7 +18,7 @@ from cli.utils import dict_to_pretty_json
 def test_get_node_info():
     """
     Case: get node information.
-    Expect: flag is synced and peer count are returned.
+    Expect: the flag is synced and peer count are returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -41,7 +41,7 @@ def test_get_node_info():
 def test_get_node_info_without_node_url(mocker, node_information):
     """
     Case: get node information without passing node URL.
-    Expect:flag is synced and peer count are returned from node on localhost.
+    Expect: the flag is synced and peer count are returned from a node on localhost
     """
     mock_node_get_info = mocker.patch('cli.node.service.loop.run_until_complete')
     mock_node_get_info.return_value = node_information
