@@ -1,7 +1,11 @@
 """
 Setup the package.
 """
-from setuptools import find_packages, setup
+from setuptools import (
+    find_packages,
+    setup,
+)
+
 
 with open('README.md', 'r') as read_me:
     long_description = read_me.read()
@@ -10,7 +14,7 @@ with open('requirements.txt', 'r') as f:
     requirements = f.read().splitlines()
 
 setup(
-    version='0.1.0',
+    version='0.2.0',
     name='remme-core-cli',
     description='The command-line interface (CLI) that provides a set of commands to interact with Remme-core.',
     long_description=long_description,
@@ -24,15 +28,13 @@ setup(
     entry_points={
         'console_scripts': [
             'remme = cli.entrypoint:cli',
-        ]
+        ],
     },
     classifiers=[
         'Operating System :: OS Independent',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
 
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],

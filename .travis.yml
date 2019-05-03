@@ -1,10 +1,12 @@
 language: python
 
+sudo: required
+
+dist: xenial
+
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
-  - "3.7-dev"
+  - "3.7"
 
 install:
   - pip install -r requirements.txt
@@ -12,10 +14,13 @@ install:
   - pip install -r requirements-tests.txt
 
 script:
-  - cat requirements.txt requirements-tests.txt requirements-dev.txt | safety check --stdin
+  - pypi-version check
   - radon cc cli -nb --total-average
-  - isort -rc cli --diff && isort -rc tests --diff
-  - flake8 cli
+  - cat requirements.txt requirements-tests.txt requirements-dev.txt | safety check --stdin
+  - bash <(curl -s https://linters.io/sort-requirements) requirements.txt requirements-tests.txt requirements-dev.txt
+  - bash <(curl -s https://linters.io/isort-diff) cli tests
+  - bash <(curl -s https://linters.io/pytest-inits) tests
+  - flake8 cli && flake8 tests
   - coverage run -m pytest -vv tests
 
 after_success:
