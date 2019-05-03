@@ -3,6 +3,7 @@ Provide tests for command line interface's block commands.
 """
 import json
 
+import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
@@ -129,13 +130,12 @@ def test_get_block_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_block_node_url_with_http():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_get_block_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a block by passing node URL with explicit HTTP protocol.
+    Case: get a block by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_http_protocol = 'http://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'account',
@@ -143,13 +143,13 @@ def test_get_block_node_url_with_http():
         '--address',
         '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf',
         '--node-url',
-        node_url_with_http_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }
@@ -158,29 +158,23 @@ def test_get_block_node_url_with_http():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_block_node_url_with_https():
+def test_get_block_non_existing_node_url():
     """
-    Case: get a block by passing node URL with explicit HTTPS protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a block by passing non-existing node URL.
+    Expect: check if node running at URL error message.
     """
-    node_url_with_https_protocol = 'https://masternode.com'
+    non_existing_node_url = 'non-existing-node.com'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
-        'account',
-        'get-balance',
-        '--address',
-        '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf',
+        'node',
+        'get-configs',
         '--node-url',
-        node_url_with_https_protocol,
+        non_existing_node_url,
     ])
 
     expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
+        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -207,29 +201,6 @@ def test_get_block_non_existing_identifier():
 
     expected_error = {
         'errors': f'Block with id `{non_existing_block_identifier}` not found.',
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_get_block_non_existing_node_url():
-    """
-    Case: get a block by passing non-existing node URL.
-    Expect: check if node running at URL error message.
-    """
-    non_existing_node_url = 'non-existing-node.com'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'node',
-        'get-configs',
-        '--node-url',
-        non_existing_node_url,
-    ])
-
-    expected_error = {
-        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

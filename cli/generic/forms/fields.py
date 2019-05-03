@@ -108,6 +108,9 @@ class PublicKeyAddressField(fields.Field):
 class BlockIdentifierField(fields.Field):
     """
     Implements validation of the block identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
