@@ -13,7 +13,6 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
-    * [Nodes](#nodes)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
@@ -161,10 +160,10 @@ $ remme atomic-swap get-public-key --node-url=node-6-testnet.remme.io
 
 Get information about atomic swap by its identifier — ``remme atomic-swap get-info``:
 
-| Arguments | Type   | Required | Description                                          |
-| :-------: | :----: | :------: | ---------------------------------------------------- |
-| id        | String | Yes      | Swap identifier to get an information about swap by. |
-| node-url  | String | No       | Node URL to apply a command to.                      |
+| Arguments | Type   | Required | Description                                       |
+| :-------: | :----: | :------: | ------------------------------------------------- |
+| id        | String | Yes      | Swap identifier to get information about swap by. |
+| node-url  | String | No       | Node URL to apply a command to.                   |
 
 ```bash
 $ remme atomic-swap get-info \

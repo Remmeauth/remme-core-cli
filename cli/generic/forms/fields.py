@@ -122,4 +122,4 @@ class SwapIdentifierField(fields.Field):
         if re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_identifier) is None:
             raise ValidationError(f'The following swap identifier `{swap_identifier}` is invalid.')
 
-        return value
+        return swap_identifier

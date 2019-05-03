@@ -17,36 +17,39 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
+SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808'
+
 
 def test_get_swap_info():
     """
     Case: get information about atomic swap by its identifier.
-    Expect: information about swap is returned.
+    Expect: information about the swap is returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
         'atomic-swap',
         'get-info',
         '--id',
-        '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808',
+        SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         NODE_27_IN_TESTNET_ADDRESS,
     ])
 
     swap_info = json.loads(result.output).get('result').get('information')
+    swap_identifier = swap_info.get('swap_id')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE == swap_identifier
     assert re.match(pattern=ADDRESS_REGEXP, string=swap_info.get('sender_address')) is not None
     assert re.match(pattern=ADDRESS_REGEXP, string=swap_info.get('receiver_address')) is not None
-    assert re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_info.get('swap_id')) is not None
-    assert isinstance(int(float(swap_info.get('amount'))), int)
+    assert re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_identifier) is not None
     assert isinstance(swap_info.get('is_initiator'), bool)
 
 
 def test_get_swap_info_without_node_url(mocker, swap_info):
     """
-    Case: get information about atomic swap by its without passing node URL.
-    Expect: information about swap is returned from node on localhost.
+    Case: get information about atomic swap by its identifier without passing node URL.
+    Expect: information about the swap is returned from node on localhost.
     """
     mock_swap_get_info = mocker.patch('cli.atomic_swap.service.loop.run_until_complete')
     mock_swap_get_info.return_value = swap_info
@@ -56,7 +59,7 @@ def test_get_swap_info_without_node_url(mocker, swap_info):
         'atomic-swap',
         'get-info',
         '--id',
-        '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808',
+        SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
     ])
 
     expected_result = {
@@ -135,7 +138,7 @@ def test_get_swap_info_non_existing_node_url():
         'atomic-swap',
         'get-info',
         '--id',
-        '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808',
+        SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         non_existing_node_url,
     ])
@@ -160,7 +163,7 @@ def test_get_swap_info_invalid_node_url():
         'atomic-swap',
         'get-info',
         '--id',
-        '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808',
+        SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         invalid_node_url,
     ])
@@ -188,7 +191,7 @@ def test_get_swap_info_node_url_with_protocol(node_url_with_protocol):
         'atomic-swap',
         'get-info',
         '--id',
-        '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808',
+        SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         node_url_with_protocol,
     ])
