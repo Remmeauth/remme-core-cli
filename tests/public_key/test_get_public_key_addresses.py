@@ -4,13 +4,14 @@ Provide tests for command line interface's public key get public keys addresses 
 import json
 import re
 
+import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
+    PUBLIC_KEY_ADDRESS_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -33,12 +34,12 @@ def test_get_public_keys():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    public_key_addresses = json.loads(result.output).get('result').get('public_key_addresses')
+    public_key_addresses = json.loads(result.output).get('result').get('addresses')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
     for public_key in public_key_addresses:
-        assert re.match(pattern=ADDRESS_REGEXP, string=public_key) is not None
+        assert re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key) is not None
 
 
 def test_get_public_keys_invalid_address():
@@ -83,7 +84,7 @@ def test_get_public_keys_without_node_url(mocker):
 
     expected_result = {
         'result': {
-            'public_key_addresses': public_key_addresses,
+            'addresses': public_key_addresses,
         },
     }
 
@@ -149,13 +150,12 @@ def test_get_public_keys_node_url_with_http():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_node_url_with_https():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_get_public_keys_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a list of the addresses of the public keys by passing node URL with explicit HTTPS protocol.
+    Case: get a list of the addresses of the public keys by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_https_protocol = 'https://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'public-key',
@@ -163,13 +163,13 @@ def test_get_public_keys_node_url_with_https():
         '--address',
         ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        node_url_with_https_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }
@@ -180,7 +180,7 @@ def test_get_public_keys_node_url_with_https():
 
 def test_get_public_keys_non_existing_address():
     """
-    Case: get a list of the addresses of the public keys by passing non existing address.
+    Case: get a list of the addresses of the public keys by passing non-existing address.
     Expect: empty list of the addresses of the public keys is returned.
     """
     non_existing_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3c1'
@@ -195,7 +195,7 @@ def test_get_public_keys_non_existing_address():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    public_key_addresses = json.loads(result.output).get('result').get('public_key_addresses')
+    public_key_addresses = json.loads(result.output).get('result').get('addresses')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert isinstance(public_key_addresses, list)
@@ -204,7 +204,7 @@ def test_get_public_keys_non_existing_address():
 
 def test_get_public_keys_non_existing_node_url():
     """
-    Case: get a list of the addresses of the public keys by passing non existing node URL.
+    Case: get a list of the addresses of the public keys by passing non-existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

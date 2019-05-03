@@ -5,8 +5,18 @@ from marshmallow import Schema
 
 from cli.generic.forms.fields import (
     AccountAddressField,
-    NodeURLField,
+    NodeUrlField,
+    PublicKeyAddressField,
 )
+
+
+class GetPublicKeyInformationForm(Schema):
+    """
+    Get information about public key of the public key information form.
+    """
+
+    address = PublicKeyAddressField(required=True)
+    node_url = NodeUrlField(required=False)
 
 
 class GetPublicKeysForm(Schema):
@@ -15,4 +25,4 @@ class GetPublicKeysForm(Schema):
     """
 
     address = AccountAddressField(required=True)
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)

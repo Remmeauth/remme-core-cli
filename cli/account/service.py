@@ -29,7 +29,11 @@ class Account:
         """
         Get balance of the account by its address.
         """
-        balance = loop.run_until_complete(self.service.token.get_balance(address=address))
+        try:
+            balance = loop.run_until_complete(self.service.token.get_balance(address=address))
+
+        except Exception as error:
+            return None, str(error)
 
         return {
             'balance': balance,
@@ -39,7 +43,11 @@ class Account:
         """
         Transfer tokens to address.
         """
-        transaction = loop.run_until_complete(self.service.token.transfer(address_to=address_to, amount=amount))
+        try:
+            transaction = loop.run_until_complete(self.service.token.transfer(address_to=address_to, amount=amount))
+
+        except Exception as error:
+            return None, str(error)
 
         return {
             'batch_identifier': transaction.batch_id,

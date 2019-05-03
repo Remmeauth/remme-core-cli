@@ -13,6 +13,7 @@ from cli.constants import (
     BLOCK_IDENTIFIER_REGEXP,
     DOMAIN_NAME_REGEXP,
     PRIVATE_KEY_REGEXP,
+    PUBLIC_KEY_ADDRESS_REGEXP,
 )
 
 
@@ -36,7 +37,7 @@ class AccountAddressField(fields.Field):
         return address
 
 
-class NodeURLField(fields.Field):
+class NodeUrlField(fields.Field):
     """
     Implements validation of the node URL.
 
@@ -52,7 +53,7 @@ class NodeURLField(fields.Field):
         """
         node_url = value
 
-        if node_url == 'localhost':
+        if node_url == 'localhost' or node_url == '127.0.0.1':
             return node_url
 
         if 'http' in node_url or 'https' in node_url:
@@ -84,12 +85,29 @@ class PrivateKeyField(fields.Field):
         return value
 
 
-class BlockIdentifierField(fields.Field):
+class PublicKeyAddressField(fields.Field):
     """
-    Implements validation of the block identifier.
+    Implements validation of the public key address.
 
     References:
         - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        """
+        Validate data (public key address) that was passed to field.
+        """
+        public_key_address = value
+
+        if re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key_address) is None:
+            raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
+
+        return value
+
+
+class BlockIdentifierField(fields.Field):
+    """
+    Implements validation of the block identifier.
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
