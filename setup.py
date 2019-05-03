@@ -6,6 +6,7 @@ from setuptools import (
     setup,
 )
 
+
 with open('README.md', 'r') as read_me:
     long_description = read_me.read()
 
@@ -13,7 +14,7 @@ with open('requirements.txt', 'r') as f:
     requirements = f.read().splitlines()
 
 setup(
-    version='0.1.1',
+    version='0.2.0',
     name='remme-core-cli',
     description='The command-line interface (CLI) that provides a set of commands to interact with Remme-core.',
     long_description=long_description,
