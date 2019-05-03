@@ -17,8 +17,7 @@ from cli.utils import dict_to_pretty_json
 
 def test_get_list_transactions_with_all_parameters(mocker):
     """
-    Case: get a list transactions by identifier, identifier starting from, limit, block identifier, family name,
-          reverse.
+    Case: get a list transactions by identifier, identifier starting from, limit, head, family name, reverse.
     Expect: transaction are returned from node on localhost.
     """
     transaction_id = '79a2780e9f07ca58d97b9de346730ddaba85dbb520778eb3d704cd214f6c580f' \
@@ -35,20 +34,20 @@ def test_get_list_transactions_with_all_parameters(mocker):
                 "family_name": "account",
                 "family_version": "0.1",
                 "inputs": [
-                    "0000000000000000000000000000000000000000000000000000000000000000000001"
+                    "0000000000000000000000000000000000000000000000000000000000000000000001",
                 ],
                 "nonce": "0x1.73309477e6e96p+30",
                 "outputs": [
                     "0000000000000000000000000000000000000000000000000000000000000000000001",
-                    "112007e5116c7f40c9ba679bedd8b50fff0a316b1eb0611a3cc1ceb39c56d206588624"
+                    "112007e5116c7f40c9ba679bedd8b50fff0a316b1eb0611a3cc1ceb39c56d206588624",
                 ],
                 "payload_sha512": "5bc11b6e912e3d16f90b49e4ef08661f827b8855c9d87deb5bad497a99107b36774b770"
                                   "15cbe9e4c0a8d4763746c1b93e704f5a32d2d4f1c7fdddf5808013961",
-                "signer_public_key": "02a65796f249091c3087614b4d9c292b00b8eba580d045ac2fd781224b87b6f13e"
+                "signer_public_key": "02a65796f249091c3087614b4d9c292b00b8eba580d045ac2fd781224b87b6f13e",
             },
             "header_signature": "79a2780e9f07ca58d97b9de346730ddaba85dbb520778eb3d704cd214f6c580f"
                                 "4f7fe4aa0e4fa9238e535f4af7e2dbae4134b4a726b36a5369c1cb4e971a2568",
-            "payload": "CAESBwiAoJSljR0="
+            "payload": "CAESBwiAoJSljR0=",
         },
     }
 
