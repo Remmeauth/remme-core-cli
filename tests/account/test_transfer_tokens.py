@@ -226,13 +226,12 @@ def test_transfer_tokens_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_transfer_tokens_node_url_with_http():
+@pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
+def test_transfer_tokens_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: transfer tokens to address by passing node URL with explicit HTTP protocol.
+    Case: transfer tokens to address by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
-    node_url_with_http_protocol = 'http://masternode.com'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'account',
@@ -244,13 +243,13 @@ def test_transfer_tokens_node_url_with_http():
         '--amount',
         '1000',
         '--node-url',
-        node_url_with_http_protocol,
+        node_url_with_protocol,
     ])
 
     expected_error = {
         'errors': {
             'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
+                f'Pass the following node URL `{node_url_with_protocol}` without protocol (http, https, etc.).',
             ],
         },
     }
@@ -259,12 +258,12 @@ def test_transfer_tokens_node_url_with_http():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_transfer_tokens_node_url_with_https():
+def test_transfer_tokens_non_existing_node_url():
     """
-    Case: transfer tokens to address by passing node URL with explicit HTTPS protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: transfer tokens to address by passing non-existing node URL.
+    Expect: check if node running at URL error message.
     """
-    node_url_with_https_protocol = 'https://masternode.com'
+    non_existing_node_url = 'non-existing-node.com'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -277,15 +276,11 @@ def test_transfer_tokens_node_url_with_https():
         '--amount',
         '1000',
         '--node-url',
-        node_url_with_https_protocol,
+        non_existing_node_url,
     ])
 
     expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_https_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
+        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

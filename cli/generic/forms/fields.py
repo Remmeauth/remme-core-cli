@@ -37,7 +37,7 @@ class AccountAddressField(fields.Field):
         return address
 
 
-class NodeURLField(fields.Field):
+class NodeUrlField(fields.Field):
     """
     Implements validation of the node URL.
 
@@ -53,7 +53,7 @@ class NodeURLField(fields.Field):
         """
         node_url = value
 
-        if node_url == 'localhost':
+        if node_url == 'localhost' or node_url == '127.0.0.1':
             return node_url
 
         if 'http' in node_url or 'https' in node_url:
@@ -105,7 +105,7 @@ class PublicKeyAddressField(fields.Field):
         return value
 
 
-class SwapIdField(fields.Field):
+class SwapIdentifierField(fields.Field):
     """
     Implements validation of the swap identifier.
 
@@ -117,9 +117,9 @@ class SwapIdField(fields.Field):
         """
         Validate data (swap identifier) that was passed to field.
         """
-        swap_id = value
+        swap_identifier = value
 
-        if re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_id) is None:
-            raise ValidationError(f'The following swap identifier `{swap_id}` is invalid.')
+        if re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_identifier) is None:
+            raise ValidationError(f'The following swap identifier `{swap_identifier}` is invalid.')
 
         return value

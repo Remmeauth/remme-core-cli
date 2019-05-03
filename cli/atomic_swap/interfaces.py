@@ -16,6 +16,6 @@ class AtomicSwapInterface:
 
     def get(self, swap_id):
         """
-        Get information about atomic swap by swap identifier.
+        Get information about atomic swap by its identifier.
         """
         pass

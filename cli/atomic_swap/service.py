@@ -42,7 +42,7 @@ class AtomicSwap:
 
     def get(self, swap_id):
         """
-        Get information about atomic swap by swap identifier.
+        Get information about atomic swap by its identifier.
         """
         try:
             swap_info = loop.run_until_complete(self.service.swap.get_info(swap_id=swap_id))

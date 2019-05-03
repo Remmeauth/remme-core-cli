@@ -1,7 +1,6 @@
 """
 Provide implementation of the command line interface's atomic swap commands.
 """
-import asyncio
 import sys
 
 import click
@@ -22,8 +21,6 @@ from cli.utils import (
     print_errors,
     print_result,
 )
-
-loop = asyncio.get_event_loop()
 
 
 @click.group('atomic-swap', chain=True)
@@ -68,7 +65,7 @@ def get_public_key(node_url):
 @atomic_swap_commands.command('get-info')
 def get_swap_info(id, node_url):
     """
-    Get information about atomic swap by swap identifier.
+    Get information about atomic swap by its identifier.
     """
     arguments, errors = GetAtomicSwapInformationForm().load({
         'id': id,

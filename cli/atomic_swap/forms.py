@@ -4,18 +4,18 @@ Provide forms for command line interface's atomic swap commands.
 from marshmallow import Schema
 
 from cli.generic.forms.fields import (
-    NodeURLField,
-    SwapIdField,
+    NodeUrlField,
+    SwapIdentifierField,
 )
 
 
 class GetAtomicSwapInformationForm(Schema):
     """
-    Get information about atomic swap of the atomic swap form.
+    Get information about atomic swap by its identifier form.
     """
 
-    id = SwapIdField(required=True)
-    node_url = NodeURLField(allow_none=True, required=False)
+    id = SwapIdentifierField(required=True)
+    node_url = NodeUrlField(required=False)
 
 
 class GetAtomicSwapPublicKeyForm(Schema):
@@ -23,4 +23,4 @@ class GetAtomicSwapPublicKeyForm(Schema):
     Get public key of the atomic swap form.
     """
 
-    node_url = NodeURLField(allow_none=True, required=False)
+    node_url = NodeUrlField(required=False)

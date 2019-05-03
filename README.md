@@ -43,8 +43,6 @@ $ pip3 install remme-core-cli
 
 ## Usage
 
-### Nodes
-
 You can use the following list of the addresses of the nodes to execute commands to:
 
 - `node-genesis-testnet.remme.io`,
@@ -52,6 +50,8 @@ You can use the following list of the addresses of the nodes to execute commands
 - `node-1-testnet.remme.io`.
 
 ### Configuration file
+
+*Disclaimer!* Configuration file is supported only on Unix operating systems and isn't supported on Windows.
 
 Using the command line interface, you will have an option to declare the `node URL` to send commands to as illustrated below:
 
@@ -159,7 +159,7 @@ $ remme atomic-swap get-public-key --node-url=node-6-testnet.remme.io
 }
 ```
 
-Get information about atomic swap by swap identifier — ``remme atomic-swap get-info``:
+Get information about atomic swap by its identifier — ``remme atomic-swap get-info``:
 
 | Arguments | Type   | Required | Description                                          |
 | :-------: | :----: | :------: | ---------------------------------------------------- |
