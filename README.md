@@ -250,6 +250,27 @@ $ remme public-key get-info \
 }
 ```
 
+Get a state by its address — ``remme state get``:
+
+| Arguments | Type   | Required | Description                        |
+| :-------: | :----: | :------: | ---------------------------------- |
+| address   | String | Yes      | Account address to get a state by. |
+| node-url  | String | No       | Node URL to apply a command to.    |
+
+```bash
+$ remme state get \
+      --address=0000000000000000000000000000000000000000000000000000000000000000000001 \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "state": {
+            "data": "CAE=",
+            "head": "2f7c6645c8e95c42ee229e14c64a80e382e3b3ef4edf73fadbc8f3605f4588ad2e9272264d138278057de2f7961dcc962b4b89713cf69d256299a6635532017b"
+        }
+    }
+}
+```
+
 ### Transaction
 
 Get a list of transactions — ``remme transaction get-list``:
