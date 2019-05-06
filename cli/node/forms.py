@@ -24,7 +24,7 @@ class GetNodePeersForm(Schema):
 
 class GetNodeInformationForm(Schema):
     """
-    Get node information.
+    Get the node information form.
     """
 
     node_url = NodeUrlField(required=False)

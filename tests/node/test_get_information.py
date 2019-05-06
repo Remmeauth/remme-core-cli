@@ -17,7 +17,7 @@ from cli.utils import dict_to_pretty_json
 
 def test_get_node_info():
     """
-    Case: get node information.
+    Case: get information about synchronization and peer count of the node.
     Expect: the flag is synced and peer count are returned.
     """
     runner = CliRunner()
@@ -40,7 +40,7 @@ def test_get_node_info():
 
 def test_get_node_info_without_node_url(mocker, node_information):
     """
-    Case: get node information without passing node URL.
+    Case: get information about synchronization and peer count of the node without passing node URL.
     Expect: the flag is synced and peer count are returned from a node on localhost
     """
     mock_node_get_info = mocker.patch('cli.node.service.loop.run_until_complete')
@@ -64,7 +64,7 @@ def test_get_node_info_without_node_url(mocker, node_information):
 
 def test_get_node_info_invalid_node_url():
     """
-    Case: get node information by passing invalid node URL.
+    Case: get information about synchronization and peer count of the node by passing invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -92,7 +92,7 @@ def test_get_node_info_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_node_info_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get node information by passing node URL with explicit protocol.
+    Case: get information about synchronization and peer count of the node by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
     runner = CliRunner()
@@ -117,7 +117,7 @@ def test_get_node_info_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_node_info_non_existing_node_url():
     """
-    Case: get node information by passing non-existing node URL.
+    Case: get information about synchronization and peer count of the node by passing non-existing node URL.
     Expect: check if node running at URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

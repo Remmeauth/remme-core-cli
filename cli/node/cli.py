@@ -93,7 +93,7 @@ def get_peers(node_url):
 @node_commands.command('get-info')
 def get_node_info(node_url):
     """
-    Get node information.
+    Get information about synchronization and peer count of the node.
     """
     arguments, errors = GetNodeInformationForm().load({
         'node_url': node_url,

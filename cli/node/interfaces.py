@@ -22,6 +22,6 @@ class NodeInterface:
 
     def get_info(self):
         """
-        Get node information.
+        Get information about synchronization and peer count of the node.
         """
         pass

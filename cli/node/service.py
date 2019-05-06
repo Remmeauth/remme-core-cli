@@ -55,7 +55,7 @@ class Node:
 
     def get_info(self):
         """
-        Get node information.
+        Get information about synchronization and peer count of the node form.
         """
         try:
             node_information = loop.run_until_complete(self.service.node_management.get_node_info())

@@ -13,10 +13,10 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
-    * [Nodes](#nodes)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Atomic Swap](#atomic-swap)
     * [Node](#node)
     * [Public key](#public-key)
     * [Transaction](#transaction)
@@ -155,6 +155,36 @@ $ remme atomic-swap get-public-key --node-url=node-6-testnet.remme.io
 {
     "result": {
         "public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+    }
+}
+```
+
+Get information about atomic swap by its identifier — ``remme atomic-swap get-info``:
+
+| Arguments | Type   | Required | Description                                       |
+| :-------: | :----: | :------: | ------------------------------------------------- |
+| id        | String | Yes      | Swap identifier to get information about swap by. |
+| node-url  | String | No       | Node URL to apply a command to.                   |
+
+```bash
+$ remme atomic-swap get-info \
+      --id=033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "information": {
+            "amount": "10.0000",
+            "created_at": 1556803765,
+            "email_address_encrypted_optional": "",
+            "is_initiator": false,
+            "receiver_address": "112007484def48e1c6b77cf784aeabcac51222e48ae14f3821697f4040247ba01558b1",
+            "secret_key": "",
+            "secret_lock": "0728356568862f9da0825aa45ae9d3642d64a6a732ad70b8857b2823dbf2a0b8",
+            "sender_address": "1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "sender_address_non_local": "0xe6ca0e7c974f06471759e9a05d18b538c5ced11e",
+            "state": "OPENED",
+            "swap_id": "033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808"
+        }
     }
 }
 ```

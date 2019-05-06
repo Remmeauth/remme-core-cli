@@ -14,6 +14,7 @@ from cli.constants import (
     FAMILY_NAMES,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
+    SWAP_IDENTIFIER_REGEXP,
     TRANSACTION_HEADER_SIGNATURE_REGEXP,
 )
 
@@ -165,3 +166,23 @@ class PublicKeyAddressField(fields.Field):
             raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
 
         return value
+
+
+class SwapIdentifierField(fields.Field):
+    """
+    Implements validation of the swap identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        """
+        Validate data (swap identifier) that was passed to field.
+        """
+        swap_identifier = value
+
+        if re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_identifier) is None:
+            raise ValidationError(f'The following swap identifier `{swap_identifier}` is invalid.')
+
+        return swap_identifier
