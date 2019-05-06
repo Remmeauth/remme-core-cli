@@ -9,6 +9,7 @@ PUBLIC_KEY_REGEXP = r'^[0-9a-f]{66}$'
 PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'
 PUBLIC_KEY_ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
 HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
+SWAP_IDENTIFIER_REGEXP = r'^[a-f0-9]{64}$'
 TRANSACTION_HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
 DOMAIN_NAME_REGEXP = r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]'
 
