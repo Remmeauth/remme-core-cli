@@ -13,13 +13,14 @@
     * [Requirements](#getting-started-requirements)
     * [Installation](#installation)
   * [Usage](#usage)
-    * [Nodes](#nodes)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
     * [Block](#block)
+    * [Atomic Swap](#atomic-swap)
     * [Node](#node)
     * [Public key](#public-key)
+    * [Transaction](#transaction)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -226,6 +227,36 @@ $ remme atomic-swap get-public-key --node-url=node-6-testnet.remme.io
 }
 ```
 
+Get information about atomic swap by its identifier — ``remme atomic-swap get-info``:
+
+| Arguments | Type   | Required | Description                                       |
+| :-------: | :----: | :------: | ------------------------------------------------- |
+| id        | String | Yes      | Swap identifier to get information about swap by. |
+| node-url  | String | No       | Node URL to apply a command to.                   |
+
+```bash
+$ remme atomic-swap get-info \
+      --id=033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "information": {
+            "amount": "10.0000",
+            "created_at": 1556803765,
+            "email_address_encrypted_optional": "",
+            "is_initiator": false,
+            "receiver_address": "112007484def48e1c6b77cf784aeabcac51222e48ae14f3821697f4040247ba01558b1",
+            "secret_key": "",
+            "secret_lock": "0728356568862f9da0825aa45ae9d3642d64a6a732ad70b8857b2823dbf2a0b8",
+            "sender_address": "1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf",
+            "sender_address_non_local": "0xe6ca0e7c974f06471759e9a05d18b538c5ced11e",
+            "state": "OPENED",
+            "swap_id": "033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808"
+        }
+    }
+}
+```
+
 ### Node
 
 Get node configurations — ``remme node get-configs``:
@@ -312,6 +343,110 @@ $ remme public-key get-info \
             "type": "rsa",
             "valid_from": 1556118334,
             "valid_to": 1587222334
+        }
+    }
+}
+```
+
+### Transaction
+
+Get a list of transactions — ``remme transaction get-list``:
+
+| Arguments   | Type   |  Required | Description                                            |
+| :---------: | :----: | :-------: | -----------------------------------------------------  |
+| ids         | String |  No       | Identifiers to get a list of transactions by.          |
+| start       | String |  No       | Transaction identifier to get a list transaction starting from.|
+| limit       | Integer|  No       | Maximum amount of transactions to return.              |
+| head        | String |  No       | Block identifier to get a list of transactions from.   |
+| reverse     | Bool   |  No       | Parameter to reverse result.                           |
+| node-url    | String |  No       | Node URL to apply a command to.                        |
+| family-name | String |  No       | List of transactions by its family name.               |
+
+```bash
+$ remme transaction get-list \
+    --ids='568a1094e574747c757c1f5028d9b929105984e509c4f2f3cb76e5f46f03ca4c3681ca0eeca86a4bd4bb5a3eaaa52fd73b08ebc5d5d85fbb1957b064f8b71972, 
+    d9b891d3efdd51cd47156ad2083bf5cabd5b35bb2ebe66813996d1a0f783e58721bbc50917ff284a40696f24058ef1e22e48600abf37d500ace78eadf7f4ecff' \
+    --start=568a1094e574747c757c1f5028d9b929105984e509c4f2f3cb76e5f46f03ca4c3681ca0eeca86a4bd4bb5a3eaaa52fd73b08ebc5d5d85fbb1957b064f8b71972 \
+    --limit=2 \
+    --head=39566f24561727f5ab2d19eb23612f1a38ff5f0cf9491caa0275261706a7cf8b080d38da0a38fa5b1cbef0cced889fdf6da679cc616a9711380f76b33e53efdf \
+    --reverse \
+    --family-name=account \
+    --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "data": [
+            {
+                "header": {
+                    "batcher_public_key": "03d4613540ce29cd1f5f28ea9169a5cb5853bd53dede635903af9383bc9ffaf079",
+                    "dependencies": [],
+                    "family_name": "account",
+                    "family_version": "0.1",
+                    "inputs": [
+                        "112007db16c75019f59423da4de3cd5c79609989d7dc1697c9975307ea846e1d4af91f",
+                        "1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf"
+                    ],
+                    "nonce": "99ccdbcfeb008e2c8407870b7033117e316b4b12df4173f3e2ffd510676e524a77ac64a0b65e6c7889a797fbd4e4462830548f455497e2362dde1bbf35d5372f",
+                    "outputs": [
+                        "112007db16c75019f59423da4de3cd5c79609989d7dc1697c9975307ea846e1d4af91f",
+                        "1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf"
+                    ],
+                    "payload_sha512": "1f0313cb9cd67559c1d33d61104882b3ebca80dfcd091d5ae3b0ee99bd27723af591551dfeea43be05e2b24a2f9a54adc6c357b60fc5c5720b161c5ff9d10ae1",
+                    "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+                },
+                "header_signature": "d9b891d3efdd51cd47156ad2083bf5cabd5b35bb2ebe66813996d1a0f783e58721bbc50917ff284a40696f24058ef1e22e48600abf37d500ace78eadf7f4ecff",
+                "payload": "CAASTQgAEkYxMTIwMDdkYjE2Yzc1MDE5ZjU5NDIzZGE0ZGUzY2Q1Yzc5NjA5OTg5ZDdkYzE2OTdjOTk3NTMwN2VhODQ2ZTFkNGFmOTFmGOgH"
+            }
+        ],
+        "head": "39566f24561727f5ab2d19eb23612f1a38ff5f0cf9491caa0275261706a7cf8b080d38da0a38fa5b1cbef0cced889fdf6da679cc616a9711380f76b33e53efdf",
+        "paging": {
+            "limit": 2,
+            "next": "",
+            "start": "568a1094e574747c757c1f5028d9b929105984e509c4f2f3cb76e5f46f03ca4c3681ca0eeca86a4bd4bb5a3eaaa52fd73b08ebc5d5d85fbb1957b064f8b71972"
+        }
+    }
+}
+```
+
+Get a transaction by identifier — ``remme transaction get``:
+
+| Arguments   | Type   |  Required | Description                       |
+| :---------: | :----: | :-------: | --------------------------------  |
+| id          | String |  Yes      | Identifier to get transaction by. |
+| node-url    | String |  No       | Node URL to apply a command to.   |
+
+```bash
+$ remme transaction get \
+    --id=64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab \
+    --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "data": {
+            "header": {
+                "batcher_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                "dependencies": [],
+                "family_name": "consensus_account",
+                "family_version": "0.1",
+                "inputs": [
+                    "116829",
+                    "112007",
+                    "0000007ca83d6bbb759da9cde0fb0dec1400c54773f137ea7cfe91e3b0c44298fc1c14",
+                    "0000007ca83d6bbb759da9cde0fb0dec1400c5034223fb6c3e825ee3b0c44298fc1c14",
+                    "0000007ca83d6bbb759da9cde0fb0dec1400c5e64de9aa6a37ac92e3b0c44298fc1c14",
+                    "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                    "00b10c00",
+                    "fd0e4f0000000000000000000000000000000000000000000000000000000000000000"
+                ],
+                "nonce": "b8baa6c54ab9463590627c18fb9c10ed",
+                "outputs": [
+                    "116829",
+                    "112007",
+                    "fd0e4f0000000000000000000000000000000000000000000000000000000000000000"
+                ],
+                "payload_sha512": "cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e",
+                "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+            },
+            "header_signature": "64d032fbaae9bc59f9e5484ec6f52cbceef567923456039a26a1cfb8bc9ee2431ac2b5de43efce28ef11820a3734dab9fa56db57a1b2fbdc2323036cceeab6ab",
+            "payload": ""
         }
     }
 }

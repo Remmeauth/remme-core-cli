@@ -1,0 +1,35 @@
+"""
+Provide implementation of the transaction interfaces.
+"""
+
+
+class TransactionInterface:
+    """
+    Implements transaction interface.
+    """
+
+    def get_list(self, transaction_ids, start, limit, head, reverse, family_name):
+        """
+        Get a list of transactions.
+
+        A list of transactions could be filtered by transactions identifiers, start identifier, limit, head identifier,
+        reverse, family name.
+
+        Arguments:
+            transaction_ids (list, optional): identifiers to get a list of transactions by.
+            start (string, optional): transaction identifier to get a list transaction starting from.
+            limit (int, optional): maximum amount of transactions to return.
+            head (string, optional): block identifier to get a list of transactions from.
+            reverse (string, optional): parameter to reverse result.
+            family_name (string, optional): list of a transactions by its family name.
+        """
+        pass
+
+    def get(self, transaction_id):
+        """
+        Get transaction by its identifier.
+
+        Arguments:
+            transaction_id (string, required): transaction identifier.
+        """
+        pass
