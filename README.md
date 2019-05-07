@@ -145,15 +145,15 @@ $ remme account transfer-tokens \
 
 ### Block
 
-Get block by its identifier — ``remme block get-single``:
+Get information about the block by its identifier — ``remme block get``:
 
-| Arguments | Type   |  Required | Description                                         |
-| :-------: | :----: | :-------: | --------------------------------------------------- |
-| id        | String |  Yes      | Identifier of the block to fetch by.                |
-| node-url  | String |  No       | Apply the command to the specified node by its URL. |
+| Arguments | Type   |  Required | Description                                            |
+| :-------: | :----: | :-------: | ------------------------------------------------------ |
+| id        | String |  Yes      | Identifier of the block to fetch information about by. |
+| node-url  | String |  No       | Node URL to apply a command to.                        |
 
 ```bash
-$ remme block get-single \
+$ remme block get \
       --id=4a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde \
       --node-url=node-6-testnet.remme.io
 {
@@ -192,7 +192,39 @@ $ remme block get-single \
                     }
                 ]
             },
-            ...
+            {
+                "header": {
+                    "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                    "transaction_ids": [
+                        "e112670497e184e7b3d7fab962440fe4be7e905ce7c73712a1a7ca9c65fba00b23fcf62cc640944bdac3c7ab1414d5d5c6fe3edf2f755d3dbca982b3d83394e2"
+                    ]
+                },
+                "header_signature": "cd11713211c6eb2fe4adc0e44925c1f82e9300e0b8827bd3c73d8be10e61cd2b1e8da810078845ca1665b4adf7f691ad731ab4cea0fc994c55a8863b30220c6e",
+                "trace": false,
+                "transactions": [
+                    {
+                        "header": {
+                            "batcher_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                            "dependencies": [],
+                            "family_name": "account",
+                            "family_version": "0.1",
+                            "inputs": [
+                                "112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202",
+                                "112007a90f66c661b32625f17e27177034a6d2cb552f89cba8c78868705ae276897df6"
+                            ],
+                            "nonce": "7d5445ee5559645bd72db237a0b448bec64c33c70be214e974da7ad0f523278cbb0c77c4a690ff751b68c318437ece2aef6eb29518a41c5ec8037218ed6fbf0d",
+                            "outputs": [
+                                "112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202",
+                                "112007a90f66c661b32625f17e27177034a6d2cb552f89cba8c78868705ae276897df6"
+                            ],
+                            "payload_sha512": "bb0e5d9898c92b9b922a4de677ed6cab106ed5c90e975941cd5d1e22ce6f0d397b812c7152796b410a9cfe1d3fd4af080c6ee88c9548fc8393e7a55cae596b8c",
+                            "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135"
+                        },
+                        "header_signature": "e112670497e184e7b3d7fab962440fe4be7e905ce7c73712a1a7ca9c65fba00b23fcf62cc640944bdac3c7ab1414d5d5c6fe3edf2f755d3dbca982b3d83394e2",
+                        "payload": "EksSRjExMjAwN2Q3MWZhN2UxMjBjNjBmYjM5MmE2NGZkNjlkZTg5MWE2MGM2NjdkOWVhOWU1ZDlkOWQ2MTcyNjNiZTZjMjAyMDIY6Ac="
+                    }
+                ]
+            }
         ],
         "header": {
             "batch_ids": [

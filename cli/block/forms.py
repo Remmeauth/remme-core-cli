@@ -11,7 +11,7 @@ from cli.generic.forms.fields import (
 
 class GetBlockByIdentifierForm(Schema):
     """
-    Transfer tokens to address form.
+    Get a block by its identifier form.
     """
 
     id = BlockIdentifierField(required=True)

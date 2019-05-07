@@ -14,6 +14,7 @@ from cli.constants import (
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.utils import (
+    default_node_url,
     print_errors,
     print_result,
 )
@@ -28,8 +29,8 @@ def block_commands():
 
 
 @click.option('--id', type=str, required=True, help=BLOCK_IDENTIFIER_ARGUMENT_HELP_MESSAGE)
-@click.option('--node-url', type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE)
-@block_commands.command('get-single')
+@click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
+@block_commands.command('get')
 def get_block(id, node_url):
     """
     Get a block by its identifier.

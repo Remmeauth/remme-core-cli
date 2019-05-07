@@ -31,14 +31,14 @@ class Block:
         Get a block by its identifier.
         """
         try:
-            block_information = loop.run_until_complete(
+            block = loop.run_until_complete(
                 self.service.blockchain_info.get_block_by_id(block_id=identifier),
             )
 
         except RpcGenericServerDefinedError as error:
-            return None, error.message
+            return None, str(error.message)
 
         except Exception as error:
             return None, str(error)
 
-        return block_information.get('data'), None
+        return block.get('data'), None
