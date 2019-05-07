@@ -2,12 +2,14 @@
 Provide tests for command line interface's get state command.
 """
 import json
+import re
 
 import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
+    HEADER_SIGNATURE_REGEXP,
     NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
@@ -32,7 +34,10 @@ def test_get_state_with_address():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_header_signature = json.loads(result.output).get('result').get('state').get('head')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=result_header_signature) is not None
     assert isinstance(json.loads(result.output), dict)
 
 
@@ -59,6 +64,31 @@ def test_get_state_with_invalid_address():
                 f'The following address `{invalid_address}` is invalid.',
             ],
         },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
+
+
+def test_get_state_with_non_existing_address():
+    """
+    Case: get a state by its non-existing address.
+    Expect: block for address not found error message.
+    """
+    non_existing_address = '0000000000000000000000000000000000000000000000000000000000100000000031'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'state',
+        'get',
+        '--address',
+        non_existing_address,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error_message = {
+        'errors': f'Block for address `{non_existing_address}` not found.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code

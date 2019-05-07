@@ -11,7 +11,7 @@ from cli.constants import (
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.state.forms import GetStateForm
-from cli.state.help import STATE_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.state.help import STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.state.service import State
 from cli.utils import (
     default_node_url,
@@ -28,7 +28,7 @@ def state_command():
     pass
 
 
-@click.option('--address', required=True, type=str, help=STATE_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', required=True, type=str, help=STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @state_command.command('get')
 def get_state(address, node_url):

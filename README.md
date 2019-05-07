@@ -19,6 +19,7 @@
     * [Account](#account)
     * [Node](#node)
     * [Public key](#public-key)
+    * [State](#state)
     * [Transaction](#transaction)
   * [Development](#development)
     * [Requirements](#development-requirements)
@@ -250,6 +251,8 @@ $ remme public-key get-info \
 }
 ```
 
+### State
+
 Get a state by its address — ``remme state get``:
 
 | Arguments | Type   | Required | Description                        |
@@ -259,13 +262,13 @@ Get a state by its address — ``remme state get``:
 
 ```bash
 $ remme state get \
-      --address=0000000000000000000000000000000000000000000000000000000000000000000001 \
+      --address=000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7 \
       --node-url=node-6-testnet.remme.io
 {
     "result": {
         "state": {
-            "data": "CAE=",
-            "head": "2f7c6645c8e95c42ee229e14c64a80e382e3b3ef4edf73fadbc8f3605f4588ad2e9272264d138278057de2f7961dcc962b4b89713cf69d256299a6635532017b"
+            "data": "CmwKJnNhd3Rvb3RoLnNldHRpbmdzLnZvdGUuYXV0aG9yaXplZF9rZXlzEkIwMmE2NTc5NmYyNDkwOTFjMzA4NzYxNGI0ZDljMjkyYjAwYjhlYmE1ODBkMDQ1YWMyZmQ3ODEyMjRiODdiNmYxM2U=",
+            "head": "95d78133eb98628d5ff17c7d1972b9ab03e50fceeb8e199d98cb52078550f5473bb001e57c116238697bdc1958eaf6d5f096f7b66974e1ea46b9c9da694be9d9"
         }
     }
 }
