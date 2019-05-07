@@ -51,10 +51,10 @@ def get_state(address, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    state, errors = State(service=remme).get(address=address)
+    result, errors = State(service=remme).get(address=address)
 
     if errors is not None:
         print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    print_result(result=state)
+    print_result(result=result)
