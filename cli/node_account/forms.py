@@ -14,5 +14,5 @@ class GetNodeAccountInformationForm(Schema):
     Get the node account information.
     """
 
-    address = AccountAddressField(required=False)
+    address = AccountAddressField(required=True)
     node_url = NodeUrlField(required=True)

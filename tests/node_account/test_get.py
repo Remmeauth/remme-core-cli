@@ -2,13 +2,11 @@
 Provide tests for command line interface's node account information by its address commands.
 """
 import json
-import re
 
 import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
@@ -17,32 +15,32 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE = \
-    '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf'
+    '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48ca'
 
 
 def test_get_information_with_address():
     """
     Case: get information about the node account by its address.
-    Expect: information about the swap is returned.
+    Expect: information about the node account is returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        'node-1-testnet.remme.io',
     ])
 
     node_account_information = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    # assert SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE == swap_identifier
-    # assert re.match(pattern=ADDRESS_REGEXP, string=swap_info.get('sender_address')) is not None
-    # assert re.match(pattern=ADDRESS_REGEXP, string=swap_info.get('receiver_address')) is not None
-    # assert re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_identifier) is not None
-    # assert isinstance(swap_info.get('is_initiator'), bool)
+    assert isinstance(node_account_information.get('min'), bool)
+    assert isinstance(node_account_information.get('reputation'), dict)
+    assert isinstance(node_account_information.get('shares'), list)
 
 
 def test_get_information_without_node_url(mocker, node_account_information):
@@ -57,6 +55,8 @@ def test_get_information_without_node_url(mocker, node_account_information):
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
     ])
@@ -74,12 +74,14 @@ def test_get_information_invalid_address():
     Case: get information about the node account by invalid address.
     Expect: the following address is not valid error message.
     """
-    invalid_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3zz'
+    invalid_address = '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48zz'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         invalid_address,
         '--node-url',
@@ -109,6 +111,8 @@ def test_get_information_invalid_node_url():
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
@@ -132,12 +136,14 @@ def test_get_information_non_existing_address():
     Case: get information about the node account by passing non-existing address.
     Expect: resource not found is returned.
     """
-    non_existing_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3c1'
+    non_existing_address = '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48cc'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         non_existing_address,
         '--node-url',
@@ -163,6 +169,8 @@ def test_get_information_non_existing_node_url():
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
@@ -187,6 +195,8 @@ def test_get_information_node_url_with_protocol(node_url_with_protocol):
     result = runner.invoke(cli, [
         'node-account',
         'get',
+        '--private-key',
+        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',

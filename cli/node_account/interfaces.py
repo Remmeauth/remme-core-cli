@@ -8,7 +8,7 @@ class NodeAccountInterface:
     Implements node account interface.
     """
 
-    def get(self, node_account_address=None):
+    def get(self, address):
         """
         Get information about the node account by its address.
         """

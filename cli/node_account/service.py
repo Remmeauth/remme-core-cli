@@ -26,13 +26,13 @@ class NodeAccount:
         """
         self.service = service
 
-    def get(self, node_account_address=None):
+    def get(self, address):
         """
         Get information about the node account by its address.
         """
         try:
             node_account_information = loop.run_until_complete(
-                self.service.node_management.get_node_account(node_account_address=node_account_address),
+                self.service.node_management.get_node_account(node_account_address=address),
             )
 
         except RpcGenericServerDefinedError as error:
