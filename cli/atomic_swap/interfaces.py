@@ -13,3 +13,9 @@ class AtomicSwapInterface:
         Get public key of atomic swap.
         """
         pass
+
+    def get(self, swap_id):
+        """
+        Get information about atomic swap by its identifier.
+        """
+        pass
