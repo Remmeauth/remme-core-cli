@@ -19,3 +19,9 @@ class NodeInterface:
         Get the node's peers.
         """
         pass
+
+    def get_info(self):
+        """
+        Get information about synchronization and peer count of the node.
+        """
+        pass
