@@ -6,14 +6,23 @@ import sys
 import click
 from remme import Remme
 
-from cli.block.forms import GetBlockByIdentifierForm
-from cli.block.help import BLOCK_IDENTIFIER_ARGUMENT_HELP_MESSAGE
+from cli.block.forms import (
+    GetBlockByIdentifierForm,
+    GetBlocksListForm,
+)
+from cli.block.help import (
+    BLOCK_IDENTIFIER_ARGUMENT_HELP_MESSAGE,
+    BLOCKS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
+    BLOCKS_LIMIT_ARGUMENT_HELP_MESSAGE,
+    BLOCKS_REVERSE_ARGUMENT_HELP_MESSAGE,
+)
 from cli.block.service import Block
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.utils import (
+    default_node_url,
     print_errors,
     print_result,
 )
@@ -25,6 +34,47 @@ def block_commands():
     Provide commands for working with block.
     """
     pass
+
+
+@click.option('--ids', required=False, type=str, help=BLOCKS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)
+@click.option('--limit', required=False, type=int, help=BLOCKS_LIMIT_ARGUMENT_HELP_MESSAGE)
+@click.option('--reverse', required=False, is_flag=True, help=BLOCKS_REVERSE_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
+@block_commands.command('get-list')
+def get_blocks(ids, limit, reverse, node_url):
+    """
+    Get a list of blocks.
+    """
+    arguments, errors = GetBlocksListForm().load({
+        'ids': ids,
+        'limit': limit,
+        'reverse': reverse,
+        'node_url': node_url,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    blocks_ids = arguments.get('ids')
+    limit = arguments.get('limit')
+    node_url = arguments.get('node_url')
+
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
+
+    result, errors = Block(service=remme).get_list(
+        ids=blocks_ids,
+        limit=limit,
+        reverse=reverse,
+    )
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
 
 
 @click.option('--id', type=str, required=True, help=BLOCK_IDENTIFIER_ARGUMENT_HELP_MESSAGE)

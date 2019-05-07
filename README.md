@@ -145,6 +145,78 @@ $ remme account transfer-tokens \
 
 ### Block
 
+Get a list of blocks — ``remme block get-list``:
+
+| Arguments   | Type   |  Required | Description                                             |
+| :---------: | :----: | :-------: | ------------------------------------------------------- |
+| ids         | String |  No       | Identifiers to get a list of blocks by.                 |
+| limit       | Integer|  No       | Maximum amount of blocks to return.                     |
+| reverse     | Bool   |  No       | Parameter to reverse result.                            |
+| node-url    | String |  No       | Node URL to apply a command to.                         |
+
+```bash
+$ remme block get-list \
+      --ids='fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c, 56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551' \
+      --limit=2 \
+      --reverse \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": [
+        {
+            "batches": [
+                {
+                    "header": {
+                        "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                        "transaction_ids": [
+                            "6593d21046519022ba32c98e934d7dfc81e8b4edf6c064dbf70feb13db4310873ec00816bce8660cafd4fa2a8c80d0147d63cf616c624babd03142c694272017"
+                        ]
+                    },
+                    "header_signature": "fa2d1a209ad04fd2ad7fb5183976e647cc47b4c08e2e578097afc2566a0284e760eb3f2ff8f72f290765211d4da3341f23091cc7a16805025a17c04a90818a44",
+                    "trace": false,
+                    "transactions": [
+                        {
+                            "header": {
+                                "batcher_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                                "dependencies": [],
+                                "family_name": "block_info",
+                                "family_version": "1.0",
+                                "inputs": [
+                                    "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                                    "00b10c00"
+                                ],
+                                "nonce": "",
+                                "outputs": [
+                                    "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                                    "00b10c00"
+                                ],
+                                "payload_sha512": "1b2cdc6ecfb575b926abea76b44e6988617e945e0f3d84b7624ee228cf35252a7cd186eabe5126c5f967ff54d0b1001e2c07716a7d9e00b5710e836400a913d5",
+                                "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135"
+                            },
+                            "header_signature": "6593d21046519022ba32c98e934d7dfc81e8b4edf6c064dbf70feb13db4310873ec00816bce8660cafd4fa2a8c80d0147d63cf616c624babd03142c694272017",
+                            "payload": "CtMCCLwBEoABOWI4Y2NhODk3Nzk2NDJiYWEyMGMwZWUyZjEzOWVlMGNlMWNjYjEwMjY5OTVjNDY3NDYzZDEzOTI0ZDg3YTg3NjNlODMzOWI2YzIyMzNmMTZiY2I5ZDVjNjEwMzVmNzAzY2FiNjBiNzQxMGJlMjJkZjkzNWEyYWE4YmIzNGE1NTcaQjAyZDFmYmRhNTBkYmNkMGQzYzI4NmE2YTlmYTcxYWE3Y2UyZDk3MTU5YjkwZGRkNDYzZTA4MTY0MjJkNjIxZTEzNSKAAWZkNzgwY2UwNzY0MGJhNDExMjI0ODY5MTU4MWE1OTU4NDVmZTc2MmJmM2ZlYjQ5Yjg0Mzk3NGFhZTU3ODQ3OGM2YmY1MTg3MzllY2RjNDlkNzAxOTM4M2QzYmQ5ZTNhYTZmYTBhZjgzODRiNDQ5MThmMGJmZjM3NDAyYjUxMGIyKMzfgeYF"
+                        }
+                    ]
+                },
+                ...
+            ],
+            "header": {
+                "batch_ids": [
+                    "fa2d1a209ad04fd2ad7fb5183976e647cc47b4c08e2e578097afc2566a0284e760eb3f2ff8f72f290765211d4da3341f23091cc7a16805025a17c04a90818a44",
+                    "661492181b838636b11ee347312bf5346b4231e0510c5c5bec27ea999ea389a66a1264696ea53e3b30e29b03192154bed8d160f035706da4f0da7f0be107a2b2"
+                ],
+                "block_num": "189",
+                "consensus": "RGV2bW9kZdG76dVw7Q7VRgkNr6HxHnnJxNwI+iySmLepFZPJXvDa",
+                "previous_block_id": "fd780ce07640ba4112248691581a595845fe762bf3feb49b843974aae578478c6bf518739ecdc49d7019383d3bd9e3aa6fa0af8384b44918f0bff37402b510b2",
+                "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                "state_root_hash": "693d08c1520c9c1b2dba54ae147bf689f6209f74e304f8ed44e1ec818a08072e"
+            },
+            "header_signature": "fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c"
+        },
+        ...
+    ]
+}      
+```
+
 Get block by its identifier — ``remme block get-single``:
 
 | Arguments | Type   |  Required | Description                                         |
