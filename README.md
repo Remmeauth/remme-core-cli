@@ -228,6 +228,24 @@ $ remme node get-peers --node-url=node-genesis-testnet.remme.io
 }
 ```
 
+Get node information — ``remme node get-info``:
+
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-info --node-url=node-27-testnet.remme.io
+{
+    "result": {
+        "information": {
+            "is_synced": true,
+            "peer_count": 3
+        }
+    }
+}
+```
+
 ### Public key
 
 Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:

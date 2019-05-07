@@ -121,35 +121,6 @@ def test_get_public_keys_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_keys_node_url_with_http():
-    """
-    Case: get a list of the addresses of the public keys by passing node URL with explicit HTTP protocol.
-    Expect: the following node URL contains protocol error message.
-    """
-    node_url_with_http_protocol = 'http://masternode.com'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'public-key',
-        'get-list',
-        '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
-        '--node-url',
-        node_url_with_http_protocol,
-    ])
-
-    expected_error = {
-        'errors': {
-            'node_url': [
-                f'Pass the following node URL `{node_url_with_http_protocol}` without protocol (http, https, etc.).',
-            ],
-        },
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output
-
-
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_public_keys_node_url_with_protocol(node_url_with_protocol):
     """
