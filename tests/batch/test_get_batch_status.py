@@ -74,12 +74,14 @@ def test_get_batch_status_without_node_url(mocker):
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751' \
 
+    committed_status = 'COMMITTED'
+
     expected_result = {
-        "result": "COMMITTED",
+        'result': committed_status,
     }
 
     mock_get_batch_status_by_id = mocker.patch('cli.batch.service.loop.run_until_complete')
-    mock_get_batch_status_by_id.return_value = expected_result
+    mock_get_batch_status_by_id.return_value = committed_status
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -90,7 +92,7 @@ def test_get_batch_status_without_node_url(mocker):
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_result == json.loads(result.output).get('result')
+    assert expected_result == json.loads(result.output)
 
 
 def test_get_batch_status_with_invalid_node_url():

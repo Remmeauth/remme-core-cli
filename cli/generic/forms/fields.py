@@ -10,6 +10,7 @@ from marshmallow import (
 
 from cli.constants import (
     ADDRESS_REGEXP,
+    BLOCK_IDENTIFIER_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
     HEADER_SIGNATURE_REGEXP,
@@ -111,12 +112,14 @@ class BatchIdentifierField(fields.Field):
 
     def _deserialize(self, value, attr, obj, **kwargs):
         """
-        Validate data (identifier) that was passed to field.
+        Validate data (batch identifier) that was passed to field.
         """
-        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is None:
-            raise ValidationError(f'The following identifier `{value}` is invalid.')
+        batch_identifier = value
 
-        return value
+        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is None:
+            raise ValidationError(f'The following identifier `{batch_identifier}` is invalid.')
+
+        return batch_identifier
 
 
 class NodeUrlField(fields.Field):
@@ -205,3 +208,23 @@ class SwapIdentifierField(fields.Field):
             raise ValidationError(f'The following swap identifier `{swap_identifier}` is invalid.')
 
         return swap_identifier
+
+
+class BlockIdentifierField(fields.Field):
+    """
+    Implements validation of the block identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        """
+        Validate data (block identifier) that was passed to field.
+        """
+        block_identifier = value
+
+        if re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is None:
+            raise ValidationError(f'The following block identifier `{block_identifier}` is invalid.')
+
+        return block_identifier
