@@ -17,6 +17,7 @@
     * [Service](#service)
     * [Account](#account)
     * [Atomic Swap](#atomic-swap)
+    * [Batch](#batch)
     * [Node](#node)
     * [Public key](#public-key)
     * [State](#state)
@@ -187,6 +188,24 @@ $ remme atomic-swap get-info \
             "swap_id": "033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808"
         }
     }
+}
+```
+
+### Batch
+
+Get batch status by identifier — ``remme batch get-status``:
+
+| Arguments   | Type   |  Required | Description                       |
+| :---------: | :----: | :-------: | --------------------------------  |
+| id          | String |  Yes      | Identifier to get batch by. |
+| node-url    | String |  No       | Node URL to apply a command to.   |
+
+```bash
+$ remme batch get-status \
+      --id=61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": "COMMITTED"
 }
 ```
 
