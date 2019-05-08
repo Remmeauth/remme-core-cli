@@ -4,6 +4,7 @@ Provide constants for command line interface.
 from remme.models.utils.family_name import RemmeFamilyName
 
 ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
+BLOCK_IDENTIFIER_REGEXP = r'^[0-9a-f]{128}$'
 BATCH_ID_REGEXP = r'^[0-9a-f]{128}$'
 PUBLIC_KEY_REGEXP = r'^[0-9a-f]{66}$'
 PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'

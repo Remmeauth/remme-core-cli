@@ -123,8 +123,8 @@ def test_get_receipts_without_node_url(mocker):
         },
     ]
 
-    mock_receipts_get = mocker.patch('cli.receipt.service.loop.run_until_complete')
-    mock_receipts_get.return_value = expected_list_of_receipts
+    mock_get_receipts = mocker.patch('cli.receipt.service.loop.run_until_complete')
+    mock_get_receipts.return_value = expected_list_of_receipts
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -147,14 +147,14 @@ def test_get_receipts_invalid_identifiers():
     Case: get list of the transaction receipts by invalid identifiers.
     Expect: the following identifier is not valid error message.
     """
-    invalid_identifiers = 'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e'
+    invalid_identifier = 'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'receipt',
         'get',
         '--ids',
-        invalid_identifiers,
+        invalid_identifier,
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
@@ -162,7 +162,7 @@ def test_get_receipts_invalid_identifiers():
     expected_error = {
         'errors': {
             'ids': [
-                f'The following identifier `{invalid_identifiers}` is invalid.',
+                f'The following identifier `{invalid_identifier}` is invalid.',
             ],
         },
     }

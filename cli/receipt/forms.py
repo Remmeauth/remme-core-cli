@@ -1,5 +1,5 @@
 """
-Provide forms for command line interface's node commands.
+Provide forms for command line interface's receipt commands.
 """
 from marshmallow import Schema
 
@@ -15,4 +15,4 @@ class GetReceiptsForm(Schema):
     """
 
     ids = TransactionIdentifiersListField(required=True)
-    node_url = NodeUrlField(required=True)
+    node_url = NodeUrlField(required=False)
