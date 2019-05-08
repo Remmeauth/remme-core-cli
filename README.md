@@ -16,6 +16,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Block](#block)
     * [Atomic Swap](#atomic-swap)
     * [Batch](#batch)
     * [Node](#node)
@@ -140,6 +141,105 @@ $ remme account transfer-tokens \
 {
     "result": {
         "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+### Block
+
+Get information about the block by its identifier — ``remme block get``:
+
+| Arguments | Type   |  Required | Description                                            |
+| :-------: | :----: | :-------: | ------------------------------------------------------ |
+| id        | String |  Yes      | Identifier of the block to fetch information about by. |
+| node-url  | String |  No       | Node URL to apply a command to.                        |
+
+```bash
+$ remme block get \
+      --id=4a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "batches": [
+            {
+                "header": {
+                    "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                    "transaction_ids": [
+                        "ce8dd0946326072eb4c70818d7d0df32ebd80b3a24525306ff92e8caa8c886ee571d8ba9f01c73c2c4aaab7960c0ef88865ace6dd9274dd378649f5b9da7c820"
+                    ]
+                },
+                "header_signature": "b684d527666cce92ea57d8e14d467ee3cec5515759e1d0a78df65dbcd2a5ff993f95c8efac7c35a6380cbce81941119e98b72956278e663b9fa04e396bb7849f",
+                "trace": false,
+                "transactions": [
+                    {
+                        "header": {
+                            "batcher_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                            "dependencies": [],
+                            "family_name": "block_info",
+                            "family_version": "1.0",
+                            "inputs": [
+                                "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                                "00b10c00"
+                            ],
+                            "nonce": "",
+                            "outputs": [
+                                "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                                "00b10c00"
+                            ],
+                            "payload_sha512": "ef5953af5e24047f92cea476c6706da72b6207ac89077cb314d6d518a1293433955c0a5012c52c4acb34e2220ac8fcc33f83b33ab847631f0471f10dcdf0a54f",
+                            "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135"
+                        },
+                        "header_signature": "ce8dd0946326072eb4c70818d7d0df32ebd80b3a24525306ff92e8caa8c886ee571d8ba9f01c73c2c4aaab7960c0ef88865ace6dd9274dd378649f5b9da7c820",
+                        "payload": "CtICCAESgAExNTJmM2JlOTFkODIzODUzOGE4MzA3N2VjOGNkNWQxZDkzNzc2N2MwOTMwZWVhNjFiNTkxNTFiMGRmYTdjNWExNzlhNjZmMTc2Y2UyM2MxNGE2N2Q4NDUxY2VjMjg1MmM4ZmY2MGZlOWU4OTYzYzNlZDExNWJkNjA3ODg5OGRhMBpCMDJkMWZiZGE1MGRiY2QwZDNjMjg2YTZhOWZhNzFhYTdjZTJkOTcxNTliOTBkZGQ0NjNlMDgxNjQyMmQ2MjFlMTM1IoABNGFlNmYzOWY0ZDZlNWJiNDhmYzA0Y2Y0MGJhNzEwMTNmYzA0NGZlNTdjOWE3Njg3ZjRlMTNkZjhjZDQ4ODQ1OTA4YTAxNjAzOTRlN2RjNjRjNDc5YTg0YzVkYmYwZmUzYzVlZTZkNmIxMDhlNzZjODYyNzQ4NzkxMWZjNjgxYWUokIr35QU="
+                    }
+                ]
+            },
+            {
+                "header": {
+                    "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                    "transaction_ids": [
+                        "e112670497e184e7b3d7fab962440fe4be7e905ce7c73712a1a7ca9c65fba00b23fcf62cc640944bdac3c7ab1414d5d5c6fe3edf2f755d3dbca982b3d83394e2"
+                    ]
+                },
+                "header_signature": "cd11713211c6eb2fe4adc0e44925c1f82e9300e0b8827bd3c73d8be10e61cd2b1e8da810078845ca1665b4adf7f691ad731ab4cea0fc994c55a8863b30220c6e",
+                "trace": false,
+                "transactions": [
+                    {
+                        "header": {
+                            "batcher_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                            "dependencies": [],
+                            "family_name": "account",
+                            "family_version": "0.1",
+                            "inputs": [
+                                "112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202",
+                                "112007a90f66c661b32625f17e27177034a6d2cb552f89cba8c78868705ae276897df6"
+                            ],
+                            "nonce": "7d5445ee5559645bd72db237a0b448bec64c33c70be214e974da7ad0f523278cbb0c77c4a690ff751b68c318437ece2aef6eb29518a41c5ec8037218ed6fbf0d",
+                            "outputs": [
+                                "112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202",
+                                "112007a90f66c661b32625f17e27177034a6d2cb552f89cba8c78868705ae276897df6"
+                            ],
+                            "payload_sha512": "bb0e5d9898c92b9b922a4de677ed6cab106ed5c90e975941cd5d1e22ce6f0d397b812c7152796b410a9cfe1d3fd4af080c6ee88c9548fc8393e7a55cae596b8c",
+                            "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135"
+                        },
+                        "header_signature": "e112670497e184e7b3d7fab962440fe4be7e905ce7c73712a1a7ca9c65fba00b23fcf62cc640944bdac3c7ab1414d5d5c6fe3edf2f755d3dbca982b3d83394e2",
+                        "payload": "EksSRjExMjAwN2Q3MWZhN2UxMjBjNjBmYjM5MmE2NGZkNjlkZTg5MWE2MGM2NjdkOWVhOWU1ZDlkOWQ2MTcyNjNiZTZjMjAyMDIY6Ac="
+                    }
+                ]
+            }
+        ],
+        "header": {
+            "batch_ids": [
+                "b684d527666cce92ea57d8e14d467ee3cec5515759e1d0a78df65dbcd2a5ff993f95c8efac7c35a6380cbce81941119e98b72956278e663b9fa04e396bb7849f",
+                "cd11713211c6eb2fe4adc0e44925c1f82e9300e0b8827bd3c73d8be10e61cd2b1e8da810078845ca1665b4adf7f691ad731ab4cea0fc994c55a8863b30220c6e"
+            ],
+            "block_num": "2",
+            "consensus": "RGV2bW9kZVrz+4RUt+Xyzhofvok/lkMcK3ZtAh/zcO/6gbPJPLPw",
+            "previous_block_id": "4ae6f39f4d6e5bb48fc04cf40ba71013fc044fe57c9a7687f4e13df8cd48845908a0160394e7dc64c479a84c5dbf0fe3c5ee6d6b108e76c8627487911fc681ae",
+            "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+            "state_root_hash": "54eeacdf8fe3262862782110d4396b60f4b8c3863ff1b1b208fa996b6bb24a0f"
+        },
+        "header_signature": "4a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde"
     }
 }
 ```
