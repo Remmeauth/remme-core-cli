@@ -11,8 +11,8 @@ from cli.generic.forms.fields import (
 
 class GetBatchForm(Schema):
     """
-    Get batch form.
+    Get a batch by its identifier form.
     """
 
-    id = BatchIdentifierField(allow_none=True, required=True)
+    id = BatchIdentifierField(allow_none=False, required=True)
     node_url = NodeUrlField(required=False)

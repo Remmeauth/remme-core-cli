@@ -26,16 +26,16 @@ class Batch:
         """
         self.service = service
 
-    def get(self, batch_id):
+    def get(self, id):
         """
-        Get a batch.
+        Get a batch by its identifier.
 
         Arguments:
-            batch_id (string, required): batch identifier.
+            id (string, required): batch identifier.
         """
         try:
             batch = loop.run_until_complete(
-                self.service.blockchain_info.get_batch_by_id(batch_id=batch_id),
+                self.service.blockchain_info.get_batch_by_id(batch_id=id),
             )
 
         except RpcGenericServerDefinedError as error:
@@ -44,4 +44,4 @@ class Batch:
         except Exception as error:
             return None, str(error)
 
-        return batch, None
+        return batch.get('data'), None

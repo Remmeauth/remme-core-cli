@@ -197,7 +197,7 @@ Get a batch by identifier — ``remme batch get``:
 
 | Arguments   | Type   |  Required | Description                       |
 | :---------: | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get batch by. |
+| id          | String |  Yes      | Identifier to get a batch by. |
 | node-url    | String |  No       | Node URL to apply a command to.   |
 
 ```bash
@@ -206,39 +206,37 @@ $ remme batch get \
       --node-url=node-6-testnet.remme.io
 {
     "result": {
-        "data": {
-            "header": {
-                "signer_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda",
-                "transaction_ids": [
-                    "73b913d679d7ec5ccd6658909b71ebdbdef5d01ea510c620639f519812efa76e66710d1d2f932f6e23775f907e5ed6c41d80b1fe227dd3316ac82452d20487c8"
-                ]
-            },
-            "header_signature": "61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d",
-            "trace": false,
-            "transactions": [
-                {
-                    "header": {
-                        "batcher_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda",
-                        "dependencies": [],
-                        "family_name": "block_info",
-                        "family_version": "1.0",
-                        "inputs": [
-                            "00b10c0100000000000000000000000000000000000000000000000000000000000000",
-                            "00b10c00"
-                        ],
-                        "nonce": "",
-                        "outputs": [
-                            "00b10c0100000000000000000000000000000000000000000000000000000000000000",
-                            "00b10c00"
-                        ],
-                        "payload_sha512": "0104c4f12d1bc53ee1d14a71a036305cfc2b82b41cee52cc6d7b9d0905d5fa0aa0db8d01e28531676b319552ce2a33e719386cb3eb5b938d8996abfa64bd3488",
-                        "signer_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda"
-                    },
-                    "header_signature": "73b913d679d7ec5ccd6658909b71ebdbdef5d01ea510c620639f519812efa76e66710d1d2f932f6e23775f907e5ed6c41d80b1fe227dd3316ac82452d20487c8",
-                    "payload": "CtMCCNkzEoABMDk1YmM0MjQ4YjU4NjYzMTllNGE5YWQ2YzZkMWFkNGI3MDA5OTFmNmJjMGVjMGRlN2UwNGJhMTAxNGYxYTU3ZTI4OWE1MmE0MjVhNzc3ZTg3YjgzMzFjMjVkNmU4NTIwNmY1ZGZmNjk1ZGFiMTI0Yzc3YjQ2OWNhMzhhNDFjY2QaQjAyZjU3OWQ3NzU0ZTg3YmYwZTRlZDJlNTBmYjEzNmI4ZTM1NTg2OGU0ODMwODkwZTE0MjRlOWZmZGVhZjZiZTE2MyKAATQzMjA5ODdiYzU3YTJjMmZlYTMzNWFkM2UxZTFmNGU0NDk3YTJhYmM2MmFhYzdlZDIwY2RmZmY5NWFhY2JiMDgyNGU2ZTBmMGFiNGI4MmQxOGExOWEyYTVmMDE3OGE2Mjk0MDIyNjhmODExNzAyZmUxZTk0MzFmZmExMGEyNWI2KMTIreYF"
-                }
+        "header": {
+            "signer_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda",
+            "transaction_ids": [
+                "73b913d679d7ec5ccd6658909b71ebdbdef5d01ea510c620639f519812efa76e66710d1d2f932f6e23775f907e5ed6c41d80b1fe227dd3316ac82452d20487c8"
             ]
-        }
+        },
+        "header_signature": "61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d",
+        "trace": false,
+        "transactions": [
+            {
+                "header": {
+                    "batcher_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda",
+                    "dependencies": [],
+                    "family_name": "block_info",
+                    "family_version": "1.0",
+                    "inputs": [
+                        "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                        "00b10c00"
+                    ],
+                    "nonce": "",
+                    "outputs": [
+                        "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                        "00b10c00"
+                    ],
+                    "payload_sha512": "0104c4f12d1bc53ee1d14a71a036305cfc2b82b41cee52cc6d7b9d0905d5fa0aa0db8d01e28531676b319552ce2a33e719386cb3eb5b938d8996abfa64bd3488",
+                    "signer_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda"
+                },
+                "header_signature": "73b913d679d7ec5ccd6658909b71ebdbdef5d01ea510c620639f519812efa76e66710d1d2f932f6e23775f907e5ed6c41d80b1fe227dd3316ac82452d20487c8",
+                "payload": "CtMCCNkzEoABMDk1YmM0MjQ4YjU4NjYzMTllNGE5YWQ2YzZkMWFkNGI3MDA5OTFmNmJjMGVjMGRlN2UwNGJhMTAxNGYxYTU3ZTI4OWE1MmE0MjVhNzc3ZTg3YjgzMzFjMjVkNmU4NTIwNmY1ZGZmNjk1ZGFiMTI0Yzc3YjQ2OWNhMzhhNDFjY2QaQjAyZjU3OWQ3NzU0ZTg3YmYwZTRlZDJlNTBmYjEzNmI4ZTM1NTg2OGU0ODMwODkwZTE0MjRlOWZmZGVhZjZiZTE2MyKAATQzMjA5ODdiYzU3YTJjMmZlYTMzNWFkM2UxZTFmNGU0NDk3YTJhYmM2MmFhYzdlZDIwY2RmZmY5NWFhY2JiMDgyNGU2ZTBmMGFiNGI4MmQxOGExOWEyYTVmMDE3OGE2Mjk0MDIyNjhmODExNzAyZmUxZTk0MzFmZmExMGEyNWI2KMTIreYF"
+            }
+        ]
     }
 }
 ```

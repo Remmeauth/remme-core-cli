@@ -33,7 +33,7 @@ def batch_commands():
 @batch_commands.command('get')
 def get_batch(id, node_url):
     """
-    Fetch batch by its identifier.
+    Get a batch by its identifier.
     """
     arguments, errors = GetBatchForm().load({
         'id': id,
@@ -51,7 +51,7 @@ def get_batch(id, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    batch, errors = Batch(service=remme).get(batch_id=batch_id)
+    batch, errors = Batch(service=remme).get(id=batch_id)
 
     if errors is not None:
         print_errors(errors=errors)
