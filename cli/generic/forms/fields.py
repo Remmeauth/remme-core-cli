@@ -12,6 +12,7 @@ from cli.constants import (
     ADDRESS_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
+    HEADER_SIGNATURE_REGEXP,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
     SWAP_IDENTIFIER_REGEXP,
@@ -95,6 +96,49 @@ class TransactionIdentifierField(fields.Field):
         Validate data (identifier) that was passed to field.
         """
         if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=value) is None:
+            raise ValidationError(f'The following identifier `{value}` is invalid.')
+
+        return value
+
+
+class BatchIdentifiersListField(fields.Field):
+    """
+    Implements validation of the list of the identifiers.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (list of the identifiers) that was passed to field.
+        """
+        validated_identifiers = []
+
+        for identifier in value.split(','):
+            identifier = identifier.strip()
+
+            if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+                raise ValidationError(f'The following identifier `{identifier}` is invalid.')
+
+            validated_identifiers.append(identifier)
+
+        return validated_identifiers
+
+
+class BatchIdentifierField(fields.Field):
+    """
+    Implements validation of the identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (identifier) that was passed to field.
+        """
+        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is None:
             raise ValidationError(f'The following identifier `{value}` is invalid.')
 
         return value

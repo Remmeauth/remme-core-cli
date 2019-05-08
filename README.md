@@ -17,6 +17,7 @@
     * [Service](#service)
     * [Account](#account)
     * [Atomic Swap](#atomic-swap)
+    * [Batch](#batch)
     * [Node](#node)
     * [Public key](#public-key)
     * [State](#state)
@@ -185,6 +186,75 @@ $ remme atomic-swap get-info \
             "sender_address_non_local": "0xe6ca0e7c974f06471759e9a05d18b538c5ced11e",
             "state": "OPENED",
             "swap_id": "033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808"
+        }
+    }
+}
+```
+
+### Batch
+
+Get a list of batches — ``remme batch get-list``:
+
+| Arguments   | Type   |  Required | Description                                             |
+| :---------: | :----: | :-------: | -----------------------------------------------------   |
+| ids         | String |  No       | Identifiers to get a list of batches by.                |
+| start       | String |  No       | Batch identifier to get a list of batches starting from.|
+| limit       | Integer|  No       | Maximum amount of batches to return.                    |
+| head        | String |  No       | Block identifier to get a list of batches from.         |
+| reverse     | Bool   |  No       | Parameter to reverse result.                            |
+| node-url    | String |  No       | Node URL to apply a command to.                         |
+
+```bash
+$ remme batch get-list \
+      --ids='6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e, 7a5daba99d5757adc997ea6a0b1b83263b3c16604dbd83c0153dc01c9fd780af4b570338c2ec60e086b1db58a4397a4dc661d6c93b0a7250fe75642e15b26e81' \
+      --start=6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e \
+      --limit=2 \
+      --head=57a7944497ca41f424932ae6b70897e7086652ab98450d4aba6a02a2d891501460947812a41028b8041f087066df6dc7e1100c4b0e5cc94bb58b002f6950eb02 \
+      --node-url=node-6-testnet.remme.io \
+      --reverse
+ "result": {
+        "data": [
+            {
+                "header": {
+                    "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                    "transaction_ids": [
+                        "ed7baa5ab9bc5ef49077ddd22de3ebef56157f188980edb6401a57729f7226195d849f227fd941cc01c5eeeedd1d9cadf2e48140098422f2cb641044d971a374",
+                    ]
+                },
+                "header_signature": "6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e",
+                "trace": false,
+                "transactions": [
+                    {
+                        "header": {
+                            "batcher_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                            "dependencies": [],
+                            "family_name": "sawtooth_settings",
+                            "family_version": "1.0",
+                            "inputs": [
+                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
+                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7",
+                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1918142591ba4e8a7",
+                                "000000a87cb5eafdcca6a8f82af32160bc5311783bdad381ea57b4e3b0c44298fc1c14"
+                            ],
+                            "nonce": "",
+                            "outputs": [
+                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
+                                "000000a87cb5eafdcca6a8f82af32160bc5311783bdad381ea57b4e3b0c44298fc1c14"
+                            ],
+                            "payload_sha512": "a39230835da9f4ae154abd7197f196acb9ed9a7d4d0bae8de71714bfe4636c8c6516d774e7b721b9d08d2abbafa42b01acdfe0e3c9b6d35ecef7452442e63b49",
+                            "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+                        },
+                        "header_signature": "ed7baa5ab9bc5ef49077ddd22de3ebef56157f188980edb6401a57729f7226195d849f227fd941cc01c5eeeedd1d9cadf2e48140098422f2cb641044d971a374",
+                        "payload": "CAESRwoic2F3dG9vdGgudmFsaWRhdG9yLmJhdGNoX2luamVjdG9ycxINcmVtbWVfYmF0Y2hlcxoSMHg5NzBkZGE2MjRlZTFhZmFh"
+                    },
+                ]
+            },
+        ],
+        "head": "57a7944497ca41f424932ae6b70897e7086652ab98450d4aba6a02a2d891501460947812a41028b8041f087066df6dc7e1100c4b0e5cc94bb58b002f6950eb02",
+        "paging": {
+            "limit": 2,
+            "next": "",
+            "start": "6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e"
         }
     }
 }
