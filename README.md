@@ -11,6 +11,7 @@
 
   * [Getting started](#getting-started)
     * [Requirements](#getting-started-requirements)
+      * [Ubuntu 16.04 & 18.04](#ubuntu-1604--1804)
     * [Installation](#installation)
   * [Usage](#usage)
     * [Configuration file](#configuration-file)
@@ -31,7 +32,7 @@
 
 <h3 id="getting-started-requirements">Requirements</h4>
 
-### Ubuntu 16.04 & 18.04
+#### Ubuntu 16.04 & 18.04
 
 If you have `16.04` version, install system requirements with the following terminal commands:
 
@@ -61,7 +62,7 @@ And make it as default `python3` with the following command:
 $ rm /usr/bin/python3 && sudo ln -s /usr/bin/python3.6 /usr/bin/python3
 ```
 
-### Installation
+## Installation
 
 Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
