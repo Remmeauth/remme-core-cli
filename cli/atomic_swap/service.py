@@ -4,6 +4,7 @@ Provide implementation of the atomic swap.
 import asyncio
 
 from accessify import implements
+from aiohttp_json_rpc import RpcGenericServerDefinedError
 
 from cli.atomic_swap.interfaces import AtomicSwapInterface
 
@@ -37,4 +38,21 @@ class AtomicSwap:
 
         return {
             'public_key': public_key,
+        }, None
+
+    def get(self, swap_id):
+        """
+        Get information about atomic swap by its identifier.
+        """
+        try:
+            swap_info = loop.run_until_complete(self.service.swap.get_info(swap_id=swap_id))
+
+        except RpcGenericServerDefinedError as error:
+            return None, str(error.message)
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'information': swap_info.data,
         }, None

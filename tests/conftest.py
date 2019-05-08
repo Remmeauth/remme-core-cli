@@ -156,6 +156,31 @@ class PublicKeyInformation:
         }
 
 
+class AtomicSwapInformation:
+    """
+    Impose atomic swap information data transfer object.
+    """
+
+    @property
+    def data(self):
+        """
+        Get atomic swap information.
+        """
+        return {
+            'sender_address': '112007be95c8bb240396446ec359d0d7f04d257b72aeb4ab1ecfe50cf36e400a96ab9c',
+            'receiver_address': '112007484def48e1c6b77cf784aeabcac51222e48ae14f3821697f4040247ba01558b1',
+            'amount': '10.0000',
+            'swap_id': '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808',
+            'secret_lock': '0728356568862f9da0825aa45ae9d3642d64a6a732ad70b8857b2823dbf2a0b8',
+            'created_at': 1555943451,
+            'sender_address_non_local': '0xe6ca0e7c974f06471759e9a05d18b538c5ced11e',
+            'state': 'OPENED',
+            'email_address_encrypted_optional': '',
+            'secret_key': '',
+            'is_initiator': False,
+        }
+
+
 class NodeConfigurations:
     """
     Impose node configurations data transfer object.
@@ -172,6 +197,22 @@ class NodeConfigurations:
         }
 
 
+class NodeInformation:
+    """
+    Impose node information data transfer object.
+    """
+
+    @property
+    def data(self):
+        """
+        Get node information.
+        """
+        return {
+            'is_synced': True,
+            'peer_count': 3,
+        }
+
+
 @pytest.fixture()
 def sent_transaction():
     """
@@ -181,11 +222,19 @@ def sent_transaction():
 
 
 @pytest.fixture()
-def public_key_info():
+def public_key_information():
     """
     Get public key information fixture.
     """
     return PublicKeyInformation()
+
+
+@pytest.fixture()
+def swap_info():
+    """
+    Get atomic swap information fixture.
+    """
+    return AtomicSwapInformation()
 
 
 @pytest.fixture()
@@ -194,3 +243,11 @@ def node_configurations():
     Get node configurations fixture.
     """
     return NodeConfigurations()
+
+
+@pytest.fixture()
+def node_information():
+    """
+    Get node information fixture.
+    """
+    return NodeInformation()

@@ -11,8 +11,11 @@ from marshmallow import (
 from cli.constants import (
     ADDRESS_REGEXP,
     DOMAIN_NAME_REGEXP,
+    FAMILY_NAMES,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
+    SWAP_IDENTIFIER_REGEXP,
+    TRANSACTION_HEADER_SIGNATURE_REGEXP,
 )
 
 
@@ -34,6 +37,67 @@ class AccountAddressField(fields.Field):
             raise ValidationError(f'The following address `{address}` is invalid.')
 
         return address
+
+
+class FamilyNameField(fields.Field):
+    """
+    Implements validation of the family name.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (family name) that was passed to field.
+        """
+        if value not in FAMILY_NAMES:
+            raise ValidationError(f'The following family name `{value}` is invalid.')
+
+        return value
+
+
+class TransactionIdentifiersListField(fields.Field):
+    """
+    Implements validation of the list of the identifiers.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (list of the identifiers) that was passed to field.
+        """
+        validated_identifiers = []
+
+        for identifier in value.split(','):
+            identifier = identifier.strip()
+
+            if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+                raise ValidationError(f'The following identifier `{identifier}` is invalid.')
+
+            validated_identifiers.append(identifier)
+
+        return validated_identifiers
+
+
+class TransactionIdentifierField(fields.Field):
+    """
+    Implements validation of the identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (identifier) that was passed to field.
+        """
+        if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=value) is None:
+            raise ValidationError(f'The following identifier `{value}` is invalid.')
+
+        return value
 
 
 class NodeUrlField(fields.Field):
@@ -102,3 +166,23 @@ class PublicKeyAddressField(fields.Field):
             raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
 
         return value
+
+
+class SwapIdentifierField(fields.Field):
+    """
+    Implements validation of the swap identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        """
+        Validate data (swap identifier) that was passed to field.
+        """
+        swap_identifier = value
+
+        if re.match(pattern=SWAP_IDENTIFIER_REGEXP, string=swap_identifier) is None:
+            raise ValidationError(f'The following swap identifier `{swap_identifier}` is invalid.')
+
+        return swap_identifier
