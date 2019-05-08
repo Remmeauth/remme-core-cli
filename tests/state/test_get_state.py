@@ -38,7 +38,6 @@ def test_get_state_with_address():
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=result_header_signature) is not None
-    assert isinstance(json.loads(result.output), dict)
 
 
 def test_get_state_with_invalid_address():

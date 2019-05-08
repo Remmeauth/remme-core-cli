@@ -326,15 +326,15 @@ $ remme state get \
 
 Get a list of transactions — ``remme transaction get-list``:
 
-| Arguments   | Type   |  Required | Description                                                    |
-| :---------: | :----: | :-------: | -------------------------------------------------------------- |
-| ids         | String |  No       | Identifiers to get a list of transactions by.                  |
+| Arguments   | Type   |  Required | Description                                            |
+| :---------: | :----: | :-------: | -----------------------------------------------------  |
+| ids         | String |  No       | Identifiers to get a list of transactions by.          |
 | start       | String |  No       | Transaction identifier to get a list transaction starting from.|
-| limit       | Integer|  No       | Maximum amount of transactions to return.                      |
-| head        | String |  No       | Block identifier to get a list of transactions from.           |
-| reverse     | Bool   |  No       | Parameter to reverse result.                                   |
-| node-url    | String |  No       | Node URL to apply a command to.                                |
-| family-name | String |  No       | List of transactions by its family name.                       |
+| limit       | Integer|  No       | Maximum amount of transactions to return.              |
+| head        | String |  No       | Block identifier to get a list of transactions from.   |
+| reverse     | Bool   |  No       | Parameter to reverse result.                           |
+| node-url    | String |  No       | Node URL to apply a command to.                        |
+| family-name | String |  No       | List of transactions by its family name.               |
 
 ```bash
 $ remme transaction get-list \

@@ -95,8 +95,8 @@ def test_get_list_transactions_with_ids():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_header_signature = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
-                                '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b'
+    expected_header_signature = '6601e240044b00db4b7e5eda7800e88236341077879a4a9cf5a1b1f9fb2ece87' \
+                                '7bc9a43808d429e68f4d65ee8d7231e4e8711e705ad51be7888d1a7f25b57717'
 
     result_header_signature = json.loads(result.output).get('result').get('data')[0].get('header_signature')
 
