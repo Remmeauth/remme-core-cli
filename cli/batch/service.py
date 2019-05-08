@@ -26,23 +26,21 @@ class Batch:
         """
         self.service = service
 
-    def get_list(self, batch_ids, start, limit, head, reverse):
+    def get_list(self, ids, start, limit, head, reverse):
         """
         Get a list of batches.
 
         Arguments:
-            batch_ids (list, optional): identifiers to get a list of batches by.
+            ids (list, optional): identifiers to get a list of batches by.
             start (string, optional): batch identifier to get a list of batches starting from.
             limit (int, optional): maximum amount of batches to return.
             head (string, optional): block identifier to get a list of batches from.
-            reverse (string, optional): parameter to reverse result.
+            reverse (bool, optional): parameter to reverse result.
         """
-        reverse = '' if reverse else 'false'
-
         try:
             batches = loop.run_until_complete(
                 self.service.blockchain_info.get_batches(query={
-                    'ids': batch_ids,
+                    'ids': ids,
                     'start': start,
                     'limit': limit,
                     'head': head,
@@ -56,4 +54,4 @@ class Batch:
         except Exception as error:
             return None, str(error)
 
-        return batches, None
+        return batches.get('data'), None

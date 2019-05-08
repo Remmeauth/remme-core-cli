@@ -9,7 +9,7 @@ from remme import Remme
 from cli.batch.forms import GetBatchesListForm
 from cli.batch.help import (
     BATCH_HEAD_ARGUMENT_HELP_MESSAGE,
-    BATCH_IDS_ARGUMENT_HELP_MESSAGE,
+    BATCH_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
     BATCH_LIMIT_ARGUMENT_HELP_MESSAGE,
     BATCH_REVERSE_ARGUMENT_HELP_MESSAGE,
     BATCH_START_ARGUMENT_HELP_MESSAGE,
@@ -34,7 +34,7 @@ def batch_commands():
     pass
 
 
-@click.option('--ids', required=False, type=str, help=BATCH_IDS_ARGUMENT_HELP_MESSAGE)
+@click.option('--ids', required=False, type=str, help=BATCH_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)
 @click.option('--start', required=False, type=str, help=BATCH_START_ARGUMENT_HELP_MESSAGE)
 @click.option('--limit', required=False, type=int, help=BATCH_LIMIT_ARGUMENT_HELP_MESSAGE)
 @click.option('--head', required=False, type=str, help=BATCH_HEAD_ARGUMENT_HELP_MESSAGE)
@@ -68,8 +68,8 @@ def get_batches(ids, start, limit, head, reverse, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    batches, errors = Batch(service=remme).get_list(
-        batch_ids=batch_ids,
+    result, errors = Batch(service=remme).get_list(
+        ids=batch_ids,
         start=start,
         limit=limit,
         head=head,
@@ -80,4 +80,4 @@ def get_batches(ids, start, limit, head, reverse, node_url):
         print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    print_result(result=batches)
+    print_result(result=result)

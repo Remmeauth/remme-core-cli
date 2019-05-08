@@ -196,7 +196,7 @@ $ remme atomic-swap get-info \
 Get a list of batches — ``remme batch get-list``:
 
 | Arguments   | Type   |  Required | Description                                             |
-| :---------: | :----: | :-------: | -----------------------------------------------------   |
+| :--------:  | :----: | :-------: | -----------------------------------------------------   |
 | ids         | String |  No       | Identifiers to get a list of batches by.                |
 | start       | String |  No       | Batch identifier to get a list of batches starting from.|
 | limit       | Integer|  No       | Maximum amount of batches to return.                    |
@@ -212,7 +212,8 @@ $ remme batch get-list \
       --head=57a7944497ca41f424932ae6b70897e7086652ab98450d4aba6a02a2d891501460947812a41028b8041f087066df6dc7e1100c4b0e5cc94bb58b002f6950eb02 \
       --node-url=node-6-testnet.remme.io \
       --reverse
- "result": {
+{
+    "result": {
         "data": [
             {
                 "header": {

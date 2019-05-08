@@ -16,7 +16,7 @@ from cli.generic.forms.fields import (
 
 class GetBatchesListForm(Schema):
     """
-    Get a list of batch form.
+    Get a list of batches form.
     """
 
     ids = BatchIdentifiersListField(allow_none=True, required=False)

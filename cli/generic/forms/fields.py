@@ -136,12 +136,14 @@ class BatchIdentifierField(fields.Field):
 
     def _deserialize(self, value, attr, obj, **kwargs):
         """
-        Validate data (identifier) that was passed to field.
+        Validate data (batch identifier) that was passed to field.
         """
-        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is None:
+        batch_identifier = value
+
+        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is None:
             raise ValidationError(f'The following identifier `{value}` is invalid.')
 
-        return value
+        return batch_identifier
 
 
 class NodeUrlField(fields.Field):
