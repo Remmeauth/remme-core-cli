@@ -19,6 +19,7 @@
     * [Atomic Swap](#atomic-swap)
     * [Node](#node)
     * [Public key](#public-key)
+    * [State](#state)
     * [Transaction](#transaction)
   * [Development](#development)
     * [Requirements](#development-requirements)
@@ -293,6 +294,29 @@ $ remme public-key get-info \
             "type": "rsa",
             "valid_from": 1556118334,
             "valid_to": 1587222334
+        }
+    }
+}
+```
+
+### State
+
+Get a state by its address — ``remme state get``:
+
+| Arguments | Type   | Required | Description                        |
+| :-------: | :----: | :------: | ---------------------------------- |
+| address   | String | Yes      | Account address to get a state by. |
+| node-url  | String | No       | Node URL to apply a command to.    |
+
+```bash
+$ remme state get \
+      --address=000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7 \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "state": {
+            "data": "CmwKJnNhd3Rvb3RoLnNldHRpbmdzLnZvdGUuYXV0aG9yaXplZF9rZXlzEkIwMmE2NTc5NmYyNDkwOTFjMzA4NzYxNGI0ZDljMjkyYjAwYjhlYmE1ODBkMDQ1YWMyZmQ3ODEyMjRiODdiNmYxM2U=",
+            "head": "95d78133eb98628d5ff17c7d1972b9ab03e50fceeb8e199d98cb52078550f5473bb001e57c116238697bdc1958eaf6d5f096f7b66974e1ea46b9c9da694be9d9"
         }
     }
 }
