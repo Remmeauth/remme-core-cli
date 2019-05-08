@@ -8,11 +8,11 @@ class BatchInterface:
     Implements batch interface.
     """
 
-    def get_status(self, batch_id):
+    def get_status(self, id):
         """
-        Get batch status by its identifier.
+        Get a batch status by its identifier.
 
         Arguments:
-            batch_id (string, required): batch identifier.
+            id (string, required): batch identifier.
         """
         pass

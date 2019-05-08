@@ -11,8 +11,8 @@ from cli.generic.forms.fields import (
 
 class GetBatchStatusForm(Schema):
     """
-    Get batch status form.
+    Get a batch status by its identifier form.
     """
 
-    id = BatchIdentifierField(allow_none=True, required=True)
+    id = BatchIdentifierField(required=True)
     node_url = NodeUrlField(required=False)

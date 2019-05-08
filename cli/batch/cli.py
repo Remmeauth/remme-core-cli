@@ -7,7 +7,7 @@ import click
 from remme import Remme
 
 from cli.batch.forms import GetBatchStatusForm
-from cli.batch.help import BATCH_STATUS_ID_ARGUMENT_HELP_MESSAGE
+from cli.batch.help import BATCH_STATUS_IDENTIFIER_ARGUMENT_HELP_MESSAGE
 from cli.batch.service import Batch
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
@@ -28,12 +28,12 @@ def batch_commands():
     pass
 
 
-@click.option('--id', required=True, type=str, help=BATCH_STATUS_ID_ARGUMENT_HELP_MESSAGE)
+@click.option('--id', required=True, type=str, help=BATCH_STATUS_IDENTIFIER_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @batch_commands.command('get-status')
 def get_batch_status(id, node_url):
     """
-    Fetch batch status by its identifier.
+    Get a batch status by its identifier.
     """
     arguments, errors = GetBatchStatusForm().load({
         'id': id,
@@ -51,7 +51,7 @@ def get_batch_status(id, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    batch_status, errors = Batch(service=remme).get_status(batch_id=batch_id)
+    batch_status, errors = Batch(service=remme).get_status(id=batch_id)
 
     if errors is not None:
         print_errors(errors=errors)

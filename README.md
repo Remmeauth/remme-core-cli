@@ -193,11 +193,11 @@ $ remme atomic-swap get-info \
 
 ### Batch
 
-Get batch status by identifier — ``remme batch get-status``:
+Get a batch status by its identifier — ``remme batch get-status``:
 
 | Arguments   | Type   |  Required | Description                       |
 | :---------: | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get batch by. |
+| id          | String |  Yes      | Identifier to get batch by.       |
 | node-url    | String |  No       | Node URL to apply a command to.   |
 
 ```bash
