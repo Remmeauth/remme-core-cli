@@ -13,6 +13,7 @@ from cli.constants import (
     BLOCK_IDENTIFIER_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
+    HEADER_SIGNATURE_REGEXP,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
     SWAP_IDENTIFIER_REGEXP,
@@ -99,6 +100,26 @@ class TransactionIdentifierField(fields.Field):
             raise ValidationError(f'The following identifier `{value}` is invalid.')
 
         return value
+
+
+class BatchIdentifierField(fields.Field):
+    """
+    Implements validation of the identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (batch identifier) that was passed to field.
+        """
+        batch_identifier = value
+
+        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is None:
+            raise ValidationError(f'The following identifier `{batch_identifier}` is invalid.')
+
+        return batch_identifier
 
 
 class NodeUrlField(fields.Field):
