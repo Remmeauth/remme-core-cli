@@ -77,13 +77,13 @@ def test_get_public_key_info_invalid_address():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_public_key_info_without_node_url(mocker, public_key_info):
+def test_get_public_key_info_without_node_url(mocker, public_key_information):
     """
     Case: get information about public key without passing node URL.
     Expect: dictionary of public key information is returned from node on localhost.
     """
     mock_public_key_get_info = mocker.patch('cli.public_key.service.loop.run_until_complete')
-    mock_public_key_get_info.return_value = public_key_info
+    mock_public_key_get_info.return_value = public_key_information
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -95,7 +95,7 @@ def test_get_public_key_info_without_node_url(mocker, public_key_info):
 
     expected_result = {
         'result': {
-            'information': public_key_info.data,
+            'information': public_key_information.data,
         },
     }
 

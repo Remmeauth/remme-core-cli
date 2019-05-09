@@ -11,6 +11,7 @@
 
   * [Getting started](#getting-started)
     * [Requirements](#getting-started-requirements)
+      * [Ubuntu 16.04 & 18.04](#ubuntu-1604--1804)
     * [Installation](#installation)
   * [Usage](#usage)
     * [Configuration file](#configuration-file)
@@ -18,8 +19,10 @@
     * [Account](#account)
     * [Block](#block)
     * [Atomic Swap](#atomic-swap)
+    * [Batch](#batch)
     * [Node](#node)
     * [Public key](#public-key)
+    * [State](#state)
     * [Transaction](#transaction)
   * [Development](#development)
     * [Requirements](#development-requirements)
@@ -32,9 +35,37 @@
 
 <h3 id="getting-started-requirements">Requirements</h4>
 
-- Python 3.6 or 3.7 — install one of them with the [following reference](https://www.python.org/downloads).
+#### Ubuntu 16.04 & 18.04
 
-### Installation
+If you have `16.04` version, install system requirements with the following terminal commands:
+
+```bash
+$ apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa -y && \
+          apt-get install -y build-essential automake libtool pkg-config \
+          libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
+```
+
+If `18.04`, then use the following terminal commands:
+
+```bash
+$ apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa -y && \
+          apt-get install -y build-essential automake libtool pkg-config libsecp256k1-dev \
+          libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
+```
+
+Now, for both of versions, install `Python 3.6` (also, we support 3.7):
+
+```bash
+$ apt-get update && apt-get install -y python3.6 python3.6-dev python3-pip python3-setuptools python3.6-venv
+```
+
+And make it as default `python3` with the following command:
+
+```bash
+$ rm /usr/bin/python3 && sudo ln -s /usr/bin/python3.6 /usr/bin/python3
+```
+
+## Installation
 
 Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
@@ -156,7 +187,8 @@ Get a list of blocks — ``remme block get-list``:
 
 ```bash
 $ remme block get-list \
-      --ids='fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c, 56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551' \
+      --ids='fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c,
+      56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551' \
       --limit=2 \
       --reverse \
       --node-url=node-genesis-testnet.remme.io
@@ -217,15 +249,15 @@ $ remme block get-list \
 }      
 ```
 
-Get block by its identifier — ``remme block get-single``:
+Get information about the block by its identifier — ``remme block get``:
 
-| Arguments | Type   |  Required | Description                                         |
-| :-------: | :----: | :-------: | --------------------------------------------------- |
-| id        | String |  Yes      | Identifier of the block to fetch by.                |
-| node-url  | String |  No       | Apply the command to the specified node by its URL. |
+| Arguments | Type   |  Required | Description                                            |
+| :-------: | :----: | :-------: | ------------------------------------------------------ |
+| id        | String |  Yes      | Identifier of the block to fetch information about by. |
+| node-url  | String |  No       | Node URL to apply a command to.                        |
 
 ```bash
-$ remme block get-single \
+$ remme block get \
       --id=4a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde \
       --node-url=node-6-testnet.remme.io
 {
@@ -264,7 +296,39 @@ $ remme block get-single \
                     }
                 ]
             },
-            ...
+            {
+                "header": {
+                    "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                    "transaction_ids": [
+                        "e112670497e184e7b3d7fab962440fe4be7e905ce7c73712a1a7ca9c65fba00b23fcf62cc640944bdac3c7ab1414d5d5c6fe3edf2f755d3dbca982b3d83394e2"
+                    ]
+                },
+                "header_signature": "cd11713211c6eb2fe4adc0e44925c1f82e9300e0b8827bd3c73d8be10e61cd2b1e8da810078845ca1665b4adf7f691ad731ab4cea0fc994c55a8863b30220c6e",
+                "trace": false,
+                "transactions": [
+                    {
+                        "header": {
+                            "batcher_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135",
+                            "dependencies": [],
+                            "family_name": "account",
+                            "family_version": "0.1",
+                            "inputs": [
+                                "112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202",
+                                "112007a90f66c661b32625f17e27177034a6d2cb552f89cba8c78868705ae276897df6"
+                            ],
+                            "nonce": "7d5445ee5559645bd72db237a0b448bec64c33c70be214e974da7ad0f523278cbb0c77c4a690ff751b68c318437ece2aef6eb29518a41c5ec8037218ed6fbf0d",
+                            "outputs": [
+                                "112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202",
+                                "112007a90f66c661b32625f17e27177034a6d2cb552f89cba8c78868705ae276897df6"
+                            ],
+                            "payload_sha512": "bb0e5d9898c92b9b922a4de677ed6cab106ed5c90e975941cd5d1e22ce6f0d397b812c7152796b410a9cfe1d3fd4af080c6ee88c9548fc8393e7a55cae596b8c",
+                            "signer_public_key": "02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135"
+                        },
+                        "header_signature": "e112670497e184e7b3d7fab962440fe4be7e905ce7c73712a1a7ca9c65fba00b23fcf62cc640944bdac3c7ab1414d5d5c6fe3edf2f755d3dbca982b3d83394e2",
+                        "payload": "EksSRjExMjAwN2Q3MWZhN2UxMjBjNjBmYjM5MmE2NGZkNjlkZTg5MWE2MGM2NjdkOWVhOWU1ZDlkOWQ2MTcyNjNiZTZjMjAyMDIY6Ac="
+                    }
+                ]
+            }
         ],
         "header": {
             "batch_ids": [
@@ -329,6 +393,56 @@ $ remme atomic-swap get-info \
 }
 ```
 
+### Batch
+
+Get a batch by identifier — ``remme batch get``:
+
+| Arguments   | Type   |  Required | Description                       |
+| :---------: | :----: | :-------: | --------------------------------  |
+| id          | String |  Yes      | Identifier to get a batch by. |
+| node-url    | String |  No       | Node URL to apply a command to.   |
+
+```bash
+$ remme batch get \
+      --id=61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "header": {
+            "signer_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda",
+            "transaction_ids": [
+                "73b913d679d7ec5ccd6658909b71ebdbdef5d01ea510c620639f519812efa76e66710d1d2f932f6e23775f907e5ed6c41d80b1fe227dd3316ac82452d20487c8"
+            ]
+        },
+        "header_signature": "61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d",
+        "trace": false,
+        "transactions": [
+            {
+                "header": {
+                    "batcher_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda",
+                    "dependencies": [],
+                    "family_name": "block_info",
+                    "family_version": "1.0",
+                    "inputs": [
+                        "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                        "00b10c00"
+                    ],
+                    "nonce": "",
+                    "outputs": [
+                        "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                        "00b10c00"
+                    ],
+                    "payload_sha512": "0104c4f12d1bc53ee1d14a71a036305cfc2b82b41cee52cc6d7b9d0905d5fa0aa0db8d01e28531676b319552ce2a33e719386cb3eb5b938d8996abfa64bd3488",
+                    "signer_public_key": "029de6b8d982a714b5e781e266a4f1e0ef88ba1ef6bd4a96e7b7f21da164d84cda"
+                },
+                "header_signature": "73b913d679d7ec5ccd6658909b71ebdbdef5d01ea510c620639f519812efa76e66710d1d2f932f6e23775f907e5ed6c41d80b1fe227dd3316ac82452d20487c8",
+                "payload": "CtMCCNkzEoABMDk1YmM0MjQ4YjU4NjYzMTllNGE5YWQ2YzZkMWFkNGI3MDA5OTFmNmJjMGVjMGRlN2UwNGJhMTAxNGYxYTU3ZTI4OWE1MmE0MjVhNzc3ZTg3YjgzMzFjMjVkNmU4NTIwNmY1ZGZmNjk1ZGFiMTI0Yzc3YjQ2OWNhMzhhNDFjY2QaQjAyZjU3OWQ3NzU0ZTg3YmYwZTRlZDJlNTBmYjEzNmI4ZTM1NTg2OGU0ODMwODkwZTE0MjRlOWZmZGVhZjZiZTE2MyKAATQzMjA5ODdiYzU3YTJjMmZlYTMzNWFkM2UxZTFmNGU0NDk3YTJhYmM2MmFhYzdlZDIwY2RmZmY5NWFhY2JiMDgyNGU2ZTBmMGFiNGI4MmQxOGExOWEyYTVmMDE3OGE2Mjk0MDIyNjhmODExNzAyZmUxZTk0MzFmZmExMGEyNWI2KMTIreYF"
+            }
+        ]
+    }
+}
+```
+
 ### Node
 
 Get node configurations — ``remme node get-configs``:
@@ -364,6 +478,24 @@ $ remme node get-peers --node-url=node-genesis-testnet.remme.io
             "tcp://node-9-testnet.remme.io:8800",
             "tcp://node-29-testnet.remme.io:8800"
         ]
+    }
+}
+```
+
+Get node information — ``remme node get-info``:
+
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-info --node-url=node-27-testnet.remme.io
+{
+    "result": {
+        "information": {
+            "is_synced": true,
+            "peer_count": 3
+        }
     }
 }
 ```
@@ -415,6 +547,29 @@ $ remme public-key get-info \
             "type": "rsa",
             "valid_from": 1556118334,
             "valid_to": 1587222334
+        }
+    }
+}
+```
+
+### State
+
+Get a state by its address — ``remme state get``:
+
+| Arguments | Type   | Required | Description                        |
+| :-------: | :----: | :------: | ---------------------------------- |
+| address   | String | Yes      | Account address to get a state by. |
+| node-url  | String | No       | Node URL to apply a command to.    |
+
+```bash
+$ remme state get \
+      --address=000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7 \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": {
+        "state": {
+            "data": "CmwKJnNhd3Rvb3RoLnNldHRpbmdzLnZvdGUuYXV0aG9yaXplZF9rZXlzEkIwMmE2NTc5NmYyNDkwOTFjMzA4NzYxNGI0ZDljMjkyYjAwYjhlYmE1ODBkMDQ1YWMyZmQ3ODEyMjRiODdiNmYxM2U=",
+            "head": "95d78133eb98628d5ff17c7d1972b9ab03e50fceeb8e199d98cb52078550f5473bb001e57c116238697bdc1958eaf6d5f096f7b66974e1ea46b9c9da694be9d9"
         }
     }
 }

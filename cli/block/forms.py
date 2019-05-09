@@ -16,7 +16,7 @@ from cli.generic.forms.fields import (
 
 class GetBlocksListForm(Schema):
     """
-    Get a list of transactions form.
+    Get a list of blocks form.
     """
 
     ids = BlockIdentifiersListField(allow_none=True, required=False)
@@ -33,7 +33,7 @@ class GetBlocksListForm(Schema):
 
 class GetBlockByIdentifierForm(Schema):
     """
-    Transfer tokens to address form.
+    Get a block by its identifier form.
     """
 
     id = BlockIdentifierField(required=True)
