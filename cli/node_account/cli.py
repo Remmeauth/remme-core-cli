@@ -5,17 +5,13 @@ import sys
 
 import click
 from remme import Remme
-from remme.models.account.account_type import AccountType
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
 from cli.node_account.forms import GetNodeAccountInformationForm
-from cli.node_account.help import (
-    NODE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
-    PRIVATE_KEY_ARGUMENT_HELP_MESSAGE,
-)
+from cli.node_account.help import NODE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE
 from cli.node_account.service import NodeAccount
 from cli.utils import (
     default_node_url,
@@ -32,16 +28,14 @@ def node_account_commands():
     pass
 
 
-@click.option('--private-key', type=str, required=True, help=PRIVATE_KEY_ARGUMENT_HELP_MESSAGE)
 @click.option('--address', type=str, required=True, help=NODE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @node_account_commands.command('get')
-def get(private_key, address, node_url):
+def get(address, node_url):
     """
     Get information about the node account by its address.
     """
     arguments, errors = GetNodeAccountInformationForm().load({
-        'private_key': private_key,
         'address': address,
         'node_url': node_url,
     })
@@ -50,13 +44,11 @@ def get(private_key, address, node_url):
         print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    private_key = arguments.get('private_key')
     node_account_address = arguments.get('address')
     node_url = arguments.get('node_url')
 
-    remme = Remme(
-        account_config={'private_key_hex': private_key, 'account_type': AccountType.NODE},
-        network_config={'node_address': str(node_url) + ':8080'},
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080'},
     )
 
     result, errors = NodeAccount(service=remme).get(address=node_account_address)

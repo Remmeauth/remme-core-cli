@@ -27,8 +27,6 @@ def test_get_information_with_address():
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
@@ -45,7 +43,7 @@ def test_get_information_with_address():
 
 def test_get_information_without_node_url(mocker, node_account_information):
     """
-    Case: get information about the node account by its address without passing node URL.
+    Case: get information about the node account without passing node URL.
     Expect: information about the node account is returned from node on localhost.
     """
     mock_node_account_get_info = mocker.patch('cli.atomic_swap.service.loop.run_until_complete')
@@ -55,8 +53,6 @@ def test_get_information_without_node_url(mocker, node_account_information):
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
     ])
@@ -80,8 +76,6 @@ def test_get_information_invalid_address():
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         invalid_address,
         '--node-url',
@@ -102,7 +96,7 @@ def test_get_information_invalid_address():
 
 def test_get_information_invalid_node_url():
     """
-    Case: get information about the node account by passing valid address and invalid node URL.
+    Case: get information about the node account by passing invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -111,8 +105,6 @@ def test_get_information_invalid_node_url():
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
@@ -142,8 +134,6 @@ def test_get_information_non_existing_address():
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         non_existing_address,
         '--node-url',
@@ -169,8 +159,6 @@ def test_get_information_non_existing_node_url():
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
@@ -188,15 +176,13 @@ def test_get_information_non_existing_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_information_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get information about the node account by passing valid address and node URL with explicit protocol.
+    Case: get information about the node account by passing node URL with explicit protocol.
     Expect: the following node URL contains protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
         'node-account',
         'get',
-        '--private-key',
-        '1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc',
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',

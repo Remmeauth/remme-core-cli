@@ -15,4 +15,4 @@ class GetNodeAccountInformationForm(Schema):
     """
 
     address = AccountAddressField(required=True)
-    node_url = NodeUrlField(required=True)
+    node_url = NodeUrlField(required=False)

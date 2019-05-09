@@ -179,15 +179,13 @@ $ remme account transfer-tokens \
 
 Get information about the node account by its address — ``remme node-account get``:
 
-| Arguments   | Type   | Required | Description                                                     |
-| :---------: | :----: | :------: | --------------------------------------------------------------- |
-| private-key | String | Yes      | Account's private key to get information about node account by. |
-| address     | String | Yes      | Node account address to get information about node account by.  |
-| node-url    | String | No       | Node URL to apply a command to.                                 |
+| Arguments   | Type   | Required | Description                                                    |
+| :---------: | :----: | :------: | -------------------------------------------------------------- |
+| address     | String | Yes      | Node account address to get information about node account by. |
+| node-url    | String | No       | Node URL to apply a command to.                                |
 
 ```bash
 $ remme node-account get \
-      --private-key=1067b42e24b4c533706f7c6e62278773c8ec7bf9e78bf570e9feb58ba8274acc \
       --address=1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48ca \
       --node-url=node-1-testnet.remme.io
 {
