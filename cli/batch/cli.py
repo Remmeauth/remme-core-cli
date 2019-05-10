@@ -89,10 +89,10 @@ def get_batch_status(id, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    batch_status, errors = Batch(service=remme).get_status(id=batch_id)
+    result, errors = Batch(service=remme).get_status(id=batch_id)
 
     if errors is not None:
         print_errors(errors=errors)
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
-    print_result(result=batch_status)
+    print_result(result=result)

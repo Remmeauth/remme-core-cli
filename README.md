@@ -11,6 +11,7 @@
 
   * [Getting started](#getting-started)
     * [Requirements](#getting-started-requirements)
+      * [Ubuntu 16.04 & 18.04](#ubuntu-1604--1804)
     * [Installation](#installation)
   * [Usage](#usage)
     * [Configuration file](#configuration-file)
@@ -34,9 +35,37 @@
 
 <h3 id="getting-started-requirements">Requirements</h4>
 
-- Python 3.6 or 3.7 — install one of them with the [following reference](https://www.python.org/downloads).
+#### Ubuntu 16.04 & 18.04
 
-### Installation
+If you have `16.04` version, install system requirements with the following terminal commands:
+
+```bash
+$ apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa -y && \
+          apt-get install -y build-essential automake libtool pkg-config \
+          libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
+```
+
+If `18.04`, then use the following terminal commands:
+
+```bash
+$ apt-get update && apt-get install -y software-properties-common && add-apt-repository ppa:deadsnakes/ppa -y && \
+          apt-get install -y build-essential automake libtool pkg-config libsecp256k1-dev \
+          libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev
+```
+
+Now, for both of versions, install `Python 3.6` (also, we support 3.7):
+
+```bash
+$ apt-get update && apt-get install -y python3.6 python3.6-dev python3-pip python3-setuptools python3.6-venv
+```
+
+And make it as default `python3` with the following command:
+
+```bash
+$ rm /usr/bin/python3 && sudo ln -s /usr/bin/python3.6 /usr/bin/python3
+```
+
+## Installation
 
 Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
 
@@ -296,8 +325,8 @@ $ remme atomic-swap get-info \
 Get a batch by identifier — ``remme batch get``:
 
 | Arguments   | Type   |  Required | Description                       |
-| :---------: | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get a batch by. |
+| :-------:   | :----: | :-------: | --------------------------------  |
+| id          | String |  Yes      | Identifier to get a batch by.     |
 | node-url    | String |  No       | Node URL to apply a command to.   |
 
 ```bash

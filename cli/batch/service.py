@@ -54,9 +54,7 @@ class Batch:
             id (string, required): batch identifier.
         """
         try:
-            result = loop.run_until_complete(
-                self.service.blockchain_info.get_batch_status(batch_id=id),
-            )
+            batch_status = loop.run_until_complete(self.service.blockchain_info.get_batch_status(batch_id=id))
 
         except RpcGenericServerDefinedError as error:
             return None, str(error.message)
@@ -64,4 +62,4 @@ class Batch:
         except Exception as error:
             return None, str(error)
 
-        return result, None
+        return batch_status, None

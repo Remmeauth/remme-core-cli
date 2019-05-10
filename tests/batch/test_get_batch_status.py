@@ -14,6 +14,8 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
+BATCH_STATUSES = ('COMMITTED', 'UNKNOWN')
+
 
 def test_get_batch_status():
     """
@@ -33,8 +35,11 @@ def test_get_batch_status():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    batch_status = json.loads(result.output).get('result')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+    assert isinstance(batch_status, str)
+    assert batch_status in BATCH_STATUSES
 
 
 def test_get_batch_status_with_invalid_id():
@@ -69,7 +74,7 @@ def test_get_batch_status_with_invalid_id():
 def test_get_batch_status_without_node_url(mocker):
     """
     Case: get a batch status by its identifier without passing node URL.
-    Expect: batch status is returned from node on localhost.
+    Expect: batch status is returned from a node on localhost.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751' \
@@ -130,7 +135,7 @@ def test_get_batch_status_with_invalid_node_url():
 def test_get_batch_status_node_url_with_protocol(node_url_with_protocol):
     """
     Case: get batch a status by its identifier by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Expect: the following node URL contains the protocol error message.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
@@ -160,7 +165,7 @@ def test_get_batch_status_node_url_with_protocol(node_url_with_protocol):
 def test_get_batch_status_with_non_existing_node_url():
     """
     Case: get a batch status by its identifier by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
