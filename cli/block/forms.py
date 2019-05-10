@@ -20,6 +20,7 @@ class GetBlocksListForm(Schema):
     """
 
     ids = BlockIdentifiersListField(allow_none=True, required=False)
+    head = BlockIdentifierField(allow_none=True, required=False)
     limit = fields.Integer(
         allow_none=True,
         strict=True,

@@ -178,17 +178,19 @@ $ remme account transfer-tokens \
 
 Get a list of blocks — ``remme block get-list``:
 
-| Arguments   | Type    |  Required | Description                             |
-| :---------: | :-----: | :-------: | --------------------------------------- |
-| ids         | String  |  No       | Identifiers to get a list of blocks by. |
-| limit       | Integer |  No       | Maximum amount of blocks to return.     |
-| reverse     | Bool    |  No       | Parameter to reverse result.            |
-| node-url    | String  |  No       | Node URL to apply a command to.         |
+| Arguments   | Type    |  Required | Description                                              |
+| :---------: | :-----: | :-------: | -------------------------------------------------------- |
+| ids         | String  |  No       | Identifiers to get a list of blocks by.                  |
+| limit       | Integer |  No       | Maximum amount of blocks to return.                      |
+| head        | Integer |  No       | Block identifier to get a list of transactions from.     |
+| reverse     | Bool    |  No       | Parameter to reverse result.                             |
+| node-url    | String  |  No       | Node URL to apply a command to.                          |
 
 ```bash
 $ remme block get-list \
       --ids='fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c,
       56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551' \
+      --head=fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c
       --limit=2 \
       --reverse \
       --node-url=node-genesis-testnet.remme.io

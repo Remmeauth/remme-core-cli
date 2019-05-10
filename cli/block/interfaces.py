@@ -14,14 +14,15 @@ class BlockInterface:
         """
         pass
 
-    def get_list(self, ids, limit, reverse):
+    def get_list(self, ids, head, limit, reverse):
         """
         Get a list of blocks.
 
-        A list of blocks could be filtered by blocks identifiers, limit, reverse.
+        A list of blocks could be filtered by blocks identifiers, head, limit, reverse.
 
         Arguments:
             ids (list, optional): identifiers to get a list of blocks by.
+            head (string, optional): block identifier to get a list of transactions from.
             limit (int, optional): maximum amount of blocks to return.
             reverse (bool, optional): parameter to reverse result.
         """

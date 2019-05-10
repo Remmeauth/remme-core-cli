@@ -39,7 +39,7 @@ def test_get_blocks():
 
 def test_get_blocks_with_ids():
     """
-    Case: get a list of blocks by identifiers.
+    Case: get a list of blocks by its identifiers.
     Expect: blocks with header signatures which matches specified identifiers are returned.
     """
     blocks_ids = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f' \
@@ -67,7 +67,7 @@ def test_get_blocks_with_ids():
 
 def test_get_blocks_invalid_ids():
     """
-    Case: get a list of blocks by invalid identifiers.
+    Case: get a list of blocks by its invalid identifiers.
     Expect: the following identifiers are not a valid error message.
     """
     invalid_block_identifier = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f'
@@ -120,6 +120,60 @@ def test_get_blocks_with_non_existing_ids():
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_get_blocks_with_head():
+    """
+    Case: get a list of blocks filtering by head identifier.
+    Expect: the first block's header signature matches specified head identifiers.
+    """
+    head_identifier = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f' \
+                      '7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'block',
+        'get-list',
+        '--head',
+        head_identifier,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    list_of_blocks = json.loads(result.output).get('result')
+    first_block = list_of_blocks[0].get('header_signature')
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert head_identifier == first_block
+
+
+def test_get_blocks_invalid_head():
+    """
+    Case: get a list of blocks by invalid head identifier.
+    Expect: the following identifiers are not a valid error message.
+    """
+    invalid_head = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'block',
+        'get-list',
+        '--head',
+        invalid_head,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error_message = {
+        'errors': {
+            'head': [
+                f'The following block identifier `{invalid_head}` is invalid.',
+            ],
+        },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
 
 
 def test_get_blocks_with_limit():
