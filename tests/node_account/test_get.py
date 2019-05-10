@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    NODE_1_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -30,7 +30,7 @@ def test_get_information_with_address():
         '--address',
         NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        'node-1-testnet.remme.io',
+        NODE_1_IN_TESTNET_ADDRESS,
     ])
 
     node_account_information = json.loads(result.output).get('result')
@@ -44,7 +44,7 @@ def test_get_information_with_address():
 def test_get_information_without_node_url(mocker, node_account_information):
     """
     Case: get information about the node account without passing node URL.
-    Expect: information about the node account is returned from node on localhost.
+    Expect: information about the node account is returned from a node on localhost.
     """
     mock_node_account_get_info = mocker.patch('cli.atomic_swap.service.loop.run_until_complete')
     mock_node_account_get_info.return_value = node_account_information
@@ -68,7 +68,7 @@ def test_get_information_without_node_url(mocker, node_account_information):
 def test_get_information_invalid_address():
     """
     Case: get information about the node account by invalid address.
-    Expect: the following address is not valid error message.
+    Expect: the following address is not a valid error message.
     """
     invalid_address = '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48zz'
 
@@ -79,7 +79,7 @@ def test_get_information_invalid_address():
         '--address',
         invalid_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        NODE_1_IN_TESTNET_ADDRESS,
     ])
 
     expected_error = {
@@ -97,7 +97,7 @@ def test_get_information_invalid_address():
 def test_get_information_invalid_node_url():
     """
     Case: get information about the node account by passing invalid node URL.
-    Expect: the following node URL is invalid error message.
+    Expect: the following node URL is an invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
 
@@ -125,8 +125,8 @@ def test_get_information_invalid_node_url():
 
 def test_get_information_non_existing_address():
     """
-    Case: get information about the node account by passing non-existing address.
-    Expect: resource not found is returned.
+    Case: get information about the node account by passing the non-existing address.
+    Expect: resource not found the error message.
     """
     non_existing_address = '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48cc'
 
@@ -137,7 +137,7 @@ def test_get_information_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        NODE_1_IN_TESTNET_ADDRESS,
     ])
 
     expected_error = {
@@ -150,8 +150,8 @@ def test_get_information_non_existing_address():
 
 def test_get_information_non_existing_node_url():
     """
-    Case: get information about the node account by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get information about the node account by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 
@@ -176,8 +176,8 @@ def test_get_information_non_existing_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_information_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get information about the node account by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get information about the node account by passing the node URL with an explicit protocol.
+    Expect: the following node URL contains the protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [

@@ -11,7 +11,7 @@ from cli.generic.forms.fields import (
 
 class GetNodeAccountInformationForm(Schema):
     """
-    Get the node account information.
+    Get information about the node account by its address form.
     """
 
     address = AccountAddressField(required=True)
