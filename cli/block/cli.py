@@ -64,11 +64,7 @@ def get_blocks(ids, limit, reverse, node_url):
         'node_address': str(node_url) + ':8080',
     })
 
-    result, errors = Block(service=remme).get_list(
-        ids=blocks_ids,
-        limit=limit,
-        reverse=reverse,
-    )
+    result, errors = Block(service=remme).get_list(ids=blocks_ids, limit=limit, reverse=reverse)
 
     if errors is not None:
         print_errors(errors=errors)

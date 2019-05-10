@@ -178,12 +178,12 @@ $ remme account transfer-tokens \
 
 Get a list of blocks — ``remme block get-list``:
 
-| Arguments   | Type   |  Required | Description                                             |
-| :---------: | :----: | :-------: | ------------------------------------------------------- |
-| ids         | String |  No       | Identifiers to get a list of blocks by.                 |
-| limit       | Integer|  No       | Maximum amount of blocks to return.                     |
-| reverse     | Bool   |  No       | Parameter to reverse result.                            |
-| node-url    | String |  No       | Node URL to apply a command to.                         |
+| Arguments   | Type    |  Required | Description                             |
+| :---------: | :-----: | :-------: | --------------------------------------- |
+| ids         | String  |  No       | Identifiers to get a list of blocks by. |
+| limit       | Integer |  No       | Maximum amount of blocks to return.     |
+| reverse     | Bool    |  No       | Parameter to reverse result.            |
+| node-url    | String  |  No       | Node URL to apply a command to.         |
 
 ```bash
 $ remme block get-list \

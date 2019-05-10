@@ -68,7 +68,7 @@ def test_get_blocks_with_ids():
 def test_get_blocks_invalid_ids():
     """
     Case: get a list of blocks by invalid identifiers.
-    Expect: the following identifier are not valid error message.
+    Expect: the following identifiers are not a valid error message.
     """
     invalid_block_identifier = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f'
 
@@ -94,6 +94,34 @@ def test_get_blocks_invalid_ids():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
+def test_get_blocks_with_non_existing_ids():
+    """
+    Case: get a list of blocks by non-existing identifiers.
+    Expect: resource not found error message.
+    """
+    non_existing_blocks_ids = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f' \
+                              '7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdfcc, ' \
+                              '56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a' \
+                              '40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c5c1'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'block',
+        'get-list',
+        '--ids',
+        non_existing_blocks_ids,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error = {
+        'errors': 'Resource not found',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
+
+
 def test_get_blocks_with_limit():
     """
     Case: get a list of blocks limiting by a number.
@@ -115,9 +143,9 @@ def test_get_blocks_with_limit():
     assert len(list_of_blocks) < 3
 
 
-def test_get_blocks_with_invalid_limit():
+def test_get_blocks_with_negative_limit():
     """
-    Case: get a list of blocks limiting by an invalid number.
+    Case: get a list of blocks limiting by a negative number.
     Expect: the following limit should be a positive error message.
     """
     invalid_limit = -33
@@ -144,12 +172,37 @@ def test_get_blocks_with_invalid_limit():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_blocks_with_invalid_node_url():
+def test_get_blocks_with_invalid_limit():
+    """
+    Case: get a list of blocks limiting by an invalid number.
+    Expect: invalid limit count error message.
+    """
+    invalid_limit = 123456789009876543234567890
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'block',
+        'get-list',
+        '--limit',
+        invalid_limit,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error = {
+        'errors': 'Invalid limit count',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_get_blocks_invalid_node_url():
     """
     Case: get a list of blocks by passing invalid node URL.
-    Expect: the following node URL is invalid error message.
+    Expect: the following node URL is an invalid error message.
     """
-    invalid_node_url = 'my-node-url.com'
+    invalid_node_url = 'domainwithoutextention'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -159,18 +212,45 @@ def test_get_blocks_with_invalid_node_url():
         invalid_node_url,
     ])
 
-    expected_error_message = {
-        'errors': f'Please check if your node running at http://{invalid_node_url}:8080.',
+    expected_error = {
+        'errors': {
+            'node_url': [
+                f'The following node URL `{invalid_node_url}` is invalid.',
+            ],
+        },
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error_message) in result.output
+    assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_blocks_node_url(mocker):
+def test_get_blocks_non_existing_node_url():
+    """
+    Case: get a list of blocks by passing an invalid node URL.
+    Expect: check if node running at the URL error message.
+    """
+    non_existing_node_url = 'non-existing-node.com'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'block',
+        'get-list',
+        '--node-url',
+        non_existing_node_url,
+    ])
+
+    expected_error = {
+        'errors': f'Please check if your node running at http://{non_existing_node_url}:8080.',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
+
+
+def test_get_blocks_without_node_url(mocker):
     """
     Case: get a list of blocks without passing node URL.
-    Expect: blocks are returned from node on localhost.
+    Expect: blocks are returned from a node on localhost.
     """
     blocks_ids = 'fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f' \
                  '7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c, ' \
@@ -305,8 +385,8 @@ def test_get_blocks_node_url(mocker):
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_blocks_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a list blocks by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a list of blocks by passing node URL with an explicit protocol.
+    Expect: the following node URL contains the protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [

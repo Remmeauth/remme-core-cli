@@ -36,7 +36,7 @@ class Block:
             )
 
         except RpcGenericServerDefinedError as error:
-            return None, error.message
+            return None, str(error.message)
 
         except Exception as error:
             return None, str(error)

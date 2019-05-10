@@ -23,6 +23,6 @@ class BlockInterface:
         Arguments:
             ids (list, optional): identifiers to get a list of blocks by.
             limit (int, optional): maximum amount of blocks to return.
-            reverse (string, optional): parameter to reverse result.
+            reverse (bool, optional): parameter to reverse result.
         """
         pass
