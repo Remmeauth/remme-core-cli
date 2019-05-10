@@ -16,3 +16,12 @@ class BatchInterface:
             id (string, required): batch identifier.
         """
         pass
+
+    def get_status(self, id):
+        """
+        Get a batch status by its identifier.
+
+        Arguments:
+            id (string, required): batch identifier.
+        """
+        pass

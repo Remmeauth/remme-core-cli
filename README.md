@@ -12,11 +12,13 @@
   * [Getting started](#getting-started)
     * [Requirements](#getting-started-requirements)
       * [Ubuntu 16.04 & 18.04](#ubuntu-1604--1804)
+      * [MacOS](#macos)
     * [Installation](#installation)
   * [Usage](#usage)
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Node Account](#node-account)
     * [Block](#block)
     * [Atomic Swap](#atomic-swap)
     * [Batch](#batch)
@@ -24,6 +26,7 @@
     * [Public key](#public-key)
     * [State](#state)
     * [Transaction](#transaction)
+    * [Receipt](#receipt)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -65,6 +68,20 @@ And make it as default `python3` with the following command:
 $ rm /usr/bin/python3 && sudo ln -s /usr/bin/python3.6 /usr/bin/python3
 ```
 
+#### MacOS
+
+Install `Python 3.7` (also, we support 3.6):
+
+```
+$ brew install python3
+```
+
+Install system requirements with the following terminal command:
+
+```bash 
+$ brew install automake pkg-config libtool libffi gmp
+```
+
 ## Installation
 
 Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
@@ -80,6 +97,13 @@ You can use the following list of the addresses of the nodes to execute commands
 - `node-genesis-testnet.remme.io`,
 - `node-6-testnet.remme.io`,
 - `node-1-testnet.remme.io`.
+
+Also, you can use the following IP-addresses (development servers):
+
+- `159.89.104.9`,
+- `165.22.75.163`.
+
+They work based on a bit different codebase. So, if you have errors using a domain name, use IP-address instead. But, keep in mind that development servers don't consist in the public test network.
 
 ### Configuration file
 
@@ -174,6 +198,42 @@ $ remme account transfer-tokens \
 }
 ```
 
+### Node Account
+
+Get information about the node account by its address — ``remme node-account get``:
+
+| Arguments   | Type   | Required | Description                                                    |
+| :---------: | :----: | :------: | -------------------------------------------------------------- |
+| address     | String | Yes      | Node account address to get information about node account by. |
+| node-url    | String | No       | Node URL to apply a command to.                                |
+
+```bash
+$ remme node-account get \
+      --address=1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48ca \
+      --node-url=node-1-testnet.remme.io
+{
+    "result": {
+        "balance": "0.0000",
+        "last_defrost_timestamp": "0",
+        "min": true,
+        "node_state": "OPENED",
+        "reputation": {
+            "frozen": "250000.4100",
+            "unfrozen": "51071032.5900"
+        },
+        "shares": [
+            {
+                "block_num": "552",
+                "block_timestamp": "1556178213",
+                "defrost_months": 0,
+                "frozen_share": "5440",
+                "reward": "0"
+            },
+        ],
+    },
+}
+```
+
 ### Block
 
 Get a list of blocks — ``remme block get-list``:
@@ -190,7 +250,7 @@ Get a list of blocks — ``remme block get-list``:
 $ remme block get-list \
       --ids='fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c,
       56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551' \
-      --head=fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c
+      --head=fe56a16dab009cc96e7125c647b6c71eb1063818cf8dece283b125423ecb184f7f1e61802bf66382da904698413f80831031f8a1b29150260c3fa4db537fdf4c \
       --limit=2 \
       --reverse \
       --node-url=node-genesis-testnet.remme.io
@@ -400,8 +460,8 @@ $ remme atomic-swap get-info \
 Get a batch by identifier — ``remme batch get``:
 
 | Arguments   | Type   |  Required | Description                       |
-| :---------: | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get a batch by. |
+| :-------:   | :----: | :-------: | --------------------------------  |
+| id          | String |  Yes      | Identifier to get a batch by.     |
 | node-url    | String |  No       | Node URL to apply a command to.   |
 
 ```bash
@@ -442,6 +502,22 @@ $ remme batch get \
             }
         ]
     }
+}
+```
+
+Get a batch status by its identifier — ``remme batch get-status``:
+
+| Arguments   | Type   |  Required | Description                          |
+| :---------: | :----: | :-------: | ------------------------------------ |
+| id          | String |  Yes      | Identifier to get a batch status by. |
+| node-url    | String |  No       | Node URL to apply a command to.      |
+
+```bash
+$ remme batch get-status \
+      --id=61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": "COMMITTED"
 }
 ```
 
@@ -678,6 +754,44 @@ $ remme transaction get \
             "payload": ""
         }
     }
+}
+```
+
+### Receipt
+
+Get a list of the transaction's receipts by identifiers — ``remme receipt get``:
+
+| Arguments | Type   | Required | Description                                             |
+| :-------: | :----: | :------: | ------------------------------------------------------- |
+| ids       | String | True     | Identifiers to get a list of transaction's receipts by. |
+| node-url  | String | No       | Node URL to apply a command to.                         |
+
+```bash
+$ remme receipt get \
+      --ids='e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492, 
+      6593d21046519022ba32c98e934d7dfc81e8b4edf6c064dbf70feb13db4310873ec00816bce8660cafd4fa2a8c80d0147d63cf616c624babd03142c694272017' \
+      --node-url='159.89.104.9'
+{
+    "result": [
+        {
+            "data": [],
+            "events": [],
+            "id": "e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492",
+            "state_changes": [
+                {
+                    "address": "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                    "type": "SET",
+                    "value": "CL0BGIACIKwC"
+                },
+                {
+                    "address": "00b10c00000000000000000000000000000000000000000000000000000000000000bd",
+                    "type": "SET",
+                    "value": "CL0BEoABZmQ3ODBjZTA3NjQwYmE0MTEyMjQ4NjkxNTgxYTU5NTg0NWZlNzYyYmYzZmViNDliODQzOTc0YWFlNTc4NDc4YzZiZjUxODczOWVjZGM0OWQ3MDE5MzgzZDNiZDllM2FhNmZhMGFmODM4NGI0NDkxOGYwYmZmMzc0MDJiNTEwYjIaQjAyZDFmYmRhNTBkYmNkMGQzYzI4NmE2YTlmYTcxYWE3Y2UyZDk3MTU5YjkwZGRkNDYzZTA4MTY0MjJkNjIxZTEzNSKAAWZlNTZhMTZkYWIwMDljYzk2ZTcxMjVjNjQ3YjZjNzFlYjEwNjM4MThjZjhkZWNlMjgzYjEyNTQyM2VjYjE4NGY3ZjFlNjE4MDJiZjY2MzgyZGE5MDQ2OTg0MTNmODA4MzEwMzFmOGExYjI5MTUwMjYwYzNmYTRkYjUzN2ZkZjRjKIzggeYF"
+                }
+            ]
+        },
+        ...
+    ]
 }
 ```
 
