@@ -25,6 +25,7 @@
     * [Public key](#public-key)
     * [State](#state)
     * [Transaction](#transaction)
+    * [Receipt](#receipt)
   * [Development](#development)
     * [Requirements](#development-requirements)
     * [Docker](#docker)
@@ -625,6 +626,44 @@ $ remme transaction get \
             "payload": ""
         }
     }
+}
+```
+
+### Receipt
+
+Get a list of the transaction's receipts by identifiers — ``remme receipt get``:
+
+| Arguments | Type   | Required | Description                                             |
+| :-------: | :----: | :------: | ------------------------------------------------------- |
+| ids       | String | True     | Identifiers to get a list of transaction's receipts by. |
+| node-url  | String | No       | Node URL to apply a command to.                         |
+
+```bash
+$ remme receipt get \
+      --ids='e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492, 
+      6593d21046519022ba32c98e934d7dfc81e8b4edf6c064dbf70feb13db4310873ec00816bce8660cafd4fa2a8c80d0147d63cf616c624babd03142c694272017' \
+      --node-url='159.89.104.9'
+{
+    "result": [
+        {
+            "data": [],
+            "events": [],
+            "id": "e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492",
+            "state_changes": [
+                {
+                    "address": "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                    "type": "SET",
+                    "value": "CL0BGIACIKwC"
+                },
+                {
+                    "address": "00b10c00000000000000000000000000000000000000000000000000000000000000bd",
+                    "type": "SET",
+                    "value": "CL0BEoABZmQ3ODBjZTA3NjQwYmE0MTEyMjQ4NjkxNTgxYTU5NTg0NWZlNzYyYmYzZmViNDliODQzOTc0YWFlNTc4NDc4YzZiZjUxODczOWVjZGM0OWQ3MDE5MzgzZDNiZDllM2FhNmZhMGFmODM4NGI0NDkxOGYwYmZmMzc0MDJiNTEwYjIaQjAyZDFmYmRhNTBkYmNkMGQzYzI4NmE2YTlmYTcxYWE3Y2UyZDk3MTU5YjkwZGRkNDYzZTA4MTY0MjJkNjIxZTEzNSKAAWZlNTZhMTZkYWIwMDljYzk2ZTcxMjVjNjQ3YjZjNzFlYjEwNjM4MThjZjhkZWNlMjgzYjEyNTQyM2VjYjE4NGY3ZjFlNjE4MDJiZjY2MzgyZGE5MDQ2OTg0MTNmODA4MzEwMzFmOGExYjI5MTUwMjYwYzNmYTRkYjUzN2ZkZjRjKIzggeYF"
+                }
+            ]
+        },
+        ...
+    ]
 }
 ```
 
