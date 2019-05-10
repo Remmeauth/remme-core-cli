@@ -14,13 +14,11 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-BATCH_STATUSES = ('COMMITTED', 'UNKNOWN')
 
-
-def test_get_batch_status():
+def test_get_committed_batch_status():
     """
-    Case: get a batch status by its identifier.
-    Expect: batch status is returned.
+    Case: get committed batch status by its identifier.
+    Expect: committed message is returned.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
@@ -38,8 +36,31 @@ def test_get_batch_status():
     batch_status = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(batch_status, str)
-    assert batch_status in BATCH_STATUSES
+    assert batch_status == 'COMMITTED'
+
+
+def test_get_unknown_batch_status():
+    """
+    Case: get non-existing batch status by its identifier.
+    Expect: unknown message is returned.
+    """
+    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
+               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8752'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'batch',
+        'get-status',
+        '--id',
+        batch_id,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    batch_status = json.loads(result.output).get('result')
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert batch_status == 'UNKNOWN'
 
 
 def test_get_batch_status_with_invalid_id():
