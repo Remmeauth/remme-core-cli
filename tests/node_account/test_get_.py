@@ -68,7 +68,7 @@ def test_get_information_without_node_url(mocker, node_account_information):
 def test_get_information_invalid_address():
     """
     Case: get information about the node account by invalid address.
-    Expect: the following address is not a valid error message.
+    Expect: the following address is not valid error message.
     """
     invalid_address = '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48zz'
 
@@ -97,7 +97,7 @@ def test_get_information_invalid_address():
 def test_get_information_invalid_node_url():
     """
     Case: get information about the node account by passing invalid node URL.
-    Expect: the following node URL is an invalid error message.
+    Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
 

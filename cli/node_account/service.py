@@ -29,6 +29,9 @@ class NodeAccount:
     def get(self, address):
         """
         Get information about the node account by its address.
+
+        Arguments:
+            address (str, required): node account address to get information about node account by.
         """
         try:
             node_account_information = loop.run_until_complete(
