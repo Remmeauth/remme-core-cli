@@ -213,6 +213,37 @@ class NodeInformation:
         }
 
 
+class NodeAccountInformation:
+    """
+    Impose node account information data transfer object.
+    """
+
+    @property
+    def node_account_response(self):
+        """
+        Get node account information.
+        """
+        return {
+            'balance': '0.0000',
+            'last_defrost_timestamp': '0',
+            'min': True,
+            'node_state': 'OPENED',
+            'reputation': {
+                'frozen': '250000.4100',
+                'unfrozen': '51071032.5900',
+            },
+            'shares': [
+                {
+                    'block_num': '552',
+                    'block_timestamp': '1556178213',
+                    'defrost_months': 0,
+                    'frozen_share': '5440',
+                    'reward': '0',
+                },
+            ],
+        }
+
+
 @pytest.fixture()
 def sent_transaction():
     """
@@ -251,3 +282,11 @@ def node_information():
     Get node information fixture.
     """
     return NodeInformation()
+
+
+@pytest.fixture()
+def node_account_information():
+    """
+    Get node account information fixture.
+    """
+    return NodeAccountInformation()
