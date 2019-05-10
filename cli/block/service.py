@@ -47,20 +47,20 @@ class Block:
         """
         Get a list of blocks.
 
-        A list of blocks could be filtered by blocks identifiers, limit, reverse.
+        A list of blocks could be filtered by blocks identifiers, limit, head, reverse.
 
         Arguments:
             ids (list, optional): identifiers to get a list of blocks by.
-            head (string, optional): block identifier to get a list of transactions from.
             limit (int, optional): maximum amount of blocks to return.
+            head (string, optional): block identifier to get a list of transactions to.
             reverse (bool, optional): parameter to reverse result.
         """
         try:
             blocks = loop.run_until_complete(
                 self.service.blockchain_info.get_blocks(query={
                     'ids': ids,
-                    'head': head,
                     'limit': limit,
+                    'head': head,
                     'reverse': reverse,
                 }),
             )

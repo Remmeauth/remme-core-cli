@@ -20,7 +20,6 @@ class GetBlocksListForm(Schema):
     """
 
     ids = BlockIdentifiersListField(allow_none=True, required=False)
-    head = BlockIdentifierField(allow_none=True, required=False)
     limit = fields.Integer(
         allow_none=True,
         strict=True,
@@ -29,6 +28,7 @@ class GetBlocksListForm(Schema):
             validate.Range(min=1, error='Limit must be greater than 0.'),
         ],
     )
+    head = BlockIdentifierField(allow_none=True, required=False)
     node_url = NodeUrlField(required=False)
 
 

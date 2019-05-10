@@ -238,13 +238,13 @@ $ remme node-account get \
 
 Get a list of blocks — ``remme block get-list``:
 
-| Arguments   | Type    |  Required | Description                                              |
-| :---------: | :-----: | :-------: | -------------------------------------------------------- |
-| ids         | String  |  No       | Identifiers to get a list of blocks by.                  |
-| limit       | Integer |  No       | Maximum amount of blocks to return.                      |
-| head        | Integer |  No       | Block identifier to get a list of transactions from.     |
-| reverse     | Bool    |  No       | Parameter to reverse result.                             |
-| node-url    | String  |  No       | Node URL to apply a command to.                          |
+| Arguments   | Type    |  Required | Description                                        |
+| :---------: | :-----: | :-------: | -------------------------------------------------- |
+| ids         | String  |  No       | Identifiers to get a list of blocks by.            |
+| limit       | Integer |  No       | Maximum amount of blocks to return.                |
+| head        | Integer |  No       | Block identifier to get a list of transactions to. |
+| reverse     | Bool    |  No       | Parameter to reverse result.                       |
+| node-url    | String  |  No       | Node URL to apply a command to.                    |
 
 ```bash
 $ remme block get-list \

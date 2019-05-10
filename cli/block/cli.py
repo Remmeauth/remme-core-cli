@@ -38,8 +38,8 @@ def block_commands():
 
 
 @click.option('--ids', required=False, type=str, help=BLOCKS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)
-@click.option('--head', required=False, type=str, help=BLOCKS_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--limit', required=False, type=int, help=BLOCKS_LIMIT_ARGUMENT_HELP_MESSAGE)
+@click.option('--head', required=False, type=str, help=BLOCKS_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--reverse', required=False, is_flag=True, help=BLOCKS_REVERSE_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @block_commands.command('get-list')
@@ -49,8 +49,8 @@ def get_blocks(ids, head, limit, reverse, node_url):
     """
     arguments, errors = GetBlocksListForm().load({
         'ids': ids,
-        'head': head,
         'limit': limit,
+        'head': head,
         'reverse': reverse,
         'node_url': node_url,
     })
@@ -61,6 +61,7 @@ def get_blocks(ids, head, limit, reverse, node_url):
 
     block_ids = arguments.get('ids')
     limit = arguments.get('limit')
+    head = arguments.get('head')
     node_url = arguments.get('node_url')
 
     remme = Remme(network_config={
