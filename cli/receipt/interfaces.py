@@ -10,6 +10,6 @@ class ReceiptInterface:
 
     def get(self, identifiers):
         """
-        Get list of the transaction receipts by identifiers.
+        Get a list of the transaction's receipts by identifiers.
         """
         pass

@@ -609,12 +609,12 @@ $ remme transaction get \
 
 ### Receipt
 
-Get list of the transaction receipts by identifiers — ``remme receipt get``:
+Get a list of the transaction's receipts by identifiers — ``remme receipt get``:
 
-| Arguments | Type   | Required | Description                                           |
-| :-------: | :----: | :------: | ----------------------------------------------------- |
-| ids       | String | True     | Identifiers to get a list of transaction receipts by. |
-| node-url  | String | No       | Node URL to apply a command to.                       |
+| Arguments | Type   | Required | Description                                             |
+| :-------: | :----: | :------: | ------------------------------------------------------- |
+| ids       | String | True     | Identifiers to get a list of transaction's receipts by. |
+| node-url  | String | No       | Node URL to apply a command to.                         |
 
 ```bash
 $ remme receipt get \
@@ -640,23 +640,7 @@ $ remme receipt get \
                 }
             ]
         },
-        {
-            "data": [],
-            "events": [],
-            "id": "6593d21046519022ba32c98e934d7dfc81e8b4edf6c064dbf70feb13db4310873ec00816bce8660cafd4fa2a8c80d0147d63cf616c624babd03142c694272017",
-            "state_changes": [
-                {
-                    "address": "00b10c00000000000000000000000000000000000000000000000000000000000000bc",
-                    "type": "SET",
-                    "value": "CLwBEoABOWI4Y2NhODk3Nzk2NDJiYWEyMGMwZWUyZjEzOWVlMGNlMWNjYjEwMjY5OTVjNDY3NDYzZDEzOTI0ZDg3YTg3NjNlODMzOWI2YzIyMzNmMTZiY2I5ZDVjNjEwMzVmNzAzY2FiNjBiNzQxMGJlMjJkZjkzNWEyYWE4YmIzNGE1NTcaQjAyZDFmYmRhNTBkYmNkMGQzYzI4NmE2YTlmYTcxYWE3Y2UyZDk3MTU5YjkwZGRkNDYzZTA4MTY0MjJkNjIxZTEzNSKAAWZkNzgwY2UwNzY0MGJhNDExMjI0ODY5MTU4MWE1OTU4NDVmZTc2MmJmM2ZlYjQ5Yjg0Mzk3NGFhZTU3ODQ3OGM2YmY1MTg3MzllY2RjNDlkNzAxOTM4M2QzYmQ5ZTNhYTZmYTBhZjgzODRiNDQ5MThmMGJmZjM3NDAyYjUxMGIyKMzfgeYF"
-                },
-                {
-                    "address": "00b10c0100000000000000000000000000000000000000000000000000000000000000",
-                    "type": "SET",
-                    "value": "CLwBGIACIKwC"
-                }
-            ]
-        }
+        ...
     ]
 }
 ```

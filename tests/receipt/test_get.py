@@ -23,8 +23,8 @@ TRANSACTION_IDENTIFIERS_PRESENTED_ON_THE_TEST_NODE = \
 
 def test_get_receipts_with_identifiers():
     """
-    Case: get list of the transaction receipts by identifiers.
-    Expect: list of the transaction receipts are returned.
+    Case: get a list of the transaction's receipts by identifiers.
+    Expect: a list of the transaction's receipts is returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -40,16 +40,14 @@ def test_get_receipts_with_identifiers():
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
-    count = 0
-    for identifier in TRANSACTION_IDENTIFIERS_PRESENTED_ON_THE_TEST_NODE.split(','):
-        assert identifier.strip() == list_of_receipts[count].get('id')
-        count += 1
+    for receipt in list_of_receipts:
+        assert receipt.get('id') in TRANSACTION_IDENTIFIERS_PRESENTED_ON_THE_TEST_NODE
 
 
 def test_get_receipts_with_identifier():
     """
-    Case: get list of the transaction receipts by identifier.
-    Expect: list of the transaction receipts are returned.
+    Case: get a list of the transaction's receipts by identifier.
+    Expect: a list of the transaction's receipts is returned.
     """
     transaction_identifier = 'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e' \
                              '7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492'
@@ -71,8 +69,8 @@ def test_get_receipts_with_identifier():
 
 def test_get_receipts_without_node_url(mocker):
     """
-    Case: get list of the transaction receipts without passing node URL.
-    Expect: list of the transaction receipts are returned from a node on localhost.
+    Case: get a list of the transaction's receipts without passing node URL.
+    Expect: a list of the transaction's receipts is returned from a node on localhost.
     """
     expected_list_of_receipts = [
         {
@@ -144,8 +142,8 @@ def test_get_receipts_without_node_url(mocker):
 
 def test_get_receipts_invalid_identifiers():
     """
-    Case: get list of the transaction receipts by invalid identifiers.
-    Expect: the following identifier is not valid error message.
+    Case: get a list of the transaction's receipts by passing invalid identifiers.
+    Expect: the following identifier is not a valid error message.
     """
     invalid_identifier = 'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e'
 
@@ -173,8 +171,8 @@ def test_get_receipts_invalid_identifiers():
 
 def test_get_receipts_invalid_node_url():
     """
-    Case: get list of the transaction receipts by passing invalid node URL.
-    Expect: the following node URL is invalid error message.
+    Case: get a list of the transaction's receipts by passing an invalid node URL.
+    Expect: the following node URL is an invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
 
@@ -202,8 +200,8 @@ def test_get_receipts_invalid_node_url():
 
 def test_get_receipts_non_existing_identifiers():
     """
-    Case: get list of the transaction receipts by passing non-existing identifiers.
-    Expect: transactions with ids not found error message.
+    Case: get a list of the transaction's receipts by passing non-existing identifiers.
+    Expect: transactions with identifiers not found the error message.
     """
     non_existing_identifiers = \
         'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e' \
@@ -237,8 +235,8 @@ def test_get_receipts_non_existing_identifiers():
 
 def test_get_receipts_non_existing_node_url():
     """
-    Case: get list of the transaction receipts by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get a list of the transaction's receipts by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 
@@ -263,8 +261,8 @@ def test_get_receipts_non_existing_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_receipts_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get list of the transaction receipts by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a list of the transaction's receipts by passing node URL with an explicit protocol.
+    Expect: the following node URL contains the protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [

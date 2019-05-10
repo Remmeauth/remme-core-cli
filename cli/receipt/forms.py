@@ -11,7 +11,7 @@ from cli.generic.forms.fields import (
 
 class GetReceiptsForm(Schema):
     """
-    Get list of the transaction receipts by identifiers form.
+    Get a list of the transaction's receipts by identifiers form.
     """
 
     ids = TransactionIdentifiersListField(required=True)

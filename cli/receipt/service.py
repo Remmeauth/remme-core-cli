@@ -28,7 +28,7 @@ class Receipt:
 
     def get(self, identifiers):
         """
-        Get list of the transaction receipts by identifiers.
+        Get a list of the transaction's receipts by identifiers.
         """
         try:
             receipts = loop.run_until_complete(self.service.blockchain_info.get_receipts(ids=identifiers))

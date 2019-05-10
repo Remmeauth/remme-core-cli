@@ -33,7 +33,7 @@ def receipt_commands():
 @receipt_commands.command('get')
 def get_receipt(ids, node_url):
     """
-    Get list of the transaction receipts by identifiers.
+    Get a list of the transaction's receipts by identifiers.
     """
     arguments, errors = GetReceiptsForm().load({
         'ids': ids,
