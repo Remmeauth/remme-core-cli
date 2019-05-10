@@ -385,8 +385,8 @@ $ remme atomic-swap get-info \
 Get a batch by identifier — ``remme batch get``:
 
 | Arguments   | Type   |  Required | Description                       |
-| :---------: | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get a batch by. |
+| :-------:   | :----: | :-------: | --------------------------------  |
+| id          | String |  Yes      | Identifier to get a batch by.     |
 | node-url    | String |  No       | Node URL to apply a command to.   |
 
 ```bash
@@ -427,6 +427,22 @@ $ remme batch get \
             }
         ]
     }
+}
+```
+
+Get a batch status by its identifier — ``remme batch get-status``:
+
+| Arguments   | Type   |  Required | Description                          |
+| :---------: | :----: | :-------: | ------------------------------------ |
+| id          | String |  Yes      | Identifier to get a batch status by. |
+| node-url    | String |  No       | Node URL to apply a command to.      |
+
+```bash
+$ remme batch get-status \
+      --id=61a02b6428342c4ac2bb0d9d253d48fd229d9b0a1344b2c114f22f127e7bfaeb3e2be19574fbd48776b71bbdb728ee1eedab2c2a4f0b951251899470318cee9d \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": "COMMITTED"
 }
 ```
 
