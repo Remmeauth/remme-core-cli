@@ -12,6 +12,7 @@
   * [Getting started](#getting-started)
     * [Requirements](#getting-started-requirements)
       * [Ubuntu 16.04 & 18.04](#ubuntu-1604--1804)
+      * [MacOS](#macos)
     * [Installation](#installation)
   * [Usage](#usage)
     * [Configuration file](#configuration-file)
@@ -66,6 +67,20 @@ And make it as default `python3` with the following command:
 $ rm /usr/bin/python3 && sudo ln -s /usr/bin/python3.6 /usr/bin/python3
 ```
 
+#### MacOS
+
+Install `Python 3.7` (also, we support 3.6):
+
+```
+$ brew install python3
+```
+
+Install system requirements with the following terminal command:
+
+```bash 
+$ brew install automake pkg-config libtool libffi gmp
+```
+
 ## Installation
 
 Install the package from the [PyPi](https://pypi.org/project/remme-core-cli) through [pip](https://github.com/pypa/pip):
@@ -81,6 +96,13 @@ You can use the following list of the addresses of the nodes to execute commands
 - `node-genesis-testnet.remme.io`,
 - `node-6-testnet.remme.io`,
 - `node-1-testnet.remme.io`.
+
+Also, you can use the following IP-addresses (development servers):
+
+- `159.89.104.9`,
+- `165.22.75.163`.
+
+They work based on a bit different codebase. So, if you have errors using a domain name, use IP-address instead. But, keep in mind that development servers don't consist in the public test network.
 
 ### Configuration file
 
