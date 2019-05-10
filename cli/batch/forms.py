@@ -16,3 +16,12 @@ class GetBatchForm(Schema):
 
     id = BatchIdentifierField(allow_none=False, required=True)
     node_url = NodeUrlField(required=False)
+
+
+class GetBatchStatusForm(Schema):
+    """
+    Get a batch status by its identifier form.
+    """
+
+    id = BatchIdentifierField(required=True)
+    node_url = NodeUrlField(required=False)
