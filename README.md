@@ -18,6 +18,7 @@
     * [Configuration file](#configuration-file)
     * [Service](#service)
     * [Account](#account)
+    * [Node Account](#node-account)
     * [Block](#block)
     * [Atomic Swap](#atomic-swap)
     * [Batch](#batch)
@@ -194,6 +195,42 @@ $ remme account transfer-tokens \
     "result": {
         "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
     }
+}
+```
+
+### Node Account
+
+Get information about the node account by its address — ``remme node-account get``:
+
+| Arguments   | Type   | Required | Description                                                    |
+| :---------: | :----: | :------: | -------------------------------------------------------------- |
+| address     | String | Yes      | Node account address to get information about node account by. |
+| node-url    | String | No       | Node URL to apply a command to.                                |
+
+```bash
+$ remme node-account get \
+      --address=1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48ca \
+      --node-url=node-1-testnet.remme.io
+{
+    "result": {
+        "balance": "0.0000",
+        "last_defrost_timestamp": "0",
+        "min": true,
+        "node_state": "OPENED",
+        "reputation": {
+            "frozen": "250000.4100",
+            "unfrozen": "51071032.5900"
+        },
+        "shares": [
+            {
+                "block_num": "552",
+                "block_timestamp": "1556178213",
+                "defrost_months": 0,
+                "frozen_share": "5440",
+                "reward": "0"
+            },
+        ],
+    },
 }
 ```
 
