@@ -6,13 +6,19 @@ import sys
 import click
 from remme import Remme
 
-from cli.batch.forms import GetBatchesListForm
+from cli.batch.forms import (
+    GetBatchesListForm,
+    GetBatchForm,
+    GetBatchStatusForm,
+)
 from cli.batch.help import (
     BATCH_HEAD_ARGUMENT_HELP_MESSAGE,
+    BATCH_ID_ARGUMENT_HELP_MESSAGE,
     BATCH_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
     BATCH_LIMIT_ARGUMENT_HELP_MESSAGE,
     BATCH_REVERSE_ARGUMENT_HELP_MESSAGE,
     BATCH_START_ARGUMENT_HELP_MESSAGE,
+    BATCH_STATUS_IDENTIFIER_ARGUMENT_HELP_MESSAGE,
 )
 from cli.batch.service import Batch
 from cli.constants import (
@@ -32,6 +38,70 @@ def batch_commands():
     Provide commands for working with batch.
     """
     pass
+
+
+@click.option('--id', required=True, type=str, help=BATCH_ID_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
+@batch_commands.command('get')
+def get_batch(id, node_url):
+    """
+    Get a batch by its identifier.
+    """
+    arguments, errors = GetBatchForm().load({
+        'id': id,
+        'node_url': node_url,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    batch_id = arguments.get('id')
+    node_url = arguments.get('node_url')
+
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
+
+    batch, errors = Batch(service=remme).get(id=batch_id)
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=batch)
+
+
+@click.option('--id', required=True, type=str, help=BATCH_STATUS_IDENTIFIER_ARGUMENT_HELP_MESSAGE)
+@click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
+@batch_commands.command('get-status')
+def get_batch_status(id, node_url):
+    """
+    Get a batch status by its identifier.
+    """
+    arguments, errors = GetBatchStatusForm().load({
+        'id': id,
+        'node_url': node_url,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    batch_id = arguments.get('id')
+    node_url = arguments.get('node_url')
+
+    remme = Remme(network_config={
+        'node_address': str(node_url) + ':8080',
+    })
+
+    result, errors = Batch(service=remme).get_status(id=batch_id)
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
 
 
 @click.option('--ids', required=False, type=str, help=BATCH_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)

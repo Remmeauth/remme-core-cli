@@ -14,6 +14,24 @@ from cli.generic.forms.fields import (
 )
 
 
+class GetBatchForm(Schema):
+    """
+    Get a batch by its identifier form.
+    """
+
+    id = BatchIdentifierField(allow_none=False, required=True)
+    node_url = NodeUrlField(required=False)
+
+
+class GetBatchStatusForm(Schema):
+    """
+    Get a batch status by its identifier form.
+    """
+
+    id = BatchIdentifierField(required=True)
+    node_url = NodeUrlField(required=False)
+
+
 class GetBatchesListForm(Schema):
     """
     Get a list of batches form.

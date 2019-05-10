@@ -54,7 +54,7 @@ def test_get_list_batches_with_all_parameters(mocker):
 def test_get_list_batches_with_ids():
     """
     Case: get a list of batches by identifiers.
-    Expect: batches are returned.
+    Expect: batches with specified identifiers are returned.
     """
     batch_ids = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                 '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751, ' \
@@ -82,8 +82,8 @@ def test_get_list_batches_with_ids():
 
 def test_get_list_batches_with_non_existing_ids():
     """
-    Case: get a list of batches by non existing identifiers.
-    Expect: list of batches not found error message is returned.
+    Case: get a list of batches by non-existing identifiers.
+    Expect: list of batches not found error message.
     """
     batch_ids = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                 '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8752, ' \
@@ -101,7 +101,7 @@ def test_get_list_batches_with_non_existing_ids():
     ])
 
     expected_error_message = {
-        'errors': f'List of batches not found.',
+        'errors': 'List of batches not found.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -143,7 +143,7 @@ def test_get_list_batches_with_invalid_ids():
 def test_get_list_batches_with_start():
     """
     Case: get a list of batches by batch identifier starting from.
-    Expect: batches are returned.
+    Expect: batches are returned starting from the batch with an identifier which matches specified start parameter.
     """
     start = 'fa2d1a209ad04fd2ad7fb5183976e647cc47b4c08e2e578097afc2566a0284e7' \
             '60eb3f2ff8f72f290765211d4da3341f23091cc7a16805025a17c04a90818a44'
@@ -164,7 +164,7 @@ def test_get_list_batches_with_start():
 def test_get_list_batches_with_non_existing_start():
     """
     Case: get a list of batches by non-existing batch identifier starting from.
-    Expect: list of batches not found error message is returned.
+    Expect: list of batches not found error message.
     """
     start = 'fa2d1a209ad04fd2ad7fb5183976e647cc47b4c08e2e578097afc2566a0284e7' \
             '60eb3f2ff8f72f290765211d4da3341f23091cc7a16805025a17c04a90818a45'
@@ -180,7 +180,7 @@ def test_get_list_batches_with_non_existing_start():
     ])
 
     expected_error_message = {
-        'errors': f'List of batches not found.',
+        'errors': 'List of batches not found.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -207,7 +207,7 @@ def test_get_list_batches_with_reverse():
 def test_get_list_batches_by_head():
     """
     Case: get a list of batches by block identifier.
-    Expect: batches are returned.
+    Expect: batches from specified block are returned.
     """
     head = '56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a' \
            '40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551'
@@ -228,7 +228,7 @@ def test_get_list_batches_by_head():
 def test_get_list_batches_by_non_existing_head():
     """
     Case: get a list of batches by non-existing block identifier.
-    Expect: list of batches not found error message is returned..
+    Expect: list of batches not found error message.
     """
     head = '56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a' \
            '40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c552'
@@ -244,7 +244,7 @@ def test_get_list_batches_by_non_existing_head():
     ])
 
     expected_error_message = {
-        'errors': f'List of batches not found.',
+        'errors': 'List of batches not found.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
