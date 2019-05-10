@@ -40,6 +40,7 @@ def test_get_initial_stake_without_node_url(mocker):
     Expect: the initial stake is returned from a node on localhost.
     """
     initial_stake = 250000
+
     mock_node_get_initial_stake = mocker.patch('cli.node.service.loop.run_until_complete')
     mock_node_get_initial_stake.return_value = initial_stake
 
@@ -59,8 +60,8 @@ def test_get_initial_stake_without_node_url(mocker):
 
 def test_get_initial_stake_invalid_node_url():
     """
-    Case: get the initial stake of the node by passing invalid node URL.
-    Expect: the following node URL is invalid error message.
+    Case: get the initial stake of the node by passing an invalid node URL.
+    Expect: the following node URL is an invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
 
@@ -86,8 +87,8 @@ def test_get_initial_stake_invalid_node_url():
 
 def test_get_initial_stake_non_existing_node_url():
     """
-    Case: get the initial stake of the node by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get the initial stake of the node by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 
@@ -110,8 +111,8 @@ def test_get_initial_stake_non_existing_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_initial_stake_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get the initial stake of the node by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get the initial stake of the node by passing node URL with an explicit protocol.
+    Expect: the following node URL contains the protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
