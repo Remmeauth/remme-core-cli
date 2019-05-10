@@ -578,6 +578,19 @@ $ remme node get-info --node-url=node-27-testnet.remme.io
 }
 ```
 
+Get the initial stake of the node — ``remme node get-initial-stake``:
+
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-initial-stake --node-url=node-27-testnet.remme.io
+{
+    "result": 250000
+}
+```
+
 ### Public key
 
 Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
