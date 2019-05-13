@@ -48,7 +48,10 @@ def test_get_list_batches_with_all_parameters(mocker):
         '--reverse',
     ])
 
+    result_header_signature = json.loads(result.output).get('result')[0].get('header_signature')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert result_header_signature in batch_ids
 
 
 def test_get_list_batches_with_ids():
@@ -71,41 +74,10 @@ def test_get_list_batches_with_ids():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_header_signature = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-                                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
-
     result_header_signature = json.loads(result.output).get('result')[0].get('header_signature')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_header_signature == result_header_signature
-
-
-def test_get_list_batches_with_non_existing_ids():
-    """
-    Case: get a list of batches by non-existing identifiers.
-    Expect: list of batches not found error message.
-    """
-    batch_ids = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8752, ' \
-                '257353cb1180bdce4e19f290e4bfdb48212744a8ae08f6fc974e8c7c2cfe4692' \
-                '19d257a7c62197bd614b9dc13cd562c6612aee45ab0bccfcdd6b0d1ed0b3cdce'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'batch',
-        'get-list',
-        '--ids',
-        batch_ids,
-        '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
-    ])
-
-    expected_error_message = {
-        'errors': 'List of batches not found.',
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error_message) in result.output
+    assert result_header_signature in batch_ids
 
 
 def test_get_list_batches_with_invalid_ids():
@@ -158,33 +130,10 @@ def test_get_list_batches_with_start():
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_header_signature = json.loads(result.output).get('result')[0].get('header_signature')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-
-
-def test_get_list_batches_with_non_existing_start():
-    """
-    Case: get a list of batches by non-existing batch identifier starting from.
-    Expect: list of batches not found error message.
-    """
-    start = 'fa2d1a209ad04fd2ad7fb5183976e647cc47b4c08e2e578097afc2566a0284e7' \
-            '60eb3f2ff8f72f290765211d4da3341f23091cc7a16805025a17c04a90818a45'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'batch',
-        'get-list',
-        '--start',
-        start,
-        '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
-    ])
-
-    expected_error_message = {
-        'errors': 'List of batches not found.',
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error_message) in result.output
+    assert result_header_signature == start
 
 
 def test_get_list_batches_with_reverse():
@@ -196,9 +145,9 @@ def test_get_list_batches_with_reverse():
     result = runner.invoke(cli, [
         'batch',
         'get-list',
+        '--reverse',
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
-        '--reverse',
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -225,20 +174,21 @@ def test_get_list_batches_by_head():
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
 
-def test_get_list_batches_by_non_existing_head():
+@pytest.mark.parametrize('command_flag', ('--start', '--head', '--ids'))
+def test_get_list_batches_by_non_existing_start_head_ids(command_flag):
     """
-    Case: get a list of batches by non-existing block identifier.
+    Case: get a list of batches by non-existing batch identifier, block identifier and batch identifier starting from.
     Expect: list of batches not found error message.
     """
-    head = '56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a' \
-           '40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c552'
+    non_existing_identifier = '56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a' \
+                              '40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c552'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get-list',
-        '--head',
-        head,
+        command_flag,
+        non_existing_identifier,
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
@@ -251,10 +201,10 @@ def test_get_list_batches_by_non_existing_head():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-@pytest.mark.parametrize('command_flag', ('--start', '--head'))
-def test_get_list_batches_with_invalid_start_head(command_flag):
+@pytest.mark.parametrize('command_flag', ('--start', '--head', '--ids'))
+def test_get_list_batches_with_invalid_start_head_ids(command_flag):
     """
-    Case: get a list of batches by invalid block identifier and batch identifier starting from.
+    Case: get a list of batches by invalid batch identifier, block identifier and batch identifier starting from.
     Expect: the following identifier is invalid error message.
     """
     invalid_id = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180'
@@ -286,22 +236,27 @@ def test_get_list_batches_with_limit():
     Case: get a list of batches by limit.
     Expect: batch is returned.
     """
+    limit = 1
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get-list',
         '--limit',
-        1,
+        limit,
         '--node-url',
         NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    batch_data = json.loads(result.output).get('result')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert len(batch_data) == limit
 
 
-def test_get_list_batches_with_invalid_limit():
+def test_get_list_batches_with_negative_limit():
     """
-    Case: get a list of batches by invalid limit.
+    Case: get a list of batches limiting by a negative number.
     Expect: limit must be greater than 0 error message.
     """
     invalid_limit = -33
@@ -326,6 +281,31 @@ def test_get_list_batches_with_invalid_limit():
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error_message) in result.output
+
+
+def test_get_list_batches_with_invalid_limit():
+    """
+    Case: get a list of batches limiting by an invalid number.
+    Expect: invalid limit count error message.
+    """
+    invalid_limit = 123456789009876543234567890
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'batch',
+        'get-list',
+        '--limit',
+        invalid_limit,
+        '--node-url',
+        NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error = {
+        'errors': 'Invalid limit count.',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error) in result.output
 
 
 def test_get_list_batches_with_invalid_node_url():

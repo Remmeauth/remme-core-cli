@@ -463,55 +463,46 @@ $ remme batch get-list \
       --start=6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e \
       --limit=2 \
       --head=57a7944497ca41f424932ae6b70897e7086652ab98450d4aba6a02a2d891501460947812a41028b8041f087066df6dc7e1100c4b0e5cc94bb58b002f6950eb02 \
-      --node-url=node-6-testnet.remme.io \
-      --reverse
+      --reverse \
+      --node-url=node-6-testnet.remme.io
 {
-    "result": {
-        "data": [
-            {
-                "header": {
-                    "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
-                    "transaction_ids": [
-                        "ed7baa5ab9bc5ef49077ddd22de3ebef56157f188980edb6401a57729f7226195d849f227fd941cc01c5eeeedd1d9cadf2e48140098422f2cb641044d971a374",
-                    ]
-                },
-                "header_signature": "6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e",
-                "trace": false,
-                "transactions": [
-                    {
-                        "header": {
-                            "batcher_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
-                            "dependencies": [],
-                            "family_name": "sawtooth_settings",
-                            "family_version": "1.0",
-                            "inputs": [
-                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
-                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7",
-                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1918142591ba4e8a7",
-                                "000000a87cb5eafdcca6a8f82af32160bc5311783bdad381ea57b4e3b0c44298fc1c14"
-                            ],
-                            "nonce": "",
-                            "outputs": [
-                                "000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b",
-                                "000000a87cb5eafdcca6a8f82af32160bc5311783bdad381ea57b4e3b0c44298fc1c14"
-                            ],
-                            "payload_sha512": "a39230835da9f4ae154abd7197f196acb9ed9a7d4d0bae8de71714bfe4636c8c6516d774e7b721b9d08d2abbafa42b01acdfe0e3c9b6d35ecef7452442e63b49",
-                            "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
-                        },
-                        "header_signature": "ed7baa5ab9bc5ef49077ddd22de3ebef56157f188980edb6401a57729f7226195d849f227fd941cc01c5eeeedd1d9cadf2e48140098422f2cb641044d971a374",
-                        "payload": "CAESRwoic2F3dG9vdGgudmFsaWRhdG9yLmJhdGNoX2luamVjdG9ycxINcmVtbWVfYmF0Y2hlcxoSMHg5NzBkZGE2MjRlZTFhZmFh"
-                    },
+    "result": [
+        {
+            "header": {
+                "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                "transaction_ids": [
+                    "376efc69c217a0b9deb545348ca32664ce61b3e35706252d1d0374bdb93b10e62abc35fc16a3d19f0d8346ddbadc1c0974af6b4364f98ffea66de72cfb11b238"
                 ]
             },
-        ],
-        "head": "57a7944497ca41f424932ae6b70897e7086652ab98450d4aba6a02a2d891501460947812a41028b8041f087066df6dc7e1100c4b0e5cc94bb58b002f6950eb02",
-        "paging": {
-            "limit": 2,
-            "next": "",
-            "start": "6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e"
+            "header_signature": "ed0fc04a114e87ae7d2046db667bb82cf5a9bbab9b51024c4192b569a997785260ea5f4ad55ac4e2a167a04d50806b00f35b2a553bb4072bb5a36be7ba49b9be",
+            "trace": false,
+            "transactions": [
+                {
+                    "header": {
+                        "batcher_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                        "dependencies": [],
+                        "family_name": "block_info",
+                        "family_version": "1.0",
+                        "inputs": [
+                            "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                            "00b10c00"
+                        ],
+                        "nonce": "",
+                        "outputs": [
+                            "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                            "00b10c00"
+                        ],
+                        "payload_sha512": "7b11153de66545d8c8847004425f9c5815483636688e79fd2bfbb6d979218fbeb7ccdcb244241d8d52ea38a1b1d62c5d178cf74c3c7b5f496936059c616163e2",
+                        "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+                    },
+                    "header_signature": "376efc69c217a0b9deb545348ca32664ce61b3e35706252d1d0374bdb93b10e62abc35fc16a3d19f0d8346ddbadc1c0974af6b4364f98ffea66de72cfb11b238",
+                    "payload": "CtMCCLwbEoABYmZiNzhkNGQxMWQyZjQzOWRlZjkzNTc2Y2YyN2M0NGVhZTNmYmMyM2Q2ODAwNmUyNGRlYmJmZGYxZWRiNmQ4MDY5MDExYzYxNWZjNjk4NGMxM2EzZDJjMDMyYzFhZTY2NWYzNmZjZTUxOWVjZTdlOGI2YmFjMGMxYWRlMTgxYWYaQjAzNzM4ZGYzZjRhYzM2MjFiYThlODk0MTNkM2ZmNGFkMDM2YzNhMGE0ZGJiMTY0YjY5NTg4NWFhYjZhYWI2MTRhZCKAAThmMjJkYjUyNTUyYzQ3MjE4ZTc0ZmE4OGExZTU2NGJhZTE1YjYwMmY0ZTI3ZTZiYTYwOWI0NzM4YjY0ZTllZTYzYzcwMjM4MjI3ZWU0NTU1OTVhNjMzYTIzOWU5ZGZiMWNiMGMxNWI1MzVhZGJkYTZmMGE2Yjk3MmU3ZWU3MWQyKLvr4eYF"
+                }
+            ]
         }
-    }
+    ]
 }
+
 ```
 
 ### Node
