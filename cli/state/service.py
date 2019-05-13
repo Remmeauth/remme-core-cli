@@ -44,3 +44,33 @@ class State:
         return {
             'state': state,
         }, None
+
+    def get_list(self, address, start, limit, head, reverse):
+        """
+        Get a list of states.
+
+        Arguments:
+            address (string, optional): account address to get a state by.
+            start (string, optional): account address to get a list of states starting from.
+            limit (int, optional): maximum amount of states to return.
+            head (string, optional): block identifier to get a list of states to.
+            reverse (bool, optional): parameter to reverse result.
+        """
+        try:
+            states = loop.run_until_complete(
+                self.service.blockchain_info.get_states(query={
+                    'address': address,
+                    'start': start,
+                    'limit': limit,
+                    'head': head,
+                    'reverse': reverse,
+                }),
+            )
+
+        except RpcGenericServerDefinedError as error:
+            return None, str(error.message)
+
+        except Exception as error:
+            return None, str(error)
+
+        return states.get('data'), None

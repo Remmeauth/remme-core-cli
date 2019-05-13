@@ -322,6 +322,34 @@ $ remme state get \
 }
 ```
 
+Get a list of states — ``remme state get-list``:
+
+| Arguments   | Type   |  Required | Description                                            |
+| :---------: | :----: | :-------: | -----------------------------------------------------  |
+| address     | String |  No       | Account address to get a list of states by.            |
+| start       | String |  No       | Account address to get a list of states starting from. |
+| limit       | Integer|  No       | Maximum amount of transactions to return.              |
+| head        | String |  No       | Block identifier to get a list of states to.           | 
+| reverse     | Bool   |  No       | Parameter to reverse result.                           |
+| node-url    | String |  No       | Node URL to apply a command to.                        |
+
+```bash
+$ remme state get-list \
+    --address=00b10c0000000000000000000000000000000000000000000000000000000000000d0e \
+    --start=00b10c0000000000000000000000000000000000000000000000000000000000000d0e \
+    --limit=1 \
+    --head=a6b1932c6a1c155122602c8934e9bf7aec85328c900fc36ca6166f3e62e61be50fe48f069869a294c8066a0038b83204241b03b8f5dea963a9878137abf3c7c0 \
+    --reverse --node-url=node-6-testnet.remme.io
+{
+    "result": [
+        {
+            "address": "00b10c0000000000000000000000000000000000000000000000000000000000000d0e",
+            "data": "CI4aEoABOTJjYTFjYmM1NzkzZDg0NjA1MzI5NmE2NTliNTQ4ZTYxNjM4YzExMzk4ZWIyZmQ5YzJkNzM3ZDg1NzY5NjMzYzVjZDAyMjRlMDFmNDhiNDQ4YWRkN2M2ODMyNzU0NmViZjExYjA3ZjJjNzBjNDY2YjExMjEwYzljM2I1ODY4ZWMaQjAzNzM4ZGYzZjRhYzM2MjFiYThlODk0MTNkM2ZmNGFkMDM2YzNhMGE0ZGJiMTY0YjY5NTg4NWFhYjZhYWI2MTRhZCKAATgyMTUwNWI1NjRiNzJhMmNhNjM3YTcxNzMyNDY3NmZjOGM1ZGM1MjlhN2ZiZjk5NmU4YmUwNjlmN2EzMjc2N2QwMTc5ZjU2ODhmZDZiNjJhNzEwNDI3ZDlkMzA4NGNmZGExZTI5ZmU2N2MxMjI5ODAzNTYxYjFhNjM2N2I2NGYwKKzf3+YF"
+        }
+    ]
+}
+```
+
 ### Transaction
 
 Get a list of transactions — ``remme transaction get-list``:
