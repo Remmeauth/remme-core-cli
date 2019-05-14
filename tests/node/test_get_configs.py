@@ -10,7 +10,7 @@ from click.testing import CliRunner
 from cli.constants import (
     ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_REGEXP,
 )
@@ -28,7 +28,7 @@ def test_get_node_configs():
         'node',
         'get-configs',
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     node_configurations = json.loads(result.output).get('result').get('configurations')

@@ -8,17 +8,17 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 TRANSACTION_IDENTIFIERS_PRESENTED_ON_THE_TEST_NODE = \
-    'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e' \
-    '7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492, ' \
-    '6593d21046519022ba32c98e934d7dfc81e8b4edf6c064dbf70feb13db431087' \
-    '3ec00816bce8660cafd4fa2a8c80d0147d63cf616c624babd03142c694272017'
+    '7c5d2651b8a1bb04b99b9a1ce201aaf9e0cb35357b9ab31611b7f7957e931a71' \
+    '4e059ecfa9fac73f49c6631c1a5e549218f1700366d82e5d84e0e7eb403e73ea, ' \
+    '640fe45794d2f63fbe1850aa99d0ac830ed94e1ac9b475e1e8c841f714b6250e' \
+    '64bc6fbd9f821147ee1eab4d76e5437f5b878a9b5288f1d4c1dc192060a82cf1'
 
 
 def test_get_receipts_with_identifiers():
@@ -33,7 +33,7 @@ def test_get_receipts_with_identifiers():
         '--ids',
         TRANSACTION_IDENTIFIERS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     list_of_receipts = json.loads(result.output).get('result')
@@ -49,8 +49,8 @@ def test_get_receipts_with_identifier():
     Case: get a list of the transaction's receipts by identifier.
     Expect: a list of the transaction's receipts is returned.
     """
-    transaction_identifier = 'e79a883581c184787360de8607c5f970cdeeaa684af3e50d8532aa9dd07afa8e' \
-                             '7fc92f0dc509b41b9695e795704bdd50455bebd1ed327a5330710ba40698b492'
+    transaction_identifier = '7c5d2651b8a1bb04b99b9a1ce201aaf9e0cb35357b9ab31611b7f7957e931a71' \
+                             '4e059ecfa9fac73f49c6631c1a5e549218f1700366d82e5d84e0e7eb403e73ea'
     runner = CliRunner()
     result = runner.invoke(cli, [
         'receipt',
@@ -58,7 +58,7 @@ def test_get_receipts_with_identifier():
         '--ids',
         transaction_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     list_of_receipts = json.loads(result.output).get('result')
@@ -154,7 +154,7 @@ def test_get_receipts_invalid_identifiers():
         '--ids',
         invalid_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -216,7 +216,7 @@ def test_get_receipts_non_existing_identifiers():
         '--ids',
         non_existing_identifiers,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     list_of_identifiers = []

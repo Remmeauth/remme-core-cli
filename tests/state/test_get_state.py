@@ -10,7 +10,7 @@ from click.testing import CliRunner
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     HEADER_SIGNATURE_REGEXP,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -31,7 +31,7 @@ def test_get_state_with_address():
         '--address',
         ADDRESS_WITH_STATE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_header_signature = json.loads(result.output).get('result').get('state').get('head')
@@ -54,7 +54,7 @@ def test_get_state_with_invalid_address():
         '--address',
         invalid_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -83,7 +83,7 @@ def test_get_state_with_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {

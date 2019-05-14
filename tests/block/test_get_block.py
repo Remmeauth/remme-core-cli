@@ -8,14 +8,14 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-EXISTING_BLOCK_IDENTIFIER = '4a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357' \
-                            '037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde'
+EXISTING_BLOCK_IDENTIFIER = '95849a2a9a4775b6432b181e12749c43724682e37ca3560223586b01cbb40593' \
+                            '31a7d970e4ebfdc328cd000adb4ddc9e3296b5cfb7045543006ca58214c25eb7'
 
 
 def test_get_block():
@@ -30,7 +30,7 @@ def test_get_block():
         '--id',
         EXISTING_BLOCK_IDENTIFIER,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_block = json.loads(result.output).get('result')
@@ -54,7 +54,7 @@ def test_get_block_invalid_identifier():
         '--id',
         invalid_block_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -79,66 +79,67 @@ def test_get_block_without_node_url(mocker):
             'batches': [
                 {
                     'header': {
-                        'signer_public_key': '02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135',
+                        'signer_public_key': '03309c84260e7265a296c77df42397372c658e30541ddc99b39cc52ce1f86dfb19',
                         'transaction_ids': [
-                            'ce8dd0946326072eb4c70818d7d0df32ebd80b3a24525306ff92e8caa8c886ee'
-                            '571d8ba9f01c73c2c4aaab7960c0ef88865ace6dd9274dd378649f5b9da7c820',
-                        ],
+                            "384bea4918e3396d6f0afb68c922f9b7d9454a6036891759ce5fbbc959e541ca"
+                            "50fe9da7fc05b291bab0e77730808aa3bab831b0e2ca89f51a47e85f9962073b"
+                        ]
                     },
-                    'header_signature': 'b684d527666cce92ea57d8e14d467ee3cec5515759e1d0a78df65dbcd2a5ff99'
-                                        '3f95c8efac7c35a6380cbce81941119e98b72956278e663b9fa04e396bb7849f',
+                    'header_signature': '2b892618024170f23a77c9ebd4c1205bfbc3a032a644c5664290735a29400b6f'
+                                        '29df1657fac3f3b4f880ee0a0cac3841195c316a324672a7fc41b397cb0ac1cc',
                     'trace': 'false',
                     'transactions': [
                         {
                             'header': {
-                                'batcher_public_key': '02d1fbda50dbcd0d3c286a6a9fa71aa7c'
-                                                      'e2d97159b90ddd463e0816422d621e135',
+                                'batcher_public_key': '03309c84260e7265a296c77df42397372'
+                                                      'c658e30541ddc99b39cc52ce1f86dfb19',
                                 'dependencies': [],
                                 'family_name': 'block_info',
                                 'family_version': '1.0',
                                 'inputs': [
                                     '00b10c0100000000000000000000000000000000000000000000000000000000000000',
-                                    '00b10c00',
+                                    "00b10c00"
                                 ],
                                 'nonce': '',
                                 'outputs': [
                                     '00b10c0100000000000000000000000000000000000000000000000000000000000000',
-                                    '00b10c00',
+                                    "00b10c00"
                                 ],
-                                'payload_sha512': 'ef5953af5e24047f92cea476c6706da72b6207ac89077cb314d6d518a1293433'
-                                                  '955c0a5012c52c4acb34e2220ac8fcc33f83b33ab847631f0471f10dcdf0a54f',
-                                'signer_public_key': '02d1fbda50dbcd0d3c286a6a9fa71aa7c'
-                                                     'e2d97159b90ddd463e0816422d621e135',
+                                'payload_sha512': 'a239acce64f765e9f2d9abdcb35172ed99a7a1927d0ea710bd7dac9caf0271fe'
+                                                  '2d22a73c7f5d5b1e444531eea1b22e9cd0516a16c3d578542c2cd4ad012813f5',
+                                'signer_public_key': '03309c84260e7265a296c77df42397372'
+                                                     'c658e30541ddc99b39cc52ce1f86dfb19',
                             },
-                            'header_signature': 'ce8dd0946326072eb4c70818d7d0df32ebd80b3a24525306ff92e8caa8c886ee'
-                                                '571d8ba9f01c73c2c4aaab7960c0ef88865ace6dd9274dd378649f5b9da7c820',
-                            'payload': 'CtICCAESgAExNTJmM2JlOTFkODIzODUzOGE4MzA3N2VjOGNkNWQxZDkzNzc2N2MwOTMwZWVhNjFiN'
-                                       'TkxNTFiMGRmYTdjNWExNzlhNjZmMTc2Y2UyM2MxNGE2N2Q4NDUxY2VjMjg1MmM4ZmY2MGZlOWU4OT'
-                                       'YzYzNlZDExNWJkNjA3ODg5OGRhMBpCMDJkMWZiZGE1MGRiY2QwZDNjMjg2YTZhOWZhNzFhYTdjZTJ'
-                                       'kOTcxNTliOTBkZGQ0NjNlMDgxNjQyMmQ2MjFlMTM1IoABNGFlNmYzOWY0ZDZlNWJiNDhmYzA0Y2Y0'
-                                       'MGJhNzEwMTNmYzA0NGZlNTdjOWE3Njg3ZjRlMTNkZjhjZDQ4ODQ1OTA4YTAxNjAzOTRlN2RjNjRjN'
-                                       'Dc5YTg0YzVkYmYwZmUzYzVlZTZkNmIxMDhlNzZjODYyNzQ4NzkxMWZjNjgxYWUokIr35QU=',
-                        },
-                    ],
+                            'header_signature': '384bea4918e3396d6f0afb68c922f9b7d9454a6036891759ce5fbbc959e541ca'
+                                                '50fe9da7fc05b291bab0e77730808aa3bab831b0e2ca89f51a47e85f9962073b',
+                            'payload': 'CtICCAISgAE3YmFjNjcwNWE4NWZiNTg1Mjc1NzIwYzI0MzIzMmVlZDk0MTY5ZTFiNjczYzI3M'
+                                       'Dk1OGJkODlmYjdjYjk1ZmY3MDdiOWFmYWRhNGQ2NDkzOTUxMmU5MDQzYzAxYzk0NDY1MGY1ZG'
+                                       'Y3M2YzODVjOGY4Yjk1ZGZjOTllOTYzNmQwYhpCMDMzMDljODQyNjBlNzI2NWEyOTZjNzdkZjQ'
+                                       'yMzk3MzcyYzY1OGUzMDU0MWRkYzk5YjM5Y2M1MmNlMWY4NmRmYjE5IoABMTE2YWY2MmM4NzIx'
+                                       'MmM1Y2VhMjdhMGQ0ZmQzMjRiMjY4MjEyMjA0ODQ0M2VjNzNmOGI0YWE2OWQxM2NkYTU3OTQwM'
+                                       'jRiNjhlZTMwN2EzY2ZkZGU1ZTJhZTI3MmEzN2NmYjE0MjRhNmJiODZiZjUxZjA3MTYwOGZiZm'
+                                       'M2MWQzMGIo2/Lq5gU='
+                        }
+                    ]
                 },
             ],
             'header': {
                 'batch_ids': [
-                    'b684d527666cce92ea57d8e14d467ee3cec5515759e1d0a78df65dbcd2a5ff99'
-                    '3f95c8efac7c35a6380cbce81941119e98b72956278e663b9fa04e396bb7849f',
-                    'cd11713211c6eb2fe4adc0e44925c1f82e9300e0b8827bd3c73d8be10e61cd2b'
-                    '1e8da810078845ca1665b4adf7f691ad731ab4cea0fc994c55a8863b30220c6e',
+                    '2b892618024170f23a77c9ebd4c1205bfbc3a032a644c5664290735a29400b6f'
+                    '29df1657fac3f3b4f880ee0a0cac3841195c316a324672a7fc41b397cb0ac1cc',
+                    "39a8690637cd926c3b8bbc008768d0f4bc9f3fb90e9275ae1a5e0689d582ac96"
+                    "067ed804db3271135a2fa337f77daa3ac8c1abf77467c1ff65f36a4e2ab398b9"
                 ],
-                'block_num': '2',
-                'consensus': 'RGV2bW9kZVrz+4RUt+Xyzhofvok/lkMcK3ZtAh/zcO/6gbPJPLPw',
-                'previous_block_id': '4ae6f39f4d6e5bb48fc04cf40ba71013fc044fe57c9a7687f4e13df8cd488459'
-                                     '08a0160394e7dc64c479a84c5dbf0fe3c5ee6d6b108e76c8627487911fc681ae',
-                'signer_public_key': '02d1fbda50dbcd0d3c286a6a9fa71aa7ce2d97159b90ddd463e0816422d621e135',
-                'state_root_hash': '54eeacdf8fe3262862782110d4396b60f4b8c3863ff1b1b208fa996b6bb24a0f',
+                'block_num': '3',
+                'consensus': 'RGV2bW9kZVvhE13lUZSAXG1nKz4P557eT/VZW3jE16JXMMAt4mWz',
+                'previous_block_id': '116af62c87212c5cea27a0d4fd324b2682122048443ec73f8b4aa69d13cda579'
+                                     '4024b68ee307a3cfdde5e2ae272a37cfb1424a6bb86bf51f071608fbfc61d30b',
+                'signer_public_key': '03309c84260e7265a296c77df42397372c658e30541ddc99b39cc52ce1f86dfb19',
+                'state_root_hash': 'dc3f81453b7a69ae88d5886929b11e39adf232b1a22188f8c85db78778640fa0',
             },
-            'header_signature': '4a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357'
-                                '037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde',
-        },
+            'header_signature': '95849a2a9a4775b6432b181e12749c43724682e37ca3560223586b01cbb40593'
+                                '31a7d970e4ebfdc328cd000adb4ddc9e3296b5cfb7045543006ca58214c25eb7'
+        }
     }
 
     mock_get_block_by_id = mocker.patch('cli.block.service.loop.run_until_complete')
@@ -258,7 +259,7 @@ def test_get_block_non_existing_identifier():
         '--id',
         non_existing_block_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {

@@ -10,14 +10,14 @@ from click.testing import CliRunner
 from cli.constants import (
     ADDRESS_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
     SWAP_IDENTIFIER_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808'
+SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '133102e41346242476b15a3a7966eb5249271025fc7fb0b37ed3fdb4bcce380e'
 
 
 def test_get_swap_info():
@@ -32,7 +32,7 @@ def test_get_swap_info():
         '--id',
         SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     swap_info = json.loads(result.output).get('result').get('information')
@@ -86,7 +86,7 @@ def test_get_swap_info_invalid_swap_id():
         '--id',
         invalid_swap_id,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -115,7 +115,7 @@ def test_get_swap_info_non_existing_swap_id():
         '--id',
         non_existing_swap_id,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
