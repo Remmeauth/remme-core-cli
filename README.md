@@ -602,6 +602,7 @@ Get a list of transactions — ``remme transaction get-list``:
 | limit       | Integer|  No       | Maximum amount of transactions to return.              |
 | head        | String |  No       | Block identifier to get a list of transactions from.   |
 | reverse     | Bool   |  No       | Parameter to reverse result.                           |
+| ids-only    | Bool   |  No       | The flag to get a list of transaction's identifiers only. |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 | family-name | String |  No       | List of transactions by its family name.               |
 
@@ -647,6 +648,20 @@ $ remme transaction get-list \
             "start": "568a1094e574747c757c1f5028d9b929105984e509c4f2f3cb76e5f46f03ca4c3681ca0eeca86a4bd4bb5a3eaaa52fd73b08ebc5d5d85fbb1957b064f8b71972"
         }
     }
+}
+```
+
+Get only a list of transaction's identifiers:
+
+```bash
+$ remme transaction get-list --ids-only --node-url=node-6-testnet.remme.io
+{
+    "result": [
+        "eb662acc48d313c9bba4a72359b0462d607bba8fc66aeb3d169d02fafd21849b6bf8bea8396b54b6fc907e1cce2a386f76bd19889d0f3e496b45b8440b161ebc",
+        "206a3767f368c1db9d07b273f80d4824d201ae61b9ced8a6aeedac58032c5557544ac622d5e3fd59f6d9873d97af1c6114d0131b4b1a191cbba7d5a8aa5a3caf",
+        "63ed3259b6067525ae241a12f66b5be1e1502cdbd6f475b139bf94cf4ba842643577835fcef0482d25190243b8dfab3a1f9913f7fd0edc425ad0c19333d8bd4b",
+        ...
+    ]
 }
 ```
 

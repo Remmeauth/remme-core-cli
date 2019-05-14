@@ -8,3 +8,4 @@ TRANSACTION_HEAD_ARGUMENT_HELP_MESSAGE = 'Block identifier to get a list of tran
 TRANSACTION_REVERSE_ARGUMENT_HELP_MESSAGE = 'Parameter to reverse result.'
 TRANSACTION_FAMILY_NAME_ARGUMENT_HELP_MESSAGE = 'List of transactions by its family name.'
 TRANSACTION_ID_ARGUMENT_HELP_MESSAGE = 'Identifier to get a transaction by.'
+TRANSACTIONS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE = 'The flag to get a list of transaction\'s identifiers only.'
