@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -30,7 +30,7 @@ def test_get_batch():
         '--id',
         batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -51,7 +51,7 @@ def test_get_batch_with_invalid_id():
         '--id',
         invalid_batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {

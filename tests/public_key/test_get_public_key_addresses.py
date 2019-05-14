@@ -9,7 +9,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_ADDRESS_REGEXP,
 )
@@ -31,7 +31,7 @@ def test_get_public_keys():
         '--address',
         ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     public_key_addresses = json.loads(result.output).get('result').get('addresses')
@@ -51,7 +51,7 @@ def test_get_public_keys_invalid_address():
 
     runner = CliRunner()
     result = runner.invoke(cli, [
-        'public-key', 'get-list', '--address', invalid_address, '--node-url', NODE_IP_ADDRESS_FOR_TESTING,
+        'public-key', 'get-list', '--address', invalid_address, '--node-url', DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -163,7 +163,7 @@ def test_get_public_keys_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     public_key_addresses = json.loads(result.output).get('result').get('addresses')

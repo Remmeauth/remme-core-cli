@@ -11,7 +11,7 @@ from cli.constants import (
     BATCH_ID_REGEXP,
     FAILED_EXIT_FROM_COMMAND_CODE,
     INCORRECT_ENTERED_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PRIVATE_KEY_FOR_TESTING,
 )
@@ -35,7 +35,7 @@ def test_transfer_tokens():
         '--amount',
         '1000',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     batch_id = json.loads(result.output).get('result').get('batch_identifier')
@@ -62,7 +62,7 @@ def test_transfer_tokens_invalid_private_key():
         '--amount',
         '1000',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -95,7 +95,7 @@ def test_transfer_tokens_invalid_address_to():
         '--amount',
         '1000',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -128,7 +128,7 @@ def test_transfer_tokens_invalid_amount():
         '--amount',
         invalid_amount,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert INCORRECT_ENTERED_COMMAND_CODE == result.exit_code
@@ -152,7 +152,7 @@ def test_transfer_tokens_with_insufficient_amount(insufficient_amount):
         '--amount',
         insufficient_amount,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {

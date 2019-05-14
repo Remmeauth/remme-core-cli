@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -30,7 +30,7 @@ def test_get_committed_batch_status():
         '--id',
         batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     batch_status = json.loads(result.output).get('result')
@@ -54,7 +54,7 @@ def test_get_unknown_batch_status():
         '--id',
         batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     batch_status = json.loads(result.output).get('result')
@@ -77,7 +77,7 @@ def test_get_batch_status_with_invalid_id():
         '--id',
         invalid_batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {

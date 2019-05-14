@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -44,7 +44,7 @@ def test_get_list_batches_with_all_parameters(mocker):
         '--head',
         head,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
         '--reverse',
     ])
 
@@ -71,7 +71,7 @@ def test_get_list_batches_with_ids():
         '--ids',
         batch_ids,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_header_signature = json.loads(result.output).get('result')[0].get('header_signature')
@@ -97,7 +97,7 @@ def test_get_list_batches_with_invalid_ids():
         '--ids',
         batch_ids,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -127,7 +127,7 @@ def test_get_list_batches_with_start():
         '--start',
         start,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_header_signature = json.loads(result.output).get('result')[0].get('header_signature')
@@ -147,7 +147,7 @@ def test_get_list_batches_with_reverse():
         'get-list',
         '--reverse',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -168,7 +168,7 @@ def test_get_list_batches_by_head():
         '--head',
         head,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -190,7 +190,7 @@ def test_get_list_batches_by_non_existing_start_head_ids(command_flag):
         command_flag,
         non_existing_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -216,7 +216,7 @@ def test_get_list_batches_with_invalid_start_head_ids(command_flag):
         command_flag,
         invalid_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -245,7 +245,7 @@ def test_get_list_batches_with_limit():
         '--limit',
         limit,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     batch_data = json.loads(result.output).get('result')
@@ -268,7 +268,7 @@ def test_get_list_batches_with_negative_limit():
         '--limit',
         invalid_limit,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -297,7 +297,7 @@ def test_get_list_batches_with_invalid_limit():
         '--limit',
         invalid_limit,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {

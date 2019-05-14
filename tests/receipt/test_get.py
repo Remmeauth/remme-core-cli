@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -33,7 +33,7 @@ def test_get_receipts_with_identifiers():
         '--ids',
         TRANSACTION_IDENTIFIERS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     list_of_receipts = json.loads(result.output).get('result')
@@ -58,7 +58,7 @@ def test_get_receipts_with_identifier():
         '--ids',
         transaction_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     list_of_receipts = json.loads(result.output).get('result')
@@ -154,7 +154,7 @@ def test_get_receipts_invalid_identifiers():
         '--ids',
         invalid_identifier,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -216,7 +216,7 @@ def test_get_receipts_non_existing_identifiers():
         '--ids',
         non_existing_identifiers,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     list_of_identifiers = []

@@ -8,7 +8,7 @@ from click.testing import CliRunner
 
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -27,7 +27,7 @@ def test_get_states():
         'state',
         'get-list',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_address = json.loads(result.output).get('result')[0].get('address')
@@ -41,8 +41,8 @@ def test_get_states_with_all_parameters():
     Case: get a list of states by account address, starting address, limit, head, reverse.
     Expect: list of states is returned.
     """
-    head = '56100bf24eed12d2f72fe3c3ccf75fe2f53d87c224d9dda6fb98a1411070b06a' \
-           '40fcf97fccc61cb9c88442953af6ae50344ad7773f1becc6bae108443c18c551'
+    head = 'afb21d7012d9a65f8bf35bfa8fd648757ece23e7687f16b1254957a92119912d' \
+           '1c1bdbbce01984ad73a12277dedfd0fe5f7af3d0f6139952b9b5ac09481ccd94'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -57,7 +57,7 @@ def test_get_states_with_all_parameters():
         '--head',
         head,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
         '--reverse',
     ])
 
@@ -79,7 +79,7 @@ def test_get_states_with_address():
         '--address',
         ADDRESS_WITH_STATE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_address = json.loads(result.output).get('result')[0].get('address')
@@ -88,7 +88,7 @@ def test_get_states_with_address():
     assert expected_address == ADDRESS_WITH_STATE
 
 
-@pytest.mark.parametrize('flag', ['--address', '--start'])
+@pytest.mark.parametrize('flag', ['address', 'start'])
 def test_get_states_with_invalid_address_start(flag):
     """
     Case: get a list of states by its invalid address and account address starting from.
@@ -100,15 +100,15 @@ def test_get_states_with_invalid_address_start(flag):
     result = runner.invoke(cli, [
         'state',
         'get-list',
-        flag,
+        '--' + flag,
         invalid_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
         'errors': {
-            'address': [
+            flag: [
                 f'The following address `{invalid_address}` is invalid.',
             ],
         },
@@ -133,7 +133,7 @@ def test_get_states_with_non_existing_address_start(flag):
         flag,
         non_existing_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -156,7 +156,7 @@ def test_get_states_with_start():
         '--start',
         ADDRESS_WITH_STATE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_data = json.loads(result.output).get('result')[0]
@@ -177,7 +177,7 @@ def test_get_states_with_limit():
         '--limit',
         1,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_data = json.loads(result.output).get('result')[0]
@@ -200,7 +200,7 @@ def test_get_states_with_invalid_limit():
         '--limit',
         invalid_limit,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -229,7 +229,7 @@ def test_get_states_with_non_existing_limit():
         '--limit',
         non_existing_limit,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -251,7 +251,7 @@ def test_get_states_with_reverse():
         'get-list',
         '--reverse',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     result_data = json.loads(result.output).get('result')[0]
