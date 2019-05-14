@@ -66,3 +66,15 @@ class Node:
         return {
             'information': node_information.data,
         }, None
+
+    def get_initial_stake(self):
+        """
+        Get the initial stake of the node.
+        """
+        try:
+            initial_stake = loop.run_until_complete(self.service.node_management.get_initial_stake())
+
+        except Exception as error:
+            return None, str(error)
+
+        return initial_stake, None

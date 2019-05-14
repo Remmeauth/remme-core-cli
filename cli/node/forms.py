@@ -28,3 +28,11 @@ class GetNodeInformationForm(Schema):
     """
 
     node_url = NodeUrlField(required=False)
+
+
+class GetNodeInitialStakeForm(Schema):
+    """
+    Get the initial stake of the node form.
+    """
+
+    node_url = NodeUrlField(required=False)

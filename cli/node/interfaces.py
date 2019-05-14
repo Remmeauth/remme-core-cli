@@ -25,3 +25,9 @@ class NodeInterface:
         Get information about synchronization and peer count of the node.
         """
         pass
+
+    def get_initial_stake(self):
+        """
+        Get the initial stake of the node.
+        """
+        pass
