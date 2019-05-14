@@ -49,6 +49,8 @@ class State:
         """
         Get a list of states.
 
+        A list of states could be filtered by account address, start address, limit, head identifier, reverse.
+
         Arguments:
             address (string, optional): account address to get a state by.
             start (string, optional): account address to get a list of states starting from.
