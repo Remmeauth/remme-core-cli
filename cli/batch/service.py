@@ -63,3 +63,33 @@ class Batch:
             return None, str(error)
 
         return batch_status, None
+
+    def get_list(self, ids, start, limit, head, reverse):
+        """
+        Get a list of batches.
+
+        Arguments:
+            ids (list, optional): identifiers to get a list of batches by.
+            start (string, optional): batch identifier to get a list of batches starting from.
+            limit (int, optional): maximum amount of batches to return.
+            head (string, optional): block identifier to get a list of batches from.
+            reverse (bool, optional): parameter to reverse result.
+        """
+        try:
+            batches = loop.run_until_complete(
+                self.service.blockchain_info.get_batches(query={
+                    'ids': ids,
+                    'start': start,
+                    'limit': limit,
+                    'head': head,
+                    'reverse': reverse,
+                }),
+            )
+
+        except RpcGenericServerDefinedError as error:
+            return None, str(error.message)
+
+        except Exception as error:
+            return None, str(error)
+
+        return batches.get('data'), None
