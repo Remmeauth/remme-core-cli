@@ -2,14 +2,16 @@
 Provide tests for command line interface's get list of transactions command.
 """
 import json
+import re
 
 import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
+    TRANSACTION_HEADER_SIGNATURE_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -80,10 +82,10 @@ def test_get_list_transactions_with_ids():
     Case: get a list transactions by identifiers.
     Expect: transactions are returned.
     """
-    transaction_ids = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
-                      '201e7be5612a671a7028474ad18e3738e676c17a86b7180fc1aad4c97e38b85b, ' \
-                      '6601e240044b00db4b7e5eda7800e88236341077879a4a9cf5a1b1f9fb2ece87' \
-                      '7bc9a43808d429e68f4d65ee8d7231e4e8711e705ad51be7888d1a7f25b57717'
+    transaction_ids = 'af249a738ab2c584c0e3a6899588c6ae2a6267cb7c7dfde9f6927c3b9b65c598' \
+                      '4de173b262e6f6553d309df402658db1ace4f6b0b92636433898832236272d1b, ' \
+                      '7c5d2651b8a1bb04b99b9a1ce201aaf9e0cb35357b9ab31611b7f7957e931a71' \
+                      '4e059ecfa9fac73f49c6631c1a5e549218f1700366d82e5d84e0e7eb403e73ea'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -95,14 +97,15 @@ def test_get_list_transactions_with_ids():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_header_signature = '6601e240044b00db4b7e5eda7800e88236341077879a4a9cf5a1b1f9fb2ece87' \
-                                '7bc9a43808d429e68f4d65ee8d7231e4e8711e705ad51be7888d1a7f25b57717'
-
-    result_header_signature = json.loads(result.output).get('result').get('data')[0].get('header_signature')
+    result_transactions = json.loads(result.output).get('result').get('data')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
-    assert expected_header_signature == result_header_signature
+
+    for transaction in result_transactions:
+        transaction_identifier = transaction.get('header_signature')
+
+        assert transaction_identifier in transaction_ids
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_with_invalid_ids():
@@ -142,21 +145,29 @@ def test_get_list_transactions_with_start():
     Case: get a list transactions by transaction identifier starting from.
     Expect: transactions are returned.
     """
-    start = 'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb' \
-            '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4'
+    start_identifier = '76200b7730af1314ece5fef607bbfbda10865a5aae42325159912a656daa5794' \
+                       '0c53966cbed7df7e56d42d55287251ecb9c575c690c0eabc7a12423e2ad6c621'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get-list',
         '--start',
-        start,
+        start_identifier,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_transactions = json.loads(result.output).get('result').get('data')
+    first_transaction_identifier = result_transactions[0].get('header_signature')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+    assert start_identifier == first_transaction_identifier
+
+    for transaction in result_transactions:
+        transaction_identifier = transaction.get('header_signature')
+
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_with_reverse():
@@ -173,8 +184,14 @@ def test_get_list_transactions_with_reverse():
         '--reverse',
     ])
 
+    result_transactions = json.loads(result.output).get('result').get('data')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+
+    for transaction in result_transactions:
+        transaction_identifier = transaction.get('header_signature')
+
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_by_head():
@@ -182,21 +199,29 @@ def test_get_list_transactions_by_head():
     Case: get a list transactions by block identifier.
     Expect: transactions are returned.
     """
-    head = '152f3be91d8238538a83077ec8cd5d1d937767c0930eea61b59151b0dfa7c5a1' \
-           '79a66f176ce23c14a67d8451cec2852c8ff60fe9e8963c3ed115bd6078898da0'
+    head_identifier = '5d2aa46008832651796c9dc3dadb8a7d50ca4a8a910a542869f7f059249fe374' \
+                      '2d768332f9012bfc98fd065036ef704f39b237d46bd511963de62cb9203e5ebf'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get-list',
         '--head',
-        head,
+        head_identifier,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_transactions = json.loads(result.output).get('result').get('data')
+    last_block_in_blockchain = json.loads(result.output).get('result').get('head')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+    assert head_identifier == last_block_in_blockchain
+
+    for transaction in result_transactions:
+        transaction_identifier = transaction.get('header_signature')
+
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
 @pytest.mark.parametrize('command_flag', ('--start', '--head'))
@@ -234,18 +259,27 @@ def test_get_list_transactions_with_limit():
     Case: get a list transactions by limit.
     Expect: transaction is returned.
     """
+    limit = 2
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get-list',
         '--limit',
-        1,
+        limit,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_transactions = json.loads(result.output).get('result').get('data')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+    assert len(result_transactions) == limit
+
+    for transaction in result_transactions:
+        transaction_identifier = transaction.get('header_signature')
+
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_with_invalid_limit():
@@ -294,8 +328,16 @@ def test_get_list_transactions_with_family_name():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_transactions = json.loads(result.output).get('result').get('data')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+
+    for transaction in result_transactions:
+        transaction_identifier = transaction.get('header_signature')
+        transaction_family_name = transaction.get('header').get('family_name')
+
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert family_name == transaction_family_name
 
 
 def test_get_list_transactions_with_invalid_family_name():
@@ -317,8 +359,8 @@ def test_get_list_transactions_with_invalid_family_name():
 
     expected_error_message = {
         'errors': {
-            "family_name": [
-                f"The following family name `{invalid_family_name}` is invalid.",
+            'family_name': [
+                f'The following family name `{invalid_family_name}` is invalid.',
             ],
         },
     }

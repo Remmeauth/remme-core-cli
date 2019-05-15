@@ -8,15 +8,14 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_CONSENSUS_GENESIS_ACCOUNT_ADDRESS,
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_ADDRESS_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
-
-ADDRESS_PRESENTED_ON_THE_TEST_NODE = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf'
 
 
 def test_get_public_keys():
@@ -29,9 +28,9 @@ def test_get_public_keys():
         'public-key',
         'get-list',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_ACCOUNT_ADDRESS,
         '--node-url',
-        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     public_key_addresses = json.loads(result.output).get('result').get('addresses')
@@ -51,7 +50,12 @@ def test_get_public_keys_invalid_address():
 
     runner = CliRunner()
     result = runner.invoke(cli, [
-        'public-key', 'get-list', '--address', invalid_address, '--node-url', DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+        'public-key',
+        'get-list',
+        '--address',
+        invalid_address,
+        '--node-url',
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -80,7 +84,12 @@ def test_get_public_keys_without_node_url(mocker):
     mock_public_key_get_public_keys.return_value = public_key_addresses
 
     runner = CliRunner()
-    result = runner.invoke(cli, ['public-key', 'get-list', '--address', ADDRESS_PRESENTED_ON_THE_TEST_NODE])
+    result = runner.invoke(cli, [
+        'public-key',
+        'get-list',
+        '--address',
+        DEV_CONSENSUS_GENESIS_ACCOUNT_ADDRESS,
+    ])
 
     expected_result = {
         'result': {
@@ -104,7 +113,7 @@ def test_get_public_keys_invalid_node_url():
         'public-key',
         'get-list',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_ACCOUNT_ADDRESS,
         '--node-url',
         invalid_node_url,
     ])
@@ -132,7 +141,7 @@ def test_get_public_keys_node_url_with_protocol(node_url_with_protocol):
         'public-key',
         'get-list',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_ACCOUNT_ADDRESS,
         '--node-url',
         node_url_with_protocol,
     ])
@@ -163,7 +172,7 @@ def test_get_public_keys_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     public_key_addresses = json.loads(result.output).get('result').get('addresses')
@@ -185,7 +194,7 @@ def test_get_public_keys_non_existing_node_url():
         'public-key',
         'get-list',
         '--address',
-        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_ACCOUNT_ADDRESS,
         '--node-url',
         non_existing_node_url,
     ])

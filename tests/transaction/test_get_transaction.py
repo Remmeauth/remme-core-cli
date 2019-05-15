@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -20,8 +20,8 @@ def test_get_transaction():
     Case: get a transaction by identifier.
     Expect: transaction is returned.
     """
-    transaction_id = 'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb' \
-                     '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4'
+    transaction_id = '640fe45794d2f63fbe1850aa99d0ac830ed94e1ac9b475e1e8c841f714b6250e' \
+                     '64bc6fbd9f821147ee1eab4d76e5437f5b878a9b5288f1d4c1dc192060a82cf1'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -33,8 +33,10 @@ def test_get_transaction():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_transaction = json.loads(result.output).get('result').get('data')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+    assert transaction_id == result_transaction.get('header_signature')
 
 
 def test_get_transaction_with_invalid_id():

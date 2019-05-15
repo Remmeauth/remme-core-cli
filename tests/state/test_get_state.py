@@ -8,9 +8,9 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
     HEADER_SIGNATURE_REGEXP,
-    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli

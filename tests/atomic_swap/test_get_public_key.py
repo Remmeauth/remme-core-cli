@@ -8,8 +8,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_REGEXP,
 )
@@ -27,7 +27,7 @@ def test_get_public_key():
         'atomic-swap',
         'get-public-key',
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     public_key = json.loads(result.output).get('result').get('public_key')
