@@ -62,9 +62,9 @@ class Transaction:
 
     def get_list_ids(self, ids, start, limit, head, reverse, family_name):
         """
-        Get a list of transactions identifiers.
+        Get a list of transactions' identifiers.
 
-        A list of transactions identifiers could be filtered by transactions identifiers,
+        A list of transactions' identifiers could be filtered by transactions' identifiers,
         start, limit, head, reverse, family_name.
 
         Arguments:

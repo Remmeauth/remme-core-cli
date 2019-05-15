@@ -437,10 +437,10 @@ def test_get_list_transactions_node_url_with_protocol(node_url_with_protocol):
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_transactions_identifiers_only():
+def test_get_transactions_identifiers():
     """
-    Case: get a list of transactions identifiers.
-    Expect: a list of transactions identifiers is returned.
+    Case: get a list of transactions' identifiers.
+    Expect: a list of transactions' identifiers is returned.
     """
     transaction_id = 'eb662acc48d313c9bba4a72359b0462d607bba8fc66aeb3d169d02fafd21849b' \
                      '6bf8bea8396b54b6fc907e1cce2a386f76bd19889d0f3e496b45b8440b161ebc'
@@ -463,10 +463,10 @@ def test_get_transactions_identifiers_only():
         break
 
 
-def test_get_transactions_identifiers_only_with_all_parameters():
+def test_get_transactions_identifiers_with_all_parameters():
     """
-    Case: get a list of transactions identifiers with all parameters.
-    Expect: a list of transactions identifiers is returned.
+    Case: get a list of transactions' identifiers with all parameters.
+    Expect: a list of transactions' identifiers is returned.
     """
     transaction_ids = '3c16f739202a58c022115b3a9ded2864ccfdfe36c3ee697904b0ee6414f5e237' \
                       '375b1299798f6f9e1f9303a9728367bab32b21b51c20eb08c8dc26ec1f0d4878, ' \
@@ -495,10 +495,10 @@ def test_get_transactions_identifiers_only_with_all_parameters():
         assert identifier in transaction_ids
 
 
-def test_get_transactions_identifiers_only_without_node_url(mocker):
+def test_get_transactions_identifiers_without_node_url(mocker):
     """
-    Case: get a list of transactions identifiers without passing node URL.
-    Expect: a list of transactions identifiers is returned from a node on localhost.
+    Case: get a list of transactions' identifiers without passing node URL.
+    Expect: a list of transactions' identifiers is returned from a node on localhost.
     """
     expected_transactions = {
         'data': [
