@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -27,7 +27,7 @@ def test_get_account_balance():
         '--address',
         '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3cf',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     balance = json.loads(result.output).get('result').get('balance')
@@ -50,7 +50,7 @@ def test_get_account_balance_invalid_address():
         '--address',
         invalid_address,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
