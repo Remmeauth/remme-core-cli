@@ -224,6 +224,28 @@ def test_get_list_transactions_by_head():
         assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
+def test_get_transactions_identifiers():
+    """
+    Case: get a list of transactions' identifiers.
+    Expect: a list of transactions' identifiers is returned.
+    """
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get-list',
+        '--ids-only',
+        '--node-url',
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    result_transactions = json.loads(result.output).get('result')
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+
+    for transaction_identifier in result_transactions:
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+
+
 @pytest.mark.parametrize('command_flag', ('--start', '--head'))
 def test_get_list_transactions_with_invalid_start_head(command_flag):
     """
@@ -476,117 +498,3 @@ def test_get_list_transactions_node_url_with_protocol(node_url_with_protocol):
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_get_transactions_identifiers():
-    """
-    Case: get a list of transactions' identifiers.
-    Expect: a list of transactions' identifiers is returned.
-    """
-    transaction_id = 'eb662acc48d313c9bba4a72359b0462d607bba8fc66aeb3d169d02fafd21849b' \
-                     '6bf8bea8396b54b6fc907e1cce2a386f76bd19889d0f3e496b45b8440b161ebc'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'transaction',
-        'get-list',
-        '--ids-only',
-        '--node-url',
-        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
-    ])
-
-    list_of_identifiers = json.loads(result.output).get('result')
-
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-
-    for identifier in list_of_identifiers:
-        assert identifier == transaction_id
-        break
-
-
-def test_get_transactions_identifiers_with_all_parameters():
-    """
-    Case: get a list of transactions' identifiers with all parameters.
-    Expect: a list of transactions' identifiers is returned.
-    """
-    transaction_ids = '3c16f739202a58c022115b3a9ded2864ccfdfe36c3ee697904b0ee6414f5e237' \
-                      '375b1299798f6f9e1f9303a9728367bab32b21b51c20eb08c8dc26ec1f0d4878, ' \
-                      '43ba216bafdffe83ea9383b741c9839c1894b3d2f851c1981649e76ef2dbd3d6' \
-                      '62bc5111ff918c78d76881c6ba636c84c673df96b5794398fccaec124d1f7beb'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'transaction',
-        'get-list',
-        '--ids-only',
-        '--start',
-        '3c16f739202a58c022115b3a9ded2864ccfdfe36c3ee697904b0ee6414f5e237'
-        '375b1299798f6f9e1f9303a9728367bab32b21b51c20eb08c8dc26ec1f0d4878',
-        '--limit',
-        2,
-        '--node-url',
-        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
-    ])
-
-    list_of_identifiers = json.loads(result.output).get('result')
-
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-
-    for identifier in list_of_identifiers:
-        assert identifier in transaction_ids
-
-
-def test_get_transactions_identifiers_without_node_url(mocker):
-    """
-    Case: get a list of transactions' identifiers without passing node URL.
-    Expect: a list of transactions' identifiers is returned from a node on localhost.
-    """
-    expected_transactions = {
-        'data': [
-            {
-                'header': {
-                    'batcher_public_key': '03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad',
-                    'dependencies': [],
-                    'family_name': 'sawtooth_settings',
-                    'family_version': '1.0',
-                    'inputs': [
-                        '000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b',
-                        '000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c12840f169a04216b7',
-                        '000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1918142591ba4e8a7',
-                        '000000a87cb5eafdcca6a8f82af32160bc53119b8878ad4d2117f2e3b0c44298fc1c14',
-                    ],
-                    'nonce': '',
-                    'outputs': [
-                        '000000a87cb5eafdcca6a8cde0fb0dec1400c5ab274474a6aa82c1c0cbf0fbcaf64c0b',
-                        '000000a87cb5eafdcca6a8f82af32160bc53119b8878ad4d2117f2e3b0c44298fc1c14',
-                    ],
-                    'payload_sha512': '8a290d2b3702068f81ec1e7a86c2329d341ff0a8b526e8745f47a2b9828dd6b9'
-                                      'd08600a07a173c4ee90a2ac079d2acc5718bb7d5b5fb80177bf652b6f76422cd',
-                    'signer_public_key': '03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad',
-                },
-                'header_signature': '656219b616e7ee1f10ae45f1020641a829725bcf1c351734c80df1a8a4ba4824'
-                                    '6b8d75cd69cf0049e5d1fc787c45f65308be66c50cbd3c93ac74d1e9f92d1bcd',
-                'payload': 'CAESggIKKXNhd3Rvb3RoLnZhbGlkYXRvci5ibG9ja192YWxpZGF0aW9uX3J1bGVzEsABTm9mWDoxLGJsb2NrX2lu'
-                           'Zm87WGF0WTpibG9ja19pbmZvLDA7bG9jYWw6MDtOb2ZYOjEsY29uc2Vuc3VzX2FjY291bnQ7WGF0WTpjb25zZW5z'
-                           'dXNfYWNjb3VudCwxO2xvY2FsOjA7Tm9mWDoxLG9ibGlnYXRvcnlfcGF5bWVudDtYYXRZOm9ibGlnYXRvcnlfcGF5'
-                           'bWVudCwyO2xvY2FsOjA7Tm9mWDoxLGJldDtYYXRZOmJldCwtMTtsb2NhbDowGhIweDZiMGQ5NGFjMzU4MGU4NDY=',
-            },
-        ],
-    }
-
-    mock_get_transactions = mocker.patch('cli.transaction.service.Transaction.get_list')
-    mock_get_transactions.return_value = expected_transactions, None
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'transaction',
-        'get-list',
-        '--ids-only',
-    ])
-
-    expected_result = {
-        'result': [expected_transactions.get('data')[0].get('header_signature')],
-    }
-
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_result == json.loads(result.output)

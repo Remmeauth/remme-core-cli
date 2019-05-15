@@ -22,7 +22,7 @@ from cli.transaction.help import (
     TRANSACTION_LIMIT_ARGUMENT_HELP_MESSAGE,
     TRANSACTION_REVERSE_ARGUMENT_HELP_MESSAGE,
     TRANSACTION_START_ARGUMENT_HELP_MESSAGE,
-    TRANSACTIONS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
 )
 from cli.transaction.service import Transaction
 from cli.utils import (
@@ -46,7 +46,7 @@ def transaction_command():
 @click.option('--head', required=False, type=str, help=TRANSACTION_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--reverse', required=False, is_flag=True, help=TRANSACTION_REVERSE_ARGUMENT_HELP_MESSAGE)
 @click.option('--family-name', required=False, type=str, help=TRANSACTION_FAMILY_NAME_ARGUMENT_HELP_MESSAGE)
-@click.option('--ids-only', required=False, is_flag=True, help=TRANSACTIONS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE)
+@click.option('--ids-only', required=False, is_flag=True, help=TRANSACTIONS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @transaction_command.command('get-list')
 def get_transactions(ids, start, limit, head, reverse, family_name, ids_only, node_url):

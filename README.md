@@ -710,7 +710,7 @@ $ remme transaction get-list \
 }
 ```
 
-Get a list of transactions' identifiers:
+Get a list of transactions' identifiers (can be combined with other parameters like `--limit`):
 
 ```bash
 $ remme transaction get-list --ids-only --node-url=node-6-testnet.remme.io
