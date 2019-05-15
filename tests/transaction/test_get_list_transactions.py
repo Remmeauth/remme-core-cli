@@ -259,12 +259,14 @@ def test_get_list_transactions_with_limit():
     Case: get a list transactions by limit.
     Expect: transaction is returned.
     """
+    limit = 2
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get-list',
         '--limit',
-        1,
+        limit,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
@@ -272,6 +274,7 @@ def test_get_list_transactions_with_limit():
     result_transactions = json.loads(result.output).get('result').get('data')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert len(result_transactions) == limit
 
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
