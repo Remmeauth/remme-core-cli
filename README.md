@@ -661,7 +661,7 @@ Get a list of transactions — ``remme transaction get-list``:
 | limit       | Integer|  No       | Maximum amount of transactions to return.              |
 | head        | String |  No       | Block identifier to get a list of transactions from.   |
 | reverse     | Bool   |  No       | Parameter to reverse result.                           |
-| ids-only    | Bool   |  No       | The flag to get a list of transactions' identifiers only. |
+| ids-only    | Bool   |  No       | The flag to get a list of transactions' identifiers.   |
 | node-url    | String |  No       | Node URL to apply a command to.                        |
 | family-name | String |  No       | List of transactions by its family name.               |
 
