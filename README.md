@@ -521,6 +521,65 @@ $ remme batch get-status \
 }
 ```
 
+Get a list of batches — ``remme batch get-list``:
+
+| Arguments   | Type   |  Required | Description                                             |
+| :--------:  | :----: | :-------: | -----------------------------------------------------   |
+| ids         | String |  No       | Identifiers to get a list of batches by.                |
+| start       | String |  No       | Batch identifier to get a list of batches starting from.|
+| limit       | Integer|  No       | Maximum amount of batches to return.                    |
+| head        | String |  No       | Block identifier to get a list of batches from.         |
+| reverse     | Bool   |  No       | Parameter to reverse result.                            |
+| node-url    | String |  No       | Node URL to apply a command to.                         |
+
+```bash
+$ remme batch get-list \
+      --ids='6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e, 7a5daba99d5757adc997ea6a0b1b83263b3c16604dbd83c0153dc01c9fd780af4b570338c2ec60e086b1db58a4397a4dc661d6c93b0a7250fe75642e15b26e81' \
+      --start=6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e \
+      --limit=2 \
+      --head=57a7944497ca41f424932ae6b70897e7086652ab98450d4aba6a02a2d891501460947812a41028b8041f087066df6dc7e1100c4b0e5cc94bb58b002f6950eb02 \
+      --reverse \
+      --node-url=node-6-testnet.remme.io
+{
+    "result": [
+        {
+            "header": {
+                "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                "transaction_ids": [
+                    "376efc69c217a0b9deb545348ca32664ce61b3e35706252d1d0374bdb93b10e62abc35fc16a3d19f0d8346ddbadc1c0974af6b4364f98ffea66de72cfb11b238"
+                ]
+            },
+            "header_signature": "ed0fc04a114e87ae7d2046db667bb82cf5a9bbab9b51024c4192b569a997785260ea5f4ad55ac4e2a167a04d50806b00f35b2a553bb4072bb5a36be7ba49b9be",
+            "trace": false,
+            "transactions": [
+                {
+                    "header": {
+                        "batcher_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad",
+                        "dependencies": [],
+                        "family_name": "block_info",
+                        "family_version": "1.0",
+                        "inputs": [
+                            "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                            "00b10c00"
+                        ],
+                        "nonce": "",
+                        "outputs": [
+                            "00b10c0100000000000000000000000000000000000000000000000000000000000000",
+                            "00b10c00"
+                        ],
+                        "payload_sha512": "7b11153de66545d8c8847004425f9c5815483636688e79fd2bfbb6d979218fbeb7ccdcb244241d8d52ea38a1b1d62c5d178cf74c3c7b5f496936059c616163e2",
+                        "signer_public_key": "03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad"
+                    },
+                    "header_signature": "376efc69c217a0b9deb545348ca32664ce61b3e35706252d1d0374bdb93b10e62abc35fc16a3d19f0d8346ddbadc1c0974af6b4364f98ffea66de72cfb11b238",
+                    "payload": "CtMCCLwbEoABYmZiNzhkNGQxMWQyZjQzOWRlZjkzNTc2Y2YyN2M0NGVhZTNmYmMyM2Q2ODAwNmUyNGRlYmJmZGYxZWRiNmQ4MDY5MDExYzYxNWZjNjk4NGMxM2EzZDJjMDMyYzFhZTY2NWYzNmZjZTUxOWVjZTdlOGI2YmFjMGMxYWRlMTgxYWYaQjAzNzM4ZGYzZjRhYzM2MjFiYThlODk0MTNkM2ZmNGFkMDM2YzNhMGE0ZGJiMTY0YjY5NTg4NWFhYjZhYWI2MTRhZCKAAThmMjJkYjUyNTUyYzQ3MjE4ZTc0ZmE4OGExZTU2NGJhZTE1YjYwMmY0ZTI3ZTZiYTYwOWI0NzM4YjY0ZTllZTYzYzcwMjM4MjI3ZWU0NTU1OTVhNjMzYTIzOWU5ZGZiMWNiMGMxNWI1MzVhZGJkYTZmMGE2Yjk3MmU3ZWU3MWQyKLvr4eYF"
+                }
+            ]
+        }
+    ]
+}
+
+```
+
 ### Node
 
 Get node configurations — ``remme node get-configs``:
@@ -575,6 +634,19 @@ $ remme node get-info --node-url=node-27-testnet.remme.io
             "peer_count": 3
         }
     }
+}
+```
+
+Get the initial stake of the node — ``remme node get-initial-stake``:
+
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
+
+```bash
+$ remme node get-initial-stake --node-url=node-27-testnet.remme.io
+{
+    "result": 250000
 }
 ```
 

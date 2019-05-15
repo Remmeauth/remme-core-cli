@@ -7,15 +7,13 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_1_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
-
-NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE = \
-    '1168290a2cbbce30382d9420fd5f8b0ec75e953e5c695365b1c22862dce713fa1e48ca'
 
 
 def test_get_information_with_address():
@@ -28,9 +26,9 @@ def test_get_information_with_address():
         'node-account',
         'get',
         '--address',
-        NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
         '--node-url',
-        NODE_1_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     node_account_information = json.loads(result.output).get('result')
@@ -54,7 +52,7 @@ def test_get_information_without_node_url(mocker, node_account_information):
         'node-account',
         'get',
         '--address',
-        NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
     ])
 
     expected_result = {
@@ -79,7 +77,7 @@ def test_get_information_invalid_address():
         '--address',
         invalid_address,
         '--node-url',
-        NODE_1_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -106,7 +104,7 @@ def test_get_information_invalid_node_url():
         'node-account',
         'get',
         '--address',
-        NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
         '--node-url',
         invalid_node_url,
     ])
@@ -137,7 +135,7 @@ def test_get_information_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_1_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -160,7 +158,7 @@ def test_get_information_non_existing_node_url():
         'node-account',
         'get',
         '--address',
-        NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
         '--node-url',
         non_existing_node_url,
     ])
@@ -184,7 +182,7 @@ def test_get_information_node_url_with_protocol(node_url_with_protocol):
         'node-account',
         'get',
         '--address',
-        NODE_ACCOUNT_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
+        DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
         '--node-url',
         node_url_with_protocol,
     ])

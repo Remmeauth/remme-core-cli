@@ -9,16 +9,17 @@ from click.testing import CliRunner
 
 from cli.constants import (
     ADDRESS_REGEXP,
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
     HEADER_SIGNATURE_REGEXP,
-    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = 'a23be17addad8eeb5177a395ea47eb54b4a646f8c570f4a2ecc0b1d2f6241c6845181b'
+PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = \
+    'a23be1a8c94d4a06d3dc8fa8f3df543d87ae79b3bf59cbae37490e1534393048873070'
 
 
 def test_get_public_key_info():
@@ -33,7 +34,7 @@ def test_get_public_key_info():
         '--address',
         PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     public_key_info = json.loads(result.output).get('result').get('information')
@@ -62,7 +63,7 @@ def test_get_public_key_info_invalid_address():
         '--address',
         invalid_address,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -174,7 +175,7 @@ def test_get_public_key_info_non_existing_address():
         '--address',
         non_existing_address,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
