@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -25,7 +25,7 @@ def test_get_node_info():
         'node',
         'get-info',
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     node_information = json.loads(result.output).get('result').get('information')
