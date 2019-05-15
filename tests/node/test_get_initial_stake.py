@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -25,7 +25,7 @@ def test_get_initial_stake():
         'node',
         'get-initial-stake',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     node_initial_stake = json.loads(result.output).get('result')
