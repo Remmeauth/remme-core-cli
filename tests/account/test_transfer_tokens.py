@@ -9,11 +9,11 @@ from click.testing import CliRunner
 
 from cli.constants import (
     BATCH_ID_REGEXP,
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
     FAILED_EXIT_FROM_COMMAND_CODE,
     INCORRECT_ENTERED_COMMAND_CODE,
-    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
-    DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json

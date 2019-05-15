@@ -8,8 +8,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
     TRANSACTION_HEADER_SIGNATURE_REGEXP,
 )
@@ -200,7 +200,7 @@ def test_get_list_transactions_by_head():
     Expect: transactions are returned.
     """
     head_identifier = '5d2aa46008832651796c9dc3dadb8a7d50ca4a8a910a542869f7f059249fe374' \
-                       '2d768332f9012bfc98fd065036ef704f39b237d46bd511963de62cb9203e5ebf'
+                      '2d768332f9012bfc98fd065036ef704f39b237d46bd511963de62cb9203e5ebf'
 
     runner = CliRunner()
     result = runner.invoke(cli, [

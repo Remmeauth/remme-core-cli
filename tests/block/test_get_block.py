@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -81,9 +81,9 @@ def test_get_block_without_node_url(mocker):
                     'header': {
                         'signer_public_key': '03309c84260e7265a296c77df42397372c658e30541ddc99b39cc52ce1f86dfb19',
                         'transaction_ids': [
-                            "384bea4918e3396d6f0afb68c922f9b7d9454a6036891759ce5fbbc959e541ca"
-                            "50fe9da7fc05b291bab0e77730808aa3bab831b0e2ca89f51a47e85f9962073b"
-                        ]
+                            '384bea4918e3396d6f0afb68c922f9b7d9454a6036891759ce5fbbc959e541ca'
+                            '50fe9da7fc05b291bab0e77730808aa3bab831b0e2ca89f51a47e85f9962073b',
+                        ],
                     },
                     'header_signature': '2b892618024170f23a77c9ebd4c1205bfbc3a032a644c5664290735a29400b6f'
                                         '29df1657fac3f3b4f880ee0a0cac3841195c316a324672a7fc41b397cb0ac1cc',
@@ -98,12 +98,12 @@ def test_get_block_without_node_url(mocker):
                                 'family_version': '1.0',
                                 'inputs': [
                                     '00b10c0100000000000000000000000000000000000000000000000000000000000000',
-                                    "00b10c00"
+                                    '00b10c00',
                                 ],
                                 'nonce': '',
                                 'outputs': [
                                     '00b10c0100000000000000000000000000000000000000000000000000000000000000',
-                                    "00b10c00"
+                                    '00b10c00',
                                 ],
                                 'payload_sha512': 'a239acce64f765e9f2d9abdcb35172ed99a7a1927d0ea710bd7dac9caf0271fe'
                                                   '2d22a73c7f5d5b1e444531eea1b22e9cd0516a16c3d578542c2cd4ad012813f5',
@@ -118,17 +118,17 @@ def test_get_block_without_node_url(mocker):
                                        'yMzk3MzcyYzY1OGUzMDU0MWRkYzk5YjM5Y2M1MmNlMWY4NmRmYjE5IoABMTE2YWY2MmM4NzIx'
                                        'MmM1Y2VhMjdhMGQ0ZmQzMjRiMjY4MjEyMjA0ODQ0M2VjNzNmOGI0YWE2OWQxM2NkYTU3OTQwM'
                                        'jRiNjhlZTMwN2EzY2ZkZGU1ZTJhZTI3MmEzN2NmYjE0MjRhNmJiODZiZjUxZjA3MTYwOGZiZm'
-                                       'M2MWQzMGIo2/Lq5gU='
-                        }
-                    ]
+                                       'M2MWQzMGIo2/Lq5gU=',
+                        },
+                    ],
                 },
             ],
             'header': {
                 'batch_ids': [
                     '2b892618024170f23a77c9ebd4c1205bfbc3a032a644c5664290735a29400b6f'
                     '29df1657fac3f3b4f880ee0a0cac3841195c316a324672a7fc41b397cb0ac1cc',
-                    "39a8690637cd926c3b8bbc008768d0f4bc9f3fb90e9275ae1a5e0689d582ac96"
-                    "067ed804db3271135a2fa337f77daa3ac8c1abf77467c1ff65f36a4e2ab398b9"
+                    '39a8690637cd926c3b8bbc008768d0f4bc9f3fb90e9275ae1a5e0689d582ac96'
+                    '067ed804db3271135a2fa337f77daa3ac8c1abf77467c1ff65f36a4e2ab398b9',
                 ],
                 'block_num': '3',
                 'consensus': 'RGV2bW9kZVvhE13lUZSAXG1nKz4P557eT/VZW3jE16JXMMAt4mWz',
@@ -138,8 +138,8 @@ def test_get_block_without_node_url(mocker):
                 'state_root_hash': 'dc3f81453b7a69ae88d5886929b11e39adf232b1a22188f8c85db78778640fa0',
             },
             'header_signature': '95849a2a9a4775b6432b181e12749c43724682e37ca3560223586b01cbb40593'
-                                '31a7d970e4ebfdc328cd000adb4ddc9e3296b5cfb7045543006ca58214c25eb7'
-        }
+                                '31a7d970e4ebfdc328cd000adb4ddc9e3296b5cfb7045543006ca58214c25eb7',
+        },
     }
 
     mock_get_block_by_id = mocker.patch('cli.block.service.loop.run_until_complete')

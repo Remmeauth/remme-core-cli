@@ -124,7 +124,7 @@ def test_get_list_batches_with_start():
     Expect: batches are returned starting from the batch with an identifier which matches specified start parameter.
     """
     start_identifier = '3c0f6658b4de1d985445e48df60718abd97cfee29373b2f4d3dff3645eea4015' \
-                        '5f675374c53287fb7109086bc6fd19865da099ed377c3a873f74443aa0a52fb0'
+                       '5f675374c53287fb7109086bc6fd19865da099ed377c3a873f74443aa0a52fb0'
 
     runner = CliRunner()
     result = runner.invoke(cli, [

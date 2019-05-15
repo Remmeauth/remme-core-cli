@@ -7,9 +7,9 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
     DEV_CONSENSUS_GENESIS_NODE_ACCOUNT_ADDRESS,
     DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
