@@ -236,7 +236,7 @@ def test_get_blocks_invalid_head():
 def test_get_blocks_with_limit():
     """
     Case: get a list of blocks limiting by a number.
-    Expect: specified number of blocks are returned.
+    Expect: a specified number of blocks are returned.
     """
     limit = 2
 
@@ -339,7 +339,7 @@ def test_get_blocks_identifiers():
 
 def test_get_blocks_invalid_node_url():
     """
-    Case: get a list of blocks by passing invalid node URL.
+    Case: get a list of blocks by passing an invalid node URL.
     Expect: the following node URL is an invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'

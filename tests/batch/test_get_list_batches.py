@@ -198,7 +198,7 @@ def test_get_list_batches_with_reverse():
 def test_get_list_batches_by_head():
     """
     Case: get a list of batches by block identifier.
-    Expect: batches from specified block are returned.
+    Expect: batches from the specified block are returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -354,7 +354,7 @@ def test_get_list_batches_with_invalid_limit():
 
 def test_get_list_batches_with_invalid_node_url():
     """
-    Case: get a list of batches by passing invalid node URL.
+    Case: get a list of batches by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -449,7 +449,7 @@ def test_get_list_batches_without_node_url(mocker):
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_list_batches_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a list of batches by passing node URL with explicit protocol.
+    Case: get a list of batches by passing node URL with an explicit protocol.
     Expect: the following node URL contains the protocol error message.
     """
     runner = CliRunner()
@@ -476,7 +476,7 @@ def test_get_list_batches_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_list_batches_with_non_existing_node_url():
     """
-    Case: get a list of batches by passing non-existing node URL.
+    Case: get a list of batches by passing the non-existing node URL.
     Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

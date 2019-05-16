@@ -72,7 +72,7 @@ def test_get_transaction_with_invalid_id():
 def test_get_transaction_without_node_url(mocker):
     """
     Case: get a transaction by identifier without passing node URL.
-    Expect: transaction is returned from node on localhost.
+    Expect: transaction is returned from a node on localhost.
     """
     transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
                      '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'
@@ -123,7 +123,7 @@ def test_get_transaction_without_node_url(mocker):
 
 def test_get_transaction_with_invalid_node_url():
     """
-    Case: get a transaction by passing invalid node URL.
+    Case: get a transaction by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
@@ -150,8 +150,8 @@ def test_get_transaction_with_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_transaction_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get transaction by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get transaction by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
                      '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'

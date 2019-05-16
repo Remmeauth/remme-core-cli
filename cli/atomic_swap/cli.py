@@ -35,7 +35,7 @@ def atomic_swap_commands():
 @atomic_swap_commands.command('get-public-key')
 def get_public_key(node_url):
     """
-    Get public key of atomic swap.
+    Get the public key of atomic swap.
     """
     arguments, errors = GetAtomicSwapPublicKeyForm().load({
         'node_url': node_url,

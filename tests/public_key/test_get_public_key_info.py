@@ -25,7 +25,7 @@ PUBLIC_KEY_ADDRESS_PRESENTED_ON_THE_TEST_NODE = \
 def test_get_public_key_info():
     """
     Case: get information about public key by its address.
-    Expect: dictionary of public key information, keys matched regexp checking.
+    Expect: a dictionary of public key information, keys matched regexp checking.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -81,7 +81,7 @@ def test_get_public_key_info_invalid_address():
 def test_get_public_key_info_without_node_url(mocker, public_key_information):
     """
     Case: get information about public key without passing node URL.
-    Expect: dictionary of public key information is returned from node on localhost.
+    Expect: a dictionary of public key information is returned from a node on localhost.
     """
     mock_public_key_get_info = mocker.patch('cli.public_key.service.loop.run_until_complete')
     mock_public_key_get_info.return_value = public_key_information
@@ -106,7 +106,7 @@ def test_get_public_key_info_without_node_url(mocker, public_key_information):
 
 def test_get_public_key_info_invalid_node_url():
     """
-    Case: get information about public key by passing invalid node URL.
+    Case: get information about public key by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -136,8 +136,8 @@ def test_get_public_key_info_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_public_key_info_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get information about public key by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get information about public key by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -163,7 +163,7 @@ def test_get_public_key_info_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_public_key_info_non_existing_address():
     """
-    Case: get information about public key by passing non-existing address.
+    Case: get information about public key by passing the non-existing address.
     Expect: public key information not found error message.
     """
     non_existing_address = 'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5c'
@@ -188,8 +188,8 @@ def test_get_public_key_info_non_existing_address():
 
 def test_get_public_key_info_non_existing_node_url():
     """
-    Case: get information about public key by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get information about public key by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 

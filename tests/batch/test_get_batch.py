@@ -69,7 +69,7 @@ def test_get_batch_with_invalid_id():
 def test_get_batch_without_node_url(mocker):
     """
     Case: get a batch by its identifier without passing node URL.
-    Expect: batch is returned from node on localhost.
+    Expect: batch is returned from a node on localhost.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751' \
@@ -126,7 +126,7 @@ def test_get_batch_without_node_url(mocker):
 
 def test_get_batch_with_invalid_node_url():
     """
-    Case: get a batch by its identifier by by passing invalid node URL.
+    Case: get a batch by its identifier by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
@@ -155,8 +155,8 @@ def test_get_batch_with_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_batch_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a batch by its identifier by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a batch by its identifier by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'

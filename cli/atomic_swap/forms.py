@@ -20,7 +20,7 @@ class GetAtomicSwapInformationForm(Schema):
 
 class GetAtomicSwapPublicKeyForm(Schema):
     """
-    Get public key of the atomic swap form.
+    Get the public key of the atomic swap form.
     """
 
     node_url = NodeUrlField(required=False)

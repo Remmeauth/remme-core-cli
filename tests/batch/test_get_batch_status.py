@@ -18,7 +18,7 @@ from cli.utils import dict_to_pretty_json
 def test_get_committed_batch_status():
     """
     Case: get committed batch status by its identifier.
-    Expect: committed message is returned.
+    Expect: the committed message is returned.
     """
     batch_id = 'ccb529856e538325b435c6a75261702d1bdb52d3873b29189a722330cda628a6' \
                '62028a7b39d1f5475cb78f5fc12efb986a35553ce8f1b63580b97fc6ab9e9655'
@@ -42,7 +42,7 @@ def test_get_committed_batch_status():
 def test_get_unknown_batch_status():
     """
     Case: get non-existing batch status by its identifier.
-    Expect: unknown message is returned.
+    Expect: the unknown message is returned.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8752'
@@ -123,7 +123,7 @@ def test_get_batch_status_without_node_url(mocker):
 
 def test_get_batch_status_with_invalid_node_url():
     """
-    Case: get a batch status by its identifier by passing invalid node URL.
+    Case: get a batch status by its identifier by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -155,7 +155,7 @@ def test_get_batch_status_with_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_batch_status_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get batch a status by its identifier by passing node URL with explicit protocol.
+    Case: get batch a status by its identifier by passing node URL with an explicit protocol.
     Expect: the following node URL contains the protocol error message.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
@@ -185,7 +185,7 @@ def test_get_batch_status_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_batch_status_with_non_existing_node_url():
     """
-    Case: get a batch status by its identifier by passing non-existing node URL.
+    Case: get a batch status by its identifier by passing the non-existing node URL.
     Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'

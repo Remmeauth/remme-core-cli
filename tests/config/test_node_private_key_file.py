@@ -20,7 +20,7 @@ def test_node_private_key_get(create_node_private_key_file, node_private_key_fil
 def test_node_private_key_get_not_supported_os(operating_system, node_private_key_file_path, mocker):
     """
     Case: get the node's private key from not supported operating system.
-    Expect: operating system is not supported to get the node's private key error message.
+    Expect: the operating system is not supported to get the node's private key error message.
     """
     mock_account_get_balance = mocker.patch('platform.system')
     mock_account_get_balance.return_value = operating_system
@@ -33,7 +33,7 @@ def test_node_private_key_get_not_supported_os(operating_system, node_private_ke
 
 def test_node_private_key_get_from_non_existing_file(node_private_key_file_path):
     """
-    Case: get the node's private key from non-existing file.
+    Case: get the node's private key from the non-existing file.
     Expect: private key hasn't been founded on the machine error message.
     """
     with pytest.raises(FileNotFoundError) as error:

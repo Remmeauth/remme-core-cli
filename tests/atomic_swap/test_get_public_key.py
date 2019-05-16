@@ -1,5 +1,5 @@
 """
-Provide tests for command line interface's get public key of the atomic swap commands.
+Provide tests for command line interface's get the public key of the atomic swap commands.
 """
 import json
 import re
@@ -19,8 +19,8 @@ from cli.utils import dict_to_pretty_json
 
 def test_get_public_key():
     """
-    Case: get the public key of atomic swap.
-    Expect: public key is returned.
+    Case: get the public key of the atomic swap.
+    Expect: a public key is returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -38,8 +38,8 @@ def test_get_public_key():
 
 def test_get_public_key_without_node_url(mocker):
     """
-    Case: get the public key of atomic swap without passing node URL.
-    Expect: public key is returned from node on localhost.
+    Case: get the public key of the atomic swap without passing node URL.
+    Expect: a public key is returned from node on localhost.
     """
     public_key = '03738df3f4ac3621ba8e89413d3ff4ad036c3a0a4dbb164b695885aab6aab614ad'
     mock_swap_get_public_key = mocker.patch('cli.node.service.loop.run_until_complete')
@@ -63,7 +63,7 @@ def test_get_public_key_without_node_url(mocker):
 
 def test_get_public_key_invalid_node_url():
     """
-    Case: get the public key of atomic swap by passing invalid node URL.
+    Case: get the public key of the atomic swap by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -91,8 +91,8 @@ def test_get_public_key_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_public_key_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get the public key of atomic swap by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get the public key of the atomic swap by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -116,8 +116,8 @@ def test_get_public_key_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_public_key_non_existing_node_url():
     """
-    Case: get the public key of atomic swap by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get the public key of the atomic swap by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 
