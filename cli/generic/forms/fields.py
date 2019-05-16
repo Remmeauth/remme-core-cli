@@ -50,10 +50,12 @@ class FamilyNameField(fields.Field):
         """
         Validate data (family name) that was passed to field.
         """
-        if value not in FAMILY_NAMES:
-            raise ValidationError(f'The following family name `{value}` is invalid.')
+        family_name = value
 
-        return value
+        if family_name not in FAMILY_NAMES:
+            raise ValidationError(f'The following family name `{family_name}` is invalid.')
+
+        return family_name
 
 
 class TransactionIdentifiersListField(fields.Field):
@@ -87,10 +89,12 @@ class TransactionIdentifierField(fields.Field):
         """
         Validate data (identifier) that was passed to field.
         """
-        if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=value) is None:
-            raise ValidationError(f'The following identifier `{value}` is invalid.')
+        transaction_identifier = value
 
-        return value
+        if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is None:
+            raise ValidationError(f'The following identifier `{transaction_identifier}` is invalid.')
+
+        return transaction_identifier
 
 
 class BatchIdentifiersListField(fields.Field):
@@ -171,7 +175,7 @@ class PrivateKeyField(fields.Field):
         if re.match(pattern=PRIVATE_KEY_REGEXP, string=private_key) is None:
             raise ValidationError(f'The following private key `{private_key}` is invalid.')
 
-        return value
+        return private_key
 
 
 class PublicKeyAddressField(fields.Field):
@@ -188,7 +192,7 @@ class PublicKeyAddressField(fields.Field):
         if re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key_address) is None:
             raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
 
-        return value
+        return public_key_address
 
 
 class SwapIdentifierField(fields.Field):
