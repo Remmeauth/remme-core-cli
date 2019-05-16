@@ -253,3 +253,29 @@ class BlockIdentifierField(fields.Field):
             raise ValidationError(f'The following block identifier `{block_identifier}` is invalid.')
 
         return block_identifier
+
+
+class BlockIdentifiersListField(fields.Field):
+    """
+    Implements validation of the list of block identifiers.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (list of block identifiers) that was passed to field.
+        """
+        block_identifiers = value
+        block_validated_identifiers = []
+
+        for identifier in block_identifiers.split(','):
+            identifier = identifier.strip()
+
+            if re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=identifier) is None:
+                raise ValidationError(f'The following block identifier `{identifier}` is invalid.')
+
+            block_validated_identifiers.append(identifier)
+
+        return block_validated_identifiers
