@@ -42,3 +42,33 @@ class Block:
             return None, str(error)
 
         return block.get('data'), None
+
+    def get_list(self, ids, head, limit, reverse):
+        """
+        Get a list of blocks.
+
+        A list of blocks could be filtered by blocks identifiers, limit, head, reverse.
+
+        Arguments:
+            ids (list, optional): identifiers to get a list of blocks by.
+            limit (int, optional): maximum amount of blocks to return.
+            head (string, optional): block identifier to get a list of transactions to.
+            reverse (bool, optional): parameter to reverse result.
+        """
+        try:
+            blocks = loop.run_until_complete(
+                self.service.blockchain_info.get_blocks(query={
+                    'ids': ids,
+                    'limit': limit,
+                    'head': head,
+                    'reverse': reverse,
+                }),
+            )
+
+        except RpcGenericServerDefinedError as error:
+            return None, str(error.message)
+
+        except Exception as error:
+            return None, str(error)
+
+        return blocks.get('data'), None

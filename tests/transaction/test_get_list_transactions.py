@@ -224,6 +224,28 @@ def test_get_list_transactions_by_head():
         assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
 
 
+def test_get_transactions_identifiers():
+    """
+    Case: get a list of transactions' identifiers.
+    Expect: a list of transactions' identifiers is returned.
+    """
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'transaction',
+        'get-list',
+        '--ids-only',
+        '--node-url',
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    result_transactions = json.loads(result.output).get('result')
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+
+    for transaction_identifier in result_transactions:
+        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+
+
 @pytest.mark.parametrize('command_flag', ('--start', '--head'))
 def test_get_list_transactions_with_invalid_start_head(command_flag):
     """
