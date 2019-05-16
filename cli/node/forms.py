@@ -8,7 +8,7 @@ from cli.generic.forms.fields import NodeUrlField
 
 class GetNodeConfigurationsForm(Schema):
     """
-    Get node configurations.
+    Get the node configurations form.
     """
 
     node_url = NodeUrlField(required=False)
@@ -16,7 +16,7 @@ class GetNodeConfigurationsForm(Schema):
 
 class GetNodePeersForm(Schema):
     """
-    Get the node's peers.
+    Get the node's peers form.
     """
 
     node_url = NodeUrlField(required=False)
