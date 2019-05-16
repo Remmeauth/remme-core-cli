@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -20,8 +20,8 @@ def test_get_batch():
     Case: get a batch by identifier.
     Expect: batch is returned.
     """
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
+    batch_id = 'ccb529856e538325b435c6a75261702d1bdb52d3873b29189a722330cda628a6' \
+               '62028a7b39d1f5475cb78f5fc12efb986a35553ce8f1b63580b97fc6ab9e9655'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -30,7 +30,7 @@ def test_get_batch():
         '--id',
         batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -51,7 +51,7 @@ def test_get_batch_with_invalid_id():
         '--id',
         invalid_batch_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -130,6 +130,7 @@ def test_get_batch_with_invalid_node_url():
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
+
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
                '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
 

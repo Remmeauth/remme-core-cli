@@ -60,6 +60,36 @@ class Transaction:
 
         return transactions, None
 
+    def get_list_ids(self, ids, start, limit, head, reverse, family_name):
+        """
+        Get a list of transactions' identifiers.
+
+        A list of transactions' identifiers could be filtered by transactions' identifiers,
+        start, limit, head, reverse, family_name.
+
+        Arguments:
+            ids (list, optional): identifiers to get a list of blocks by.
+            start (string, optional): transaction identifier to get a list transaction starting from.
+            limit (int, optional): maximum amount of blocks to return.
+            head (string, optional): block identifier to get a list of transactions to.
+            reverse (bool, optional): parameter to reverse result.
+            family_name (bool, optional): list of a transactions by its family name.
+        """
+        transactions, errors = self.get_list(
+            transaction_ids=ids, start=start, head=head, limit=limit, reverse=reverse, family_name=family_name,
+        )
+
+        if errors is not None:
+            return None, errors
+
+        transactions_identifiers = []
+
+        for transaction in transactions.get('data'):
+            transaction_identifier = transaction.get('header_signature')
+            transactions_identifiers.append(transaction_identifier)
+
+        return transactions_identifiers, None
+
     def get(self, transaction_id):
         """
         Get a transaction.
