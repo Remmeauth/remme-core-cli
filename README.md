@@ -544,6 +544,7 @@ Get a list of batches — ``remme batch get-list``:
 | limit       | Integer|  No       | Maximum amount of batches to return.                    |
 | head        | String |  No       | Block identifier to get a list of batches from.         |
 | reverse     | Bool   |  No       | Parameter to reverse result.                            |
+| ids-only    | Bool   |  No       | The flag to get a list of batches' identifiers.         |
 | node-url    | String |  No       | Node URL to apply a command to.                         |
 
 ```bash
@@ -591,7 +592,19 @@ $ remme batch get-list \
         }
     ]
 }
+```
 
+Get a list of batches' identifiers (can be combined with other parameters like `--limit`):
+
+```bash
+$ remme batch get-list --ids-only --node-url=node-6-testnet.remme.io
+{
+    "result": [
+        "e4d5089f2ef1...6b0f185b3b6ca",
+        "df5e555f...317f039501",
+        ...
+    ]
+}
 ```
 
 ### Node

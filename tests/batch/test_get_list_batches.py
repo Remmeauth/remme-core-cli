@@ -11,6 +11,7 @@ from cli.constants import (
     BLOCK_IDENTIFIER_REGEXP,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
+    HEADER_SIGNATURE_REGEXP,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -84,6 +85,28 @@ def test_get_list_batches_with_ids():
 
         assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
         assert block_identifier in COMMITTED_BATCH_IDENTIFIERS
+
+
+def test_get_batches_identifiers():
+    """
+    Case: get a list of batches' identifiers.
+    Expect: a list of batches' identifiers is returned.
+    """
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'batch',
+        'get-list',
+        '--ids-only',
+        '--node-url',
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    batches = json.loads(result.output).get('result')
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+
+    for batch_identifier in batches:
+        assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is not None
 
 
 def test_get_list_batches_with_invalid_ids():
