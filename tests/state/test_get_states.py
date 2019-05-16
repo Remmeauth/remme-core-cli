@@ -30,10 +30,11 @@ def test_get_states():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_address = json.loads(result.output).get('result')[0].get('address')
+    result_state_address = json.loads(result.output).get('result')
+    first_state_address = result_state_address[0]
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_address == ADDRESS_WITH_STATE
+    assert first_state_address.get('address') == ADDRESS_WITH_STATE
 
 
 def test_get_states_with_all_parameters():
@@ -41,8 +42,8 @@ def test_get_states_with_all_parameters():
     Case: get a list of states by account address, starting address, limit, head, reverse.
     Expect: list of states is returned.
     """
-    head = 'afb21d7012d9a65f8bf35bfa8fd648757ece23e7687f16b1254957a92119912d' \
-           '1c1bdbbce01984ad73a12277dedfd0fe5f7af3d0f6139952b9b5ac09481ccd94'
+    head = 'c892656e3efd5459d782d97cba9cb046a73c7facc12e6849b804a7af7a600949' \
+           '7d554ec1e3f9b191b1cdd512fb5d4b0c256cea3d3bd1475cf1f61a60f74cc4ed'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -61,10 +62,11 @@ def test_get_states_with_all_parameters():
         '--reverse',
     ])
 
-    expected_address = json.loads(result.output).get('result')[0].get('address')
+    result_state_address = json.loads(result.output).get('result')
+    single_state_address = result_state_address[0]
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_address == ADDRESS_WITH_STATE
+    assert single_state_address.get('address') == ADDRESS_WITH_STATE
 
 
 def test_get_states_with_address():
@@ -82,10 +84,11 @@ def test_get_states_with_address():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    expected_address = json.loads(result.output).get('result')[0].get('address')
+    result_state_address = json.loads(result.output).get('result')
+    single_state_address = result_state_address[0]
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_address == ADDRESS_WITH_STATE
+    assert single_state_address.get('address') == ADDRESS_WITH_STATE
 
 
 @pytest.mark.parametrize('flag', ['address', 'start'])
@@ -159,10 +162,11 @@ def test_get_states_with_start():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_data = json.loads(result.output).get('result')[0]
+    result_state_address = json.loads(result.output).get('result')
+    first_state_address = result_state_address[0]
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert result_data
+    assert first_state_address.get('address') == ADDRESS_WITH_STATE
 
 
 def test_get_states_with_limit():
@@ -170,20 +174,22 @@ def test_get_states_with_limit():
     Case: get a list of states by limit.
     Expect: list of states is returned.
     """
+    limit = 1
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'state',
         'get-list',
         '--limit',
-        1,
+        limit,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_data = json.loads(result.output).get('result')[0]
+    single_state_result = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert result_data
+    assert len(single_state_result) == limit
 
 
 def test_get_states_with_invalid_limit():
@@ -243,7 +249,7 @@ def test_get_states_with_non_existing_limit():
 def test_get_states_with_reverse():
     """
     Case: get a list of states by reverse.
-    Expect: reverse list of a states are returned.
+    Expect: reverse list of states is returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -254,10 +260,11 @@ def test_get_states_with_reverse():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_data = json.loads(result.output).get('result')[0]
+    result_reverse_states = json.loads(result.output).get('result')
+    first_reverse_state = result_reverse_states[0]
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert result_data
+    assert first_reverse_state
 
 
 def test_get_states_without_node_url(mocker):
@@ -283,10 +290,10 @@ def test_get_states_without_node_url(mocker):
         'get-list',
     ])
 
-    result_data = json.loads(result.output).get('result')
+    result_states = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert expected_result.get('data') == result_data
+    assert expected_result.get('data') == result_states
 
 
 def test_get_states_non_existing_node_url():

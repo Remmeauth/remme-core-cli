@@ -15,7 +15,7 @@ from cli.state.forms import (
     GetStateListForm,
 )
 from cli.state.help import (
-    STATES_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
+    STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
     STATES_HEAD_ARGUMENT_HELP_MESSAGE,
     STATES_LIMIT_ARGUMENT_HELP_MESSAGE,
     STATES_REVERSE_ARGUMENT_HELP_MESSAGE,
@@ -37,7 +37,7 @@ def state_command():
     pass
 
 
-@click.option('--address', required=True, type=str, help=STATES_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', required=True, type=str, help=STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @state_command.command('get')
 def get_state(address, node_url):
@@ -69,7 +69,7 @@ def get_state(address, node_url):
     print_result(result=result)
 
 
-@click.option('--address', required=False, type=str, help=STATES_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--address', required=False, type=str, help=STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--start', required=False, type=str, help=STATES_START_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--limit', required=False, type=int, help=STATES_LIMIT_ARGUMENT_HELP_MESSAGE)
 @click.option('--head', required=False, type=str, help=STATES_HEAD_ARGUMENT_HELP_MESSAGE)
