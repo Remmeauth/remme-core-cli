@@ -36,7 +36,7 @@ def node_commands():
 @node_commands.command('get-configs')
 def get_config(node_url):
     """
-    Get node configurations.
+    Get the node configurations.
     """
     arguments, errors = GetNodeConfigurationsForm().load({
         'node_url': node_url,
