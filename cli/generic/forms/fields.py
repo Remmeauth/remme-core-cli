@@ -1,5 +1,8 @@
 """
 Provide implementation of the generic form fields.
+
+References:
+    - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
 """
 import re
 
@@ -24,9 +27,6 @@ from cli.constants import (
 class AccountAddressField(fields.Field):
     """
     Implements validation of the account address.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -44,9 +44,6 @@ class AccountAddressField(fields.Field):
 class FamilyNameField(fields.Field):
     """
     Implements validation of the family name.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -62,9 +59,6 @@ class FamilyNameField(fields.Field):
 class TransactionIdentifiersListField(fields.Field):
     """
     Implements validation of the list of the identifiers.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -87,9 +81,6 @@ class TransactionIdentifiersListField(fields.Field):
 class TransactionIdentifierField(fields.Field):
     """
     Implements validation of the identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -105,9 +96,6 @@ class TransactionIdentifierField(fields.Field):
 class BatchIdentifiersListField(fields.Field):
     """
     Implements validation of the list of the identifiers.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -130,9 +118,6 @@ class BatchIdentifiersListField(fields.Field):
 class BatchIdentifierField(fields.Field):
     """
     Implements validation of the identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -152,9 +137,6 @@ class NodeUrlField(fields.Field):
     Implements validation of the node URL.
 
     If node URL is localhost, it means client didn't passed any URL, so nothing to validate.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -178,9 +160,6 @@ class NodeUrlField(fields.Field):
 class PrivateKeyField(fields.Field):
     """
     Implements validation of the private key.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -198,9 +177,6 @@ class PrivateKeyField(fields.Field):
 class PublicKeyAddressField(fields.Field):
     """
     Implements validation of the public key address.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -218,9 +194,6 @@ class PublicKeyAddressField(fields.Field):
 class SwapIdentifierField(fields.Field):
     """
     Implements validation of the swap identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -238,9 +211,6 @@ class SwapIdentifierField(fields.Field):
 class BlockIdentifierField(fields.Field):
     """
     Implements validation of the block identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -258,9 +228,6 @@ class BlockIdentifierField(fields.Field):
 class BlockIdentifiersListField(fields.Field):
     """
     Implements validation of the list of block identifiers.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
