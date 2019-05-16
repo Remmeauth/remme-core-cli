@@ -12,6 +12,7 @@ from cli.block.forms import (
 )
 from cli.block.help import (
     BLOCK_IDENTIFIER_ARGUMENT_HELP_MESSAGE,
+    BLOCKS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE,
     BLOCKS_HEAD_ARGUMENT_HELP_MESSAGE,
     BLOCKS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
     BLOCKS_LIMIT_ARGUMENT_HELP_MESSAGE,
@@ -41,7 +42,7 @@ def block_commands():
 @click.option('--limit', required=False, type=int, help=BLOCKS_LIMIT_ARGUMENT_HELP_MESSAGE)
 @click.option('--head', required=False, type=str, help=BLOCKS_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--reverse', required=False, is_flag=True, help=BLOCKS_REVERSE_ARGUMENT_HELP_MESSAGE)
-@click.option('--ids-only', required=False, is_flag=True, help=BLOCKS_REVERSE_ARGUMENT_HELP_MESSAGE)
+@click.option('--ids-only', required=False, is_flag=True, help=BLOCKS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @block_commands.command('get-list')
 def get_blocks(ids, head, limit, reverse, ids_only, node_url):

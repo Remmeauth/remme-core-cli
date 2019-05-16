@@ -315,6 +315,28 @@ def test_get_blocks_with_invalid_limit():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
+def test_get_blocks_identifiers():
+    """
+    Case: get a list of blocks' identifiers.
+    Expect: a list of blocks' identifiers is returned.
+    """
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'block',
+        'get-list',
+        '--ids-only',
+        '--node-url',
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    blocks = json.loads(result.output).get('result')
+
+    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+
+    for block_identifier in blocks:
+        assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
+
+
 def test_get_blocks_invalid_node_url():
     """
     Case: get a list of blocks by passing invalid node URL.
