@@ -15,6 +15,7 @@ from cli.batch.help import (
     BATCH_HEAD_ARGUMENT_HELP_MESSAGE,
     BATCH_ID_ARGUMENT_HELP_MESSAGE,
     BATCH_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
+    BATCH_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE,
     BATCH_LIMIT_ARGUMENT_HELP_MESSAGE,
     BATCH_REVERSE_ARGUMENT_HELP_MESSAGE,
     BATCH_START_ARGUMENT_HELP_MESSAGE,
@@ -109,9 +110,10 @@ def get_batch_status(id, node_url):
 @click.option('--limit', required=False, type=int, help=BATCH_LIMIT_ARGUMENT_HELP_MESSAGE)
 @click.option('--head', required=False, type=str, help=BATCH_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--reverse', required=False, is_flag=True, help=BATCH_REVERSE_ARGUMENT_HELP_MESSAGE)
+@click.option('--ids-only', required=False, is_flag=True, help=BATCH_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @batch_commands.command('get-list')
-def get_batches(ids, start, limit, head, reverse, node_url):
+def get_batches(ids, start, limit, head, reverse, ids_only, node_url):
     """
     Get a list of batches.
     """
@@ -121,6 +123,7 @@ def get_batches(ids, start, limit, head, reverse, node_url):
         'limit': limit,
         'head': head,
         'reverse': reverse,
+        'ids_only': ids_only,
         'node_url': node_url,
     })
 
@@ -132,19 +135,29 @@ def get_batches(ids, start, limit, head, reverse, node_url):
     start = arguments.get('start')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    ids_only = arguments.get('ids_only')
     node_url = arguments.get('node_url')
 
     remme = Remme(network_config={
         'node_address': str(node_url) + ':8080',
     })
 
-    result, errors = Batch(service=remme).get_list(
-        ids=batch_ids,
-        start=start,
-        limit=limit,
-        head=head,
-        reverse=reverse,
-    )
+    if ids_only:
+        result, errors = Batch(service=remme).get_list_ids(
+            ids=batch_ids,
+            start=start,
+            limit=limit,
+            head=head,
+            reverse=reverse,
+        )
+    else:
+        result, errors = Batch(service=remme).get_list(
+            ids=batch_ids,
+            start=start,
+            limit=limit,
+            head=head,
+            reverse=reverse,
+        )
 
     if errors is not None:
         print_errors(errors=errors)
