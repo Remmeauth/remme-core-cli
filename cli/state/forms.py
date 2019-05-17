@@ -29,7 +29,6 @@ class GetStateListForm(Schema):
     """
 
     address = AccountAddressField(allow_none=True, required=False)
-    start = AccountAddressField(allow_none=True, required=False)
     head = StateIdentifierField(allow_none=True, required=False)
     limit = fields.Integer(
         allow_none=True,

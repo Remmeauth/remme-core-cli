@@ -39,7 +39,7 @@ def test_get_states():
 
 def test_get_states_with_all_parameters():
     """
-    Case: get a list of states by account address, starting address, limit, head, reverse.
+    Case: get a list of states by account address, limit, head, reverse.
     Expect: list of states is returned.
     """
     head = 'c892656e3efd5459d782d97cba9cb046a73c7facc12e6849b804a7af7a600949' \
@@ -50,8 +50,6 @@ def test_get_states_with_all_parameters():
         'state',
         'get-list',
         '--address',
-        ADDRESS_WITH_STATE,
-        '--start',
         ADDRESS_WITH_STATE,
         '--limit',
         1,
@@ -91,10 +89,9 @@ def test_get_states_with_address():
     assert single_state_address.get('address') == ADDRESS_WITH_STATE
 
 
-@pytest.mark.parametrize('flag', ['address', 'start'])
-def test_get_states_with_invalid_address_start(flag):
+def test_get_states_with_invalid_address():
     """
-    Case: get a list of states by its invalid address and account address starting from.
+    Case: get a list of states by its invalid address.
     Expect: the following address is invalid error message.
     """
     invalid_address = '044c7db163cf2'
@@ -103,7 +100,7 @@ def test_get_states_with_invalid_address_start(flag):
     result = runner.invoke(cli, [
         'state',
         'get-list',
-        '--' + flag,
+        '--address',
         invalid_address,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
@@ -111,7 +108,7 @@ def test_get_states_with_invalid_address_start(flag):
 
     expected_error_message = {
         'errors': {
-            flag: [
+            'address': [
                 f'The following address `{invalid_address}` is invalid.',
             ],
         },
@@ -121,10 +118,9 @@ def test_get_states_with_invalid_address_start(flag):
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-@pytest.mark.parametrize('flag', ['--address', '--start'])
-def test_get_states_with_non_existing_address_start(flag):
+def test_get_states_with_non_existing_address():
     """
-    Case: get a list of states by its non-existing address and account address starting from.
+    Case: get a list of states by its non-existing address.
     Expect: block not found error message.
     """
     non_existing_address = '0000000000000000000000000000000000000000000000000000000000100000000031'
@@ -133,7 +129,7 @@ def test_get_states_with_non_existing_address_start(flag):
     result = runner.invoke(cli, [
         'state',
         'get-list',
-        flag,
+        '--address',
         non_existing_address,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
@@ -145,28 +141,6 @@ def test_get_states_with_non_existing_address_start(flag):
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error_message) in result.output
-
-
-def test_get_states_with_start():
-    """
-    Case: get a list of states by account address starting from.
-    Expect: list of states is returned.
-    """
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'state',
-        'get-list',
-        '--start',
-        ADDRESS_WITH_STATE,
-        '--node-url',
-        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
-    ])
-
-    result_state_address = json.loads(result.output).get('result')
-    first_state_address = result_state_address[0]
-
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert first_state_address.get('address') == ADDRESS_WITH_STATE
 
 
 def test_get_states_with_limit():
