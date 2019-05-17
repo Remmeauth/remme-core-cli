@@ -15,4 +15,4 @@ class GetReceiptsForm(Schema):
     """
 
     ids = TransactionIdentifiersListField(required=True)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)

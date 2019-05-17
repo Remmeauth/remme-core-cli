@@ -15,4 +15,4 @@ class GetStateForm(Schema):
     """
 
     address = AccountAddressField(required=True)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)

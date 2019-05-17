@@ -33,7 +33,7 @@ class GetTransactionsListForm(Schema):
     )
     reverse = fields.Boolean(required=False)
     family_name = FamilyNameField(allow_none=True, required=False)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetTransactionForm(Schema):
@@ -42,4 +42,4 @@ class GetTransactionForm(Schema):
     """
 
     id = TransactionIdentifierField(allow_none=True, required=True)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)

@@ -15,7 +15,7 @@ class GetAtomicSwapInformationForm(Schema):
     """
 
     id = SwapIdentifierField(required=True)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetAtomicSwapPublicKeyForm(Schema):
@@ -23,4 +23,4 @@ class GetAtomicSwapPublicKeyForm(Schema):
     Get the public key of the atomic swap form.
     """
 
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
