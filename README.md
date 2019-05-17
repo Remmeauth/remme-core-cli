@@ -972,8 +972,10 @@ $ docker exec -it remme-core-cli bash
 And now being in the container, you can develop the project. For instance, run tests and linters:
 
 ```bash
-$ pytest -vv tests/
+$ coverage run -m pytest -vv tests
+$ coverage report -m && coverage xml
 $ flake8 cli && flake8 tests/
+$ bash <(curl -s https://linters.io/isort-diff) cli tests
 ```
 
 When you have developed new functionality, check it with the following command. This command creates the ``Python package``
