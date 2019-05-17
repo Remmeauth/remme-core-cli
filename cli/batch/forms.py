@@ -48,5 +48,6 @@ class GetBatchesListForm(Schema):
             validate.Range(min=1, error='Limit must be greater than 0.'),
         ],
     )
+    reverse = fields.Boolean(required=False)
     ids_only = fields.Boolean(required=False)
     node_url = NodeUrlField(required=False)

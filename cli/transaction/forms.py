@@ -31,6 +31,7 @@ class GetTransactionsListForm(Schema):
             validate.Range(min=1, error='Limit must be greater than 0.'),
         ],
     )
+    reverse = fields.Boolean(required=False)
     family_name = FamilyNameField(allow_none=True, required=False)
     node_url = NodeUrlField(required=False)
 

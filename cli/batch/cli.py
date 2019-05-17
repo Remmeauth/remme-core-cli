@@ -144,19 +144,11 @@ def get_batches(ids, start, limit, head, reverse, ids_only, node_url):
 
     if ids_only:
         result, errors = Batch(service=remme).get_list_ids(
-            ids=batch_ids,
-            start=start,
-            limit=limit,
-            head=head,
-            reverse=reverse,
+            ids=batch_ids, start=start, limit=limit, head=head, reverse=reverse,
         )
     else:
         result, errors = Batch(service=remme).get_list(
-            ids=batch_ids,
-            start=start,
-            limit=limit,
-            head=head,
-            reverse=reverse,
+            ids=batch_ids, start=start, limit=limit, head=head, reverse=reverse,
         )
 
     if errors is not None:
