@@ -72,3 +72,28 @@ class Block:
             return None, str(error)
 
         return blocks.get('data'), None
+
+    def get_list_ids(self, ids, head, limit, reverse):
+        """
+        Get a list of blocks identifiers.
+
+        A list of blocks identifiers could be filtered by blocks identifiers, limit, head, reverse.
+
+        Arguments:
+            ids (list, optional): identifiers to get a list of blocks by.
+            limit (int, optional): maximum amount of blocks to return.
+            head (string, optional): block identifier to get a list of transactions to.
+            reverse (bool, optional): parameter to reverse result.
+        """
+        blocks, errors = self.get_list(ids=ids, head=head, limit=limit, reverse=reverse)
+
+        if errors is not None:
+            return None, errors
+
+        blocks_identifiers = []
+
+        for block in blocks:
+            block_identifier = block.get('header_signature')
+            blocks_identifiers.append(block_identifier)
+
+        return blocks_identifiers, None

@@ -93,3 +93,27 @@ class Batch:
             return None, str(error)
 
         return batches.get('data'), None
+
+    def get_list_ids(self, ids, start, limit, head, reverse):
+        """
+        Get a list of batches' identifiers.
+
+        Arguments:
+            ids (list, optional): identifiers to get a list of batches by.
+            start (string, optional): batch identifier to get a list of batches starting from.
+            limit (int, optional): maximum amount of batches to return.
+            head (string, optional): block identifier to get a list of batches from.
+            reverse (bool, optional): parameter to reverse result.
+        """
+        batches, errors = self.get_list(ids=ids, start=start, head=head, limit=limit, reverse=reverse)
+
+        if errors is not None:
+            return None, errors
+
+        batch_identifiers = []
+
+        for batch in batches:
+            batch_identifier = batch.get('header_signature')
+            batch_identifiers.append(batch_identifier)
+
+        return batch_identifiers, None

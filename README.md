@@ -243,6 +243,7 @@ Get a list of blocks — ``remme block get-list``:
 | ids         | String  |  No       | Identifiers to get a list of blocks by.            |
 | limit       | Integer |  No       | Maximum amount of blocks to return.                |
 | head        | Integer |  No       | Block identifier to get a list of transactions to. |
+| ids-only    | Bool    |  No       | The flag to get a list of blocks' identifiers.     |
 | reverse     | Bool    |  No       | Parameter to reverse result.                       |
 | node-url    | String  |  No       | Node URL to apply a command to.                    |
 
@@ -309,6 +310,19 @@ $ remme block get-list \
         ...
     ]
 }      
+```
+
+Get a list of blocks' identifiers (can be combined with other parameters like `--limit`):
+
+```bash
+$ remme block get-list --ids-only --node-url=node-6-testnet.remme.io
+{
+    "result": [
+        "b757c74fbcd57ae12577b71490878affb6b688434c2e20170138760e72e937ca1bb3d6773e2ef37b5151ed74dcb663114a181072e0870e7a4d452c58659a6dbb",
+        "585f23725d1236e90e2b961b0c0c1404aba0ba5a96e4d85cd2f048b1d61b027669153e3618c84fc09a8041f8e149b97d50a89ee7761d0458cd57c63d5f354cbd",
+        ...
+    ]
+}
 ```
 
 Get information about the block by its identifier — ``remme block get``:
@@ -530,6 +544,7 @@ Get a list of batches — ``remme batch get-list``:
 | limit       | Integer|  No       | Maximum amount of batches to return.                    |
 | head        | String |  No       | Block identifier to get a list of batches from.         |
 | reverse     | Bool   |  No       | Parameter to reverse result.                            |
+| ids-only    | Bool   |  No       | The flag to get a list of batches' identifiers.         |
 | node-url    | String |  No       | Node URL to apply a command to.                         |
 
 ```bash
@@ -577,7 +592,19 @@ $ remme batch get-list \
         }
     ]
 }
+```
 
+Get a list of batches' identifiers (can be combined with other parameters like `--limit`):
+
+```bash
+$ remme batch get-list --ids-only --node-url=node-6-testnet.remme.io
+{
+    "result": [
+        "e4d5089f2ef1...6b0f185b3b6ca",
+        "df5e555f...317f039501",
+        ...
+    ]
+}
 ```
 
 ### Node
