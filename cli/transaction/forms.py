@@ -32,14 +32,15 @@ class GetTransactionsListForm(Schema):
         ],
     )
     reverse = fields.Boolean(required=False)
+    ids_only = fields.Boolean(required=False)
     family_name = FamilyNameField(allow_none=True, required=False)
     node_url = NodeUrlField(required=True)
 
 
 class GetTransactionForm(Schema):
     """
-    Get transaction form.
+    Get transaction by its identifier form.
     """
 
-    id = TransactionIdentifierField(allow_none=True, required=True)
+    id = TransactionIdentifierField(required=True)
     node_url = NodeUrlField(required=True)

@@ -19,7 +19,7 @@ class GetBatchForm(Schema):
     Get a batch by its identifier form.
     """
 
-    id = BatchIdentifierField(allow_none=False, required=True)
+    id = BatchIdentifierField(required=True)
     node_url = NodeUrlField(required=True)
 
 
