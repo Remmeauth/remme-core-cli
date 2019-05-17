@@ -17,7 +17,7 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_get_list_transactions_with_all_parameters(mocker):
+def test_get_transactions_with_all_parameters(mocker):
     """
     Case: get a list transactions by identifier, identifier starting from, limit, head, family name, reverse.
     Expect: transactions is returned from a node on localhost.
@@ -77,7 +77,7 @@ def test_get_list_transactions_with_all_parameters(mocker):
     assert expected_result == json.loads(result.output).get('result')
 
 
-def test_get_list_transactions_with_ids():
+def test_get_transactions_with_ids():
     """
     Case: get a list of transactions by identifiers.
     Expect: transactions are returned.
@@ -108,7 +108,7 @@ def test_get_list_transactions_with_ids():
         assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_with_invalid_ids():
+def test_get_transactions_with_invalid_ids():
     """
     Case: get a list of transactions by invalid identifiers.
     Expect: the following identifier is not valid error message.
@@ -140,7 +140,7 @@ def test_get_list_transactions_with_invalid_ids():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_start():
+def test_get_transactions_with_start():
     """
     Case: get a list transactions by transaction identifier starting from.
     Expect: transactions are returned.
@@ -170,7 +170,7 @@ def test_get_list_transactions_with_start():
         assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_with_reverse():
+def test_get_transactions_with_reverse():
     """
     Case: get a list transactions by reverse.
     Expect: reverse list transactions are returned.
@@ -194,7 +194,7 @@ def test_get_list_transactions_with_reverse():
         assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_by_head():
+def test_get_transactions_by_head():
     """
     Case: get a list transactions by block identifier.
     Expect: transactions are returned.
@@ -247,7 +247,7 @@ def test_get_transactions_identifiers():
 
 
 @pytest.mark.parametrize('command_flag', ('--start', '--head'))
-def test_get_list_transactions_with_invalid_start_head(command_flag):
+def test_get_transactions_with_invalid_start_head(command_flag):
     """
     Case: get a list transactions by invalid block identifier and transaction identifier starting from.
     Expect: the following identifier is not valid error message.
@@ -276,7 +276,7 @@ def test_get_list_transactions_with_invalid_start_head(command_flag):
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_limit():
+def test_get_transactions_with_limit():
     """
     Case: get a list transactions by limit.
     Expect: transactions are returned.
@@ -304,7 +304,7 @@ def test_get_list_transactions_with_limit():
         assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_with_invalid_limit():
+def test_get_transactions_with_invalid_limit():
     """
     Case: get a list transactions by invalid limit.
     Expect: the following limit should be a positive error message.
@@ -333,7 +333,7 @@ def test_get_list_transactions_with_invalid_limit():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_family_name():
+def test_get_transactions_with_family_name():
     """
     Case: get a list transactions by family name.
     Expect: transactions are returned.
@@ -362,7 +362,7 @@ def test_get_list_transactions_with_family_name():
         assert family_name == transaction_family_name
 
 
-def test_get_list_transactions_with_invalid_family_name():
+def test_get_transactions_with_invalid_family_name():
     """
     Case: get a list transactions by invalid family name.
     Expect: the following family name is not valid error message.
@@ -391,7 +391,7 @@ def test_get_list_transactions_with_invalid_family_name():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_invalid_node_url():
+def test_get_transactions_with_invalid_node_url():
     """
     Case: get a list of transactions by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
@@ -417,7 +417,7 @@ def test_get_list_transactions_with_invalid_node_url():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_without_node_url(mocker):
+def test_get_transactions_without_node_url(mocker):
     """
     Case: get a list transactions by identifier without passing node URL.
     Expect: transactions are returned from a node on localhost.
@@ -470,7 +470,7 @@ def test_get_list_transactions_without_node_url(mocker):
 
 
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
-def test_get_list_transactions_node_url_with_protocol(node_url_with_protocol):
+def test_get_transactions_node_url_with_protocol(node_url_with_protocol):
     """
     Case: get list transactions by passing node URL with an explicit protocol.
     Expect: the following node URL contains a protocol error message.

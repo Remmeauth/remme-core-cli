@@ -28,7 +28,7 @@ VALID_BLOCK_IDENTIFIER = 'afb21d7012d9a65f8bf35bfa8fd648757ece23e7687f16b1254957
                          '1c1bdbbce01984ad73a12277dedfd0fe5f7af3d0f6139952b9b5ac09481ccd94'
 
 
-def test_get_list_batches_with_all_parameters():
+def test_get_batches_with_all_parameters():
     """
     Case: get a list of batches by identifiers, identifier starting from, limit, head, reverse.
     Expect: batches are returned from a node on localhost.
@@ -60,7 +60,7 @@ def test_get_list_batches_with_all_parameters():
         assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
-def test_get_list_batches_with_ids():
+def test_get_batches_with_ids():
     """
     Case: get a list of batches by identifiers.
     Expect: batches with specified identifiers are returned.
@@ -108,7 +108,7 @@ def test_get_batches_identifiers():
         assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
-def test_get_list_batches_with_invalid_ids():
+def test_get_batches_with_invalid_ids():
     """
     Case: get a list of batches by invalid identifiers.
     Expect: the following identifier is invalid error message.
@@ -140,7 +140,7 @@ def test_get_list_batches_with_invalid_ids():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_batches_with_start():
+def test_get_batches_with_start():
     """
     Case: get a list of batches by batch identifier starting from.
     Expect: batches are returned starting from the batch with an identifier which matches specified start parameter.
@@ -170,7 +170,7 @@ def test_get_list_batches_with_start():
         assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
-def test_get_list_batches_with_reverse():
+def test_get_batches_with_reverse():
     """
     Case: get a list of batches by reverse.
     Expect: reversed list of batches is returned.
@@ -194,7 +194,7 @@ def test_get_list_batches_with_reverse():
         assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
-def test_get_list_batches_by_head():
+def test_get_batches_by_head():
     """
     Case: get a list of batches by block identifier.
     Expect: batches from the specified block are returned.
@@ -213,7 +213,7 @@ def test_get_list_batches_by_head():
 
 
 @pytest.mark.parametrize('command_flag', ('--start', '--head', '--ids'))
-def test_get_list_batches_by_non_existing_start_head_ids(command_flag):
+def test_get_batches_by_non_existing_start_head_ids(command_flag):
     """
     Case: get a list of batches by non-existing batch identifier, block identifier and batch identifier starting from.
     Expect: list of batches not found error message.
@@ -240,7 +240,7 @@ def test_get_list_batches_by_non_existing_start_head_ids(command_flag):
 
 
 @pytest.mark.parametrize('command_flag', ('--start', '--head', '--ids'))
-def test_get_list_batches_with_invalid_start_head_ids(command_flag):
+def test_get_batches_with_invalid_start_head_ids(command_flag):
     """
     Case: get a list of batches by invalid batch identifier, block identifier and batch identifier starting from.
     Expect: the following identifier is invalid error message.
@@ -269,7 +269,7 @@ def test_get_list_batches_with_invalid_start_head_ids(command_flag):
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_batches_with_limit():
+def test_get_batches_with_limit():
     """
     Case: get a list of batches by limit.
     Expect: batch is returned.
@@ -297,7 +297,7 @@ def test_get_list_batches_with_limit():
         assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
-def test_get_list_batches_with_negative_limit():
+def test_get_batches_with_negative_limit():
     """
     Case: get a list of batches limiting by a negative number.
     Expect: limit must be greater than 0 error message.
@@ -326,7 +326,7 @@ def test_get_list_batches_with_negative_limit():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_batches_with_invalid_limit():
+def test_get_batches_with_invalid_limit():
     """
     Case: get a list of batches limiting by an invalid number.
     Expect: invalid limit count error message.
@@ -351,7 +351,7 @@ def test_get_list_batches_with_invalid_limit():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_list_batches_with_invalid_node_url():
+def test_get_batches_with_invalid_node_url():
     """
     Case: get a list of batches by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
@@ -380,7 +380,7 @@ def test_get_list_batches_with_invalid_node_url():
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_list_batches_without_node_url(mocker):
+def test_get_batches_without_node_url(mocker):
     """
     Case: get a list of batches by identifier without passing node URL.
     Expect: batches are returned from a node on localhost.
@@ -446,7 +446,7 @@ def test_get_list_batches_without_node_url(mocker):
 
 
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
-def test_get_list_batches_node_url_with_protocol(node_url_with_protocol):
+def test_get_batches_node_url_with_protocol(node_url_with_protocol):
     """
     Case: get a list of batches by passing node URL with an explicit protocol.
     Expect: the following node URL contains the protocol error message.
@@ -473,7 +473,7 @@ def test_get_list_batches_node_url_with_protocol(node_url_with_protocol):
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_get_list_batches_with_non_existing_node_url():
+def test_get_batches_with_non_existing_node_url():
     """
     Case: get a list of batches by passing the non-existing node URL.
     Expect: check if node running at the URL error message.

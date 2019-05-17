@@ -160,10 +160,10 @@ Options:
 
 Get balance of the account by its address — ``remme account get-balance``:
 
-| Arguments | Type   |  Required | Description                          |
-| :-------: | :----: | :-------: | ------------------------------------ |
-| address   | String |  Yes      | Account address to get a balance by. |
-| node-url  | String |  No       | Node URL to apply a command to.      |
+| Arguments | Type   | Required | Description                          |
+| :-------: | :----: | :------: | ------------------------------------ |
+| address   | String | Yes      | Account address to get a balance by. |
+| node-url  | String | No       | Node URL to apply a command to.      |
 
 ```bash
 $ remme account get-balance \
@@ -178,12 +178,12 @@ $ remme account get-balance \
 
 Transfer tokens to address — ``remme account transfer-tokens``:
 
-| Arguments   | Type    |  Required | Description                                    |
-| :---------: | :-----: | :-------: | ---------------------------------------------- |
-| private-key | String  |  Yes      | Account's private key to transfer tokens from. |
-| address-to  | String  |  Yes      | Account address to transfer tokens to.         |
-| amount      | Integer |  Yes      | Amount to transfer.                            |
-| node-url    | String  |  No       | Node URL to apply a command to.                |
+| Arguments   | Type    | Required | Description                                    |
+| :---------: | :-----: | :------: | ---------------------------------------------- |
+| private-key | String  | Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  | Yes      | Account address to transfer tokens to.         |
+| amount      | Integer | Yes      | Amount to transfer.                            |
+| node-url    | String  | No       | Node URL to apply a command to.                |
 
 ```bash
 $ remme account transfer-tokens \
@@ -202,10 +202,10 @@ $ remme account transfer-tokens \
 
 Get information about the node account by its address — ``remme node-account get``:
 
-| Arguments   | Type   | Required | Description                                                    |
-| :---------: | :----: | :------: | -------------------------------------------------------------- |
-| address     | String | Yes      | Node account address to get information about node account by. |
-| node-url    | String | No       | Node URL to apply a command to.                                |
+| Arguments | Type   | Required | Description                                                    |
+| :-------: | :----: | :------: | -------------------------------------------------------------- |
+| address   | String | Yes      | Node account address to get information about node account by. |
+| node-url  | String | No       | Node URL to apply a command to.                                |
 
 ```bash
 $ remme node-account get \
@@ -238,14 +238,14 @@ $ remme node-account get \
 
 Get a list of blocks — ``remme block get-list``:
 
-| Arguments   | Type    |  Required | Description                                        |
-| :---------: | :-----: | :-------: | -------------------------------------------------- |
-| ids         | String  |  No       | Identifiers to get a list of blocks by.            |
-| limit       | Integer |  No       | Maximum amount of blocks to return.                |
-| head        | Integer |  No       | Block identifier to get a list of transactions to. |
-| ids-only    | Bool    |  No       | The flag to get a list of blocks' identifiers.     |
-| reverse     | Bool    |  No       | Parameter to reverse result.                       |
-| node-url    | String  |  No       | Node URL to apply a command to.                    |
+| Arguments | Type    | Required | Description                                        |
+| :-------: | :-----: | :------: | -------------------------------------------------- |
+| ids       | String  | No       | Identifiers to get a list of blocks by.            |
+| limit     | Integer | No       | Maximum amount of blocks to return.                |
+| head      | Integer | No       | Block identifier to get a list of transactions to. |
+| ids-only  | Bool    | No       | The flag to get a list of blocks' identifiers.     |
+| reverse   | Bool    | No       | Parameter to reverse result.                       |
+| node-url  | String  | No       | Node URL to apply a command to.                    |
 
 ```bash
 $ remme block get-list \
@@ -327,10 +327,10 @@ $ remme block get-list --ids-only --node-url=node-6-testnet.remme.io
 
 Get information about the block by its identifier — ``remme block get``:
 
-| Arguments | Type   |  Required | Description                                            |
-| :-------: | :----: | :-------: | ------------------------------------------------------ |
-| id        | String |  Yes      | Identifier of the block to fetch information about by. |
-| node-url  | String |  No       | Node URL to apply a command to.                        |
+| Arguments | Type   | Required | Description                                            |
+| :-------: | :----: | :------: | ------------------------------------------------------ |
+| id        | String | Yes      | Identifier of the block to fetch information about by. |
+| node-url  | String | No       | Node URL to apply a command to.                        |
 
 ```bash
 $ remme block get \
@@ -473,10 +473,10 @@ $ remme atomic-swap get-info \
 
 Get a batch by identifier — ``remme batch get``:
 
-| Arguments   | Type   |  Required | Description                       |
-| :-------:   | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get a batch by.     |
-| node-url    | String |  No       | Node URL to apply a command to.   |
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| id        | String | Yes      | Identifier to get a batch by.   |
+| node-url  | String | No       | Node URL to apply a command to. |
 
 ```bash
 $ remme batch get \
@@ -521,10 +521,10 @@ $ remme batch get \
 
 Get a batch status by its identifier — ``remme batch get-status``:
 
-| Arguments   | Type   |  Required | Description                          |
-| :---------: | :----: | :-------: | ------------------------------------ |
-| id          | String |  Yes      | Identifier to get a batch status by. |
-| node-url    | String |  No       | Node URL to apply a command to.      |
+| Arguments | Type   | Required | Description                          |
+| :-------: | :----: | :------: | ------------------------------------ |
+| id        | String | Yes      | Identifier to get a batch status by. |
+| node-url  | String | No       | Node URL to apply a command to.      |
 
 ```bash
 $ remme batch get-status \
@@ -537,15 +537,15 @@ $ remme batch get-status \
 
 Get a list of batches — ``remme batch get-list``:
 
-| Arguments   | Type   |  Required | Description                                             |
-| :--------:  | :----: | :-------: | -----------------------------------------------------   |
-| ids         | String |  No       | Identifiers to get a list of batches by.                |
-| start       | String |  No       | Batch identifier to get a list of batches starting from.|
-| limit       | Integer|  No       | Maximum amount of batches to return.                    |
-| head        | String |  No       | Block identifier to get a list of batches from.         |
-| reverse     | Bool   |  No       | Parameter to reverse result.                            |
-| ids-only    | Bool   |  No       | The flag to get a list of batches' identifiers.         |
-| node-url    | String |  No       | Node URL to apply a command to.                         |
+| Arguments | Type    | Required | Description                                              |
+| :-------: | :-----: | :------: | -------------------------------------------------------- |
+| ids       | String  | No       | Identifiers to get a list of batches by.                 |
+| start     | String  | No       | Batch identifier to get a list of batches starting from. |
+| limit     | Integer | No       | Maximum amount of batches to return.                     |
+| head      | String  | No       | Block identifier to get a list of batches from.          |
+| reverse   | Bool    | No       | Parameter to reverse result.                             |
+| ids-only  | Bool    | No       | The flag to get a list of batches' identifiers.          |
+| node-url  | String  | No       | Node URL to apply a command to.                          |
 
 ```bash
 $ remme batch get-list \
@@ -600,8 +600,8 @@ Get a list of batches' identifiers (can be combined with other parameters like `
 $ remme batch get-list --ids-only --node-url=node-6-testnet.remme.io
 {
     "result": [
-        "e4d5089f2ef1...6b0f185b3b6ca",
-        "df5e555f...317f039501",
+        "6bd3382e3deef34d0bc63a7b450c88c7ae00152f5168c7b4dc4357feff6d52175209919cd0710441fa2768f4c12adf97143440ef8414bb5144b9459d78ff3e0e",
+        "7a5daba99d5757adc997ea6a0b1b83263b3c16604dbd83c0153dc01c9fd780af4b570338c2ec60e086b1db58a4397a4dc661d6c93b0a7250fe75642e15b26e81",
         ...
     ]
 }
@@ -609,11 +609,11 @@ $ remme batch get-list --ids-only --node-url=node-6-testnet.remme.io
 
 ### Node
 
-Get node configurations — ``remme node get-configs``:
+Get the node configurations — ``remme node get-configs``:
 
-| Arguments | Type   |  Required | Description                     |
-| :-------: | :----: | :-------: | ------------------------------- |
-| node-url  | String |  No       | Node URL to apply a command to. |
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
 
 ```bash
 $ remme node get-configs --node-url=node-genesis-testnet.remme.io
@@ -629,9 +629,9 @@ $ remme node get-configs --node-url=node-genesis-testnet.remme.io
 
 Get the node's peers — ``remme node get-peers``:
 
-| Arguments | Type   |  Required | Description                     |
-| :-------: | :----: | :-------: | ------------------------------- |
-| node-url  | String |  No       | Node URL to apply a command to. |
+| Arguments | Type   | Required | Description                     |
+| :-------: | :----: | :------: | ------------------------------- |
+| node-url  | String | No       | Node URL to apply a command to. |
 
 ```bash
 $ remme node get-peers --node-url=node-genesis-testnet.remme.io
@@ -754,13 +754,13 @@ $ remme state get \
 
 Get a list of states — ``remme state get-list``:
 
-| Arguments   | Type   |  Required | Description                                            |
-| :---------: | :----: | :-------: | -----------------------------------------------------  |
-| address     | String |  No       | Account address to get a list of states by.            |
-| limit       | Integer|  No       | Maximum amount of transactions to return.              |
-| head        | String |  No       | Block identifier to get a list of states to.           | 
-| reverse     | Bool   |  No       | Parameter to reverse result.                           |
-| node-url    | String |  No       | Node URL to apply a command to.                        |
+| Arguments | Type    | Required | Description                                  |
+| :-------: | :-----: | :------: | -------------------------------------------- |
+| address   | String  | No       | Account address to get a list of states by.  |
+| limit     | Integer | No       | Maximum amount of transactions to return.    |
+| head      | String  | No       | Block identifier to get a list of states to. | 
+| reverse   | Bool    | No       | Parameter to reverse result.                 |
+| node-url  | String  | No       | Node URL to apply a command to.              |
 
 ```bash
 $ remme state get-list \
@@ -783,16 +783,16 @@ $ remme state get-list \
 
 Get a list of transactions — ``remme transaction get-list``:
 
-| Arguments   | Type   |  Required | Description                                            |
-| :---------: | :----: | :-------: | -----------------------------------------------------  |
-| ids         | String |  No       | Identifiers to get a list of transactions by.          |
-| start       | String |  No       | Transaction identifier to get a list transaction starting from.|
-| limit       | Integer|  No       | Maximum amount of transactions to return.              |
-| head        | String |  No       | Block identifier to get a list of transactions from.   |
-| reverse     | Bool   |  No       | Parameter to reverse result.                           |
-| ids-only    | Bool   |  No       | The flag to get a list of transactions' identifiers.   |
-| node-url    | String |  No       | Node URL to apply a command to.                        |
-| family-name | String |  No       | List of transactions by its family name.               |
+| Arguments   | Type    | Required | Description                                                     |
+| :---------: | :-----: | :------: | --------------------------------------------------------------  |
+| ids         | String  | No       | Identifiers to get a list of transactions by.                   |
+| start       | String  | No       | Transaction identifier to get a list transaction starting from. |
+| limit       | Integer | No       | Maximum amount of transactions to return.                       |
+| head        | String  | No       | Block identifier to get a list of transactions from.            |
+| reverse     | Bool    | No       | Parameter to reverse result.                                    |
+| ids-only    | Bool    | No       | The flag to get a list of transactions' identifiers.            |
+| family-name | String  | No       | List of transactions by its family name.                        |
+| node-url    | String  | No       | Node URL to apply a command to.                                 |
 
 ```bash
 $ remme transaction get-list \
@@ -855,10 +855,10 @@ $ remme transaction get-list --ids-only --node-url=node-6-testnet.remme.io
 
 Get a transaction by identifier — ``remme transaction get``:
 
-| Arguments   | Type   |  Required | Description                       |
-| :---------: | :----: | :-------: | --------------------------------  |
-| id          | String |  Yes      | Identifier to get transaction by. |
-| node-url    | String |  No       | Node URL to apply a command to.   |
+| Arguments | Type   | Required | Description                       |
+| :-------: | :----: | :------: | --------------------------------- |
+| id        | String | Yes      | Identifier to get transaction by. |
+| node-url  | String | No       | Node URL to apply a command to.   |
 
 ```bash
 $ remme transaction get \
