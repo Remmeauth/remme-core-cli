@@ -59,6 +59,24 @@ class FamilyNameField(fields.Field):
         return value
 
 
+class StateIdentifierField(fields.Field):
+    """
+    Implements validation of the state identifier.
+
+    References:
+        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (state identifier) that was passed to field.
+        """
+        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is None:
+            raise ValidationError(f'The following identifier `{value}` is invalid.')
+
+        return value
+
+
 class TransactionIdentifiersListField(fields.Field):
     """
     Implements validation of the list of the identifiers.
