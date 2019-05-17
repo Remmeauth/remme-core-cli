@@ -2,13 +2,15 @@
 Provide tests for command line interface's get a list of states command.
 """
 import json
+import re
 
 import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
+    ADDRESS_REGEXP,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -136,7 +138,7 @@ def test_get_states_with_non_existing_address():
     ])
 
     expected_error_message = {
-        'errors': f'Block not found.',
+        'errors': 'Block not found.',
     }
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -161,8 +163,10 @@ def test_get_states_with_limit():
     ])
 
     single_state_result = json.loads(result.output).get('result')
+    single_state_address = single_state_result[0].get('address')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert re.match(pattern=ADDRESS_WITH_STATE, string=single_state_address) is not None
     assert len(single_state_result) == limit
 
 
@@ -235,10 +239,10 @@ def test_get_states_with_reverse():
     ])
 
     result_reverse_states = json.loads(result.output).get('result')
-    first_reverse_state = result_reverse_states[0]
+    first_reverse_state_address = result_reverse_states[0].get('address')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert first_reverse_state
+    assert re.match(pattern=ADDRESS_REGEXP, string=first_reverse_state_address) is not None
 
 
 def test_get_states_without_node_url(mocker):

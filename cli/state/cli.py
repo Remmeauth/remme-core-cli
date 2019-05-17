@@ -19,7 +19,6 @@ from cli.state.help import (
     STATES_HEAD_ARGUMENT_HELP_MESSAGE,
     STATES_LIMIT_ARGUMENT_HELP_MESSAGE,
     STATES_REVERSE_ARGUMENT_HELP_MESSAGE,
-    STATES_START_ADDRESS_ARGUMENT_HELP_MESSAGE,
 )
 from cli.state.service import State
 from cli.utils import (
