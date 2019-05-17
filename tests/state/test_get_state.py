@@ -8,9 +8,9 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    BLOCK_IDENTIFIER_REGEXP,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    HEADER_SIGNATURE_REGEXP,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -37,7 +37,7 @@ def test_get_state_with_address():
     result_header_signature = json.loads(result.output).get('result').get('state').get('head')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=result_header_signature) is not None
+    assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=result_header_signature) is not None
 
 
 def test_get_state_with_invalid_address():

@@ -14,6 +14,9 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
+BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
+                                              '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
+
 
 def test_get_committed_batch_status():
     """
@@ -97,9 +100,6 @@ def test_get_batch_status_without_node_url(mocker):
     Case: get a batch status by its identifier without passing node URL.
     Expect: batch status is returned from a node on localhost.
     """
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751' \
-
     committed_status = 'COMMITTED'
 
     expected_result = {
@@ -114,7 +114,7 @@ def test_get_batch_status_without_node_url(mocker):
         'batch',
         'get-status',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -127,15 +127,13 @@ def test_get_batch_status_with_invalid_node_url():
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get-status',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         invalid_node_url,
     ])
@@ -158,15 +156,12 @@ def test_get_batch_status_node_url_with_protocol(node_url_with_protocol):
     Case: get batch a status by its identifier by passing node URL with an explicit protocol.
     Expect: the following node URL contains the protocol error message.
     """
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get-status',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         node_url_with_protocol,
     ])
@@ -189,15 +184,13 @@ def test_get_batch_status_with_non_existing_node_url():
     Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get-status',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         non_existing_node_url,
     ])

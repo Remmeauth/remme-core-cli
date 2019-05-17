@@ -13,14 +13,14 @@ from marshmallow import (
 
 from cli.constants import (
     ADDRESS_REGEXP,
+    BATCH_IDENTIFIER_REGEXP,
     BLOCK_IDENTIFIER_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
-    HEADER_SIGNATURE_REGEXP,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
     SWAP_IDENTIFIER_REGEXP,
-    TRANSACTION_HEADER_SIGNATURE_REGEXP,
+    TRANSACTION_IDENTIFIER_REGEXP,
 )
 
 
@@ -72,7 +72,7 @@ class TransactionIdentifiersListField(fields.Field):
         for identifier in value.split(','):
             identifier = identifier.strip()
 
-            if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+            if re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=identifier) is None:
                 raise ValidationError(f'The following identifier `{identifier}` is invalid.')
 
             validated_identifiers.append(identifier)
@@ -91,7 +91,7 @@ class TransactionIdentifierField(fields.Field):
         """
         transaction_identifier = value
 
-        if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is None:
+        if re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is None:
             raise ValidationError(f'The following identifier `{transaction_identifier}` is invalid.')
 
         return transaction_identifier
@@ -111,7 +111,7 @@ class BatchIdentifiersListField(fields.Field):
         for identifier in value.split(','):
             identifier = identifier.strip()
 
-            if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+            if re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=identifier) is None:
                 raise ValidationError(f'The following identifier `{identifier}` is invalid.')
 
             validated_identifiers.append(identifier)
@@ -130,7 +130,7 @@ class BatchIdentifierField(fields.Field):
         """
         batch_identifier = value
 
-        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is None:
+        if re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is None:
             raise ValidationError(f'The following identifier `{batch_identifier}` is invalid.')
 
         return batch_identifier

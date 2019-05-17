@@ -16,6 +16,11 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
+EXISTING_BLOCKS_IDENTIFIERS = 'b757c74fbcd57ae12577b71490878affb6b688434c2e20170138760e72e937ca' \
+                              '1bb3d6773e2ef37b5151ed74dcb663114a181072e0870e7a4d452c58659a6dbb, ' \
+                              '585f23725d1236e90e2b961b0c0c1404aba0ba5a96e4d85cd2f048b1d61b0276' \
+                              '69153e3618c84fc09a8041f8e149b97d50a89ee7761d0458cd57c63d5f354cbd'
+
 
 def test_get_blocks_all_parameters():
     """
@@ -23,11 +28,6 @@ def test_get_blocks_all_parameters():
     Expect: blocks are returned.
     """
     limit = 2
-
-    blocks_ids = 'b757c74fbcd57ae12577b71490878affb6b688434c2e20170138760e72e937ca' \
-                 '1bb3d6773e2ef37b5151ed74dcb663114a181072e0870e7a4d452c58659a6dbb, ' \
-                 '585f23725d1236e90e2b961b0c0c1404aba0ba5a96e4d85cd2f048b1d61b0276' \
-                 '69153e3618c84fc09a8041f8e149b97d50a89ee7761d0458cd57c63d5f354cbd'
 
     head_identifier = '585f23725d1236e90e2b961b0c0c1404aba0ba5a96e4d85cd2f048b1d61b0276' \
                       '69153e3618c84fc09a8041f8e149b97d50a89ee7761d0458cd57c63d5f354cbd'
@@ -37,7 +37,7 @@ def test_get_blocks_all_parameters():
         'block',
         'get-list',
         '--ids',
-        blocks_ids,
+        EXISTING_BLOCKS_IDENTIFIERS,
         '--head',
         head_identifier,
         '--limit',
@@ -91,17 +91,12 @@ def test_get_blocks_with_ids():
     Case: get a list of blocks by its identifiers.
     Expect: blocks with header signatures which matches specified identifiers are returned.
     """
-    blocks_ids = 'b757c74fbcd57ae12577b71490878affb6b688434c2e20170138760e72e937ca' \
-                 '1bb3d6773e2ef37b5151ed74dcb663114a181072e0870e7a4d452c58659a6dbb, ' \
-                 '585f23725d1236e90e2b961b0c0c1404aba0ba5a96e4d85cd2f048b1d61b0276' \
-                 '69153e3618c84fc09a8041f8e149b97d50a89ee7761d0458cd57c63d5f354cbd'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'block',
         'get-list',
         '--ids',
-        blocks_ids,
+        EXISTING_BLOCKS_IDENTIFIERS,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
@@ -114,7 +109,7 @@ def test_get_blocks_with_ids():
         block_identifier = block.get('header_signature')
 
         assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
-        assert block_identifier in blocks_ids
+        assert block_identifier in EXISTING_BLOCKS_IDENTIFIERS
 
 
 def test_get_blocks_invalid_ids():

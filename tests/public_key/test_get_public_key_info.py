@@ -11,9 +11,9 @@ from cli.constants import (
     ADDRESS_REGEXP,
     DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    HEADER_SIGNATURE_REGEXP,
     PASSED_EXIT_FROM_COMMAND_CODE,
     PUBLIC_KEY_REGEXP,
+    TRANSACTION_IDENTIFIER_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -41,7 +41,7 @@ def test_get_public_key_info():
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert re.match(pattern=ADDRESS_REGEXP, string=public_key_info.get('address')) is not None
-    assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=public_key_info.get('entity_hash')) is not None
+    assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=public_key_info.get('entity_hash')) is not None
     assert re.match(pattern=PUBLIC_KEY_REGEXP, string=public_key_info.get('owner_public_key')) is not None
     assert isinstance(public_key_info.get('valid_from'), int)
     assert isinstance(public_key_info.get('valid_to'), int)

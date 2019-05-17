@@ -8,7 +8,7 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    BATCH_ID_REGEXP,
+    BATCH_IDENTIFIER_REGEXP,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
     FAILED_EXIT_FROM_COMMAND_CODE,
@@ -17,6 +17,8 @@ from cli.constants import (
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
+
+ADDRESS_PRESENTED_ON_THE_TEST_NODE = '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202'
 
 
 def test_transfer_tokens():
@@ -31,7 +33,7 @@ def test_transfer_tokens():
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         '1000',
         '--node-url',
@@ -41,7 +43,7 @@ def test_transfer_tokens():
     batch_id = json.loads(result.output).get('result').get('batch_identifier')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert re.match(pattern=BATCH_ID_REGEXP, string=batch_id) is not None
+    assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_id) is not None
 
 
 def test_transfer_tokens_invalid_private_key():
@@ -58,7 +60,7 @@ def test_transfer_tokens_invalid_private_key():
         '--private-key',
         invalid_private_key,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         '1000',
         '--node-url',
@@ -124,7 +126,7 @@ def test_transfer_tokens_invalid_amount():
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         invalid_amount,
         '--node-url',
@@ -148,7 +150,7 @@ def test_transfer_tokens_with_insufficient_amount(insufficient_amount):
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         insufficient_amount,
         '--node-url',
@@ -182,7 +184,7 @@ def test_transfer_tokens_without_node_url(mocker, sent_transaction):
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         '1000',
     ])
@@ -190,7 +192,7 @@ def test_transfer_tokens_without_node_url(mocker, sent_transaction):
     batch_id = json.loads(result.output).get('result').get('batch_identifier')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert re.match(pattern=BATCH_ID_REGEXP, string=batch_id) is not None
+    assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_id) is not None
 
 
 def test_transfer_tokens_invalid_node_url():
@@ -207,7 +209,7 @@ def test_transfer_tokens_invalid_node_url():
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         '1000',
         '--node-url',
@@ -239,7 +241,7 @@ def test_transfer_tokens_node_url_with_protocol(node_url_with_protocol):
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         '1000',
         '--node-url',
@@ -272,7 +274,7 @@ def test_transfer_tokens_non_existing_node_url():
         '--private-key',
         DEV_BRANCH_NODE_PRIVATE_KEY_WITH_MONEY,
         '--address-to',
-        '112007d71fa7e120c60fb392a64fd69de891a60c667d9ea9e5d9d9d617263be6c20202',
+        ADDRESS_PRESENTED_ON_THE_TEST_NODE,
         '--amount',
         '1000',
         '--node-url',

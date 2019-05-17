@@ -8,10 +8,9 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    BLOCK_IDENTIFIER_REGEXP,
+    BATCH_IDENTIFIER_REGEXP,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    HEADER_SIGNATURE_REGEXP,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -46,19 +45,19 @@ def test_get_list_batches_with_all_parameters():
         1,
         '--head',
         VALID_BLOCK_IDENTIFIER,
+        '--reverse',
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
-        '--reverse',
     ])
 
-    result_blocks = json.loads(result.output).get('result')
+    result_batches = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
-    for block in result_blocks:
-        block_identifier = block.get('header_signature')
+    for batch in result_batches:
+        batch_identifier = batch.get('header_signature')
 
-        assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
+        assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
 def test_get_list_batches_with_ids():
@@ -76,15 +75,15 @@ def test_get_list_batches_with_ids():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_blocks = json.loads(result.output).get('result')
+    result_batches = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
-    for block in result_blocks:
-        block_identifier = block.get('header_signature')
+    for batch in result_batches:
+        batch_identifier = batch.get('header_signature')
 
-        assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
-        assert block_identifier in COMMITTED_BATCH_IDENTIFIERS
+        assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
+        assert batch_identifier in COMMITTED_BATCH_IDENTIFIERS
 
 
 def test_get_batches_identifiers():
@@ -106,7 +105,7 @@ def test_get_batches_identifiers():
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
     for batch_identifier in batches:
-        assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is not None
+        assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
 def test_get_list_batches_with_invalid_ids():
@@ -159,16 +158,16 @@ def test_get_list_batches_with_start():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_blocks = json.loads(result.output).get('result')
-    first_block_identifier = result_blocks[0].get('header_signature')
+    result_batches = json.loads(result.output).get('result')
+    first_batch_identifier = result_batches[0].get('header_signature')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert start_identifier == first_block_identifier
+    assert start_identifier == first_batch_identifier
 
-    for block in result_blocks:
-        block_identifier = block.get('header_signature')
+    for batch in result_batches:
+        batch_identifier = batch.get('header_signature')
 
-        assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
+        assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
 def test_get_list_batches_with_reverse():
@@ -185,14 +184,14 @@ def test_get_list_batches_with_reverse():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_blocks = json.loads(result.output).get('result')
+    result_batches = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
-    for block in result_blocks:
-        block_identifier = block.get('header_signature')
+    for batch in result_batches:
+        batch_identifier = batch.get('header_signature')
 
-        assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
+        assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
 def test_get_list_batches_by_head():
@@ -287,15 +286,15 @@ def test_get_list_batches_with_limit():
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
-    result_blocks = json.loads(result.output).get('result')
+    result_batches = json.loads(result.output).get('result')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert len(result_blocks) == limit
+    assert len(result_batches) == limit
 
-    for block in result_blocks:
-        block_identifier = block.get('header_signature')
+    for batch in result_batches:
+        batch_identifier = batch.get('header_signature')
 
-        assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=block_identifier) is not None
+        assert re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is not None
 
 
 def test_get_list_batches_with_negative_limit():

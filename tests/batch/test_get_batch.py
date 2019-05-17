@@ -14,21 +14,21 @@ from cli.constants import (
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
+BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = 'ccb529856e538325b435c6a75261702d1bdb52d3873b29189a722330cda628a6' \
+                                              '62028a7b39d1f5475cb78f5fc12efb986a35553ce8f1b63580b97fc6ab9e9655'
+
 
 def test_get_batch():
     """
     Case: get a batch by identifier.
     Expect: batch is returned.
     """
-    batch_id = 'ccb529856e538325b435c6a75261702d1bdb52d3873b29189a722330cda628a6' \
-               '62028a7b39d1f5475cb78f5fc12efb986a35553ce8f1b63580b97fc6ab9e9655'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
@@ -72,7 +72,7 @@ def test_get_batch_without_node_url(mocker):
     Expect: batch is returned from a node on localhost.
     """
     batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751' \
+               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
 
     expected_result = {
         "data": {
@@ -131,15 +131,12 @@ def test_get_batch_with_invalid_node_url():
     """
     invalid_node_url = 'my-node-url.com'
 
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         invalid_node_url,
     ])
@@ -158,15 +155,12 @@ def test_get_batch_node_url_with_protocol(node_url_with_protocol):
     Case: get a batch by its identifier by passing node URL with an explicit protocol.
     Expect: the following node URL contains a protocol error message.
     """
-    batch_id = '6f200995e766da7218ec2a3d0aeabbe1151128063cdf4e954cd08390a879b28e' \
-               '085a06f8708d2e6bb34f6501e8ddc981f0353627c1d4f90c80a656a8090c8751'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'batch',
         'get',
         '--id',
-        batch_id,
+        BATCH_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         node_url_with_protocol,
     ])

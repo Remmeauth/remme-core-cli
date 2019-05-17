@@ -1,18 +1,18 @@
 """
 Provide constants for command line interface.
 """
+from remme.models.general.patterns import RemmePatterns
 from remme.models.utils.family_name import RemmeFamilyName
 
-ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
-BLOCK_IDENTIFIER_REGEXP = r'^[0-9a-f]{128}$'
-BATCH_ID_REGEXP = r'^[0-9a-f]{128}$'
-PUBLIC_KEY_REGEXP = r'^[0-9a-f]{66}$'
-PRIVATE_KEY_REGEXP = r'^[a-f0-9]{64}$'
-PUBLIC_KEY_ADDRESS_REGEXP = r'^[0-9a-f]{70}$'
-HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
-SWAP_IDENTIFIER_REGEXP = r'^[a-f0-9]{64}$'
-TRANSACTION_HEADER_SIGNATURE_REGEXP = r'^[0-9a-f]{128}$'
+ADDRESS_REGEXP = RemmePatterns.ADDRESS.value
+BATCH_IDENTIFIER_REGEXP = RemmePatterns.HEADER_SIGNATURE.value
+BLOCK_IDENTIFIER_REGEXP = RemmePatterns.HEADER_SIGNATURE.value
 DOMAIN_NAME_REGEXP = r'(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]'
+PRIVATE_KEY_REGEXP = RemmePatterns.PRIVATE_KEY.value
+PUBLIC_KEY_ADDRESS_REGEXP = RemmePatterns.ADDRESS.value
+PUBLIC_KEY_REGEXP = RemmePatterns.PUBLIC_KEY.value
+SWAP_IDENTIFIER_REGEXP = RemmePatterns.SWAP_ID.value
+TRANSACTION_IDENTIFIER_REGEXP = RemmePatterns.HEADER_SIGNATURE.value
 
 PASSED_EXIT_FROM_COMMAND_CODE = 0
 FAILED_EXIT_FROM_COMMAND_CODE = -1
