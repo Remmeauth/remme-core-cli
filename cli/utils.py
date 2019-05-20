@@ -44,7 +44,7 @@ def print_errors(errors):
     Print error messages to the terminal.
 
     Arguments:
-        errors (dict): dictionary with error messages.
+        errors (string or dict): dictionary with error messages.
 
     References:
         - https://click.palletsprojects.com/en/7.x/utils/#ansi-colors

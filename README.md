@@ -664,6 +664,17 @@ $ remme node get-info --node-url=node-27-testnet.remme.io
 }
 ```
 
+Open the node to participate in the network (executable only on the machine which runs the node) — ``remme node open``:
+
+```bash
+$ remme node open
+{
+    "result": {
+        "batch_id": "b877a10ddc0ef7f28b0b4a075cbab580b5f7be4dc4063e282a87ce812105316569ccba6c554176c36174bb62025181dc7bb9d83cba57d90dd27c04c043261c9c"
+    }
+}
+```
+
 Get the initial stake of the node — ``remme node get-initial-stake``:
 
 | Arguments | Type   | Required | Description                     |
