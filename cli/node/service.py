@@ -27,16 +27,16 @@ class Node:
 
     def get_configs(self):
         """
-        Get node configurations.
+        Get the node configurations.
         """
         try:
-            configurations = loop.run_until_complete(self.service.node_management.get_node_config())
+            node_configurations = loop.run_until_complete(self.service.node_management.get_node_config())
 
         except Exception as error:
             return None, str(error)
 
         return {
-            'configurations': configurations.data,
+            'configurations': node_configurations.data,
         }, None
 
     def get_peers(self):
@@ -44,13 +44,13 @@ class Node:
         Get the node's peers.
         """
         try:
-            peers = loop.run_until_complete(self.service.blockchain_info.get_peers())
+            node_peers = loop.run_until_complete(self.service.blockchain_info.get_peers())
 
         except Exception as error:
             return None, str(error)
 
         return {
-            'peers': peers,
+            'peers': node_peers,
         }, None
 
     def get_info(self):
@@ -66,3 +66,15 @@ class Node:
         return {
             'information': node_information.data,
         }, None
+
+    def get_initial_stake(self):
+        """
+        Get the initial stake of the node.
+        """
+        try:
+            node_initial_stake = loop.run_until_complete(self.service.node_management.get_initial_stake())
+
+        except Exception as error:
+            return None, str(error)
+
+        return node_initial_stake, None

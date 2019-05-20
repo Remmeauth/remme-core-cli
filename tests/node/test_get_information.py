@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -25,7 +25,7 @@ def test_get_node_info():
         'node',
         'get-info',
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     node_information = json.loads(result.output).get('result').get('information')
@@ -64,7 +64,7 @@ def test_get_node_info_without_node_url(mocker, node_information):
 
 def test_get_node_info_invalid_node_url():
     """
-    Case: get information about synchronization and peer count of the node by passing invalid node URL.
+    Case: get information about synchronization and peer count of the node by an passing invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -93,7 +93,7 @@ def test_get_node_info_invalid_node_url():
 def test_get_node_info_node_url_with_protocol(node_url_with_protocol):
     """
     Case: get information about synchronization and peer count of the node by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -117,8 +117,8 @@ def test_get_node_info_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_node_info_non_existing_node_url():
     """
-    Case: get information about synchronization and peer count of the node by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get information about synchronization and peer count of the node by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 

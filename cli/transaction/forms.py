@@ -31,14 +31,16 @@ class GetTransactionsListForm(Schema):
             validate.Range(min=1, error='Limit must be greater than 0.'),
         ],
     )
+    reverse = fields.Boolean(required=False)
+    ids_only = fields.Boolean(required=False)
     family_name = FamilyNameField(allow_none=True, required=False)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetTransactionForm(Schema):
     """
-    Get transaction form.
+    Get transaction by its identifier form.
     """
 
-    id = TransactionIdentifierField(allow_none=True, required=True)
-    node_url = NodeUrlField(required=False)
+    id = TransactionIdentifierField(required=True)
+    node_url = NodeUrlField(required=True)

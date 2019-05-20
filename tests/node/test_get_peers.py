@@ -7,15 +7,15 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_get_node_peers_configs():
+def test_get_node_peers():
     """
     Case: get the node's peers.
     Expect: node peers are returned.
@@ -25,7 +25,7 @@ def test_get_node_peers_configs():
         'node',
         'get-peers',
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     peers = json.loads(result.output).get('result').get('peers')
@@ -40,7 +40,7 @@ def test_get_node_peers_configs():
 def test_get_node_peers_without_node_url(mocker):
     """
     Case: get the node's peers without passing node URL.
-    Expect: node peers are returned from node on localhost.
+    Expect: node peers are returned from a node on localhost.
     """
     peers = [
         'tcp://node-26-testnet.remme.io:8800',
@@ -71,7 +71,7 @@ def test_get_node_peers_without_node_url(mocker):
 
 def test_get_node_peers_invalid_node_url():
     """
-    Case: get the node's peers by passing invalid node URL.
+    Case: get the node's peers by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -99,8 +99,8 @@ def test_get_node_peers_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_node_peers_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get the node's peers by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get the node's peers by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -124,8 +124,8 @@ def test_get_node_peers_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_node_peers_non_existing_node_url():
     """
-    Case: get the node's peers by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get the node's peers by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 

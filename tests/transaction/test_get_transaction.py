@@ -7,12 +7,15 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_IP_ADDRESS_FOR_TESTING,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
+
+TRANSACTION_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '640fe45794d2f63fbe1850aa99d0ac830ed94e1ac9b475e1e8c841f714b6250e' \
+                                                    '64bc6fbd9f821147ee1eab4d76e5437f5b878a9b5288f1d4c1dc192060a82cf1'
 
 
 def test_get_transaction():
@@ -20,21 +23,20 @@ def test_get_transaction():
     Case: get a transaction by identifier.
     Expect: transaction is returned.
     """
-    transaction_id = 'c13fff007b5059ea0f95fc0dc0bdc897ef185b1e1187e355f3b02fb0aad515eb' \
-                     '1d679241758805d82fc1b07975cb49ee36e7c9574315fc1df5bae8eb5b2766f4'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get',
         '--id',
-        transaction_id,
+        TRANSACTION_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
+    result_transaction = json.loads(result.output).get('result').get('data')
+
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert isinstance(json.loads(result.output), dict)
+    assert TRANSACTION_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE == result_transaction.get('header_signature')
 
 
 def test_get_transaction_with_invalid_id():
@@ -52,7 +54,7 @@ def test_get_transaction_with_invalid_id():
         '--id',
         invalid_transaction_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -70,11 +72,8 @@ def test_get_transaction_with_invalid_id():
 def test_get_transaction_without_node_url(mocker):
     """
     Case: get a transaction by identifier without passing node URL.
-    Expect: transaction is returned from node on localhost.
+    Expect: transaction is returned from a node on localhost.
     """
-    transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
-                     '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'
-
     expected_result = {
         'data': {
             'header': {
@@ -97,8 +96,8 @@ def test_get_transaction_without_node_url(mocker):
                 'dependencies': [],
                 'nonce': '',
             },
-            'header_signature': '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-                                '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+            'header_signature': '640fe45794d2f63fbe1850aa99d0ac830ed94e1ac9b475e1e8c841f714b6250e'
+                                '64bc6fbd9f821147ee1eab4d76e5437f5b878a9b5288f1d4c1dc192060a82cf1',
             'payload': 'CAESRAoic2F3dG9vdGgudmFsaWRhdG9yLmJhdGNoX2luamVj'
                        'dG9ycxIKYmxvY2tfaW5mbxoSMHhhNGY2YzZhZWMxOWQ1OTBi',
         },
@@ -112,7 +111,7 @@ def test_get_transaction_without_node_url(mocker):
         'transaction',
         'get',
         '--id',
-        transaction_id,
+        TRANSACTION_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -121,7 +120,7 @@ def test_get_transaction_without_node_url(mocker):
 
 def test_get_transaction_with_invalid_node_url():
     """
-    Case: get a transaction by passing invalid node URL.
+    Case: get a transaction by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
@@ -131,8 +130,7 @@ def test_get_transaction_with_invalid_node_url():
         'transaction',
         'get',
         '--id',
-        '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
-        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5',
+        TRANSACTION_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         invalid_node_url,
     ])
@@ -148,18 +146,15 @@ def test_get_transaction_with_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_transaction_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get transaction by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get transaction by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
-    transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
-                     '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'
-
     runner = CliRunner()
     result = runner.invoke(cli, [
         'transaction',
         'get',
         '--id',
-        transaction_id,
+        TRANSACTION_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
         node_url_with_protocol,
     ])

@@ -9,15 +9,15 @@ from click.testing import CliRunner
 
 from cli.constants import (
     ADDRESS_REGEXP,
+    DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    NODE_27_IN_TESTNET_ADDRESS,
     PASSED_EXIT_FROM_COMMAND_CODE,
     SWAP_IDENTIFIER_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
-SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6808'
+SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE = '133102e41346242476b15a3a7966eb5249271025fc7fb0b37ed3fdb4bcce380e'
 
 
 def test_get_swap_info():
@@ -32,7 +32,7 @@ def test_get_swap_info():
         '--id',
         SWAP_IDENTIFIER_PRESENTED_ON_THE_TEST_NODE,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     swap_info = json.loads(result.output).get('result').get('information')
@@ -49,7 +49,7 @@ def test_get_swap_info():
 def test_get_swap_info_without_node_url(mocker, swap_info):
     """
     Case: get information about atomic swap by its identifier without passing node URL.
-    Expect: information about the swap is returned from node on localhost.
+    Expect: information about the swap is returned from a node on localhost.
     """
     mock_swap_get_info = mocker.patch('cli.atomic_swap.service.loop.run_until_complete')
     mock_swap_get_info.return_value = swap_info
@@ -86,7 +86,7 @@ def test_get_swap_info_invalid_swap_id():
         '--id',
         invalid_swap_id,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -103,8 +103,8 @@ def test_get_swap_info_invalid_swap_id():
 
 def test_get_swap_info_non_existing_swap_id():
     """
-    Case: get information about atomic swap by passing non-existing identifier.
-    Expect: atomic swap with identifier not found error message.
+    Case: get information about atomic swap by passing the non-existing identifier.
+    Expect: atomic swap with an identifier not found error message.
     """
     non_existing_swap_id = '033402fe1346742486b15a3a9966eb5249271025fc7fb0b37ed3fdb4bcce6809'
 
@@ -115,7 +115,7 @@ def test_get_swap_info_non_existing_swap_id():
         '--id',
         non_existing_swap_id,
         '--node-url',
-        NODE_27_IN_TESTNET_ADDRESS,
+        DEV_CONSENSUS_GENESIS_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error = {
@@ -128,8 +128,8 @@ def test_get_swap_info_non_existing_swap_id():
 
 def test_get_swap_info_non_existing_node_url():
     """
-    Case: get information about atomic swap by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get information about atomic swap by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 
@@ -153,7 +153,7 @@ def test_get_swap_info_non_existing_node_url():
 
 def test_get_swap_info_invalid_node_url():
     """
-    Case: get information about atomic swap by passing invalid node URL.
+    Case: get information about atomic swap by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -183,8 +183,8 @@ def test_get_swap_info_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_swap_info_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get information about atomic swap by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get information about atomic swap by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
