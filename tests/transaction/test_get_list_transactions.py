@@ -7,8 +7,8 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
-    FAILED_EXIT_FROM_COMMAND_CODE,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -92,7 +92,7 @@ def test_get_list_transactions_with_ids():
         '--ids',
         transaction_ids,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_header_signature = '6601e240044b00db4b7e5eda7800e88236341077879a4a9cf5a1b1f9fb2ece87' \
@@ -122,7 +122,7 @@ def test_get_list_transactions_with_invalid_ids():
         '--ids',
         transaction_ids,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -152,7 +152,7 @@ def test_get_list_transactions_with_start():
         '--start',
         start,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -169,7 +169,7 @@ def test_get_list_transactions_with_reverse():
         'transaction',
         'get-list',
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
         '--reverse',
     ])
 
@@ -192,7 +192,7 @@ def test_get_list_transactions_by_head():
         '--head',
         head,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -214,7 +214,7 @@ def test_get_list_transactions_with_invalid_start_head(command_flag):
         command_flag,
         invalid_id,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -241,7 +241,7 @@ def test_get_list_transactions_with_limit():
         '--limit',
         1,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -262,7 +262,7 @@ def test_get_list_transactions_with_invalid_limit():
         '--limit',
         invalid_limit,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
@@ -291,7 +291,7 @@ def test_get_list_transactions_with_family_name():
         '--family-name',
         family_name,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
@@ -312,7 +312,7 @@ def test_get_list_transactions_with_invalid_family_name():
         '--family-name',
         invalid_family_name,
         '--node-url',
-        NODE_IP_ADDRESS_FOR_TESTING,
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     ])
 
     expected_error_message = {
