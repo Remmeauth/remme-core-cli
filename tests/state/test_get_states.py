@@ -46,7 +46,7 @@ def test_get_states_with_all_parameters():
     """
     head = 'dff30edf2b6be3b456d076ca25f4063ac59106a7698dc1d49da40c328b8889d0' \
            '5dcab8b2cbdcf5e2f2cd64f42e9bab881a9901138eef909841f0765e123e6f3d'
-    
+
     runner = CliRunner()
     result = runner.invoke(cli, [
         'state',
