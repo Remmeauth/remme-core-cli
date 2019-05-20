@@ -11,7 +11,7 @@ from cli.constants import (
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
-    TRANSACTION_HEADER_SIGNATURE_REGEXP,
+    TRANSACTION_IDENTIFIER_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
@@ -105,7 +105,7 @@ def test_get_list_transactions_with_ids():
         transaction_identifier = transaction.get('header_signature')
 
         assert transaction_identifier in transaction_ids
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_with_invalid_ids():
@@ -167,7 +167,7 @@ def test_get_list_transactions_with_start():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_with_reverse():
@@ -191,7 +191,7 @@ def test_get_list_transactions_with_reverse():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_by_head():
@@ -221,7 +221,7 @@ def test_get_list_transactions_by_head():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 @pytest.mark.parametrize('command_flag', ('--start', '--head'))
@@ -279,7 +279,7 @@ def test_get_list_transactions_with_limit():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_list_transactions_with_invalid_limit():
@@ -336,7 +336,7 @@ def test_get_list_transactions_with_family_name():
         transaction_identifier = transaction.get('header_signature')
         transaction_family_name = transaction.get('header').get('family_name')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
         assert family_name == transaction_family_name
 
 
