@@ -68,7 +68,7 @@ def test_get_account_balance_invalid_address():
 def test_get_account_balance_without_node_url(mocker):
     """
     Case: get a balance of an account by address without passing node URL.
-    Expect: balance is returned from node on localhost.
+    Expect: balance is returned from a node on localhost.
     """
     balance = 13500
 
@@ -95,7 +95,7 @@ def test_get_account_balance_without_node_url(mocker):
 
 def test_get_account_balance_invalid_node_url():
     """
-    Case: get a balance of an account by passing invalid node URL.
+    Case: get a balance of an account by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -125,8 +125,8 @@ def test_get_account_balance_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_account_balance_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a balance of an account by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a balance of an account by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -152,8 +152,8 @@ def test_get_account_balance_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_account_balance_non_existing_node_url():
     """
-    Case: get a balance of an account by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get a balance of an account by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 

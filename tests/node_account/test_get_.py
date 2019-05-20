@@ -94,7 +94,7 @@ def test_get_information_invalid_address():
 
 def test_get_information_invalid_node_url():
     """
-    Case: get information about the node account by passing invalid node URL.
+    Case: get information about the node account by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'

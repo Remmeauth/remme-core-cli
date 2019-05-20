@@ -8,18 +8,18 @@ from cli.generic.forms.fields import NodeUrlField
 
 class GetNodeConfigurationsForm(Schema):
     """
-    Get node configurations.
+    Get the node configurations form.
     """
 
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetNodePeersForm(Schema):
     """
-    Get the node's peers.
+    Get the node's peers form.
     """
 
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetNodeInformationForm(Schema):
@@ -27,7 +27,7 @@ class GetNodeInformationForm(Schema):
     Get the node information form.
     """
 
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetNodeInitialStakeForm(Schema):
@@ -35,4 +35,4 @@ class GetNodeInitialStakeForm(Schema):
     Get the initial stake of the node form.
     """
 
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)

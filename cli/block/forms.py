@@ -29,8 +29,9 @@ class GetBlocksListForm(Schema):
         ],
     )
     head = BlockIdentifierField(allow_none=True, required=False)
+    reverse = fields.Boolean(required=False)
     ids_only = fields.Boolean(required=False)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetBlockByIdentifierForm(Schema):

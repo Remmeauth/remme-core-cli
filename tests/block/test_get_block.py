@@ -72,7 +72,7 @@ def test_get_block_invalid_identifier():
 def test_get_block_without_node_url(mocker):
     """
     Case: get a block by identifier without passing node URL.
-    Expect: blocks is returned from a node on localhost.
+    Expect: block data is returned from a node on localhost.
     """
     block = {
         'data': {
@@ -164,7 +164,7 @@ def test_get_block_without_node_url(mocker):
 
 def test_get_block_invalid_node_url():
     """
-    Case: get a block by identifier by passing invalid node URL.
+    Case: get a block by identifier by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -194,8 +194,8 @@ def test_get_block_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_block_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a block by identifier by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a block by identifier by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -221,8 +221,8 @@ def test_get_block_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_block_non_existing_node_url():
     """
-    Case: get a block by identifier by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get a block by identifier by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 
@@ -246,8 +246,8 @@ def test_get_block_non_existing_node_url():
 
 def test_get_block_non_existing_identifier():
     """
-    Case: get a block by identifier by passing non-existing identifier.
-    Expect: block with identifier not found error message.
+    Case: get a block by identifier by passing the non-existing identifier.
+    Expect: block with an identifier not found error message.
     """
     non_existing_block_identifier = '7a7897650db9863aca34874778e6c5802f86c3df0e22b39cfea730bc83654357' \
                                     '037a422f8ef51ac85a9bc61d2484bd0f37be10cfc861588c41dc6f1bbfd92cde'

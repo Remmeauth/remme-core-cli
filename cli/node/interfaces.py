@@ -10,7 +10,7 @@ class NodeInterface:
 
     def get_configs(self):
         """
-        Get node configurations.
+        Get the node configurations.
         """
         pass
 

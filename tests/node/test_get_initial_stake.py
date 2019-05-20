@@ -61,7 +61,7 @@ def test_get_initial_stake_without_node_url(mocker):
 def test_get_initial_stake_invalid_node_url():
     """
     Case: get the initial stake of the node by passing an invalid node URL.
-    Expect: the following node URL is an invalid error message.
+    Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
 

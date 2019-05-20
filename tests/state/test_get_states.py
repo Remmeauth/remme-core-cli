@@ -166,7 +166,7 @@ def test_get_states_with_limit():
     single_state_address = single_state_result[0].get('address')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert re.match(pattern=ADDRESS_WITH_STATE, string=single_state_address) is not None
+    assert re.match(pattern=ADDRESS_REGEXP, string=single_state_address) is not None
     assert len(single_state_result) == limit
 
 
@@ -224,6 +224,61 @@ def test_get_states_with_non_existing_limit():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
+def test_get_states_with_invalid_head():
+    """
+    Case: get a list of states by its invalid head.
+    Expect: the following block identifier is invalid error message.
+    """
+    invalid_head = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'state',
+        'get-list',
+        '--head',
+        invalid_head,
+        '--node-url',
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error_message = {
+        'errors': {
+            'head': [
+                f'The following block identifier `{invalid_head}` is invalid.',
+            ],
+        },
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
+
+
+def test_get_states_with_non_existing_head():
+    """
+    Case: get a list of states by its non-existing head.
+    Expect: block not found error message.
+    """
+    non_existing_head = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
+                        '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240ca'
+
+    runner = CliRunner()
+    result = runner.invoke(cli, [
+        'state',
+        'get-list',
+        '--head',
+        non_existing_head,
+        '--node-url',
+        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
+    ])
+
+    expected_error_message = {
+        'errors': 'Block not found.',
+    }
+
+    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
+    assert dict_to_pretty_json(expected_error_message) in result.output
+
+
 def test_get_states_with_reverse():
     """
     Case: get a list of states by reverse.
@@ -248,7 +303,7 @@ def test_get_states_with_reverse():
 def test_get_states_without_node_url(mocker):
     """
     Case: get a list of states by its address without passing node URL.
-    Expect: list of states is returned from node on localhost.
+    Expect: list of states is returned from a node on localhost.
     """
     expected_result = {
         "data": [
@@ -276,8 +331,8 @@ def test_get_states_without_node_url(mocker):
 
 def test_get_states_non_existing_node_url():
     """
-    Case: get a list of states by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get a list of states by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'my-node-url.com'
 
@@ -300,8 +355,8 @@ def test_get_states_non_existing_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_states_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a list of states by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a list of states by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -325,7 +380,7 @@ def test_get_states_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_states_invalid_node_url():
     """
-    Case: get a list of states by passing invalid node URL.
+    Case: get a list of states by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'

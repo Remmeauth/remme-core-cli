@@ -82,6 +82,7 @@ def get_states(address, limit, head, reverse, node_url):
         'address': address,
         'limit': limit,
         'head': head,
+        'reverse': reverse,
         'node_url': node_url,
     })
 
@@ -92,6 +93,7 @@ def get_states(address, limit, head, reverse, node_url):
     address = arguments.get('address')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    reverse = arguments.get('reverse')
     node_url = arguments.get('node_url')
 
     remme = Remme(network_config={
@@ -99,10 +101,7 @@ def get_states(address, limit, head, reverse, node_url):
     })
 
     result, errors = State(service=remme).get_list(
-        address=address,
-        limit=limit,
-        head=head,
-        reverse=reverse,
+        address=address, limit=limit, head=head, reverse=reverse,
     )
 
     if errors is not None:
