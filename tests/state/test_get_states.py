@@ -44,9 +44,9 @@ def test_get_states_with_all_parameters():
     Case: get a list of states by account address, limit, head, reverse.
     Expect: list of states is returned.
     """
-    head = 'c892656e3efd5459d782d97cba9cb046a73c7facc12e6849b804a7af7a600949' \
-           '7d554ec1e3f9b191b1cdd512fb5d4b0c256cea3d3bd1475cf1f61a60f74cc4ed'
-
+    head = 'dff30edf2b6be3b456d076ca25f4063ac59106a7698dc1d49da40c328b8889d0' \
+           '5dcab8b2cbdcf5e2f2cd64f42e9bab881a9901138eef909841f0765e123e6f3d'
+    
     runner = CliRunner()
     result = runner.invoke(cli, [
         'state',
