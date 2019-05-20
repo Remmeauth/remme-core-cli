@@ -28,7 +28,7 @@ class AtomicSwap:
 
     def get_public_key(self):
         """
-        Get public key of atomic swap.
+        Get the public key of atomic swap.
         """
         try:
             public_key = loop.run_until_complete(self.service.swap.get_public_key())

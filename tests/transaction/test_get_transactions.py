@@ -11,16 +11,16 @@ from cli.constants import (
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
     PASSED_EXIT_FROM_COMMAND_CODE,
-    TRANSACTION_HEADER_SIGNATURE_REGEXP,
+    TRANSACTION_IDENTIFIER_REGEXP,
 )
 from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_get_list_transactions_with_all_parameters(mocker):
+def test_get_transactions_with_all_parameters(mocker):
     """
     Case: get a list transactions by identifier, identifier starting from, limit, head, family name, reverse.
-    Expect: transaction are returned from node on localhost.
+    Expect: transactions is returned from a node on localhost.
     """
     transaction_id = '79a2780e9f07ca58d97b9de346730ddaba85dbb520778eb3d704cd214f6c580f' \
                      '4f7fe4aa0e4fa9238e535f4af7e2dbae4134b4a726b36a5369c1cb4e971a2568'
@@ -77,9 +77,9 @@ def test_get_list_transactions_with_all_parameters(mocker):
     assert expected_result == json.loads(result.output).get('result')
 
 
-def test_get_list_transactions_with_ids():
+def test_get_transactions_with_ids():
     """
-    Case: get a list transactions by identifiers.
+    Case: get a list of transactions by identifiers.
     Expect: transactions are returned.
     """
     transaction_ids = 'af249a738ab2c584c0e3a6899588c6ae2a6267cb7c7dfde9f6927c3b9b65c598' \
@@ -105,13 +105,13 @@ def test_get_list_transactions_with_ids():
         transaction_identifier = transaction.get('header_signature')
 
         assert transaction_identifier in transaction_ids
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_with_invalid_ids():
+def test_get_transactions_with_invalid_ids():
     """
-    Case: get a list transactions by invalid identifiers.
-    Expect: the following identifier are not valid error message.
+    Case: get a list of transactions by invalid identifiers.
+    Expect: the following identifier is not valid error message.
     """
     invalid_id = '044c7'
     transaction_ids = '044c7db163cf21ab9eafc9b267693e2d732411056c7530e54282946ec47cc180' \
@@ -140,7 +140,7 @@ def test_get_list_transactions_with_invalid_ids():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_start():
+def test_get_transactions_with_start():
     """
     Case: get a list transactions by transaction identifier starting from.
     Expect: transactions are returned.
@@ -167,10 +167,10 @@ def test_get_list_transactions_with_start():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_with_reverse():
+def test_get_transactions_with_reverse():
     """
     Case: get a list transactions by reverse.
     Expect: reverse list transactions are returned.
@@ -191,10 +191,10 @@ def test_get_list_transactions_with_reverse():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_by_head():
+def test_get_transactions_by_head():
     """
     Case: get a list transactions by block identifier.
     Expect: transactions are returned.
@@ -221,7 +221,7 @@ def test_get_list_transactions_by_head():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 def test_get_transactions_identifiers():
@@ -243,11 +243,11 @@ def test_get_transactions_identifiers():
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
 
     for transaction_identifier in result_transactions:
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
 @pytest.mark.parametrize('command_flag', ('--start', '--head'))
-def test_get_list_transactions_with_invalid_start_head(command_flag):
+def test_get_transactions_with_invalid_start_head(command_flag):
     """
     Case: get a list transactions by invalid block identifier and transaction identifier starting from.
     Expect: the following identifier is not valid error message.
@@ -276,10 +276,10 @@ def test_get_list_transactions_with_invalid_start_head(command_flag):
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_limit():
+def test_get_transactions_with_limit():
     """
     Case: get a list transactions by limit.
-    Expect: transaction is returned.
+    Expect: transactions are returned.
     """
     limit = 2
 
@@ -301,10 +301,10 @@ def test_get_list_transactions_with_limit():
     for transaction in result_transactions:
         transaction_identifier = transaction.get('header_signature')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
 
 
-def test_get_list_transactions_with_invalid_limit():
+def test_get_transactions_with_invalid_limit():
     """
     Case: get a list transactions by invalid limit.
     Expect: the following limit should be a positive error message.
@@ -333,7 +333,7 @@ def test_get_list_transactions_with_invalid_limit():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_family_name():
+def test_get_transactions_with_family_name():
     """
     Case: get a list transactions by family name.
     Expect: transactions are returned.
@@ -358,11 +358,11 @@ def test_get_list_transactions_with_family_name():
         transaction_identifier = transaction.get('header_signature')
         transaction_family_name = transaction.get('header').get('family_name')
 
-        assert re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=transaction_identifier) is not None
+        assert re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is not None
         assert family_name == transaction_family_name
 
 
-def test_get_list_transactions_with_invalid_family_name():
+def test_get_transactions_with_invalid_family_name():
     """
     Case: get a list transactions by invalid family name.
     Expect: the following family name is not valid error message.
@@ -391,9 +391,9 @@ def test_get_list_transactions_with_invalid_family_name():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_with_invalid_node_url():
+def test_get_transactions_with_invalid_node_url():
     """
-    Case: get a list of transactions by passing invalid node URL.
+    Case: get a list of transactions by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
@@ -417,10 +417,10 @@ def test_get_list_transactions_with_invalid_node_url():
     assert dict_to_pretty_json(expected_error_message) in result.output
 
 
-def test_get_list_transactions_without_node_url(mocker):
+def test_get_transactions_without_node_url(mocker):
     """
     Case: get a list transactions by identifier without passing node URL.
-    Expect: transactions are returned from node on localhost.
+    Expect: transactions are returned from a node on localhost.
     """
     transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
                      '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'
@@ -454,8 +454,8 @@ def test_get_list_transactions_without_node_url(mocker):
         },
     }
 
-    mock_get_transaction_by_ids = mocker.patch('cli.transaction.service.loop.run_until_complete')
-    mock_get_transaction_by_ids.return_value = expected_result
+    mock_get_transactions = mocker.patch('cli.transaction.service.loop.run_until_complete')
+    mock_get_transactions.return_value = expected_result
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -470,10 +470,10 @@ def test_get_list_transactions_without_node_url(mocker):
 
 
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
-def test_get_list_transactions_node_url_with_protocol(node_url_with_protocol):
+def test_get_transactions_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get list transactions by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get list transactions by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     transaction_id = '8d8cb28c58f7785621b51d220b6a1d39fe5829266495d28eaf0362dc85d7e91c' \
                      '205c1c4634604443dc566c56e1a4c0cf2eb122ac42cb482ef1436694634240c5'

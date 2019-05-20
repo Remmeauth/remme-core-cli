@@ -65,6 +65,7 @@ def get_blocks(ids, head, limit, reverse, ids_only, node_url):
     block_ids = arguments.get('ids')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    reverse = arguments.get('reverse')
     ids_only = arguments.get('ids_only')
     node_url = arguments.get('node_url')
 

@@ -10,7 +10,7 @@ class AtomicSwapInterface:
 
     def get_public_key(self):
         """
-        Get public key of atomic swap.
+        Get the public key of atomic swap.
         """
         pass
 

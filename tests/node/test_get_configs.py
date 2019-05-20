@@ -44,10 +44,10 @@ def test_get_node_configs():
 def test_get_node_configs_without_node_url(mocker, node_configurations):
     """
     Case: get node configurations without passing node URL.
-    Expect: batch identifier is returned from node on localhost.
+    Expect: batch identifier is returned from a node on localhost.
     """
-    mock_account_get_balance = mocker.patch('cli.node.service.loop.run_until_complete')
-    mock_account_get_balance.return_value = node_configurations
+    mock_get_node_configs = mocker.patch('cli.node.service.loop.run_until_complete')
+    mock_get_node_configs.return_value = node_configurations
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -67,7 +67,7 @@ def test_get_node_configs_without_node_url(mocker, node_configurations):
 
 def test_get_node_configs_invalid_node_url():
     """
-    Case: get node configurations by passing invalid node URL.
+    Case: get node configurations by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -95,8 +95,8 @@ def test_get_node_configs_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_node_configs_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get node configurations by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get node configurations by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -120,8 +120,8 @@ def test_get_node_configs_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_node_configs_non_existing_node_url():
     """
-    Case: get node configurations by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get node configurations by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 

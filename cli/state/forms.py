@@ -9,8 +9,8 @@ from marshmallow import (
 
 from cli.generic.forms.fields import (
     AccountAddressField,
+    BlockIdentifierField,
     NodeUrlField,
-    StateIdentifierField,
 )
 
 
@@ -20,7 +20,7 @@ class GetStateForm(Schema):
     """
 
     address = AccountAddressField(required=True)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetStateListForm(Schema):
@@ -29,7 +29,7 @@ class GetStateListForm(Schema):
     """
 
     address = AccountAddressField(allow_none=True, required=False)
-    head = StateIdentifierField(allow_none=True, required=False)
+    head = BlockIdentifierField(allow_none=True, required=False)
     limit = fields.Integer(
         allow_none=True,
         strict=True,
@@ -38,4 +38,5 @@ class GetStateListForm(Schema):
             validate.Range(min=1, error='Limit must be greater than 0.'),
         ],
     )
-    node_url = NodeUrlField(required=False)
+    reverse = fields.Boolean(required=False)
+    node_url = NodeUrlField(required=True)

@@ -26,24 +26,22 @@ class Transaction:
         """
         self.service = service
 
-    def get_list(self, transaction_ids, start, limit, head, reverse, family_name):
+    def get_list(self, ids, start, limit, head, reverse, family_name):
         """
         Get a list of transactions.
 
         Arguments:
-            transaction_ids (list, optional): identifiers to get a list of transactions by.
+            ids (list, optional): identifiers to get a list of transactions by.
             start (string, optional): transaction identifier to get a list transaction starting from.
             limit (int, optional): maximum amount of transactions to return.
             head (string, optional): block identifier to get a list of transactions from.
-            reverse (string, optional): parameter to reverse result.
+            reverse (bool, optional): parameter to reverse result.
             family_name (string, optional): list of a transactions by its family name.
         """
-        reverse = '' if reverse else 'false'
-
         try:
             transactions = loop.run_until_complete(
                 self.service.blockchain_info.get_transactions(query={
-                    'ids': transaction_ids,
+                    'ids': ids,
                     'start': start,
                     'limit': limit,
                     'head': head,
@@ -73,10 +71,10 @@ class Transaction:
             limit (int, optional): maximum amount of blocks to return.
             head (string, optional): block identifier to get a list of transactions to.
             reverse (bool, optional): parameter to reverse result.
-            family_name (bool, optional): list of a transactions by its family name.
+            family_name (string, optional): list of a transactions by its family name.
         """
         transactions, errors = self.get_list(
-            transaction_ids=ids, start=start, head=head, limit=limit, reverse=reverse, family_name=family_name,
+            ids=ids, start=start, head=head, limit=limit, reverse=reverse, family_name=family_name,
         )
 
         if errors is not None:

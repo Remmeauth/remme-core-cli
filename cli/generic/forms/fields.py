@@ -1,5 +1,8 @@
 """
 Provide implementation of the generic form fields.
+
+References:
+    - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
 """
 import re
 
@@ -10,23 +13,20 @@ from marshmallow import (
 
 from cli.constants import (
     ADDRESS_REGEXP,
+    BATCH_IDENTIFIER_REGEXP,
     BLOCK_IDENTIFIER_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
-    HEADER_SIGNATURE_REGEXP,
     PRIVATE_KEY_REGEXP,
     PUBLIC_KEY_ADDRESS_REGEXP,
     SWAP_IDENTIFIER_REGEXP,
-    TRANSACTION_HEADER_SIGNATURE_REGEXP,
+    TRANSACTION_IDENTIFIER_REGEXP,
 )
 
 
 class AccountAddressField(fields.Field):
     """
     Implements validation of the account address.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -44,45 +44,23 @@ class AccountAddressField(fields.Field):
 class FamilyNameField(fields.Field):
     """
     Implements validation of the family name.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
         """
         Validate data (family name) that was passed to field.
         """
-        if value not in FAMILY_NAMES:
-            raise ValidationError(f'The following family name `{value}` is invalid.')
+        family_name = value
 
-        return value
+        if family_name not in FAMILY_NAMES:
+            raise ValidationError(f'The following family name `{family_name}` is invalid.')
 
-
-class StateIdentifierField(fields.Field):
-    """
-    Implements validation of the state identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
-    """
-
-    def _deserialize(self, value, attr, obj, **kwargs):
-        """
-        Validate data (state identifier) that was passed to field.
-        """
-        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=value) is None:
-            raise ValidationError(f'The following identifier `{value}` is invalid.')
-
-        return value
+        return family_name
 
 
 class TransactionIdentifiersListField(fields.Field):
     """
     Implements validation of the list of the identifiers.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -94,7 +72,7 @@ class TransactionIdentifiersListField(fields.Field):
         for identifier in value.split(','):
             identifier = identifier.strip()
 
-            if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+            if re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=identifier) is None:
                 raise ValidationError(f'The following identifier `{identifier}` is invalid.')
 
             validated_identifiers.append(identifier)
@@ -105,27 +83,23 @@ class TransactionIdentifiersListField(fields.Field):
 class TransactionIdentifierField(fields.Field):
     """
     Implements validation of the identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
         """
         Validate data (identifier) that was passed to field.
         """
-        if re.match(pattern=TRANSACTION_HEADER_SIGNATURE_REGEXP, string=value) is None:
-            raise ValidationError(f'The following identifier `{value}` is invalid.')
+        transaction_identifier = value
 
-        return value
+        if re.match(pattern=TRANSACTION_IDENTIFIER_REGEXP, string=transaction_identifier) is None:
+            raise ValidationError(f'The following identifier `{transaction_identifier}` is invalid.')
+
+        return transaction_identifier
 
 
 class BatchIdentifiersListField(fields.Field):
     """
     Implements validation of the list of the identifiers.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -137,7 +111,7 @@ class BatchIdentifiersListField(fields.Field):
         for identifier in value.split(','):
             identifier = identifier.strip()
 
-            if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=identifier) is None:
+            if re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=identifier) is None:
                 raise ValidationError(f'The following identifier `{identifier}` is invalid.')
 
             validated_identifiers.append(identifier)
@@ -148,9 +122,6 @@ class BatchIdentifiersListField(fields.Field):
 class BatchIdentifierField(fields.Field):
     """
     Implements validation of the identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -159,7 +130,7 @@ class BatchIdentifierField(fields.Field):
         """
         batch_identifier = value
 
-        if re.match(pattern=HEADER_SIGNATURE_REGEXP, string=batch_identifier) is None:
+        if re.match(pattern=BATCH_IDENTIFIER_REGEXP, string=batch_identifier) is None:
             raise ValidationError(f'The following identifier `{batch_identifier}` is invalid.')
 
         return batch_identifier
@@ -170,9 +141,6 @@ class NodeUrlField(fields.Field):
     Implements validation of the node URL.
 
     If node URL is localhost, it means client didn't passed any URL, so nothing to validate.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):
@@ -196,9 +164,6 @@ class NodeUrlField(fields.Field):
 class PrivateKeyField(fields.Field):
     """
     Implements validation of the private key.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -210,15 +175,12 @@ class PrivateKeyField(fields.Field):
         if re.match(pattern=PRIVATE_KEY_REGEXP, string=private_key) is None:
             raise ValidationError(f'The following private key `{private_key}` is invalid.')
 
-        return value
+        return private_key
 
 
 class PublicKeyAddressField(fields.Field):
     """
     Implements validation of the public key address.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -230,15 +192,12 @@ class PublicKeyAddressField(fields.Field):
         if re.match(pattern=PUBLIC_KEY_ADDRESS_REGEXP, string=public_key_address) is None:
             raise ValidationError(f'The following public key address `{public_key_address}` is invalid.')
 
-        return value
+        return public_key_address
 
 
 class SwapIdentifierField(fields.Field):
     """
     Implements validation of the swap identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -256,9 +215,6 @@ class SwapIdentifierField(fields.Field):
 class BlockIdentifierField(fields.Field):
     """
     Implements validation of the block identifier.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, data, **kwargs):
@@ -276,9 +232,6 @@ class BlockIdentifierField(fields.Field):
 class BlockIdentifiersListField(fields.Field):
     """
     Implements validation of the list of block identifiers.
-
-    References:
-        - https://marshmallow.readthedocs.io/en/3.0/custom_fields.html
     """
 
     def _deserialize(self, value, attr, obj, **kwargs):

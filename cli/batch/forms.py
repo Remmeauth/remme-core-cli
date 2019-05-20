@@ -19,8 +19,8 @@ class GetBatchForm(Schema):
     Get a batch by its identifier form.
     """
 
-    id = BatchIdentifierField(allow_none=False, required=True)
-    node_url = NodeUrlField(required=False)
+    id = BatchIdentifierField(required=True)
+    node_url = NodeUrlField(required=True)
 
 
 class GetBatchStatusForm(Schema):
@@ -29,7 +29,7 @@ class GetBatchStatusForm(Schema):
     """
 
     id = BatchIdentifierField(required=True)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)
 
 
 class GetBatchesListForm(Schema):
@@ -48,5 +48,6 @@ class GetBatchesListForm(Schema):
             validate.Range(min=1, error='Limit must be greater than 0.'),
         ],
     )
+    reverse = fields.Boolean(required=False)
     ids_only = fields.Boolean(required=False)
-    node_url = NodeUrlField(required=False)
+    node_url = NodeUrlField(required=True)

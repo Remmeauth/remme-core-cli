@@ -26,3 +26,4 @@ class StateInterface:
             head (string, optional): block identifier to get a list of states to.
             reverse (bool, optional): parameter to reverse result.
         """
+        pass

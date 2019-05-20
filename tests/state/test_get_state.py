@@ -8,9 +8,9 @@ import pytest
 from click.testing import CliRunner
 
 from cli.constants import (
+    BLOCK_IDENTIFIER_REGEXP,
     DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
     FAILED_EXIT_FROM_COMMAND_CODE,
-    HEADER_SIGNATURE_REGEXP,
     PASSED_EXIT_FROM_COMMAND_CODE,
 )
 from cli.entrypoint import cli
@@ -22,7 +22,7 @@ ADDRESS_WITH_STATE = '0000000000000000000000000000000000000000000000000000000000
 def test_get_state_with_address():
     """
     Case: get a state by its address.
-    Expect: state is returned.
+    Expect: the state is returned.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -37,7 +37,7 @@ def test_get_state_with_address():
     result_header_signature = json.loads(result.output).get('result').get('state').get('head')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert re.match(pattern=HEADER_SIGNATURE_REGEXP, string=result_header_signature) is not None
+    assert re.match(pattern=BLOCK_IDENTIFIER_REGEXP, string=result_header_signature) is not None
 
 
 def test_get_state_with_invalid_address():
@@ -97,7 +97,7 @@ def test_get_state_with_non_existing_address():
 def test_get_state_without_node_url(mocker):
     """
     Case: get a state by its address without passing node URL.
-    Expect: state is returned from node on localhost.
+    Expect: the state is returned from a node on localhost.
     """
     expected_result = {
         "data": "CAE=",
@@ -124,7 +124,7 @@ def test_get_state_without_node_url(mocker):
 
 def test_get_state_with_invalid_node_url():
     """
-    Case: get a state by passing invalid node URL.
+    Case: get a state by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'my-node-url.com'
@@ -150,8 +150,8 @@ def test_get_state_with_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_state_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a state by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a state by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [

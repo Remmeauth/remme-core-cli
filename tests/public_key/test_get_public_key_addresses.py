@@ -73,7 +73,7 @@ def test_get_public_keys_invalid_address():
 def test_get_public_keys_without_node_url(mocker):
     """
     Case: get a list of the addresses of the public keys without passing node URL.
-    Expect: list of the addresses of the public keys is returned from node on localhost.
+    Expect: list of the addresses of the public keys is returned from a node on localhost.
     """
     public_key_addresses = [
         'a23be14785e7b073b50e24f72e086675289795b969a895a7f02202404086946e8ddc5b',
@@ -103,7 +103,7 @@ def test_get_public_keys_without_node_url(mocker):
 
 def test_get_public_keys_invalid_node_url():
     """
-    Case: get a list of the addresses of the public keys by passing invalid node URL.
+    Case: get a list of the addresses of the public keys by passing an invalid node URL.
     Expect: the following node URL is invalid error message.
     """
     invalid_node_url = 'domainwithoutextention'
@@ -133,8 +133,8 @@ def test_get_public_keys_invalid_node_url():
 @pytest.mark.parametrize('node_url_with_protocol', ['http://masternode.com', 'https://masternode.com'])
 def test_get_public_keys_node_url_with_protocol(node_url_with_protocol):
     """
-    Case: get a list of the addresses of the public keys by passing node URL with explicit protocol.
-    Expect: the following node URL contains protocol error message.
+    Case: get a list of the addresses of the public keys by passing node URL with an explicit protocol.
+    Expect: the following node URL contains a protocol error message.
     """
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -160,7 +160,7 @@ def test_get_public_keys_node_url_with_protocol(node_url_with_protocol):
 
 def test_get_public_keys_non_existing_address():
     """
-    Case: get a list of the addresses of the public keys by passing non-existing address.
+    Case: get a list of the addresses of the public keys by passing the non-existing address.
     Expect: empty list of the addresses of the public keys is returned.
     """
     non_existing_address = '1120076ecf036e857f42129b58303bcf1e03723764a1702cbe98529802aad8514ee3c1'
@@ -184,8 +184,8 @@ def test_get_public_keys_non_existing_address():
 
 def test_get_public_keys_non_existing_node_url():
     """
-    Case: get a list of the addresses of the public keys by passing non-existing node URL.
-    Expect: check if node running at URL error message.
+    Case: get a list of the addresses of the public keys by passing the non-existing node URL.
+    Expect: check if node running at the URL error message.
     """
     non_existing_node_url = 'non-existing-node.com'
 

@@ -15,14 +15,14 @@ from cli.transaction.forms import (
     GetTransactionsListForm,
 )
 from cli.transaction.help import (
-    TRANSACTION_FAMILY_NAME_ARGUMENT_HELP_MESSAGE,
-    TRANSACTION_HEAD_ARGUMENT_HELP_MESSAGE,
     TRANSACTION_ID_ARGUMENT_HELP_MESSAGE,
-    TRANSACTION_IDS_ARGUMENT_HELP_MESSAGE,
-    TRANSACTION_LIMIT_ARGUMENT_HELP_MESSAGE,
-    TRANSACTION_REVERSE_ARGUMENT_HELP_MESSAGE,
-    TRANSACTION_START_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_FAMILY_NAME_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_HEAD_ARGUMENT_HELP_MESSAGE,
     TRANSACTIONS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_LIMIT_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_REVERSE_ARGUMENT_HELP_MESSAGE,
+    TRANSACTIONS_START_ARGUMENT_HELP_MESSAGE,
 )
 from cli.transaction.service import Transaction
 from cli.utils import (
@@ -40,13 +40,13 @@ def transaction_command():
     pass
 
 
-@click.option('--ids', required=False, type=str, help=TRANSACTION_IDS_ARGUMENT_HELP_MESSAGE)
-@click.option('--start', required=False, type=str, help=TRANSACTION_START_ARGUMENT_HELP_MESSAGE)
-@click.option('--limit', required=False, type=int, help=TRANSACTION_LIMIT_ARGUMENT_HELP_MESSAGE)
-@click.option('--head', required=False, type=str, help=TRANSACTION_HEAD_ARGUMENT_HELP_MESSAGE)
-@click.option('--reverse', required=False, is_flag=True, help=TRANSACTION_REVERSE_ARGUMENT_HELP_MESSAGE)
-@click.option('--family-name', required=False, type=str, help=TRANSACTION_FAMILY_NAME_ARGUMENT_HELP_MESSAGE)
-@click.option('--ids-only', required=False, is_flag=True, help=TRANSACTIONS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)
+@click.option('--ids', required=False, type=str, help=TRANSACTIONS_IDENTIFIERS_ARGUMENT_HELP_MESSAGE)
+@click.option('--start', required=False, type=str, help=TRANSACTIONS_START_ARGUMENT_HELP_MESSAGE)
+@click.option('--limit', required=False, type=int, help=TRANSACTIONS_LIMIT_ARGUMENT_HELP_MESSAGE)
+@click.option('--head', required=False, type=str, help=TRANSACTIONS_HEAD_ARGUMENT_HELP_MESSAGE)
+@click.option('--reverse', required=False, is_flag=True, help=TRANSACTIONS_REVERSE_ARGUMENT_HELP_MESSAGE)
+@click.option('--family-name', required=False, type=str, help=TRANSACTIONS_FAMILY_NAME_ARGUMENT_HELP_MESSAGE)
+@click.option('--ids-only', required=False, is_flag=True, help=TRANSACTIONS_IDENTIFIERS_ONLY_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @transaction_command.command('get-list')
 def get_transactions(ids, start, limit, head, reverse, family_name, ids_only, node_url):
@@ -72,6 +72,7 @@ def get_transactions(ids, start, limit, head, reverse, family_name, ids_only, no
     start = arguments.get('start')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    reverse = arguments.get('reverse')
     family_name = arguments.get('family_name')
     node_url = arguments.get('node_url')
 
@@ -86,12 +87,7 @@ def get_transactions(ids, start, limit, head, reverse, family_name, ids_only, no
 
     else:
         result, errors = Transaction(service=remme).get_list(
-            transaction_ids=transaction_ids,
-            start=start,
-            limit=limit,
-            head=head,
-            family_name=family_name,
-            reverse=reverse,
+            ids=transaction_ids, start=start, limit=limit, head=head, family_name=family_name, reverse=reverse,
         )
 
     if errors is not None:
