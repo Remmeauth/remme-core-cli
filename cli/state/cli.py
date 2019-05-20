@@ -16,6 +16,7 @@ from cli.state.forms import (
 )
 from cli.state.help import (
     STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
+    STATES_START_ADDRESS_ARGUMENT_HELP_MESSAGE,
     STATES_HEAD_ARGUMENT_HELP_MESSAGE,
     STATES_LIMIT_ARGUMENT_HELP_MESSAGE,
     STATES_REVERSE_ARGUMENT_HELP_MESSAGE,
@@ -69,17 +70,19 @@ def get_state(address, node_url):
 
 
 @click.option('--address', required=False, type=str, help=STATE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE)
+@click.option('--start', required=False, type=str, help=STATES_START_ADDRESS_ARGUMENT_HELP_MESSAGE)
 @click.option('--limit', required=False, type=int, help=STATES_LIMIT_ARGUMENT_HELP_MESSAGE)
 @click.option('--head', required=False, type=str, help=STATES_HEAD_ARGUMENT_HELP_MESSAGE)
 @click.option('--reverse', required=False, is_flag=True, help=STATES_REVERSE_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', required=False, type=str, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @state_command.command('get-list')
-def get_states(address, limit, head, reverse, node_url):
+def get_states(address, start, limit, head, reverse, node_url):
     """
     Get a list of states.
     """
     arguments, errors = GetStateListForm().load({
         'address': address,
+        'start': start,
         'limit': limit,
         'head': head,
         'reverse': reverse,
@@ -91,6 +94,7 @@ def get_states(address, limit, head, reverse, node_url):
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     address = arguments.get('address')
+    start = arguments.get('start')
     limit = arguments.get('limit')
     head = arguments.get('head')
     reverse = arguments.get('reverse')
@@ -101,7 +105,7 @@ def get_states(address, limit, head, reverse, node_url):
     })
 
     result, errors = State(service=remme).get_list(
-        address=address, limit=limit, head=head, reverse=reverse,
+        address=address, start=start, limit=limit, head=head, reverse=reverse,
     )
 
     if errors is not None:
