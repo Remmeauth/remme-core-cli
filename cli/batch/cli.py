@@ -135,6 +135,7 @@ def get_batches(ids, start, limit, head, reverse, ids_only, node_url):
     start = arguments.get('start')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    reverse = arguments.get('reverse')
     ids_only = arguments.get('ids_only')
     node_url = arguments.get('node_url')
 

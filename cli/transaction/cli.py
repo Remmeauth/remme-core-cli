@@ -72,6 +72,7 @@ def get_transactions(ids, start, limit, head, reverse, family_name, ids_only, no
     start = arguments.get('start')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    reverse = arguments.get('reverse')
     family_name = arguments.get('family_name')
     node_url = arguments.get('node_url')
 

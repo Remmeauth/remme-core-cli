@@ -93,6 +93,7 @@ def get_states(address, limit, head, reverse, node_url):
     address = arguments.get('address')
     limit = arguments.get('limit')
     head = arguments.get('head')
+    reverse = arguments.get('reverse')
     node_url = arguments.get('node_url')
 
     remme = Remme(network_config={
