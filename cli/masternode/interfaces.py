@@ -16,9 +16,10 @@ class MasternodeInterface:
 
     def set_bet(self, bet):
         """
-        Set masternode betting behaviour.
+        Set the masternode betting behaviour.
 
         Arguments:
-            bet (string or integer, required): type of bet to set to the masternode account.
+            bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
+            `min` or `max` as strings, or an integer value (e.g. 15000).
         """
         pass

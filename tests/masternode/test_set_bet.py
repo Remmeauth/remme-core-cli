@@ -15,7 +15,7 @@ from cli.utils import dict_to_pretty_json
 
 def test_set_bet(mocker, set_bet_masternode_transaction):
     """
-    Case: set masternode betting behaviour.
+    Case: set the masternode betting behaviour.
     Expect: betting masternode transaction's batch identifier is returned.
     """
     mock_get_node_private_key = mocker.patch('cli.config.NodePrivateKey.get')
@@ -29,7 +29,7 @@ def test_set_bet(mocker, set_bet_masternode_transaction):
         'masternode',
         'set-bet',
         '--bet',
-        'MAX',
+        'max',
     ])
 
     set_bet_masternode_transaction_identifier = json.loads(result.output).get('result').get('batch_id')
@@ -40,7 +40,7 @@ def test_set_bet(mocker, set_bet_masternode_transaction):
 
 def test_set_bet_with_invalid_bet():
     """
-    Case: set masternode with invalid betting behaviour.
+    Case: set the masternode with invalid betting behaviour.
     Expect: the following bet is not a valid error message.
     """
     invalid_bet = 'qwqwqwq'

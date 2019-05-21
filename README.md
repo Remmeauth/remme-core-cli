@@ -706,14 +706,14 @@ $ remme masternode open --amount=300000
 }
 ```
 
-Set masternode betting behaviour (executable only on the machine which runs the node) — ``remme masternode set-bet``:
+Set the masternode betting behaviour (executable only on the machine which runs the node) — ``remme masternode set-bet``:
 
-| Arguments | Type    | Required | Description                           |
-| :-------: | :-----: | :------: | ------------------------------------- |
-| bet       | Integer | Yes      | Bet to set to the masternode account. |
+| Arguments | Type   | Required | Description                           |
+| :-------: | :----: | :------: | ------------------------------------- |
+| bet       | String | Yes      | Bet to set to the masternode account. |
 
 ```bash
-$ remme masternode set-bet --bet=MAX
+$ remme masternode set-bet --bet=max
 {
     "result": {
         "batch_id": "a58c23ba6b346aeb3c7186754e436eb23162a5250384667a6c3ce70f7f02e19c42e8ca31f871e4aea333849b8ea752321882977499b1df098832a8296b0c6e9a"
