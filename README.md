@@ -23,6 +23,7 @@
     * [Atomic Swap](#atomic-swap)
     * [Batch](#batch)
     * [Node](#node)
+    * [Masternode](#masternode)
     * [Public key](#public-key)
     * [State](#state)
     * [Transaction](#transaction)
@@ -679,6 +680,17 @@ $ remme node get-info --node-url=node-27-testnet.remme.io
 }
 ```
 
+Open the node to participate in the network (executable only on the machine which runs the node) — ``remme node open``:
+
+```bash
+$ remme node open
+{
+    "result": {
+        "batch_id": "b877a10ddc0ef7f28b0b4a075cbab580b5f7be4dc4063e282a87ce812105316569ccba6c554176c36174bb62025181dc7bb9d83cba57d90dd27c04c043261c9c"
+    }
+}
+```
+
 Get the initial stake of the node — ``remme node get-initial-stake``:
 
 | Arguments | Type   | Required | Description                     |
@@ -689,6 +701,23 @@ Get the initial stake of the node — ``remme node get-initial-stake``:
 $ remme node get-initial-stake --node-url=node-27-testnet.remme.io
 {
     "result": 250000
+}
+```
+
+### Masternode
+
+Open the masternode (executable only on the machine which runs the node) — ``remme masternode open``:
+
+| Arguments | Type      |  Required  | Description                                                 |
+| :-------: | :-------: | :--------: | ----------------------------------------------------------- |
+| amount    | Integer   |  Yes       | Starting amount of tokens to put to the masternode account. |
+
+```bash
+$ remme masternode open --amount=300000
+{
+    "result": {
+        "batch_id": "b877a10ddc0ef7f28b0b4a075cbab580b5f7be4dc4063e282a87ce812105316569ccba6c554176c36174bb62025181dc7bb9d83cba57d90dd27c04c043261c9c"
+    }
 }
 ```
 
@@ -769,17 +798,19 @@ $ remme state get \
 
 Get a list of states — ``remme state get-list``:
 
-| Arguments | Type    | Required | Description                                  |
-| :-------: | :-----: | :------: | -------------------------------------------- |
-| address   | String  | No       | Account address to get a list of states by.  |
-| limit     | Integer | No       | Maximum amount of transactions to return.    |
-| head      | String  | No       | Block identifier to get a list of states to. | 
-| reverse   | Bool    | No       | Parameter to reverse result.                 |
-| node-url  | String  | No       | Node URL to apply a command to.              |
+| Arguments | Type    | Required | Description                                           |
+| :-------: | :-----: | :------: | ----------------------------------------------------- |
+| address   | String  | No       | Account address to get a list of states by.           |
+| start     | String  | No       | Account address to get a list of states starting from.|
+| limit     | Integer | No       | Maximum amount of transactions to return.             |
+| head      | String  | No       | Block identifier to get a list of states to.          | 
+| reverse   | Bool    | No       | Parameter to reverse result.                          |
+| node-url  | String  | No       | Node URL to apply a command to.                       |
 
 ```bash
 $ remme state get-list \
     --address=00001d0024b20fbe284cdaca250b30f40c30c3999e2cafbace268f2f26d9d493a4d09b \
+    --start=00001d0024b20fbe284cdaca250b30f40c30c3999e2cafbace268f2f26d9d493a4d09b \
     --limit=1 \
     --head=d3b9c12f76bf33ed0fb70df9f0ab9af9b3e29a6c9cf3e446fb2d799bdae07a92721cc52a0f3c683a972d562abae6a041d09a90c4157fce9bd305036e1cb15149 \
     --reverse \

@@ -78,3 +78,17 @@ class Node:
             return None, str(error)
 
         return node_initial_stake, None
+
+    def open(self):
+        """
+        Open the node to participate in the network.
+        """
+        try:
+            open_node = loop.run_until_complete(self.service.node_management.open_node())
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'batch_id': open_node.batch_id,
+        }, None
