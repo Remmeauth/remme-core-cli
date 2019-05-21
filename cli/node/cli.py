@@ -5,11 +5,14 @@ import sys
 
 import click
 from remme import Remme
+from remme.models.account.account_type import AccountType
 
+from cli.config import NodePrivateKey
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
+from cli.errors import NotSupportedOsToGetNodePrivateKeyError
 from cli.node.forms import (
     GetNodeConfigurationsForm,
     GetNodeInformationForm,
@@ -140,6 +143,32 @@ def get_initial_stake(node_url):
     })
 
     result, errors = Node(service=remme).get_initial_stake()
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
+
+
+@node_commands.command('open')
+def open():
+    """
+    Open the node to participate in the network.
+    """
+    try:
+        node_private_key = NodePrivateKey().get()
+
+    except (NotSupportedOsToGetNodePrivateKeyError, FileNotFoundError) as error:
+        print_errors(errors=str(error))
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    remme = Remme(
+        account_config={'private_key_hex': node_private_key, 'account_type': AccountType.NODE},
+        network_config={'node_address': 'localhost' + ':8080'},
+    )
+
+    result, errors = Node(service=remme).open()
 
     if errors is not None:
         print_errors(errors=errors)

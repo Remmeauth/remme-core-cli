@@ -31,3 +31,9 @@ class NodeInterface:
         Get the initial stake of the node.
         """
         pass
+
+    def open(self):
+        """
+        Open the node to participate in the network.
+        """
+        pass
