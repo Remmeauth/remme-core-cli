@@ -23,6 +23,7 @@
     * [Atomic Swap](#atomic-swap)
     * [Batch](#batch)
     * [Node](#node)
+    * [Masternode](#masternode)
     * [Public key](#public-key)
     * [State](#state)
     * [Transaction](#transaction)
@@ -685,6 +686,23 @@ Get the initial stake of the node — ``remme node get-initial-stake``:
 $ remme node get-initial-stake --node-url=node-27-testnet.remme.io
 {
     "result": 250000
+}
+```
+
+### Masternode
+
+Open the masternode (executable only on the machine which runs the node) — ``remme masternode open``:
+
+| Arguments | Type      |  Required  | Description                                                 |
+| :-------: | :-------: | :--------: | ----------------------------------------------------------- |
+| amount    | Integer   |  Yes       | Starting amount of tokens to put to the masternode account. |
+
+```bash
+$ remme masternode open --amount=300000
+{
+    "result": {
+        "batch_id": "b877a10ddc0ef7f28b0b4a075cbab580b5f7be4dc4063e282a87ce812105316569ccba6c554176c36174bb62025181dc7bb9d83cba57d90dd27c04c043261c9c"
+    }
 }
 ```
 
