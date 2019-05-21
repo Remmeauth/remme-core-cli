@@ -7,6 +7,8 @@ from marshmallow import (
     validate,
 )
 
+from cli.generic.forms.fields import BetField
+
 
 class OpenMasternodeForm(Schema):
     """
@@ -20,3 +22,11 @@ class OpenMasternodeForm(Schema):
             validate.Range(min=1, error='Amount must be greater than 0.'),
         ],
     )
+
+
+class SetBetMasternodeForm(Schema):
+    """
+    Set masternode betting behaviour form.
+    """
+
+    bet = BetField(required=True)

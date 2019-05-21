@@ -14,6 +14,7 @@ from marshmallow import (
 from cli.constants import (
     ADDRESS_REGEXP,
     BATCH_IDENTIFIER_REGEXP,
+    BET_TYPES,
     BLOCK_IDENTIFIER_REGEXP,
     DOMAIN_NAME_REGEXP,
     FAMILY_NAMES,
@@ -250,3 +251,28 @@ class BlockIdentifiersListField(fields.Field):
             block_validated_identifiers.append(identifier)
 
         return block_validated_identifiers
+
+
+class BetField(fields.Field):
+    """
+    Implements validation of the bet.
+    """
+
+    def _deserialize(self, value, attr, obj, **kwargs):
+        """
+        Validate data (bet) that was passed to field.
+
+        Valid bet is `min` or `max` as strings, or an integer value (e.g. 15000).
+        """
+        bet = value
+
+        if bet in BET_TYPES:
+            return bet
+
+        try:
+            int(bet)
+
+        except ValueError:
+            raise ValidationError(f'The following bet `{bet}` is invalid.')
+
+        return bet

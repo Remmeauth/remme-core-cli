@@ -13,3 +13,12 @@ class MasternodeInterface:
         Open the masternode with starting amount.
         """
         pass
+
+    def set_bet(self, bet):
+        """
+        Set masternode betting behaviour.
+
+        Arguments:
+            bet (string or integer, required): type of bet to set to the masternode account.
+        """
+        pass

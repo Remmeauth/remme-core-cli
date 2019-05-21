@@ -272,6 +272,20 @@ class OpenMasternodeTransaction:
                '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
 
 
+class SetBetMasternodeTransaction:
+    """
+    Impose set bet masternode transaction's data transfer object.
+    """
+
+    @property
+    def batch_id(self):
+        """
+        Get batch identifier of the set bet masternode transaction.
+        """
+        return 'a58c23ba6b346aeb3c7186754e436eb23162a5250384667a6c3ce70f7f02e19c' \
+               '42e8ca31f871e4aea333849b8ea752321882977499b1df098832a8296b0c6e9a'
+
+
 @pytest.fixture()
 def sent_transaction():
     """
@@ -334,3 +348,11 @@ def open_masternode_transaction():
     Get the open masternode transaction fixture.
     """
     return OpenMasternodeTransaction()
+
+
+@pytest.fixture()
+def set_bet_masternode_transaction():
+    """
+    Get the set bet masternode transaction fixture.
+    """
+    return SetBetMasternodeTransaction()

@@ -40,3 +40,24 @@ class Masternode:
         return {
             'batch_id': open_masternode.batch_id,
         }, None
+
+    def set_bet(self, bet):
+        """
+        Set masternode betting behaviour.
+
+        Arguments:
+            bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
+            `min` or `max` as strings, or an integer value (e.g. 15000).
+        """
+        if isinstance(bet, str):
+            bet = bet.upper()
+
+        try:
+            masternode_bet = loop.run_until_complete(self.service.node_management.set_bet(bet_type=bet))
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'batch_id': masternode_bet.batch_id,
+        }, None

@@ -235,21 +235,6 @@ $ remme node-account get \
 }
 ```
 
-Set bet for masternode account (executable only on the machine which runs the node) — ``remme masternode set-bet``:
-
-| Arguments | Type    | Required | Description                                  |
-| :-------: | :-----: | :------: | -------------------------------------------- |
-| bet       | Integer | Yes      | Type of bet set on the masternode's account. |
-
-```bash
-$ remme masternode set-bet --bet=MAX
-{
-    "result": {
-        "batch_id": "a58c23ba6b346aeb3c7186754e436eb23162a5250384667a6c3ce70f7f02e19c42e8ca31f871e4aea333849b8ea752321882977499b1df098832a8296b0c6e9a"
-    }
-}
-```
-
 ### Block
 
 Get a list of blocks — ``remme block get-list``:
@@ -717,6 +702,21 @@ $ remme masternode open --amount=300000
 {
     "result": {
         "batch_id": "b877a10ddc0ef7f28b0b4a075cbab580b5f7be4dc4063e282a87ce812105316569ccba6c554176c36174bb62025181dc7bb9d83cba57d90dd27c04c043261c9c"
+    }
+}
+```
+
+Set masternode betting behaviour (executable only on the machine which runs the node) — ``remme masternode set-bet``:
+
+| Arguments | Type    | Required | Description                           |
+| :-------: | :-----: | :------: | ------------------------------------- |
+| bet       | Integer | Yes      | Bet to set to the masternode account. |
+
+```bash
+$ remme masternode set-bet --bet=MAX
+{
+    "result": {
+        "batch_id": "a58c23ba6b346aeb3c7186754e436eb23162a5250384667a6c3ce70f7f02e19c42e8ca31f871e4aea333849b8ea752321882977499b1df098832a8296b0c6e9a"
     }
 }
 ```

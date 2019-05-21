@@ -45,20 +45,3 @@ class NodeAccount:
             return None, str(error)
 
         return node_account_information.node_account_response, None
-    
-    def set_bet(self, bet):
-        """
-        Set masternode betting behaviour.
-
-        Arguments:
-            bet (string or integer, required): bet type (can be `MIN`, `MAX`, integer)
-        """
-        try:
-            node_account_bet = loop.run_until_complete(self.service.node_management.set_bet(bet_type=bet))
-
-        except Exception as error:
-            return None, str(error)
-
-        return {
-            'batch_id': node_account_bet.batch_id,
-        }, None

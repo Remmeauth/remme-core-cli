@@ -10,8 +10,14 @@ from remme.models.account.account_type import AccountType
 from cli.config import NodePrivateKey
 from cli.constants import FAILED_EXIT_FROM_COMMAND_CODE
 from cli.errors import NotSupportedOsToGetNodePrivateKeyError
-from cli.masternode.forms import OpenMasternodeForm
-from cli.masternode.help import STARTING_AMOUNT_ARGUMENT_HELP_MESSAGE
+from cli.masternode.forms import (
+    OpenMasternodeForm,
+    SetBetMasternodeForm,
+)
+from cli.masternode.help import (
+    SET_BET_ARGUMENT_HELP_MESSAGE,
+    STARTING_AMOUNT_ARGUMENT_HELP_MESSAGE,
+)
 from cli.masternode.service import Masternode
 from cli.utils import (
     print_errors,
@@ -56,6 +62,43 @@ def open(amount):
     )
 
     result, errors = Masternode(service=remme).open(amount=amount)
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
+
+
+@click.option('--bet', type=str, required=True, help=SET_BET_ARGUMENT_HELP_MESSAGE)
+@masternode_commands.command('set-bet')
+def set_bet(bet):
+    """
+    Set masternode betting behaviour.
+    """
+    arguments, errors = SetBetMasternodeForm().load({
+        'bet': bet,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    bet = arguments.get('bet')
+
+    try:
+        node_private_key = NodePrivateKey().get()
+
+    except (NotSupportedOsToGetNodePrivateKeyError, FileNotFoundError) as error:
+        print_errors(errors=str(error))
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    remme = Remme(
+        account_config={'private_key_hex': node_private_key, 'account_type': AccountType.NODE},
+        network_config={'node_address': 'localhost' + ':8080'},
+    )
+
+    result, errors = Masternode(service=remme).set_bet(bet=bet)
 
     if errors is not None:
         print_errors(errors=errors)
