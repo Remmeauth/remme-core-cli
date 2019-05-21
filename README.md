@@ -783,17 +783,19 @@ $ remme state get \
 
 Get a list of states — ``remme state get-list``:
 
-| Arguments | Type    | Required | Description                                  |
-| :-------: | :-----: | :------: | -------------------------------------------- |
-| address   | String  | No       | Account address to get a list of states by.  |
-| limit     | Integer | No       | Maximum amount of transactions to return.    |
-| head      | String  | No       | Block identifier to get a list of states to. | 
-| reverse   | Bool    | No       | Parameter to reverse result.                 |
-| node-url  | String  | No       | Node URL to apply a command to.              |
+| Arguments | Type    | Required | Description                                           |
+| :-------: | :-----: | :------: | ----------------------------------------------------- |
+| address   | String  | No       | Account address to get a list of states by.           |
+| start     | String  | No       | Account address to get a list of states starting from.|
+| limit     | Integer | No       | Maximum amount of transactions to return.             |
+| head      | String  | No       | Block identifier to get a list of states to.          | 
+| reverse   | Bool    | No       | Parameter to reverse result.                          |
+| node-url  | String  | No       | Node URL to apply a command to.                       |
 
 ```bash
 $ remme state get-list \
     --address=00001d0024b20fbe284cdaca250b30f40c30c3999e2cafbace268f2f26d9d493a4d09b \
+    --start=00001d0024b20fbe284cdaca250b30f40c30c3999e2cafbace268f2f26d9d493a4d09b \
     --limit=1 \
     --head=d3b9c12f76bf33ed0fb70df9f0ab9af9b3e29a6c9cf3e446fb2d799bdae07a92721cc52a0f3c683a972d562abae6a041d09a90c4157fce9bd305036e1cb15149 \
     --reverse \
