@@ -1,7 +1,10 @@
 """
 Provide forms for command line interface's node account commands.
 """
-from marshmallow import Schema
+from marshmallow import (
+    Schema,
+    fields,
+)
 
 from cli.generic.forms.fields import (
     AccountAddressField,
@@ -16,3 +19,11 @@ class GetNodeAccountInformationForm(Schema):
 
     address = AccountAddressField(required=True)
     node_url = NodeUrlField(required=True)
+
+
+class SetBetNodeAccountForm(Schema):
+    """
+    Set masternode betting behaviour form.
+    """
+
+    bet = fields.String(required=True)

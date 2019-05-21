@@ -5,13 +5,22 @@ import sys
 
 import click
 from remme import Remme
+from remme.models.account.account_type import AccountType
 
+from cli.config import NodePrivateKey
 from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
-from cli.node_account.forms import GetNodeAccountInformationForm
-from cli.node_account.help import NODE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE
+from cli.errors import NotSupportedOsToGetNodePrivateKeyError
+from cli.node_account.forms import (
+    GetNodeAccountInformationForm,
+    SetBetNodeAccountForm,
+)
+from cli.node_account.help import (
+    NODE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
+    SET_BET_ARGUMENT_HELP_MESSAGE,
+)
 from cli.node_account.service import NodeAccount
 from cli.utils import (
     default_node_url,
@@ -52,6 +61,43 @@ def get(address, node_url):
     )
 
     result, errors = NodeAccount(service=remme).get(address=node_account_address)
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
+
+
+@click.option('--bet', type=str, required=True, help=SET_BET_ARGUMENT_HELP_MESSAGE)
+@node_account_commands.command('set-bet')
+def set_bet(bet):
+    """
+    Set masternode betting behaviour.
+    """
+    arguments, errors = SetBetNodeAccountForm().load({
+        'bet': bet,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    bet = arguments.get('bet')
+
+    try:
+        node_private_key = NodePrivateKey().get()
+
+    except (NotSupportedOsToGetNodePrivateKeyError, FileNotFoundError) as error:
+        print_errors(errors=str(error))
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    remme = Remme(
+        account_config={'private_key_hex': node_private_key, 'account_type': AccountType.NODE},
+        network_config={'node_address': 'localhost' + ':8080'},
+    )
+
+    result, errors = NodeAccount(service=remme).set_bet(bet=bet)
 
     if errors is not None:
         print_errors(errors=errors)
