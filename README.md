@@ -765,14 +765,14 @@ $ remme state get \
 
 Get a list of states — ``remme state get-list``:
 
-| Arguments | Type    | Required | Description                                              |
-| :-------: | :-----: | :------: | -------------------------------------------------------- |
-| address   | String  | No       | Account address to get a list of states by.              |
-| start     | String  | No       | Account address to get a list of states starting from.   |
-| limit     | Integer | No       | Maximum amount of transactions to return.                |
-| head      | String  | No       | Block identifier to get a list of states to.             | 
-| reverse   | Bool    | No       | Parameter to reverse result.                             |
-| node-url  | String  | No       | Node URL to apply a command to.                          |
+| Arguments | Type    | Required | Description                                           |
+| :-------: | :-----: | :------: | ----------------------------------------------------- |
+| address   | String  | No       | Account address to get a list of states by.           |
+| start     | String  | No       | Account address to get a list of states starting from.|
+| limit     | Integer | No       | Maximum amount of transactions to return.             |
+| head      | String  | No       | Block identifier to get a list of states to.          | 
+| reverse   | Bool    | No       | Parameter to reverse result.                          |
+| node-url  | String  | No       | Node URL to apply a command to.                       |
 
 ```bash
 $ remme state get-list \
