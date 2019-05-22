@@ -16,3 +16,9 @@ class NodeAccountInterface:
             address (str, required): node account address to get information about node account by.
         """
         pass
+
+    def transfer_tokens_from_frozen_to_unfrozen(self):
+        """
+        Transfer available tokens from frozen to unfrozen reputation's balances.
+        """
+        pass

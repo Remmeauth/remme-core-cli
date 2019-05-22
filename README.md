@@ -235,6 +235,17 @@ $ remme node-account get \
 }
 ```
 
+Transfer available tokens from frozen to unfrozen reputation's balances (executable only on the machine which runs the node) — `remme node-account transfer-tokens-from-frozen-to-unfrozen`.
+
+```bash
+$ remme node-account transfer-tokens-from-frozen-to-unfrozen
+{
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
 ### Block
 
 Get a list of blocks — ``remme block get-list``:
