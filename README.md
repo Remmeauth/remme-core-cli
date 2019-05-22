@@ -240,7 +240,7 @@ Transfer tokens to address — ``remme node-account transfer-tokens``:
 | Arguments   | Type    | Required | Description                                    |
 | :---------: | :-----: | :------: | ---------------------------------------------- |
 | private-key | String  | Yes      | Account's private key to transfer tokens from. |
-| address-to  | String  | Yes      | Node account address to transfer tokens to.    |
+| address-to  | String  | Yes      | Account address to transfer tokens to.         |
 | amount      | Integer | Yes      | Amount to transfer.                            |
 | node-url    | String  | No       | Node URL to apply a command to.                |
 

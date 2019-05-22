@@ -11,14 +11,12 @@ from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
-from cli.node_account.forms import (
-    GetNodeAccountInformationForm,
-    TransferTokensForm,
-)
+from cli.generic.forms.forms import TransferTokensForm
+from cli.node_account.forms import GetNodeAccountInformationForm
 from cli.node_account.help import (
+    ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
     AMOUNT_ARGUMENT_HELP_MESSAGE,
     NODE_ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
-    NODE_ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
     PRIVATE_KEY_ARGUMENT_HELP_MESSAGE,
 )
 from cli.node_account.service import NodeAccount
@@ -70,7 +68,7 @@ def get(address, node_url):
 
 
 @click.option('--private-key', type=str, required=True, help=PRIVATE_KEY_ARGUMENT_HELP_MESSAGE)
-@click.option('--address-to', type=str, required=True, help=NODE_ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE)
+@click.option('--address-to', type=str, required=True, help=ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE)
 @click.option('--amount', type=int, required=True, help=AMOUNT_ARGUMENT_HELP_MESSAGE)
 @click.option('--node-url', type=str, required=False, help=NODE_URL_ARGUMENT_HELP_MESSAGE, default=default_node_url())
 @node_account_commands.command('transfer-tokens')
