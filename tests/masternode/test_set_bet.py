@@ -15,7 +15,7 @@ from cli.utils import dict_to_pretty_json
 
 
 @pytest.mark.parametrize('bet', ['max', 'min', '15000'])
-def test_set_bet_masternode(mocker, set_bet_masternode_transaction, bet):
+def test_set_bet_masternode(mocker, transaction, bet):
     """
     Case: set the masternode betting behaviour.
     Expect: betting masternode transaction's batch identifier is returned.
@@ -24,7 +24,7 @@ def test_set_bet_masternode(mocker, set_bet_masternode_transaction, bet):
     mock_get_node_private_key.return_value = '42dada12f863528bd456785d8c544154db6ec9455be2c123d91b687df3697314'
 
     mock_set_bet_masternode = mocker.patch('cli.masternode.service.loop.run_until_complete')
-    mock_set_bet_masternode.return_value = set_bet_masternode_transaction
+    mock_set_bet_masternode.return_value = transaction
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -37,7 +37,7 @@ def test_set_bet_masternode(mocker, set_bet_masternode_transaction, bet):
     masternode_set_bet_transaction_identifier = json.loads(result.output).get('result').get('batch_id')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert set_bet_masternode_transaction.batch_id == masternode_set_bet_transaction_identifier
+    assert transaction.batch_id == masternode_set_bet_transaction_identifier
 
 
 def test_set_bet_masternode_with_invalid_bet():

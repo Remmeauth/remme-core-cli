@@ -269,10 +269,7 @@ class BetField(fields.Field):
         if bet in BET_TYPES:
             return bet
 
-        try:
-            int(bet)
+        if bet.isdigit():
+            return int(bet)
 
-        except ValueError:
-            raise ValidationError(f'The following bet `{bet}` is invalid.')
-
-        return int(bet)
+        raise ValidationError(f'The following bet `{bet}` is invalid.')
