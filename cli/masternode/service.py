@@ -5,6 +5,7 @@ import asyncio
 
 from accessify import implements
 
+from cli.errors import NotSupportedBetError
 from cli.masternode.interfaces import MasternodeInterface
 
 loop = asyncio.get_event_loop()
@@ -47,10 +48,18 @@ class Masternode:
 
         Arguments:
             bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
-                                               `min` or `max` as strings, or an integer value (e.g. 15000).
+                                               `min` or `max` as strings, or an integer value from 1 to 9
+                                               that means block costs ratio (integer*block_cost).
         """
         if isinstance(bet, str):
             bet = bet.upper()
+
+        if isinstance(bet, int):
+
+            if not 1 <= bet <= 9:
+                raise NotSupportedBetError(
+                    f'The following bet {bet} is not supported to be set as masternode betting behavior.',
+                )
 
         try:
             masternode_bet = loop.run_until_complete(self.service.node_management.set_bet(bet_type=bet))

@@ -10,3 +10,12 @@ class NotSupportedOsToGetNodePrivateKeyError(Exception):
 
     def __init__(self, message):
         self.message = message
+
+
+class NotSupportedBetError(Exception):
+    """
+    The following bet is not supported to be set as masternode betting behavior error.
+    """
+
+    def __init__(self, message):
+        self.message = message

@@ -3,4 +3,5 @@ Provide help messages for command line interface's masternode commands.
 """
 STARTING_AMOUNT_ARGUMENT_HELP_MESSAGE = 'Starting amount of tokens to put to the masternode account.'
 SET_BET_ARGUMENT_HELP_MESSAGE = \
-    'Bet to set to the masternode account. Possible values are `min`, `max` or integer like `15000`.'
+    'Bet to set to the masternode account. Possible values are `min`, `max` or ' \
+    'an integer value from 1 to 9 that means block costs ratio (integer*block_cost).'

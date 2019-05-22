@@ -9,7 +9,10 @@ from remme.models.account.account_type import AccountType
 
 from cli.config import NodePrivateKey
 from cli.constants import FAILED_EXIT_FROM_COMMAND_CODE
-from cli.errors import NotSupportedOsToGetNodePrivateKeyError
+from cli.errors import (
+    NotSupportedBetError,
+    NotSupportedOsToGetNodePrivateKeyError,
+)
 from cli.masternode.forms import (
     OpenMasternodeForm,
     SetBetMasternodeForm,
@@ -98,7 +101,12 @@ def set_bet(bet):
         network_config={'node_address': 'localhost' + ':8080'},
     )
 
-    result, errors = Masternode(service=remme).set_bet(bet=bet)
+    try:
+        result, errors = Masternode(service=remme).set_bet(bet=bet)
+
+    except NotSupportedBetError as error:
+        print_errors(errors=str(error))
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     if errors is not None:
         print_errors(errors=errors)
