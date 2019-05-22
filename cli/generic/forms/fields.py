@@ -275,4 +275,4 @@ class BetField(fields.Field):
         except ValueError:
             raise ValidationError(f'The following bet `{bet}` is invalid.')
 
-        return bet
+        return int(bet)

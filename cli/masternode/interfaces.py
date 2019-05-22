@@ -20,6 +20,6 @@ class MasternodeInterface:
 
         Arguments:
             bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
-            `min` or `max` as strings, or an integer value (e.g. 15000).
+                                               `min` or `max` as strings, or an integer value (e.g. 15000).
         """
         pass

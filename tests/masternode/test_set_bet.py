@@ -2,6 +2,7 @@
 Provide tests for command line interface's masternode set bet command.
 """
 import json
+import pytest
 
 from click.testing import CliRunner
 
@@ -13,7 +14,8 @@ from cli.entrypoint import cli
 from cli.utils import dict_to_pretty_json
 
 
-def test_set_bet(mocker, set_bet_masternode_transaction):
+@pytest.mark.parametrize('bet', ['max', 'min', '15000'])
+def test_set_bet_masternode(mocker, set_bet_masternode_transaction, bet):
     """
     Case: set the masternode betting behaviour.
     Expect: betting masternode transaction's batch identifier is returned.
@@ -29,16 +31,16 @@ def test_set_bet(mocker, set_bet_masternode_transaction):
         'masternode',
         'set-bet',
         '--bet',
-        'max',
+        bet,
     ])
 
-    set_bet_masternode_transaction_identifier = json.loads(result.output).get('result').get('batch_id')
+    masternode_set_bet_transaction_identifier = json.loads(result.output).get('result').get('batch_id')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert set_bet_masternode_transaction.batch_id == set_bet_masternode_transaction_identifier
+    assert set_bet_masternode_transaction.batch_id == masternode_set_bet_transaction_identifier
 
 
-def test_set_bet_with_invalid_bet():
+def test_set_bet_masternode_with_invalid_bet():
     """
     Case: set the masternode with invalid betting behaviour.
     Expect: the following bet is not a valid error message.
