@@ -84,7 +84,7 @@ def test_set_bet_masternode_with_non_supported_bet(mocker, non_supported_bet):
     ])
 
     expected_error = {
-        'errors': f'The following bet {non_supported_bet} is not supported to be set as masternode betting behavior.',
+        'errors': f'The following bet `{non_supported_bet}` is not supported to be set as masternode betting behavior.',
 
     }
 

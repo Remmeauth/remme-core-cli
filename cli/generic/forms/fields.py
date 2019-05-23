@@ -262,7 +262,8 @@ class BetField(fields.Field):
         """
         Validate data (bet) that was passed to field.
 
-        Valid bet is `min` or `max` as strings, or an integer value (e.g. 15000).
+        Valid bet is `min` or `max` as strings, or an integer value from 1 to 9
+        that means block costs ratio (integer*block_cost).
         """
         bet = value
 

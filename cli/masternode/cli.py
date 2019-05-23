@@ -73,6 +73,32 @@ def open(amount):
     print_result(result=result)
 
 
+@masternode_commands.command('close')
+def close():
+    """
+    Close the masternode.
+    """
+    try:
+        node_private_key = NodePrivateKey().get()
+
+    except (NotSupportedOsToGetNodePrivateKeyError, FileNotFoundError) as error:
+        print_errors(errors=str(error))
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    remme = Remme(
+        account_config={'private_key_hex': node_private_key, 'account_type': AccountType.NODE},
+        network_config={'node_address': 'localhost' + ':8080'},
+    )
+
+    result, errors = Masternode(service=remme).close()
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)
+
+
 @click.option('--bet', type=str, required=True, help=SET_BET_ARGUMENT_HELP_MESSAGE)
 @masternode_commands.command('set-bet')
 def set_bet(bet):
@@ -107,32 +133,6 @@ def set_bet(bet):
     except NotSupportedBetError as error:
         print_errors(errors=str(error))
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
-
-    if errors is not None:
-        print_errors(errors=errors)
-        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
-
-    print_result(result=result)
-
-
-@masternode_commands.command('close')
-def close():
-    """
-    Close the masternode.
-    """
-    try:
-        node_private_key = NodePrivateKey().get()
-
-    except (NotSupportedOsToGetNodePrivateKeyError, FileNotFoundError) as error:
-        print_errors(errors=str(error))
-        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
-
-    remme = Remme(
-        account_config={'private_key_hex': node_private_key, 'account_type': AccountType.NODE},
-        network_config={'node_address': 'localhost' + ':8080'},
-    )
-
-    result, errors = Masternode(service=remme).close()
 
     if errors is not None:
         print_errors(errors=errors)

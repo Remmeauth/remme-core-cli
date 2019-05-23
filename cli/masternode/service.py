@@ -74,7 +74,7 @@ class Masternode:
 
             if not 1 <= bet <= 9:
                 raise NotSupportedBetError(
-                    f'The following bet {bet} is not supported to be set as masternode betting behavior.',
+                    f'The following bet `{bet}` is not supported to be set as masternode betting behavior.',
                 )
 
         try:
