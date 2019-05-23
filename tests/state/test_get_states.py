@@ -39,38 +39,6 @@ def test_get_states():
     assert first_state_address.get('address') == ADDRESS_WITH_STATE
 
 
-def test_get_states_with_all_parameters():
-    """
-    Case: get a list of states by account address, starting address, limit, head, reverse.
-    Expect: list of states is returned.
-    """
-    head = 'dff30edf2b6be3b456d076ca25f4063ac59106a7698dc1d49da40c328b8889d0' \
-           '5dcab8b2cbdcf5e2f2cd64f42e9bab881a9901138eef909841f0765e123e6f3d'
-
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'state',
-        'get-list',
-        '--address',
-        ADDRESS_WITH_STATE,
-        '--start',
-        ADDRESS_WITH_STATE,
-        '--limit',
-        1,
-        '--head',
-        head,
-        '--node-url',
-        DEV_BRANCH_NODE_IP_ADDRESS_FOR_TESTING,
-        '--reverse',
-    ])
-
-    result_state_address = json.loads(result.output).get('result')
-    single_state_address = result_state_address[0]
-
-    assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert single_state_address.get('address') == ADDRESS_WITH_STATE
-
-
 def test_get_states_with_address():
     """
     Case: get a list of states by its address.
