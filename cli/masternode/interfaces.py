@@ -13,3 +13,9 @@ class MasternodeInterface:
         Open the masternode with starting amount.
         """
         pass
+
+    def close(self):
+        """
+        Close the masternode.
+        """
+        pass

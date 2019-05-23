@@ -46,6 +46,20 @@ class NodeAccount:
 
         return node_account_information.node_account_response, None
 
+    def transfer_tokens(self, address_to, amount):
+        """
+        Transfer tokens to address.
+        """
+        try:
+            transaction = loop.run_until_complete(self.service.token.transfer(address_to=address_to, amount=amount))
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'batch_id': transaction.batch_id,
+        }, None
+
     def transfer_tokens_from_frozen_to_unfrozen(self):
         """
         Transfer available tokens from frozen to unfrozen reputation's balances.
