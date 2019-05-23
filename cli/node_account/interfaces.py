@@ -22,3 +22,9 @@ class NodeAccountInterface:
         Transfer tokens to address.
         """
         pass
+
+    def transfer_tokens_from_frozen_to_unfrozen(self):
+        """
+        Transfer available tokens from frozen to unfrozen reputation's balances.
+        """
+        pass
