@@ -728,6 +728,17 @@ $ remme masternode open --amount=300000
 }
 ```
 
+Close the masternode (executable only on the machine which runs the node) — ``remme masternode close``:
+
+```bash
+$ remme masternode close
+{
+    "result": {
+        "batch_id": "ae0ad8d5379beb28211cdc3f4d70a7ef66852eb815241cb201425897fc470e727c34e67ea77525ac696633afd27cca88227df52493889edcbb6fb840b4c93326"
+    }
+}
+```
+
 ### Public key
 
 Get a list of the addresses of the public keys by account address — ``remme public-key get-list``:
