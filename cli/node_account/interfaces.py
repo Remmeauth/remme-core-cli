@@ -16,3 +16,9 @@ class NodeAccountInterface:
             address (str, required): node account address to get information about node account by.
         """
         pass
+
+    def transfer_tokens(self, address_to, amount):
+        """
+        Transfer tokens to address.
+        """
+        pass
