@@ -51,7 +51,7 @@ class NodeAccount:
         Transfer available tokens from frozen to unfrozen reputation's balances.
         """
         try:
-            transaction = loop.run_until_complete(
+            transfer_transaction = loop.run_until_complete(
                 self.service.token.transfer_from_frozen_to_unfrozen(),
             )
 
@@ -59,5 +59,5 @@ class NodeAccount:
             return None, str(error)
 
         return {
-            'batch_identifier': transaction.batch_id,
+            'batch_identifier': transfer_transaction.batch_id,
         }, None

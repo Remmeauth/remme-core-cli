@@ -11,7 +11,7 @@ from cli.entrypoint import cli
 
 def test_transfer_tokens_from_frozen_to_unfrozen(mocker, transaction):
     """
-    Case: transfer tokens from frozen to unfrozen.
+    Case: transfer available tokens from frozen to unfrozen.
     Expect: transaction's batch identifier is returned.
     """
     mock_get_node_private_key = mocker.patch('cli.config.NodePrivateKey.get')
