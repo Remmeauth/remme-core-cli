@@ -90,25 +90,3 @@ def test_set_bet_masternode_with_non_supported_bet(mocker, non_supported_bet):
 
     assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
     assert dict_to_pretty_json(expected_error) in result.output
-
-
-def test_set_bet_masternode_without_private_key():
-    """
-    Case: set the masternode without private key.
-    Expect: the private key hasn't been founded on the machine error message.
-    """
-    runner = CliRunner()
-    result = runner.invoke(cli, [
-        'masternode',
-        'set-bet',
-        '--bet',
-        '1',
-    ])
-
-    expected_error = {
-        'errors': 'Private key hasn\'t been founded on the machine.',
-
-    }
-
-    assert FAILED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert dict_to_pretty_json(expected_error) in result.output

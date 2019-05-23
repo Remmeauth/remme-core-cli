@@ -199,7 +199,7 @@ $ remme account transfer-tokens \
 }
 ```
 
-### Node Account
+### Node account
 
 Get information about the node account by its address — ``remme node-account get``:
 
@@ -232,6 +232,28 @@ $ remme node-account get \
             },
         ],
     },
+}
+```
+
+Transfer tokens to address — ``remme node-account transfer-tokens``:
+
+| Arguments   | Type    | Required | Description                                    |
+| :---------: | :-----: | :------: | ---------------------------------------------- |
+| private-key | String  | Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  | Yes      | Account address to transfer tokens to.         |
+| amount      | Integer | Yes      | Amount to transfer.                            |
+| node-url    | String  | No       | Node URL to apply a command to.                |
+
+```bash
+$ remme node-account transfer-tokens \
+      --private-key=7ae575740dcdae8e704ff461ab89ad42505e06abbbae8ea68e18387e537b7462 \
+      --address-to=1168292465adcaffeea284f89330dcc013533c8c285089b75466a958733f4f3fc9174d \
+      --amount=100 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "batch_id": "045c2b7c43a7ca7c3dc60e92714c03265572a726d1fae631c39a404eaf97770e3f6a7a8c35c86f6361afb2e4f12b4a17d71a66a19158b62f30531ab32b62f06f"
+    }
 }
 ```
 

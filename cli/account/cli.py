@@ -6,10 +6,7 @@ import sys
 import click
 from remme import Remme
 
-from cli.account.forms import (
-    GetAccountBalanceForm,
-    TransferTokensForm,
-)
+from cli.account.forms import GetAccountBalanceForm
 from cli.account.help import (
     ACCOUNT_ADDRESS_ARGUMENT_HELP_MESSAGE,
     ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
@@ -21,6 +18,7 @@ from cli.constants import (
     FAILED_EXIT_FROM_COMMAND_CODE,
     NODE_URL_ARGUMENT_HELP_MESSAGE,
 )
+from cli.generic.forms.forms import TransferTokensForm
 from cli.utils import (
     default_node_url,
     print_errors,

@@ -45,3 +45,17 @@ class NodeAccount:
             return None, str(error)
 
         return node_account_information.node_account_response, None
+
+    def transfer_tokens(self, address_to, amount):
+        """
+        Transfer tokens to address.
+        """
+        try:
+            transaction = loop.run_until_complete(self.service.token.transfer(address_to=address_to, amount=amount))
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'batch_id': transaction.batch_id,
+        }, None
