@@ -14,6 +14,12 @@ class MasternodeInterface:
         """
         pass
 
+    def close(self):
+        """
+        Close the masternode.
+        """
+        pass
+
     def set_bet(self, bet):
         """
         Set the masternode betting behaviour.

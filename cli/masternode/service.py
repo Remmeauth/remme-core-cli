@@ -42,6 +42,22 @@ class Masternode:
             'batch_id': open_masternode.batch_id,
         }, None
 
+    def close(self):
+        """
+        Close the masternode.
+        """
+        try:
+            close_masternode = loop.run_until_complete(
+                self.service.node_management.close_master_node(),
+            )
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'batch_id': close_masternode.batch_id,
+        }, None
+
     def set_bet(self, bet):
         """
         Set the masternode betting behaviour.
@@ -62,7 +78,9 @@ class Masternode:
                 )
 
         try:
-            masternode_bet = loop.run_until_complete(self.service.node_management.set_bet(bet_type=bet))
+            masternode_bet = loop.run_until_complete(
+                self.service.node_management.set_bet(bet_type=bet),
+            )
 
         except Exception as error:
             return None, str(error)
