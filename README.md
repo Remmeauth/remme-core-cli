@@ -199,7 +199,7 @@ $ remme account transfer-tokens \
 }
 ```
 
-### Node Account
+### Node account
 
 Get information about the node account by its address — ``remme node-account get``:
 
@@ -232,6 +232,39 @@ $ remme node-account get \
             },
         ],
     },
+}
+```
+
+Transfer tokens to address — ``remme node-account transfer-tokens``:
+
+| Arguments   | Type    | Required | Description                                    |
+| :---------: | :-----: | :------: | ---------------------------------------------- |
+| private-key | String  | Yes      | Account's private key to transfer tokens from. |
+| address-to  | String  | Yes      | Account address to transfer tokens to.         |
+| amount      | Integer | Yes      | Amount to transfer.                            |
+| node-url    | String  | No       | Node URL to apply a command to.                |
+
+```bash
+$ remme node-account transfer-tokens \
+      --private-key=7ae575740dcdae8e704ff461ab89ad42505e06abbbae8ea68e18387e537b7462 \
+      --address-to=1168292465adcaffeea284f89330dcc013533c8c285089b75466a958733f4f3fc9174d \
+      --amount=100 \
+      --node-url=node-genesis-testnet.remme.io
+{
+    "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+Transfer available tokens from frozen to unfrozen reputation's balances (executable only on the machine which runs the node) — `remme node-account transfer-tokens-from-frozen-to-unfrozen`.
+
+```bash
+$ remme node-account transfer-tokens-from-frozen-to-unfrozen
+{
+    "result": {
+        "batch_id": "045c2b7c43a7ca7c3dc60e92714c03265572a726d1fae631c39a404eaf97770e3f6a7a8c35c86f6361afb2e4f12b4a17d71a66a19158b62f30531ab32b62f06f"
+    }
 }
 ```
 
@@ -702,6 +735,33 @@ $ remme masternode open --amount=300000
 {
     "result": {
         "batch_id": "b877a10ddc0ef7f28b0b4a075cbab580b5f7be4dc4063e282a87ce812105316569ccba6c554176c36174bb62025181dc7bb9d83cba57d90dd27c04c043261c9c"
+    }
+}
+```
+
+Close the masternode (executable only on the machine which runs the node) — ``remme masternode close``:
+
+```bash
+$ remme masternode close
+{
+    "result": {
+        "batch_id": "ae0ad8d5379beb28211cdc3f4d70a7ef66852eb815241cb201425897fc470e727c34e67ea77525ac696633afd27cca88227df52493889edcbb6fb840b4c93326"
+    }
+}
+```
+
+Set the masternode betting behavior (executable only on the machine which runs the node) — ``remme masternode set-bet``:
+
+| Arguments | Type   | Required | Description                                                      |
+| :-------: | :----: | :------: | ---------------------------------------------------------------- |
+| bet       | String | Yes      | Bet to set to the masternode account.                            |
+|           |        |          | Possible values are `min`, `max`, or an integer value (e.g. 20). |
+
+```bash
+$ remme masternode set-bet --bet=max
+{
+    "result": {
+        "batch_id": "a58c23ba6b346aeb3c7186754e436eb23162a5250384667a6c3ce70f7f02e19c42e8ca31f871e4aea333849b8ea752321882977499b1df098832a8296b0c6e9a"
     }
 }
 ```
