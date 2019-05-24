@@ -66,14 +66,15 @@ def test_set_bet_masternode_with_invalid_bet(invalid_bet):
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-@pytest.mark.parametrize('non_supported_bet', ['0', '10'])
-def test_set_bet_masternode_with_non_supported_bet(mocker, non_supported_bet):
+def test_set_bet_masternode_with_non_supported_bet(mocker):
     """
     Case: set the masternode with non supported bet.
-    Expect: the following bet is not a valid error message.
+    Expect: the following bet is not supported error message.
     """
     mock_get_node_private_key = mocker.patch('cli.config.NodePrivateKey.get')
     mock_get_node_private_key.return_value = '42dada12f863528bd456785d8c544154db6ec9455be2c123d91b687df3697314'
+
+    non_supported_bet = '0'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -84,7 +85,7 @@ def test_set_bet_masternode_with_non_supported_bet(mocker, non_supported_bet):
     ])
 
     expected_error = {
-        'errors': f'The following bet `{non_supported_bet}` is not supported to be set as masternode betting behavior.',
+        'errors': f'The following bet `{non_supported_bet}` is not supported, the minimum bet is integer 1.',
 
     }
 

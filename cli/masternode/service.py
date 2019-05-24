@@ -64,17 +64,16 @@ class Masternode:
 
         Arguments:
             bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
-                                               `min` or `max` as strings, or an integer value from 1 to 9
-                                               that means block costs ratio (integer*block_cost).
+                                               `min` or `max` as strings, or an integer value (e.g. 20).
         """
         if isinstance(bet, str):
             bet = bet.upper()
 
         if isinstance(bet, int):
 
-            if not 1 <= bet <= 9:
+            if bet == 0:
                 raise NotSupportedBetError(
-                    f'The following bet `{bet}` is not supported to be set as masternode betting behavior.',
+                    f'The following bet `{bet}` is not supported, the minimum bet is integer 1.',
                 )
 
         try:
