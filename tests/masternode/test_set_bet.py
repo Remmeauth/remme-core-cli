@@ -17,7 +17,7 @@ from cli.utils import dict_to_pretty_json
 @pytest.mark.parametrize('bet', ['max', 'min', '2'])
 def test_set_bet_masternode(mocker, transaction, bet):
     """
-    Case: set the masternode betting behaviour.
+    Case: set the masternode betting behavior.
     Expect: betting masternode transaction's batch identifier is returned.
     """
     mock_get_node_private_key = mocker.patch('cli.config.NodePrivateKey.get')
@@ -43,7 +43,7 @@ def test_set_bet_masternode(mocker, transaction, bet):
 @pytest.mark.parametrize('invalid_bet', ['-1', 'qwqwqwq'])
 def test_set_bet_masternode_with_invalid_bet(invalid_bet):
     """
-    Case: set the masternode with invalid betting behaviour.
+    Case: set the masternode with invalid betting behavior.
     Expect: the following bet is not a valid error message.
     """
     runner = CliRunner()
@@ -66,26 +66,26 @@ def test_set_bet_masternode_with_invalid_bet(invalid_bet):
     assert dict_to_pretty_json(expected_error) in result.output
 
 
-def test_set_bet_masternode_with_non_supported_bet(mocker):
+def test_set_bet_masternode_with_not_supported_bet(mocker):
     """
-    Case: set the masternode with non supported bet.
+    Case: set the masternode with not supported bet.
     Expect: the following bet is not supported error message.
     """
     mock_get_node_private_key = mocker.patch('cli.config.NodePrivateKey.get')
     mock_get_node_private_key.return_value = '42dada12f863528bd456785d8c544154db6ec9455be2c123d91b687df3697314'
 
-    non_supported_bet = '0'
+    not_supported_bet = '0'
 
     runner = CliRunner()
     result = runner.invoke(cli, [
         'masternode',
         'set-bet',
         '--bet',
-        non_supported_bet,
+        not_supported_bet,
     ])
 
     expected_error = {
-        'errors': f'The following bet `{non_supported_bet}` is not supported, the minimum bet is integer 1.',
+        'errors': f'The following bet `{not_supported_bet}` is not supported, the minimum bet is integer 1.',
 
     }
 

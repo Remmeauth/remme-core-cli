@@ -103,7 +103,7 @@ def close():
 @masternode_commands.command('set-bet')
 def set_bet(bet):
     """
-    Set the masternode betting behaviour.
+    Set the masternode betting behavior.
     """
     arguments, errors = SetBetMasternodeForm().load({
         'bet': bet,

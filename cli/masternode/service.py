@@ -60,7 +60,7 @@ class Masternode:
 
     def set_bet(self, bet):
         """
-        Set the masternode betting behaviour.
+        Set the masternode betting behavior.
 
         Arguments:
             bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
@@ -70,7 +70,6 @@ class Masternode:
             bet = bet.upper()
 
         if isinstance(bet, int):
-
             if bet == 0:
                 raise NotSupportedBetError(
                     f'The following bet `{bet}` is not supported, the minimum bet is integer 1.',

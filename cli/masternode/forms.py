@@ -26,7 +26,7 @@ class OpenMasternodeForm(Schema):
 
 class SetBetMasternodeForm(Schema):
     """
-    Set the masternode betting behaviour form.
+    Set the masternode betting behavior form.
     """
 
     bet = BetField(required=True)

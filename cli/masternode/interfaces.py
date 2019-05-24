@@ -22,7 +22,7 @@ class MasternodeInterface:
 
     def set_bet(self, bet):
         """
-        Set the masternode betting behaviour.
+        Set the masternode betting behavior.
 
         Arguments:
             bet (string or integer, required): type of bet to set to the masternode account. Valid bet is

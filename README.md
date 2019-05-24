@@ -750,7 +750,7 @@ $ remme masternode close
 }
 ```
 
-Set the masternode betting behaviour (executable only on the machine which runs the node) — ``remme masternode set-bet``:
+Set the masternode betting behavior (executable only on the machine which runs the node) — ``remme masternode set-bet``:
 
 | Arguments | Type   | Required | Description                                                      |
 | :-------: | :----: | :------: | ---------------------------------------------------------------- |
