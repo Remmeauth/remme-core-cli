@@ -252,6 +252,17 @@ $ remme node-account transfer-tokens \
       --node-url=node-genesis-testnet.remme.io
 {
     "result": {
+        "batch_identifier": "aac64d7b10be4b93b8c345b5eca1dc870c6b3905485e48a0ca5f58928a88a42b7a404abb4f1027e973314cca95379b1ef375358ad1661d0964c1ded4c212810f"
+    }
+}
+```
+
+Transfer available tokens from frozen to unfrozen reputation's balances (executable only on the machine which runs the node) — `remme node-account transfer-tokens-from-frozen-to-unfrozen`.
+
+```bash
+$ remme node-account transfer-tokens-from-frozen-to-unfrozen
+{
+    "result": {
         "batch_id": "045c2b7c43a7ca7c3dc60e92714c03265572a726d1fae631c39a404eaf97770e3f6a7a8c35c86f6361afb2e4f12b4a17d71a66a19158b62f30531ab32b62f06f"
     }
 }
