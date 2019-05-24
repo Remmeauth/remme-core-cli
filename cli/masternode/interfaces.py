@@ -19,3 +19,13 @@ class MasternodeInterface:
         Close the masternode.
         """
         pass
+
+    def set_bet(self, bet):
+        """
+        Set the masternode betting behavior.
+
+        Arguments:
+            bet (string or integer, required): type of bet to set to the masternode account. Valid bet is
+                                               `min` or `max` as strings, or an integer value (e.g. 20).
+        """
+        pass
