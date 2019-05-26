@@ -268,7 +268,7 @@ $ remme node-account transfer-tokens-from-frozen-to-unfrozen
 }
 ```
 
-Transfer available tokens from unfrozen reputational balance to operational balance (executable only on the machine which runs the node) — `remme node-account transfer-tokens-from-unfrozen-to-operational`.
+Transfer available tokens from unfrozen reputational balance to operational balance (executable only on the machine which runs the node) — `remme node-account transfer-tokens-from-unfrozen-to-operational --amount=1000`.
 
 | Arguments   | Type    | Required | Description                                    |
 | :---------: | :-----: | :------: | ---------------------------------------------- |
