@@ -26,7 +26,7 @@ def test_transfer_tokens_from_unfrozen_to_operational(mocker, unfrozen_to_operat
         'node-account',
         'transfer-tokens-from-unfrozen-to-operational',
         '--amount',
-        1000
+        1000,
     ])
 
     transaction_batch_identifier = json.loads(result.output).get('result').get('batch_identifier')
