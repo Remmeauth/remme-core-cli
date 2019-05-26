@@ -132,3 +132,30 @@ def transfer_tokens_from_frozen_to_unfrozen():
         sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
 
     print_result(result=result)
+
+
+@node_account_commands.command('transfer-tokens-from-unfrozen-to-operational')
+@click.option('--amount', type=int, required=True, help=AMOUNT_ARGUMENT_HELP_MESSAGE)
+def transfer_tokens_from_unfrozen_to_operational(amount):
+    """
+    Transfer available tokens from unfrozen reputational balance to operational balance.
+    """
+    try:
+        node_private_key = NodePrivateKey().get()
+
+    except (NotSupportedOsToGetNodePrivateKeyError, FileNotFoundError) as error:
+        print_errors(errors=str(error))
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    remme = Remme(
+        account_config={'private_key_hex': node_private_key, 'account_type': AccountType.NODE},
+        network_config={'node_address': 'localhost' + ':8080'},
+    )
+
+    result, errors = NodeAccount(service=remme).transfer_tokens_from_unfrozen_to_operational(amount=amount)
+
+    if errors is not None:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
+    print_result(result=result)

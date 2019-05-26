@@ -268,6 +268,21 @@ $ remme node-account transfer-tokens-from-frozen-to-unfrozen
 }
 ```
 
+Transfer available tokens from unfrozen reputational balance to operational balance (executable only on the machine which runs the node) — `remme node-account transfer-tokens-from-unfrozen-to-operational`.
+
+| Arguments   | Type    | Required | Description                                    |
+| :---------: | :-----: | :------: | ---------------------------------------------- |
+| amount      | Integer | Yes      | Amount to transfer.                            |
+
+```bash
+$ remme node-account transfer-tokens-from-unfrozen-to-operational
+{
+    "result": {
+        "batch_id": "045c2b7c43a7ca7c3dc60e92714c03265572a726d1fae631c39a404eaf97770e3f6a7a8c35c86f6361afb2e4f12b4a17d71a66a19158b62f30531ab32b62f06f"
+    }
+}
+```
+
 ### Block
 
 Get a list of blocks — ``remme block get-list``:
