@@ -300,20 +300,6 @@ class Transaction:
                '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
 
 
-class UnfrozenToOperationalTransaction:
-    """
-    Impose unfrozen to opetational balance transaction's data transfer object.
-    """
-
-    @property
-    def batch_id(self):
-        """
-        Get batch identifier of the transaction.
-        """
-        return '37809770b004dcbc7dae116fd9f17428255ddddee3304c9b3d14609d2792e78f' \
-               '08f5308af03fd4aa18ff1d868f043b12dd7b0a792e141f000a2505acd4b7a956'
-
-
 @pytest.fixture()
 def sent_transaction():
     """
@@ -392,11 +378,3 @@ def transaction():
     Get the transaction fixture.
     """
     return Transaction()
-
-
-@pytest.fixture()
-def unfrozen_to_operational_transaction():
-    """
-    Get the transaction fixture.
-    """
-    return UnfrozenToOperationalTransaction()

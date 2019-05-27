@@ -78,7 +78,7 @@ class NodeAccount:
 
     def transfer_tokens_from_unfrozen_to_operational(self, amount):
         """
-        Transfer available tokens from unfrozen reputational balance to operational balance.
+        Transfer tokens from unfrozen reputational balance to operational balance.
         """
         try:
             transfer_transaction = loop.run_until_complete(

@@ -31,6 +31,6 @@ class NodeAccountInterface:
 
     def transfer_tokens_from_unfrozen_to_operational(self, amount):
         """
-        Transfer available tokens from unfrozen to operational balance.
+        Transfer tokens from unfrozen to operational balance.
         """
         pass

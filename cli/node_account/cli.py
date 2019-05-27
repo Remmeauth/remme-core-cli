@@ -138,7 +138,7 @@ def transfer_tokens_from_frozen_to_unfrozen():
 @click.option('--amount', type=int, required=True, help=AMOUNT_ARGUMENT_HELP_MESSAGE)
 def transfer_tokens_from_unfrozen_to_operational(amount):
     """
-    Transfer available tokens from unfrozen reputational balance to operational balance.
+    Transfer tokens from unfrozen reputational balance to operational balance.
     """
     try:
         node_private_key = NodePrivateKey().get()

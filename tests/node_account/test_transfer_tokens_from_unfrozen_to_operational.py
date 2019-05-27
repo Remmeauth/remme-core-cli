@@ -9,9 +9,9 @@ from cli.constants import PASSED_EXIT_FROM_COMMAND_CODE
 from cli.entrypoint import cli
 
 
-def test_transfer_tokens_from_unfrozen_to_operational(mocker, unfrozen_to_operational_transaction):
+def test_transfer_tokens_from_unfrozen_to_operational(mocker, transaction):
     """
-    Case: transfer available tokens from unfrozen to operational.
+    Case: transfer tokens from unfrozen to operational.
     Expect: transaction's batch identifier is returned.
     """
     mock_get_node_private_key = mocker.patch('cli.config.NodePrivateKey.get')
@@ -19,7 +19,7 @@ def test_transfer_tokens_from_unfrozen_to_operational(mocker, unfrozen_to_operat
 
     mock_node_account_transfer_tokens_from_unfrozen_to_operational = \
         mocker.patch('cli.node_account.service.loop.run_until_complete')
-    mock_node_account_transfer_tokens_from_unfrozen_to_operational.return_value = unfrozen_to_operational_transaction
+    mock_node_account_transfer_tokens_from_unfrozen_to_operational.return_value = transaction
 
     runner = CliRunner()
     result = runner.invoke(cli, [
@@ -32,4 +32,4 @@ def test_transfer_tokens_from_unfrozen_to_operational(mocker, unfrozen_to_operat
     transaction_batch_identifier = json.loads(result.output).get('result').get('batch_identifier')
 
     assert PASSED_EXIT_FROM_COMMAND_CODE == result.exit_code
-    assert unfrozen_to_operational_transaction.batch_id == transaction_batch_identifier
+    assert transaction.batch_id == transaction_batch_identifier
