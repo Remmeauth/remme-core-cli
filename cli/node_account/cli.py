@@ -14,7 +14,10 @@ from cli.constants import (
 )
 from cli.errors import NotSupportedOsToGetNodePrivateKeyError
 from cli.generic.forms.forms import TransferTokensForm
-from cli.node_account.forms import GetNodeAccountInformationForm
+from cli.node_account.forms import (
+    GetNodeAccountInformationForm,
+    TransferTokensFromUnfrozenToOperationalForm,
+)
 from cli.node_account.help import (
     ACCOUNT_ADDRESS_TO_ARGUMENT_HELP_MESSAGE,
     AMOUNT_ARGUMENT_HELP_MESSAGE,
@@ -140,6 +143,14 @@ def transfer_tokens_from_unfrozen_to_operational(amount):
     """
     Transfer tokens from unfrozen reputational balance to operational balance.
     """
+    arguments, errors = TransferTokensFromUnfrozenToOperationalForm().load({
+        'amount': amount,
+    })
+
+    if errors:
+        print_errors(errors=errors)
+        sys.exit(FAILED_EXIT_FROM_COMMAND_CODE)
+
     try:
         node_private_key = NodePrivateKey().get()
 
