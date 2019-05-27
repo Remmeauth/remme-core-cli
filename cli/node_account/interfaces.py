@@ -28,3 +28,9 @@ class NodeAccountInterface:
         Transfer available tokens from frozen to unfrozen reputation's balances.
         """
         pass
+
+    def transfer_tokens_from_unfrozen_to_operational(self, amount):
+        """
+        Transfer tokens from unfrozen to operational balance.
+        """
+        pass

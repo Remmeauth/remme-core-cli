@@ -75,3 +75,19 @@ class NodeAccount:
         return {
             'batch_identifier': transfer_transaction.batch_id,
         }, None
+
+    def transfer_tokens_from_unfrozen_to_operational(self, amount):
+        """
+        Transfer tokens from unfrozen reputational balance to operational balance.
+        """
+        try:
+            transfer_transaction = loop.run_until_complete(
+                self.service.token.transfer_from_unfrozen_to_operational(amount=amount),
+            )
+
+        except Exception as error:
+            return None, str(error)
+
+        return {
+            'batch_identifier': transfer_transaction.batch_id,
+        }, None
